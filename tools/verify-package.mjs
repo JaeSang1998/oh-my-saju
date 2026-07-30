@@ -4,6 +4,8 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
+const typescriptBinary = `./node_modules/.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`;
+
 const request = {
   birth: {
     date: { calendar: 'gregorian', year: 1992, month: 10, day: 24 },
@@ -260,11 +262,13 @@ if (process.argv.includes('--child')) {
   );
 
   const typeCheck = spawnSync(
-    process.execPath,
+    typescriptBinary,
     [
-      './node_modules/typescript/bin/tsc',
       '--noEmit',
+      '--ignoreConfig',
       '--strict',
+      '--types',
+      'node',
       '--target',
       'ES2022',
       '--module',
@@ -274,7 +278,10 @@ if (process.argv.includes('--child')) {
       'test/package-consumer.ts',
       'test/package-consumer.cts',
     ],
-    { encoding: 'utf8' },
+    {
+      encoding: 'utf8',
+      shell: process.platform === 'win32',
+    },
   );
   assert.equal(typeCheck.status, 0, typeCheck.stderr || typeCheck.stdout);
 

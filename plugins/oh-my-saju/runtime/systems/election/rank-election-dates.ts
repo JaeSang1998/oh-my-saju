@@ -101,6 +101,14 @@ function assertGregorianDate(
   }
 }
 
+function assertCalculableNatalRequest(
+  value: unknown,
+): asserts value is ElectionParticipant['natalRequest'] {
+  // calculateSaju validates untrusted JavaScript input at runtime even though
+  // its public TypeScript signature intentionally accepts only SajuRequest.
+  calculateSaju(value as ElectionParticipant['natalRequest']);
+}
+
 function assertParticipant(
   value: unknown,
   index: number,
@@ -147,7 +155,7 @@ function assertParticipant(
     );
   }
   try {
-    calculateSaju(value.natalRequest as unknown as ElectionParticipant['natalRequest']);
+    assertCalculableNatalRequest(value.natalRequest);
   } catch (error) {
     throw new TraditionalSystemError(
       'INVALID_SYSTEM_INPUT',
@@ -240,23 +248,26 @@ function assertElectionRequest(value: unknown): asserts value is ElectionRequest
       { path: ['participants'] },
     );
   }
-  value.participants.forEach((participant, index) =>
-    assertParticipant(participant, index, value.timeZone as string),
-  );
-  const participantIds = value.participants.map(({ id }) => id);
+  const participantValues: readonly unknown[] = value.participants;
+  const timeZone = value.timeZone;
+  const participants = participantValues.map((participant, index): ElectionParticipant => {
+    assertParticipant(participant, index, timeZone);
+    return participant;
+  });
+  const participantIds = participants.map(({ id }) => id);
   if (new Set(participantIds).size !== participantIds.length) {
     throw new TraditionalSystemError('INVALID_SYSTEM_INPUT', 'Participant IDs must be unique.', {
       path: ['participants'],
     });
   }
-  if (value.eventType === 'daily' && value.participants.length !== 1) {
+  if (value.eventType === 'daily' && participants.length !== 1) {
     throw new TraditionalSystemError(
       'INVALID_SYSTEM_INPUT',
       'daily election requests require exactly one participant.',
       { path: ['participants'] },
     );
   }
-  if (value.eventType === 'wedding' && value.participants.length !== 2) {
+  if (value.eventType === 'wedding' && participants.length !== 2) {
     throw new TraditionalSystemError(
       'INVALID_SYSTEM_INPUT',
       'wedding election requests require exactly two symmetric participants.',

@@ -5708,6 +5708,16 @@ function jsonSafe(value, seen = /* @__PURE__ */ new WeakSet()) {
     Object.entries(value).map(([key, entry]) => [key, jsonSafe(entry, seen)])
   );
 }
+function jsonSafeRecord(value) {
+  const seen = /* @__PURE__ */ new WeakSet();
+  seen.add(value);
+  return Object.fromEntries(
+    Object.entries(value).map(([key, entry]) => [
+      key,
+      jsonSafe(entry, seen)
+    ])
+  );
+}
 var SajuError = class extends Error {
   code;
   path;
@@ -5731,7 +5741,7 @@ var SajuError = class extends Error {
       message: this.message,
       ...this.path === void 0 ? {} : { path: this.path },
       ...this.details === void 0 ? {} : {
-        details: jsonSafe(this.details)
+        details: jsonSafeRecord(this.details)
       }
     };
   }
@@ -5761,7 +5771,7 @@ function brandCalculationReport(value) {
 
 // src/manifest.ts
 var import_moment_timezone = __toESM(require_moment_timezone2(), 1);
-var SOURCE_REVISION = true ? "core-content-sha256:10809c2236d27d01280e977e79fcf8b8535ca1bf9491c9c78461433b350caa55" : "source-tree-unbuilt";
+var SOURCE_REVISION = true ? "core-content-sha256:8bc34f0c74a77b196dea299d48ab7854e1ca7f11b5520a123a4c708f11edbcc0" : "source-tree-unbuilt";
 var SUPPORTED_RANGES = Object.freeze({
   sajuBirthYears: Object.freeze({ min: 1801, max: 2100 }),
   solarTermYears: Object.freeze({ min: 1800, max: 2300 }),
@@ -8703,12 +8713,15 @@ function resolveDayHourClock(civilDateTime, instantEpochMilliseconds, clock) {
 }
 
 // src/time/resolve-birth-instant.ts
-var import_moment_timezone2 = __toESM(require_moment_timezone2(), 1);
+var import_moment_timezone3 = __toESM(require_moment_timezone2(), 1);
 
 // src/internal/guards.ts
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
+
+// src/time/daylight-saving.ts
+var import_moment_timezone2 = __toESM(require_moment_timezone2(), 1);
 
 // src/time/dst-offsets-data.ts
 var DST_OFFSET_CODE_BASE = 33;
@@ -8854,7 +8867,7 @@ function resolveBirthInstant(input) {
       }
     );
   }
-  const zone = import_moment_timezone2.default.tz.zone(input.timeZone);
+  const zone = import_moment_timezone3.default.tz.zone(input.timeZone);
   if (zone === null) {
     throw new SajuError("UNKNOWN_TIME_ZONE", `Unknown IANA time zone: ${input.timeZone}`, {
       path: ["timeZone"],
@@ -9600,7 +9613,7 @@ function calculateSaju(request) {
 }
 
 // src/auditable/calculate-saju-possibilities.ts
-var import_moment_timezone3 = __toESM(require_moment_timezone2(), 1);
+var import_moment_timezone4 = __toESM(require_moment_timezone2(), 1);
 var DAY_MS = 864e5;
 var HOUR_MS = 36e5;
 var MINUTE_MS = 6e4;
@@ -10070,7 +10083,7 @@ function fixedBreakpoints(request, coverage, solarProvenance) {
   for (let value = firstHour; value < coverage.endExclusive; value += HOUR_MS) {
     addBreakpoint(points, coverage, value);
   }
-  const zone = import_moment_timezone3.default.tz.zone(request.birth.timeZone);
+  const zone = import_moment_timezone4.default.tz.zone(request.birth.timeZone);
   if (zone === null) {
     throw new SajuError("UNKNOWN_TIME_ZONE", `Unknown IANA time zone: ${request.birth.timeZone}`, {
       path: ["birth", "timeZone"],
@@ -10485,7 +10498,7 @@ function calculateSajuPossibilities(request) {
   const gregorianDate = normalizeBirthDate(request.birth.date);
   const coverage = coverageFor(gregorianDate, request.birth.time);
   const omitHour = request.birth.time.kind === "unknown";
-  const zone = import_moment_timezone3.default.tz.zone(request.birth.timeZone);
+  const zone = import_moment_timezone4.default.tz.zone(request.birth.timeZone);
   if (zone === null) {
     throw new SajuError("UNKNOWN_TIME_ZONE", `Unknown IANA time zone: ${request.birth.timeZone}`, {
       path: ["birth", "timeZone"]
@@ -10569,6 +10582,14 @@ function deepFreeze2(value) {
 // plugins/oh-my-saju/runtime/internal/guards.ts
 function isRecord2(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+function isArrayOf(value, predicate) {
+  if (!Array.isArray(value)) return false;
+  const entries = value;
+  for (let index = 0; index < entries.length; index += 1) {
+    if (!Object.hasOwn(entries, index) || !predicate(entries[index])) return false;
+  }
+  return true;
 }
 
 // plugins/oh-my-saju/runtime/manifest.ts
@@ -11155,7 +11176,7 @@ function artifactDigests(value) {
 var artifacts_default = {
   schemaVersion: "1",
   knowledgeSnapshot: "6c0ebde3b81aac964a7a6124bb4cb2cc62f6a7d70fae595b3ac1ae0cf081e796",
-  rules: "31c8e7175fcc8a1f032356083edf50dec6a302f8a8e5d1046a7404ab9e14fa64",
+  rules: "61a13764735234073de5825d810cc93e8830f26273ff7f7971df63d7f0c9ca99",
   fixtures: "c85cd4ff6577150d2c16964a73a2fe4253efd38a5fa284a19607ec9eb4b5819c"
 };
 
@@ -11441,8 +11462,8 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ditianshui/artifacts.json
 var artifacts_default2 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "be0dfa3b89c52100552778af23e9dc6f1231ad6f683649785528489f35602163",
-  rules: "df058b908b4727c6f4cf3b15ef47b44d4c2739b88e4c6ae06a7993d098832a0a",
+  knowledgeSnapshot: "b09030e80fbf397129f9cc9717eca2688b88427cb112d5972d9dd7e8a3dd1a13",
+  rules: "7d4b7574777a9f90096a79ae65930817369f550596d035895d3c5d29a7825e98",
   fixtures: "3c5be0ad7ed6adb9cc5e36631454066adf3b7562375d24f4ea2cbddceed12aa1"
 };
 
@@ -11619,7 +11640,7 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 var artifacts_default3 = {
   schemaVersion: "1",
   knowledgeSnapshot: "ab9bc189fe82e36e8a112668f4799967a400a6ee0a899fd85ebea327d87c5227",
-  rules: "47f1f91a7e46ba2aec42e689f0ac2e1d7c9bb743217d5c89a02696c57e56ff4c",
+  rules: "bdbeaf0a45a0ced9cc81150b2a84ab57b5718776e452133af5e92674107da4c8",
   fixtures: "fa1e1cbea176782d98785aefd292e61186bb37253c8983fbbe309e49e3100039"
 };
 
@@ -12223,7 +12244,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 var artifacts_default4 = {
   schemaVersion: "1",
   knowledgeSnapshot: "892b4223fe0d17c7042072e37fbdacd398a8e776b6f34cc691438aec6f3a5353",
-  rules: "74f9fab6b5cdfe475b6940572b30e6a2528a4503aedfebd4110bbff10b42b6fc",
+  rules: "883072738e0a59965fa6263fe0f386e703f81292cc9b36cdedab61c58088fa73",
   fixtures: "83140f3303f946ef0ac70ef20d8ffae884fa0e489de8593a44a92539a6cff7b7"
 };
 
@@ -12548,7 +12569,7 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 var artifacts_default5 = {
   schemaVersion: "1",
   knowledgeSnapshot: "92c19f40a2cf080bfe5035c66ccc8c7741743521e077384b4f0b1b74c7af8ed9",
-  rules: "ff85a8b4fcda574a3c9b945e455120923f0e06e881540d839f25ac38946980dd",
+  rules: "93df7f4e6d49fd9ad8c19476d5617379e54c20c6ffcc48025dcd322a98a5f999",
   fixtures: "89a61e9f2e371e876f89ee18d632bef7ceb5bb64474e58085fcc1106daa64ac7"
 };
 
@@ -13257,9 +13278,33 @@ var DITIANSHUI_LEDGER_SOURCE_IDS = [
   "ditianshui-strength-flow-v1",
   "oh-my-saju-ditianshui-evidence-v1"
 ];
-var DITIANSHUI_SEASONAL_RULER_BY_MONTH_V1 = deepFreeze2(
-  seasonal_state_table_default.monthRuler
-);
+function requireFiveElement(value, monthBranch) {
+  if (value === "\uBAA9" || value === "\uD654" || value === "\uD1A0" || value === "\uAE08" || value === "\uC218") {
+    return value;
+  }
+  throw new TypeError(`Invalid Ditianshui seasonal ruler for month branch ${monthBranch}.`);
+}
+function parseSeasonalRulerTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || !isRecord2(value.monthRuler)) {
+    throw new TypeError("Invalid Ditianshui seasonal-state table.");
+  }
+  const rulers = value.monthRuler;
+  return {
+    \uC790: requireFiveElement(rulers["\uC790"], "\uC790"),
+    \uCD95: requireFiveElement(rulers["\uCD95"], "\uCD95"),
+    \uC778: requireFiveElement(rulers["\uC778"], "\uC778"),
+    \uBB18: requireFiveElement(rulers["\uBB18"], "\uBB18"),
+    \uC9C4: requireFiveElement(rulers["\uC9C4"], "\uC9C4"),
+    \uC0AC: requireFiveElement(rulers["\uC0AC"], "\uC0AC"),
+    \uC624: requireFiveElement(rulers["\uC624"], "\uC624"),
+    \uBBF8: requireFiveElement(rulers["\uBBF8"], "\uBBF8"),
+    \uC2E0: requireFiveElement(rulers["\uC2E0"], "\uC2E0"),
+    \uC720: requireFiveElement(rulers["\uC720"], "\uC720"),
+    \uC220: requireFiveElement(rulers["\uC220"], "\uC220"),
+    \uD574: requireFiveElement(rulers["\uD574"], "\uD574")
+  };
+}
+var DITIANSHUI_SEASONAL_RULER_BY_MONTH_V1 = deepFreeze2(parseSeasonalRulerTable(seasonal_state_table_default));
 function seasonalState(ruler, subject) {
   if (subject === ruler) return "\uC655";
   if (ELEMENT_GENERATES2[ruler] === subject) return "\uC0C1";
@@ -14018,6 +14063,15 @@ var REFERENCE_VERIFICATIONS = /* @__PURE__ */ new Set([
   "bibliographic-only",
   "unverified"
 ]);
+function isInterpretationRuleId(value) {
+  return typeof value === "string" && /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(value) && ALL_RULE_ID_SET.has(value);
+}
+function isInterpretationTopic(value) {
+  return typeof value === "string" && INTERPRETATION_TOPICS.has(value);
+}
+function isProfileLimitationId(value) {
+  return typeof value === "string" && PROFILE_LIMITATION_ID_SET.has(value);
+}
 var REFERENCE_TEXTUAL_LAYERS = /* @__PURE__ */ new Set([
   "base-text",
   "commentary",
@@ -14117,7 +14171,7 @@ function isJsonValue(value) {
         }
         continue;
       }
-      const prototype = Object.getPrototypeOf(current.value);
+      const prototype = Reflect.getPrototypeOf(current.value);
       if (!isRecord2(current.value) || prototype !== Object.prototype && prototype !== null) {
         return false;
       }
@@ -14180,16 +14234,17 @@ function assertProfile(profile) {
       "profile.enabledRuleIds must contain at least one rule."
     );
   }
-  if (!Array.isArray(profile.supportedTopics) || profile.supportedTopics.length > INTERPRETATION_TOPICS.size || !Array.isArray(profile.references) || profile.references.length > 64 || !isRecord2(profile.parameters) || !isJsonValue(profile.parameters) || !Array.isArray(profile.knownLimitations) || profile.knownLimitations.length > PROFILE_LIMITATION_ID_SET.size) {
+  if (!isArrayOf(profile.supportedTopics, isInterpretationTopic) || profile.supportedTopics.length > INTERPRETATION_TOPICS.size || !Array.isArray(profile.references) || profile.references.length > 64 || !isRecord2(profile.parameters) || !isJsonValue(profile.parameters) || !isArrayOf(profile.knownLimitations, isProfileLimitationId) || profile.knownLimitations.length > PROFILE_LIMITATION_ID_SET.size) {
     throw new SajuInterpretationError(
       "INVALID_PROFILE",
       "profile topics, references, parameters, and limitations must be serializable collections."
     );
   }
-  const enabledRuleIds = profile.enabledRuleIds;
+  const enabledRuleValues = profile.enabledRuleIds;
+  const enabledRuleIds = [];
   const enabledRuleIdSet = /* @__PURE__ */ new Set();
-  for (const [index, ruleId] of enabledRuleIds.entries()) {
-    if (typeof ruleId !== "string" || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(ruleId) || !ALL_RULE_ID_SET.has(ruleId)) {
+  for (const [index, ruleId] of enabledRuleValues.entries()) {
+    if (!isInterpretationRuleId(ruleId)) {
       throw new SajuInterpretationError("UNKNOWN_RULE", "Unknown interpretation rule.", {
         details: { index }
       });
@@ -14200,6 +14255,7 @@ function assertProfile(profile) {
       });
     }
     enabledRuleIdSet.add(ruleId);
+    enabledRuleIds.push(ruleId);
   }
   const referenceIds = /* @__PURE__ */ new Set();
   for (const reference of profile.references) {
@@ -14233,11 +14289,7 @@ function assertProfile(profile) {
       );
     }
   }
-  if (!profile.supportedTopics.every(
-    (topic) => typeof topic === "string" && INTERPRETATION_TOPICS.has(topic)
-  ) || new Set(profile.supportedTopics).size !== profile.supportedTopics.length || !profile.knownLimitations.every(
-    (limitation) => typeof limitation === "string" && PROFILE_LIMITATION_ID_SET.has(limitation)
-  ) || new Set(profile.knownLimitations).size !== profile.knownLimitations.length) {
+  if (new Set(profile.supportedTopics).size !== profile.supportedTopics.length || new Set(profile.knownLimitations).size !== profile.knownLimitations.length) {
     throw new SajuInterpretationError(
       "INVALID_PROFILE",
       "profile topics and limitations contain unsupported values."
@@ -14245,9 +14297,7 @@ function assertProfile(profile) {
   }
   const supportedTopics = new Set(profile.supportedTopics);
   const producedTopics = new Set(
-    enabledRuleIds.map(
-      (ruleId) => INTERPRETATION_RULE_CONTRACTS_V1[ruleId].topic
-    )
+    enabledRuleIds.map((ruleId) => INTERPRETATION_RULE_CONTRACTS_V1[ruleId].topic)
   );
   const missingTopics = [...producedTopics].filter((topic) => !supportedTopics.has(topic));
   const extraTopics = [...supportedTopics].filter((topic) => !producedTopics.has(topic));
@@ -15317,6 +15367,7 @@ var DEFAULT_PURPOSE = "general-interpretation";
 var DEFAULT_AUDIENCE = "general";
 var DEFAULT_VARIANT_POLICY = "include-candidate-dependent";
 var ALLOWED_TOPICS = new Set(Object.keys(SAJU_TOPIC_TITLES));
+var PILLAR_NAMES = /* @__PURE__ */ new Set(["year", "month", "day", "hour"]);
 var HTML_OR_URL_PATTERN = /<[^>]*>|(?:https?|file|mailto|javascript|data):|(?:^|[\s[(])(?:www\.|\/\/)|\[[^\]]*]\([^)]*\)/i;
 var INVISIBLE_PATTERN2 = /[\u200b-\u200f\u202a-\u202e\u2060\u2066-\u2069\ufeff]/u;
 var HANGUL_STEMS = "\uAC11\uC744\uBCD1\uC815\uBB34\uAE30\uACBD\uC2E0\uC784\uACC4";
@@ -15398,9 +15449,9 @@ function copySubject(subject) {
 }
 function copyNarrationFinding(finding, index) {
   const isCandidateId = (value) => typeof value === "string" && /^[A-Za-z0-9_.@:-]{1,240}$/.test(value);
-  if (!isRecord2(finding) || typeof finding.id !== "string" || typeof finding.ruleId !== "string" || typeof finding.topic !== "string" || !ALLOWED_TOPICS.has(finding.topic) || finding.category !== "structural-observation" && finding.category !== "traditional-judgment" || finding.stability !== "stable" && finding.stability !== "candidate-dependent" || finding.coverage !== "complete" && finding.coverage !== "partial" || !Array.isArray(finding.omittedPillars) || !finding.omittedPillars.every(
-    (pillar) => ["year", "month", "day", "hour"].includes(pillar)
-  ) || !Array.isArray(finding.sourceReferenceIds) || !finding.sourceReferenceIds.every((id) => typeof id === "string") || !Array.isArray(finding.candidateIds) || finding.candidateIds.length === 0 || !finding.candidateIds.every(isCandidateId) || new Set(finding.candidateIds).size !== finding.candidateIds.length || !Array.isArray(finding.absentCandidateIds) || !finding.absentCandidateIds.every(isCandidateId) || new Set(finding.absentCandidateIds).size !== finding.absentCandidateIds.length || finding.candidateIds.some((candidateId) => finding.absentCandidateIds.includes(candidateId))) {
+  const isPillarName = (value) => typeof value === "string" && PILLAR_NAMES.has(value);
+  const isString = (value) => typeof value === "string";
+  if (!isRecord2(finding) || typeof finding.id !== "string" || typeof finding.ruleId !== "string" || typeof finding.topic !== "string" || !ALLOWED_TOPICS.has(finding.topic) || finding.category !== "structural-observation" && finding.category !== "traditional-judgment" || finding.stability !== "stable" && finding.stability !== "candidate-dependent" || finding.coverage !== "complete" && finding.coverage !== "partial" || !isArrayOf(finding.omittedPillars, isPillarName) || !isArrayOf(finding.sourceReferenceIds, isString) || !isArrayOf(finding.candidateIds, isCandidateId) || finding.candidateIds.length === 0 || new Set(finding.candidateIds).size !== finding.candidateIds.length || !isArrayOf(finding.absentCandidateIds, isCandidateId) || new Set(finding.absentCandidateIds).size !== finding.absentCandidateIds.length || finding.candidateIds.some((candidateId) => finding.absentCandidateIds.includes(candidateId))) {
     throw new AiReadingError("INVALID_REQUEST", `assessment.findings[${index}] is invalid.`);
   }
   return {
@@ -15422,9 +15473,9 @@ function copyNarrationFinding(finding, index) {
   };
 }
 function copyUnavailableRule(rule, index) {
-  if (!isRecord2(rule) || typeof rule.ruleId !== "string" || rule.reason !== "missing-required-pillar" || !Array.isArray(rule.missingPillars) || !rule.missingPillars.every(
-    (pillar) => ["year", "month", "day", "hour"].includes(pillar)
-  ) || !Array.isArray(rule.candidateIds) || !rule.candidateIds.every((candidateId) => typeof candidateId === "string")) {
+  const isPillarName = (value) => typeof value === "string" && PILLAR_NAMES.has(value);
+  const isString = (value) => typeof value === "string";
+  if (!isRecord2(rule) || typeof rule.ruleId !== "string" || rule.reason !== "missing-required-pillar" || !isArrayOf(rule.missingPillars, isPillarName) || !isArrayOf(rule.candidateIds, isString)) {
     throw new AiReadingError(
       "INVALID_REQUEST",
       `assessment.unavailableRules[${index}] is invalid.`
@@ -15805,7 +15856,7 @@ function copyProviderJson(value) {
       }
       return result2;
     }
-    const prototype = Object.getPrototypeOf(current);
+    const prototype = Reflect.getPrototypeOf(current);
     if (prototype !== Object.prototype && prototype !== null) {
       throw new TypeError("provider object must be plain");
     }
@@ -16383,7 +16434,7 @@ function calculateSajuDailyTransit(request) {
 }
 
 // src/timing/calculate-saju-timing.ts
-var import_moment_timezone4 = __toESM(require_moment_timezone2(), 1);
+var import_moment_timezone5 = __toESM(require_moment_timezone2(), 1);
 
 // src/features/luck-pillars.ts
 var MILLISECONDS_PER_DAY2 = 864e5;
@@ -16535,7 +16586,7 @@ function pillarReport2(pillar, cycleIndex) {
   return report;
 }
 function timingBoundary(boundary, timeZone) {
-  const local = import_moment_timezone4.default.tz(boundary.epochMilliseconds, timeZone);
+  const local = import_moment_timezone5.default.tz(boundary.epochMilliseconds, timeZone);
   return {
     year: boundary.year,
     index: boundary.index,
@@ -16574,7 +16625,7 @@ function representativeAfter(boundary, end) {
   };
 }
 function localDateTimeAt(epochMilliseconds, timeZone) {
-  const local = import_moment_timezone4.default.tz(epochMilliseconds, timeZone);
+  const local = import_moment_timezone5.default.tz(epochMilliseconds, timeZone);
   return {
     year: local.year(),
     month: local.month() + 1,
@@ -17175,6 +17226,9 @@ function assertGregorianDate2(value, path) {
     );
   }
 }
+function assertCalculableNatalRequest(value) {
+  calculateSaju(value);
+}
 function assertParticipant(value, index, timeZone) {
   const path = ["participants", index];
   if (!isRecord2(value)) {
@@ -17217,7 +17271,7 @@ function assertParticipant(value, index, timeZone) {
     );
   }
   try {
-    calculateSaju(value.natalRequest);
+    assertCalculableNatalRequest(value.natalRequest);
   } catch (error) {
     throw new TraditionalSystemError(
       "INVALID_SYSTEM_INPUT",
@@ -17301,23 +17355,26 @@ function assertElectionRequest(value) {
       { path: ["participants"] }
     );
   }
-  value.participants.forEach(
-    (participant, index) => assertParticipant(participant, index, value.timeZone)
-  );
-  const participantIds = value.participants.map(({ id }) => id);
+  const participantValues = value.participants;
+  const timeZone = value.timeZone;
+  const participants = participantValues.map((participant, index) => {
+    assertParticipant(participant, index, timeZone);
+    return participant;
+  });
+  const participantIds = participants.map(({ id }) => id);
   if (new Set(participantIds).size !== participantIds.length) {
     throw new TraditionalSystemError("INVALID_SYSTEM_INPUT", "Participant IDs must be unique.", {
       path: ["participants"]
     });
   }
-  if (value.eventType === "daily" && value.participants.length !== 1) {
+  if (value.eventType === "daily" && participants.length !== 1) {
     throw new TraditionalSystemError(
       "INVALID_SYSTEM_INPUT",
       "daily election requests require exactly one participant.",
       { path: ["participants"] }
     );
   }
-  if (value.eventType === "wedding" && value.participants.length !== 2) {
+  if (value.eventType === "wedding" && participants.length !== 2) {
     throw new TraditionalSystemError(
       "INVALID_SYSTEM_INPUT",
       "wedding election requests require exactly two symmetric participants.",
@@ -18116,10 +18173,12 @@ function lineClass(value) {
   return "old-yang";
 }
 function validateManualLines(request) {
-  if (!Array.isArray(request.lines) || request.lines.length !== 6) {
+  const linesValue = request.lines;
+  if (!Array.isArray(linesValue) || linesValue.length !== 6) {
     missingCastEvidence("Manual I Ching casts require exactly six lines.", ["lines"]);
   }
-  return request.lines.map((value, index) => {
+  const lines = linesValue;
+  return lines.map((value, index) => {
     if (value !== 6 && value !== 7 && value !== 8 && value !== 9) {
       invalidInput("Each I Ching line must be 6, 7, 8, or 9.", ["lines", index]);
     }
@@ -18130,19 +18189,27 @@ function isCoinFace(value) {
   return value === "back" || value === "inscribedFace";
 }
 function deriveThreeCoinCast(request) {
-  if (!Array.isArray(request.casts) || request.casts.length !== 6) {
+  const castsValue = request.casts;
+  if (!Array.isArray(castsValue) || castsValue.length !== 6) {
     missingCastEvidence("Three-coin I Ching casts require exactly six casts.", ["casts"]);
   }
-  const entries = request.casts.map((cast, index) => {
+  const casts = castsValue;
+  const entries = casts.map((cast, index) => {
     if (!Array.isArray(cast) || cast.length !== 3) {
       invalidInput("Each three-coin cast requires exactly three faces.", ["casts", index]);
     }
-    const faces = cast.map((face, faceIndex) => {
-      if (!isCoinFace(face)) {
-        invalidInput('Coin faces must be "back" or "inscribedFace".', ["casts", index, faceIndex]);
-      }
-      return face;
-    });
+    const faceValues = cast;
+    const [first, second, third] = faceValues;
+    if (!isCoinFace(first)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ["casts", index, 0]);
+    }
+    if (!isCoinFace(second)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ["casts", index, 1]);
+    }
+    if (!isCoinFace(third)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ["casts", index, 2]);
+    }
+    const faces = [first, second, third];
     const backCount = faces.filter((face) => face === "back").length;
     return {
       position: index + 1,
@@ -18169,58 +18236,56 @@ function fourRemainder(stalks) {
   return (stalks - 1) % 4 + 1;
 }
 function deriveYarrowCast(request) {
-  if (!Array.isArray(request.traces) || request.traces.length !== 6) {
+  const tracesValue = request.traces;
+  if (!Array.isArray(tracesValue) || tracesValue.length !== 6) {
     missingCastEvidence("Yarrow I Ching casts require exactly six line traces.", ["traces"]);
   }
-  const traces = request.traces.map((lineTrace, lineIndex) => {
-    if (lineTrace === null || typeof lineTrace !== "object" || !Array.isArray(lineTrace.changes) || lineTrace.changes.length !== 3) {
+  const traceValues = tracesValue;
+  const traces = traceValues.map((lineTrace, lineIndex) => {
+    if (lineTrace === null || typeof lineTrace !== "object" || !("changes" in lineTrace) || !Array.isArray(lineTrace.changes) || lineTrace.changes.length !== 3) {
       invalidInput("Each yarrow line requires exactly three explicit changes.", [
         "traces",
         lineIndex,
         "changes"
       ]);
     }
+    const changeValues = lineTrace.changes;
     let startStalks = 49;
-    const changes = lineTrace.changes.map(
-      (split, changeIndex) => {
-        const path = ["traces", lineIndex, "changes", changeIndex];
-        if (split === null || typeof split !== "object" || !Number.isInteger(split.left) || !Number.isInteger(split.right) || split.left <= 0 || split.right <= 1) {
-          invalidInput(
-            "A yarrow split requires positive integer left and right piles, with a stalk left after hanging one from the right.",
-            path
-          );
-        }
-        if (split.left + split.right !== startStalks) {
-          invalidInput(
-            "A yarrow split must equal the stalks remaining from the prior change.",
-            path
-          );
-        }
-        const rightAfterHang = split.right - 1;
-        const leftRemainder = fourRemainder(split.left);
-        const rightRemainder = fourRemainder(rightAfterHang);
-        const removedStalks = 1 + leftRemainder + rightRemainder;
-        const remainingStalks = startStalks - removedStalks;
-        const allowedRemoved = changeIndex === 0 ? [5, 9] : [4, 8];
-        if (!allowedRemoved.includes(removedStalks) || remainingStalks <= 0 || remainingStalks % 4 !== 0) {
-          invalidInput("The yarrow change does not produce a valid four-stalk remainder.", path);
-        }
-        const changeTrace = {
-          change: changeIndex + 1,
-          startStalks,
-          left: split.left,
-          right: split.right,
-          hangFromRight: 1,
-          rightAfterHang,
-          leftRemainder,
-          rightRemainder,
-          removedStalks,
-          remainingStalks
-        };
-        startStalks = remainingStalks;
-        return changeTrace;
+    const changes = changeValues.map((split, changeIndex) => {
+      const path = ["traces", lineIndex, "changes", changeIndex];
+      if (split === null || typeof split !== "object" || !("left" in split) || typeof split.left !== "number" || !Number.isInteger(split.left) || !("right" in split) || typeof split.right !== "number" || !Number.isInteger(split.right) || split.left <= 0 || split.right <= 1) {
+        invalidInput(
+          "A yarrow split requires positive integer left and right piles, with a stalk left after hanging one from the right.",
+          path
+        );
       }
-    );
+      if (split.left + split.right !== startStalks) {
+        invalidInput("A yarrow split must equal the stalks remaining from the prior change.", path);
+      }
+      const rightAfterHang = split.right - 1;
+      const leftRemainder = fourRemainder(split.left);
+      const rightRemainder = fourRemainder(rightAfterHang);
+      const removedStalks = 1 + leftRemainder + rightRemainder;
+      const remainingStalks = startStalks - removedStalks;
+      const allowedRemoved = changeIndex === 0 ? [5, 9] : [4, 8];
+      if (!allowedRemoved.includes(removedStalks) || remainingStalks <= 0 || remainingStalks % 4 !== 0) {
+        invalidInput("The yarrow change does not produce a valid four-stalk remainder.", path);
+      }
+      const changeTrace = {
+        change: changeIndex + 1,
+        startStalks,
+        left: split.left,
+        right: split.right,
+        hangFromRight: 1,
+        rightAfterHang,
+        leftRemainder,
+        rightRemainder,
+        removedStalks,
+        remainingStalks
+      };
+      startStalks = remainingStalks;
+      return changeTrace;
+    });
     if (startStalks !== 24 && startStalks !== 28 && startStalks !== 32 && startStalks !== 36) {
       invalidInput("A completed yarrow line must leave 24, 28, 32, or 36 stalks.", [
         "traces",
@@ -18232,7 +18297,7 @@ function deriveYarrowCast(request) {
       startStalks: 49,
       changes,
       finalStalks: startStalks,
-      lineValue: startStalks / 4
+      lineValue: startStalks === 24 ? 6 : startStalks === 28 ? 7 : startStalks === 32 ? 8 : 9
     };
   });
   const values = traces.map(({ lineValue }) => lineValue);
@@ -19726,6 +19791,9 @@ var SYSTEM_REGISTRY = Object.freeze({
     profile: LIUREN_QUANSHU_NINE_GATES_PROFILE
   })
 });
+function isTraditionalSystemKind(value) {
+  return typeof value === "string" && Object.hasOwn(SYSTEM_REGISTRY, value);
+}
 function runTraditionalSystem(request) {
   if (!isRecord2(request) || typeof request.kind !== "string") {
     throw new TraditionalSystemError(
@@ -19734,8 +19802,7 @@ function runTraditionalSystem(request) {
       { path: ["request", "kind"] }
     );
   }
-  const entry = SYSTEM_REGISTRY[request.kind];
-  if (entry === void 0) {
+  if (!isTraditionalSystemKind(request.kind)) {
     throw new TraditionalSystemError(
       "INVALID_SYSTEM_INPUT",
       "Unsupported traditional-system request.kind.",
@@ -19748,6 +19815,7 @@ function runTraditionalSystem(request) {
       }
     );
   }
+  const entry = SYSTEM_REGISTRY[request.kind];
   const result = entry.evaluate(request);
   if (result.kind !== request.kind || result.audit.profile.id !== entry.profile.id || result.audit.profile.version !== entry.profile.version) {
     throw new TraditionalSystemError(
@@ -20013,15 +20081,36 @@ function calculateRequestedTiming(request, value) {
       "timing is available only for an exact birth-time calculation."
     );
   }
-  return calculateSajuTiming({
-    natalRequest: request.calculation.request,
+  if (typeof value.fromYear !== "number" || typeof value.throughYear !== "number") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "timing.fromYear and timing.throughYear must be numbers."
+    );
+  }
+  if (value.gender !== void 0 && value.gender !== "male" && value.gender !== "female") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "timing.gender must be male or female when supplied."
+    );
+  }
+  if (value.luckPillarCount !== void 0 && typeof value.luckPillarCount !== "number") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "timing.luckPillarCount must be a number when supplied."
+    );
+  }
+  const timing = {
     fromYear: value.fromYear,
     throughYear: value.throughYear,
     ...value.gender === void 0 ? {} : { gender: value.gender },
     ...value.luckPillarCount === void 0 ? {} : { luckPillarCount: value.luckPillarCount }
+  };
+  return calculateSajuTiming({
+    natalRequest: request.calculation.request,
+    ...timing
   });
 }
-function prepareOhMySajuReading(command) {
+function prepareOhMySajuReadingFromUnknown(command) {
   if (!isRecord2(command) || command.command !== "prepare-reading") {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -20044,7 +20133,7 @@ function prepareOhMySajuReading(command) {
     binding: preparationBinding(analysis, timing, tasks)
   });
 }
-async function validateOhMySajuReading(command) {
+async function validateOhMySajuReadingFromUnknown(command) {
   if (!isRecord2(command) || command.command !== "validate-reading") {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -20069,7 +20158,7 @@ async function validateOhMySajuReading(command) {
       "narrator.requestedModel"
     )
   };
-  const prepared = prepareOhMySajuReading({
+  const prepared = prepareOhMySajuReadingFromUnknown({
     schemaVersion: "1",
     command: "prepare-reading",
     request: command.request,
@@ -20128,7 +20217,7 @@ async function validateOhMySajuReading(command) {
     timing: prepared.timing
   });
 }
-function executeTraditionalSystemCommand(command) {
+function executeTraditionalSystemCommandFromUnknown(command) {
   if (!isRecord2(command) || command.command !== "run-traditional-system") {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -20181,7 +20270,7 @@ async function executeOhMySaju(command) {
         schemaVersion: "1",
         ok: true,
         command: "prepare-reading",
-        result: prepareOhMySajuReading(command)
+        result: prepareOhMySajuReadingFromUnknown(command)
       });
     }
     if (command.command === "validate-reading") {
@@ -20189,7 +20278,7 @@ async function executeOhMySaju(command) {
         schemaVersion: "1",
         ok: true,
         command: "validate-reading",
-        result: await validateOhMySajuReading(command)
+        result: await validateOhMySajuReadingFromUnknown(command)
       });
     }
     if (command.command === "run-traditional-system") {
@@ -20197,7 +20286,7 @@ async function executeOhMySaju(command) {
         schemaVersion: "1",
         ok: true,
         command: "run-traditional-system",
-        result: executeTraditionalSystemCommand(command)
+        result: executeTraditionalSystemCommandFromUnknown(command)
       });
     }
     throw new OhMySajuApplicationError(
@@ -20250,7 +20339,14 @@ function parseOptions(argv) {
 async function readStdin() {
   const chunks = [];
   for await (const chunk of stdin) {
-    chunks.push(Buffer2.isBuffer(chunk) ? chunk : Buffer2.from(chunk));
+    const value = chunk;
+    if (typeof value === "string") {
+      chunks.push(Buffer2.from(value));
+    } else if (value instanceof Uint8Array) {
+      chunks.push(value);
+    } else {
+      throw new TypeError("stdin emitted an unsupported chunk type.");
+    }
   }
   return Buffer2.concat(chunks).toString("utf8");
 }

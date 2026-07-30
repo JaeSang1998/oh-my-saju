@@ -21,7 +21,13 @@ await build({
   // astronomy-engine 2.1.x exposes an ambiguous .js ESM entry that Node 18
   // interprets as CommonJS. Bundling it keeps both published formats portable.
   noExternal: ['astronomy-engine'],
-  dts: true,
+  // tsup 8 injects baseUrl into its TypeScript 6 declaration worker.
+  // Keep that compatibility suppression local; TypeScript 7 reads tsconfig.json directly.
+  dts: {
+    compilerOptions: {
+      ignoreDeprecations: '6.0',
+    },
+  },
   sourcemap: true,
   clean: true,
   define: {

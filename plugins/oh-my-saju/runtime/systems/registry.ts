@@ -52,11 +52,15 @@ const SYSTEM_REGISTRY = Object.freeze({
   }),
 } satisfies Readonly<Record<TraditionalSystemKind, TraditionalSystemRegistryEntry>>);
 
+function isTraditionalSystemKind(value: unknown): value is TraditionalSystemKind {
+  return typeof value === 'string' && Object.hasOwn(SYSTEM_REGISTRY, value);
+}
+
 /**
  * Internal JSON-command dispatcher. TypeScript callers use the five explicit
  * system functions exported from `./index` instead.
  */
-export function runTraditionalSystem(request: TraditionalSystemRequest): TraditionalSystemResult {
+export function runTraditionalSystem(request: unknown): TraditionalSystemResult {
   if (!isRecord(request) || typeof request.kind !== 'string') {
     throw new TraditionalSystemError(
       'INVALID_SYSTEM_INPUT',
@@ -64,8 +68,7 @@ export function runTraditionalSystem(request: TraditionalSystemRequest): Traditi
       { path: ['request', 'kind'] },
     );
   }
-  const entry = SYSTEM_REGISTRY[request.kind as TraditionalSystemKind];
-  if (entry === undefined) {
+  if (!isTraditionalSystemKind(request.kind)) {
     throw new TraditionalSystemError(
       'INVALID_SYSTEM_INPUT',
       'Unsupported traditional-system request.kind.',
@@ -78,6 +81,7 @@ export function runTraditionalSystem(request: TraditionalSystemRequest): Traditi
       },
     );
   }
+  const entry = SYSTEM_REGISTRY[request.kind];
   const result = entry.evaluate(request);
   if (
     result.kind !== request.kind ||

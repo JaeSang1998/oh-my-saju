@@ -11,7 +11,7 @@ import type {
   UnavailableInterpretationRule,
 } from '../traditions/types';
 import { deepFreeze } from '../internal/deep-freeze';
-import { isRecord } from '../internal/guards';
+import { isArrayOf, isRecord } from '../internal/guards';
 import { isAuthenticInterpretationReport } from '../internal/report-authenticity';
 import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { AiReadingError } from './errors';
@@ -56,6 +56,7 @@ const DEFAULT_AUDIENCE: SajuReadingAudience = 'general';
 const DEFAULT_VARIANT_POLICY: SajuVariantPolicy = 'include-candidate-dependent';
 
 const ALLOWED_TOPICS = new Set<string>(Object.keys(SAJU_TOPIC_TITLES));
+const PILLAR_NAMES: ReadonlySet<string> = new Set(['year', 'month', 'day', 'hour']);
 
 const HTML_OR_URL_PATTERN =
   /<[^>]*>|(?:https?|file|mailto|javascript|data):|(?:^|[\s[(])(?:www\.|\/\/)|\[[^\]]*]\([^)]*\)/i;
@@ -195,6 +196,11 @@ function copyNarrationFinding(
 ): SajuNarrationEvidenceFinding {
   const isCandidateId = (value: unknown): value is string =>
     typeof value === 'string' && /^[A-Za-z0-9_.@:-]{1,240}$/.test(value);
+  const isPillarName = (
+    value: unknown,
+  ): value is SajuNarrationEvidenceFinding['omittedPillars'][number] =>
+    typeof value === 'string' && PILLAR_NAMES.has(value);
+  const isString = (value: unknown): value is string => typeof value === 'string';
   if (
     !isRecord(finding) ||
     typeof finding.id !== 'string' ||
@@ -205,18 +211,12 @@ function copyNarrationFinding(
       finding.category !== 'traditional-judgment') ||
     (finding.stability !== 'stable' && finding.stability !== 'candidate-dependent') ||
     (finding.coverage !== 'complete' && finding.coverage !== 'partial') ||
-    !Array.isArray(finding.omittedPillars) ||
-    !finding.omittedPillars.every((pillar) =>
-      ['year', 'month', 'day', 'hour'].includes(pillar as string),
-    ) ||
-    !Array.isArray(finding.sourceReferenceIds) ||
-    !finding.sourceReferenceIds.every((id) => typeof id === 'string') ||
-    !Array.isArray(finding.candidateIds) ||
+    !isArrayOf(finding.omittedPillars, isPillarName) ||
+    !isArrayOf(finding.sourceReferenceIds, isString) ||
+    !isArrayOf(finding.candidateIds, isCandidateId) ||
     finding.candidateIds.length === 0 ||
-    !finding.candidateIds.every(isCandidateId) ||
     new Set(finding.candidateIds).size !== finding.candidateIds.length ||
-    !Array.isArray(finding.absentCandidateIds) ||
-    !finding.absentCandidateIds.every(isCandidateId) ||
+    !isArrayOf(finding.absentCandidateIds, isCandidateId) ||
     new Set(finding.absentCandidateIds).size !== finding.absentCandidateIds.length ||
     finding.candidateIds.some((candidateId) => finding.absentCandidateIds.includes(candidateId))
   ) {
@@ -245,16 +245,17 @@ function copyUnavailableRule(
   rule: UnavailableInterpretationRule,
   index: number,
 ): UnavailableInterpretationRule {
+  const isPillarName = (
+    value: unknown,
+  ): value is UnavailableInterpretationRule['missingPillars'][number] =>
+    typeof value === 'string' && PILLAR_NAMES.has(value);
+  const isString = (value: unknown): value is string => typeof value === 'string';
   if (
     !isRecord(rule) ||
     typeof rule.ruleId !== 'string' ||
     rule.reason !== 'missing-required-pillar' ||
-    !Array.isArray(rule.missingPillars) ||
-    !rule.missingPillars.every((pillar) =>
-      ['year', 'month', 'day', 'hour'].includes(pillar as string),
-    ) ||
-    !Array.isArray(rule.candidateIds) ||
-    !rule.candidateIds.every((candidateId) => typeof candidateId === 'string')
+    !isArrayOf(rule.missingPillars, isPillarName) ||
+    !isArrayOf(rule.candidateIds, isString)
   ) {
     throw new AiReadingError(
       'INVALID_REQUEST',
@@ -735,7 +736,7 @@ function copyProviderJson(value: unknown): unknown {
       return result;
     }
 
-    const prototype = Object.getPrototypeOf(current);
+    const prototype = Reflect.getPrototypeOf(current);
     if (prototype !== Object.prototype && prototype !== null) {
       throw new TypeError('provider object must be plain');
     }

@@ -9,7 +9,7 @@ export type TraditionalSystemErrorCode =
   | 'SYSTEM_INVARIANT_VIOLATION';
 
 export class TraditionalSystemError extends Error {
-  readonly name = 'TraditionalSystemError';
+  override readonly name = 'TraditionalSystemError';
 
   constructor(
     readonly code: TraditionalSystemErrorCode,

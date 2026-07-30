@@ -29,7 +29,6 @@ import { isRecord } from '../internal/guards';
 import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { calculateSajuTiming } from 'saju-engine/timing';
 import type { SajuTimingReport } from 'saju-engine/timing';
-import type { Gender } from 'saju-engine';
 import { OhMySajuApplicationError, isOhMySajuApplicationError } from './errors';
 import type {
   OhMySajuCommand,
@@ -37,6 +36,7 @@ import type {
   OhMySajuNarrationDraft,
   OhMySajuNarrationTask,
   OhMySajuResponse,
+  OhMySajuTimingOptions,
   PrepareOhMySajuReadingCommand,
   PreparedOhMySajuReading,
   RunTraditionalSystemCommand,
@@ -313,20 +313,37 @@ function calculateRequestedTiming(
       'timing is available only for an exact birth-time calculation.',
     );
   }
+  if (typeof value.fromYear !== 'number' || typeof value.throughYear !== 'number') {
+    throw new OhMySajuApplicationError(
+      'INVALID_COMMAND',
+      'timing.fromYear and timing.throughYear must be numbers.',
+    );
+  }
+  if (value.gender !== undefined && value.gender !== 'male' && value.gender !== 'female') {
+    throw new OhMySajuApplicationError(
+      'INVALID_COMMAND',
+      'timing.gender must be male or female when supplied.',
+    );
+  }
+  if (value.luckPillarCount !== undefined && typeof value.luckPillarCount !== 'number') {
+    throw new OhMySajuApplicationError(
+      'INVALID_COMMAND',
+      'timing.luckPillarCount must be a number when supplied.',
+    );
+  }
+  const timing: OhMySajuTimingOptions = {
+    fromYear: value.fromYear,
+    throughYear: value.throughYear,
+    ...(value.gender === undefined ? {} : { gender: value.gender }),
+    ...(value.luckPillarCount === undefined ? {} : { luckPillarCount: value.luckPillarCount }),
+  };
   return calculateSajuTiming({
     natalRequest: request.calculation.request,
-    fromYear: value.fromYear as number,
-    throughYear: value.throughYear as number,
-    ...(value.gender === undefined ? {} : { gender: value.gender as Gender }),
-    ...(value.luckPillarCount === undefined
-      ? {}
-      : { luckPillarCount: value.luckPillarCount as number }),
+    ...timing,
   });
 }
 
-export function prepareOhMySajuReading(
-  command: PrepareOhMySajuReadingCommand,
-): PreparedOhMySajuReading {
+function prepareOhMySajuReadingFromUnknown(command: unknown): PreparedOhMySajuReading {
   if (!isRecord(command) || command.command !== 'prepare-reading') {
     throw new OhMySajuApplicationError(
       'INVALID_COMMAND',
@@ -350,8 +367,14 @@ export function prepareOhMySajuReading(
   });
 }
 
-export async function validateOhMySajuReading(
-  command: ValidateOhMySajuReadingCommand,
+export function prepareOhMySajuReading(
+  command: PrepareOhMySajuReadingCommand,
+): PreparedOhMySajuReading {
+  return prepareOhMySajuReadingFromUnknown(command);
+}
+
+async function validateOhMySajuReadingFromUnknown(
+  command: unknown,
 ): Promise<ValidatedOhMySajuReading> {
   if (!isRecord(command) || command.command !== 'validate-reading') {
     throw new OhMySajuApplicationError(
@@ -377,7 +400,7 @@ export async function validateOhMySajuReading(
       'narrator.requestedModel',
     ),
   };
-  const prepared = prepareOhMySajuReading({
+  const prepared = prepareOhMySajuReadingFromUnknown({
     schemaVersion: '1',
     command: 'prepare-reading',
     request: command.request,
@@ -447,8 +470,14 @@ export async function validateOhMySajuReading(
   });
 }
 
-export function executeTraditionalSystemCommand(
-  command: RunTraditionalSystemCommand,
+export async function validateOhMySajuReading(
+  command: ValidateOhMySajuReadingCommand,
+): Promise<ValidatedOhMySajuReading> {
+  return validateOhMySajuReadingFromUnknown(command);
+}
+
+function executeTraditionalSystemCommandFromUnknown(
+  command: unknown,
 ): OhMySajuTraditionalSystemSuccess['result'] {
   if (!isRecord(command) || command.command !== 'run-traditional-system') {
     throw new OhMySajuApplicationError(
@@ -459,6 +488,12 @@ export function executeTraditionalSystemCommand(
   assertOnlyKeys(command, ['schemaVersion', 'command', 'request'], 'command');
   assertCommandVersion(command.schemaVersion);
   return runTraditionalSystem(command.request);
+}
+
+export function executeTraditionalSystemCommand(
+  command: RunTraditionalSystemCommand,
+): OhMySajuTraditionalSystemSuccess['result'] {
+  return executeTraditionalSystemCommandFromUnknown(command);
 }
 
 const COMMAND_NAMES = Object.freeze([
@@ -523,7 +558,7 @@ export async function executeOhMySaju(command: unknown): Promise<OhMySajuRespons
         schemaVersion: '1',
         ok: true,
         command: 'prepare-reading',
-        result: prepareOhMySajuReading(command as unknown as PrepareOhMySajuReadingCommand),
+        result: prepareOhMySajuReadingFromUnknown(command),
       });
     }
     if (command.command === 'validate-reading') {
@@ -531,7 +566,7 @@ export async function executeOhMySaju(command: unknown): Promise<OhMySajuRespons
         schemaVersion: '1',
         ok: true,
         command: 'validate-reading',
-        result: await validateOhMySajuReading(command as unknown as ValidateOhMySajuReadingCommand),
+        result: await validateOhMySajuReadingFromUnknown(command),
       });
     }
     if (command.command === 'run-traditional-system') {
@@ -539,7 +574,7 @@ export async function executeOhMySaju(command: unknown): Promise<OhMySajuRespons
         schemaVersion: '1',
         ok: true,
         command: 'run-traditional-system',
-        result: executeTraditionalSystemCommand(command as unknown as RunTraditionalSystemCommand),
+        result: executeTraditionalSystemCommandFromUnknown(command),
       });
     }
     throw new OhMySajuApplicationError(

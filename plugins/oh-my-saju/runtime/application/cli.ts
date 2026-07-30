@@ -53,9 +53,16 @@ function parseOptions(argv: readonly string[]): CliOptions {
 }
 
 async function readStdin(): Promise<string> {
-  const chunks: Buffer[] = [];
+  const chunks: Uint8Array[] = [];
   for await (const chunk of stdin) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    const value: unknown = chunk;
+    if (typeof value === 'string') {
+      chunks.push(Buffer.from(value));
+    } else if (value instanceof Uint8Array) {
+      chunks.push(value);
+    } else {
+      throw new TypeError('stdin emitted an unsupported chunk type.');
+    }
   }
   return Buffer.concat(chunks).toString('utf8');
 }

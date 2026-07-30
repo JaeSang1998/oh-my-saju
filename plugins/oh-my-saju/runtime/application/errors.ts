@@ -33,7 +33,7 @@ export class OhMySajuApplicationError extends Error {
     if (options.details !== undefined) this.details = options.details;
   }
 
-  static [Symbol.hasInstance](value: unknown): boolean {
+  static override [Symbol.hasInstance](value: unknown): boolean {
     return hasBrand(value);
   }
 }

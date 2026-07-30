@@ -1,19 +1,18 @@
 import { spawnSync } from 'node:child_process';
 
+const binary = (name) => `./node_modules/.bin/${name}${process.platform === 'win32' ? '.cmd' : ''}`;
+
 const checks = [
-  ['Core TypeScript', ['./node_modules/typescript/bin/tsc', '--noEmit']],
+  ['Core TypeScript', binary('tsc'), ['--noEmit']],
   [
     'Oh My Saju TypeScript',
-    [
-      './node_modules/typescript/bin/tsc',
-      '--noEmit',
-      '--project',
-      'plugins/oh-my-saju/tsconfig.json',
-    ],
+    binary('tsc'),
+    ['--noEmit', '--project', 'plugins/oh-my-saju/tsconfig.json'],
   ],
-  ['ESLint', ['./node_modules/eslint/bin/eslint.js', '.']],
+  ['ESLint', process.execPath, ['./node_modules/eslint/bin/eslint.js', '.']],
   [
     'Prettier',
+    process.execPath,
     [
       './node_modules/prettier/bin/prettier.cjs',
       '--check',
@@ -29,18 +28,23 @@ const checks = [
       'docs/**/*.md',
     ],
   ],
-  ['Vitest + coverage', ['./node_modules/vitest/vitest.mjs', 'run', '--coverage']],
-  ['browser bundle', ['tools/build-browser-smoke.mjs']],
-  ['package build', ['tools/build.mjs']],
-  ['package consumers', ['tools/verify-package.mjs']],
-  ['packed artifact', ['tools/verify-packed-artifact.mjs']],
-  ['Oh My Saju plugin artifact', ['tools/verify-agent-plugin.mjs']],
+  [
+    'Vitest + coverage',
+    process.execPath,
+    ['./node_modules/vitest/vitest.mjs', 'run', '--coverage'],
+  ],
+  ['browser bundle', process.execPath, ['tools/build-browser-smoke.mjs']],
+  ['package build', process.execPath, ['tools/build.mjs']],
+  ['package consumers', process.execPath, ['tools/verify-package.mjs']],
+  ['packed artifact', process.execPath, ['tools/verify-packed-artifact.mjs']],
+  ['Oh My Saju plugin artifact', process.execPath, ['tools/verify-agent-plugin.mjs']],
 ];
 
-for (const [label, arguments_] of checks) {
+for (const [label, command, arguments_] of checks) {
   console.log(`\n> ${label}`);
-  const result = spawnSync(process.execPath, arguments_, {
+  const result = spawnSync(command, arguments_, {
     cwd: process.cwd(),
+    shell: process.platform === 'win32' && command.endsWith('.cmd'),
     stdio: 'inherit',
   });
   if (result.error !== undefined) throw result.error;

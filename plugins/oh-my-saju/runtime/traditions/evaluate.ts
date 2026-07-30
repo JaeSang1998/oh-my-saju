@@ -14,7 +14,7 @@ import {
   type StructuralAnalysis,
 } from 'saju-engine/advanced';
 import { deepFreeze } from '../internal/deep-freeze';
-import { isRecord } from '../internal/guards';
+import { isArrayOf, isRecord } from '../internal/guards';
 import { canonicalJsonStringify } from '../internal/canonical-json';
 import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { brandInterpretationReport } from '../internal/report-authenticity';
@@ -81,6 +81,24 @@ const REFERENCE_VERIFICATIONS = new Set<string>([
   'bibliographic-only',
   'unverified',
 ]);
+
+function isInterpretationRuleId(value: unknown): value is InterpretationRuleId {
+  return (
+    typeof value === 'string' &&
+    /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(value) &&
+    ALL_RULE_ID_SET.has(value)
+  );
+}
+
+function isInterpretationTopic(value: unknown): value is InterpretationTopic {
+  return typeof value === 'string' && INTERPRETATION_TOPICS.has(value);
+}
+
+function isProfileLimitationId(
+  value: unknown,
+): value is TraditionRuleProfile['knownLimitations'][number] {
+  return typeof value === 'string' && PROFILE_LIMITATION_ID_SET.has(value);
+}
 const REFERENCE_TEXTUAL_LAYERS = new Set<string>([
   'base-text',
   'commentary',
@@ -217,7 +235,7 @@ function isJsonValue(value: unknown): value is JsonValue {
         continue;
       }
 
-      const prototype = Object.getPrototypeOf(current.value);
+      const prototype = Reflect.getPrototypeOf(current.value);
       if (!isRecord(current.value) || (prototype !== Object.prototype && prototype !== null)) {
         return false;
       }
@@ -308,13 +326,13 @@ function assertProfile(profile: unknown): asserts profile is TraditionRuleProfil
     );
   }
   if (
-    !Array.isArray(profile.supportedTopics) ||
+    !isArrayOf(profile.supportedTopics, isInterpretationTopic) ||
     profile.supportedTopics.length > INTERPRETATION_TOPICS.size ||
     !Array.isArray(profile.references) ||
     profile.references.length > 64 ||
     !isRecord(profile.parameters) ||
     !isJsonValue(profile.parameters) ||
-    !Array.isArray(profile.knownLimitations) ||
+    !isArrayOf(profile.knownLimitations, isProfileLimitationId) ||
     profile.knownLimitations.length > PROFILE_LIMITATION_ID_SET.size
   ) {
     throw new SajuInterpretationError(
@@ -322,14 +340,11 @@ function assertProfile(profile: unknown): asserts profile is TraditionRuleProfil
       'profile topics, references, parameters, and limitations must be serializable collections.',
     );
   }
-  const enabledRuleIds = profile.enabledRuleIds;
+  const enabledRuleValues: readonly unknown[] = profile.enabledRuleIds;
+  const enabledRuleIds: InterpretationRuleId[] = [];
   const enabledRuleIdSet = new Set<string>();
-  for (const [index, ruleId] of enabledRuleIds.entries()) {
-    if (
-      typeof ruleId !== 'string' ||
-      !/^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(ruleId) ||
-      !ALL_RULE_ID_SET.has(ruleId)
-    ) {
+  for (const [index, ruleId] of enabledRuleValues.entries()) {
+    if (!isInterpretationRuleId(ruleId)) {
       throw new SajuInterpretationError('UNKNOWN_RULE', 'Unknown interpretation rule.', {
         details: { index },
       });
@@ -340,6 +355,7 @@ function assertProfile(profile: unknown): asserts profile is TraditionRuleProfil
       });
     }
     enabledRuleIdSet.add(ruleId);
+    enabledRuleIds.push(ruleId);
   }
   const referenceIds = new Set<string>();
   for (const reference of profile.references) {
@@ -401,13 +417,7 @@ function assertProfile(profile: unknown): asserts profile is TraditionRuleProfil
     }
   }
   if (
-    !profile.supportedTopics.every(
-      (topic) => typeof topic === 'string' && INTERPRETATION_TOPICS.has(topic),
-    ) ||
     new Set(profile.supportedTopics).size !== profile.supportedTopics.length ||
-    !profile.knownLimitations.every(
-      (limitation) => typeof limitation === 'string' && PROFILE_LIMITATION_ID_SET.has(limitation),
-    ) ||
     new Set(profile.knownLimitations).size !== profile.knownLimitations.length
   ) {
     throw new SajuInterpretationError(
@@ -417,9 +427,7 @@ function assertProfile(profile: unknown): asserts profile is TraditionRuleProfil
   }
   const supportedTopics = new Set(profile.supportedTopics);
   const producedTopics = new Set(
-    enabledRuleIds.map(
-      (ruleId) => INTERPRETATION_RULE_CONTRACTS_V1[ruleId as InterpretationRuleId].topic,
-    ),
+    enabledRuleIds.map((ruleId) => INTERPRETATION_RULE_CONTRACTS_V1[ruleId].topic),
   );
   const missingTopics = [...producedTopics].filter((topic) => !supportedTopics.has(topic));
   const extraTopics = [...supportedTopics].filter((topic) => !producedTopics.has(topic));

@@ -45,6 +45,19 @@ function jsonSafe(value: unknown, seen = new WeakSet<object>()): unknown {
   );
 }
 
+function jsonSafeRecord(
+  value: Readonly<Record<string, unknown>>,
+): Readonly<Record<string, unknown>> {
+  const seen = new WeakSet<object>();
+  seen.add(value);
+  return Object.fromEntries(
+    Object.entries(value).map(([key, entry]): readonly [string, unknown] => [
+      key,
+      jsonSafe(entry, seen),
+    ]),
+  );
+}
+
 /** Expected, machine-readable failure from a public Saju API. */
 export class SajuError extends Error {
   readonly code: SajuErrorCode;
@@ -69,7 +82,7 @@ export class SajuError extends Error {
   }
 
   /** Recognizes branded errors across ESM/CommonJS entry bundles in one realm. */
-  static [Symbol.hasInstance](value: unknown): boolean {
+  static override [Symbol.hasInstance](value: unknown): boolean {
     return hasSajuErrorBrand(value);
   }
 
@@ -88,7 +101,7 @@ export class SajuError extends Error {
       ...(this.details === undefined
         ? {}
         : {
-            details: jsonSafe(this.details) as Readonly<Record<string, unknown>>,
+            details: jsonSafeRecord(this.details),
           }),
     };
   }

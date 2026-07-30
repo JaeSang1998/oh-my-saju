@@ -20,6 +20,7 @@ import type {
   DoctrineRuleContext,
   DoctrineRuleMatch,
 } from '../../runtime/traditions/rule-evaluator-types';
+import { isRecord } from '../../runtime/internal/guards';
 import seasonalStateTable from './seasonal-state-table.json';
 
 const DITIANSHUI_SEASONAL_SOURCE_IDS = ['sanming-seasonal-state-table-v1'] as const;
@@ -30,10 +31,36 @@ const DITIANSHUI_LEDGER_SOURCE_IDS = [
 
 export type DitianshuiSeasonalState = '왕' | '상' | '휴' | '수' | '사';
 
+function requireFiveElement(value: unknown, monthBranch: EarthlyBranch): FiveElement {
+  if (value === '목' || value === '화' || value === '토' || value === '금' || value === '수') {
+    return value;
+  }
+  throw new TypeError(`Invalid Ditianshui seasonal ruler for month branch ${monthBranch}.`);
+}
+
+function parseSeasonalRulerTable(value: unknown): Readonly<Record<EarthlyBranch, FiveElement>> {
+  if (!isRecord(value) || value.schemaVersion !== '1' || !isRecord(value.monthRuler)) {
+    throw new TypeError('Invalid Ditianshui seasonal-state table.');
+  }
+  const rulers = value.monthRuler;
+  return {
+    자: requireFiveElement(rulers['자'], '자'),
+    축: requireFiveElement(rulers['축'], '축'),
+    인: requireFiveElement(rulers['인'], '인'),
+    묘: requireFiveElement(rulers['묘'], '묘'),
+    진: requireFiveElement(rulers['진'], '진'),
+    사: requireFiveElement(rulers['사'], '사'),
+    오: requireFiveElement(rulers['오'], '오'),
+    미: requireFiveElement(rulers['미'], '미'),
+    신: requireFiveElement(rulers['신'], '신'),
+    유: requireFiveElement(rulers['유'], '유'),
+    술: requireFiveElement(rulers['술'], '술'),
+    해: requireFiveElement(rulers['해'], '해'),
+  };
+}
+
 export const DITIANSHUI_SEASONAL_RULER_BY_MONTH_V1: Readonly<Record<EarthlyBranch, FiveElement>> =
-  deepFreeze(
-    seasonalStateTable.monthRuler as unknown as Readonly<Record<EarthlyBranch, FiveElement>>,
-  );
+  deepFreeze(parseSeasonalRulerTable(seasonalStateTable));
 
 type StrengthEvidenceRole =
   | 'resourceSupport'

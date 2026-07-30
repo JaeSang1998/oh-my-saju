@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "resolveJsonModule": true,
+    "paths": {
+      "saju-engine": ["./src/index.ts"],
+      "saju-engine/advanced": ["./src/advanced.ts"],
+      "saju-engine/timing": ["./src/timing.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "test/**/*.cts",
+    "plugins/oh-my-saju/runtime/**/*.ts",
+    "plugins/oh-my-saju/tradition-packs/**/*.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

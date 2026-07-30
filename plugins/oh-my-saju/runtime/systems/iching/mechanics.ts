@@ -20,7 +20,6 @@ import type {
   IChingCastTrace,
   IChingYarrowChangeTrace,
   IChingYarrowLineTrace,
-  IChingYarrowSplit,
 } from './types';
 
 const TRIGRAMS: Readonly<Record<string, IChingTrigram>> = deepFreeze({
@@ -62,10 +61,12 @@ function lineClass(value: IChingLineValue): IChingLine['traditionalClass'] {
 function validateManualLines(
   request: Extract<IChingRequest, { readonly method: 'manual-lines' }>,
 ): readonly IChingLineValue[] {
-  if (!Array.isArray(request.lines) || request.lines.length !== 6) {
+  const linesValue: unknown = request.lines;
+  if (!Array.isArray(linesValue) || linesValue.length !== 6) {
     missingCastEvidence('Manual I Ching casts require exactly six lines.', ['lines']);
   }
-  return request.lines.map((value, index) => {
+  const lines: readonly unknown[] = linesValue;
+  return lines.map((value, index) => {
     if (value !== 6 && value !== 7 && value !== 8 && value !== 9) {
       invalidInput('Each I Ching line must be 6, 7, 8, or 9.', ['lines', index]);
     }
@@ -81,19 +82,27 @@ function deriveThreeCoinCast(request: Extract<IChingRequest, { readonly method: 
   readonly values: readonly IChingLineValue[];
   readonly trace: Extract<IChingCastTrace, { readonly method: 'three-coins' }>;
 } {
-  if (!Array.isArray(request.casts) || request.casts.length !== 6) {
+  const castsValue: unknown = request.casts;
+  if (!Array.isArray(castsValue) || castsValue.length !== 6) {
     missingCastEvidence('Three-coin I Ching casts require exactly six casts.', ['casts']);
   }
-  const entries = request.casts.map((cast, index): IChingCoinCastTraceEntry => {
+  const casts: readonly unknown[] = castsValue;
+  const entries = casts.map((cast, index): IChingCoinCastTraceEntry => {
     if (!Array.isArray(cast) || cast.length !== 3) {
       invalidInput('Each three-coin cast requires exactly three faces.', ['casts', index]);
     }
-    const faces = cast.map((face, faceIndex) => {
-      if (!isCoinFace(face)) {
-        invalidInput('Coin faces must be "back" or "inscribedFace".', ['casts', index, faceIndex]);
-      }
-      return face;
-    }) as unknown as IChingCoinCast;
+    const faceValues: readonly unknown[] = cast;
+    const [first, second, third] = faceValues;
+    if (!isCoinFace(first)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ['casts', index, 0]);
+    }
+    if (!isCoinFace(second)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ['casts', index, 1]);
+    }
+    if (!isCoinFace(third)) {
+      invalidInput('Coin faces must be "back" or "inscribedFace".', ['casts', index, 2]);
+    }
+    const faces: IChingCoinCast = [first, second, third];
     const backCount = faces.filter((face) => face === 'back').length as 0 | 1 | 2 | 3;
     return {
       position: (index + 1) as IChingCoinCastTraceEntry['position'],
@@ -125,13 +134,16 @@ function deriveYarrowCast(request: Extract<IChingRequest, { readonly method: 'ya
   readonly values: readonly IChingLineValue[];
   readonly trace: Extract<IChingCastTrace, { readonly method: 'yarrow' }>;
 } {
-  if (!Array.isArray(request.traces) || request.traces.length !== 6) {
+  const tracesValue: unknown = request.traces;
+  if (!Array.isArray(tracesValue) || tracesValue.length !== 6) {
     missingCastEvidence('Yarrow I Ching casts require exactly six line traces.', ['traces']);
   }
-  const traces = request.traces.map((lineTrace, lineIndex): IChingYarrowLineTrace => {
+  const traceValues: readonly unknown[] = tracesValue;
+  const traces = traceValues.map((lineTrace, lineIndex): IChingYarrowLineTrace => {
     if (
       lineTrace === null ||
       typeof lineTrace !== 'object' ||
+      !('changes' in lineTrace) ||
       !Array.isArray(lineTrace.changes) ||
       lineTrace.changes.length !== 3
     ) {
@@ -141,58 +153,58 @@ function deriveYarrowCast(request: Extract<IChingRequest, { readonly method: 'ya
         'changes',
       ]);
     }
+    const changeValues: readonly unknown[] = lineTrace.changes;
     let startStalks = 49;
-    const changes = lineTrace.changes.map(
-      (split: IChingYarrowSplit, changeIndex: number): IChingYarrowChangeTrace => {
-        const path = ['traces', lineIndex, 'changes', changeIndex] as const;
-        if (
-          split === null ||
-          typeof split !== 'object' ||
-          !Number.isInteger(split.left) ||
-          !Number.isInteger(split.right) ||
-          split.left <= 0 ||
-          split.right <= 1
-        ) {
-          invalidInput(
-            'A yarrow split requires positive integer left and right piles, with a stalk left after hanging one from the right.',
-            path,
-          );
-        }
-        if (split.left + split.right !== startStalks) {
-          invalidInput(
-            'A yarrow split must equal the stalks remaining from the prior change.',
-            path,
-          );
-        }
-        const rightAfterHang = split.right - 1;
-        const leftRemainder = fourRemainder(split.left);
-        const rightRemainder = fourRemainder(rightAfterHang);
-        const removedStalks = 1 + leftRemainder + rightRemainder;
-        const remainingStalks = startStalks - removedStalks;
-        const allowedRemoved = changeIndex === 0 ? [5, 9] : [4, 8];
-        if (
-          !allowedRemoved.includes(removedStalks) ||
-          remainingStalks <= 0 ||
-          remainingStalks % 4 !== 0
-        ) {
-          invalidInput('The yarrow change does not produce a valid four-stalk remainder.', path);
-        }
-        const changeTrace: IChingYarrowChangeTrace = {
-          change: (changeIndex + 1) as 1 | 2 | 3,
-          startStalks,
-          left: split.left,
-          right: split.right,
-          hangFromRight: 1,
-          rightAfterHang,
-          leftRemainder,
-          rightRemainder,
-          removedStalks,
-          remainingStalks,
-        };
-        startStalks = remainingStalks;
-        return changeTrace;
-      },
-    );
+    const changes = changeValues.map((split, changeIndex): IChingYarrowChangeTrace => {
+      const path = ['traces', lineIndex, 'changes', changeIndex] as const;
+      if (
+        split === null ||
+        typeof split !== 'object' ||
+        !('left' in split) ||
+        typeof split.left !== 'number' ||
+        !Number.isInteger(split.left) ||
+        !('right' in split) ||
+        typeof split.right !== 'number' ||
+        !Number.isInteger(split.right) ||
+        split.left <= 0 ||
+        split.right <= 1
+      ) {
+        invalidInput(
+          'A yarrow split requires positive integer left and right piles, with a stalk left after hanging one from the right.',
+          path,
+        );
+      }
+      if (split.left + split.right !== startStalks) {
+        invalidInput('A yarrow split must equal the stalks remaining from the prior change.', path);
+      }
+      const rightAfterHang = split.right - 1;
+      const leftRemainder = fourRemainder(split.left);
+      const rightRemainder = fourRemainder(rightAfterHang);
+      const removedStalks = 1 + leftRemainder + rightRemainder;
+      const remainingStalks = startStalks - removedStalks;
+      const allowedRemoved = changeIndex === 0 ? [5, 9] : [4, 8];
+      if (
+        !allowedRemoved.includes(removedStalks) ||
+        remainingStalks <= 0 ||
+        remainingStalks % 4 !== 0
+      ) {
+        invalidInput('The yarrow change does not produce a valid four-stalk remainder.', path);
+      }
+      const changeTrace: IChingYarrowChangeTrace = {
+        change: (changeIndex + 1) as 1 | 2 | 3,
+        startStalks,
+        left: split.left,
+        right: split.right,
+        hangFromRight: 1,
+        rightAfterHang,
+        leftRemainder,
+        rightRemainder,
+        removedStalks,
+        remainingStalks,
+      };
+      startStalks = remainingStalks;
+      return changeTrace;
+    });
     if (startStalks !== 24 && startStalks !== 28 && startStalks !== 32 && startStalks !== 36) {
       invalidInput('A completed yarrow line must leave 24, 28, 32, or 36 stalks.', [
         'traces',
@@ -204,7 +216,7 @@ function deriveYarrowCast(request: Extract<IChingRequest, { readonly method: 'ya
       startStalks: 49,
       changes,
       finalStalks: startStalks,
-      lineValue: (startStalks / 4) as IChingLineValue,
+      lineValue: startStalks === 24 ? 6 : startStalks === 28 ? 7 : startStalks === 32 ? 8 : 9,
     };
   });
   const values = traces.map(({ lineValue }) => lineValue);

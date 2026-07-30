@@ -2,6 +2,10 @@ import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const rootDirectory = dirname(fileURLToPath(import.meta.url));
 
 export default [
   {
@@ -34,6 +38,8 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: rootDirectory,
       },
     },
     plugins: {
@@ -41,6 +47,7 @@ export default [
     },
     rules: {
       ...typescript.configs.recommended.rules,
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-function-return-type': [
         'warn',
         {
@@ -49,6 +56,17 @@ export default [
           allowHigherOrderFunctions: true,
         },
       ],
+    },
+  },
+  {
+    files: ['src/**/*.ts', 'plugins/oh-my-saju/{runtime,tradition-packs}/**/*.ts'],
+    ignores: ['**/*.test.ts', '**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-argument': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'error',
+      '@typescript-eslint/no-unsafe-call': 'error',
+      '@typescript-eslint/no-unsafe-member-access': 'error',
+      '@typescript-eslint/no-unsafe-return': 'error',
     },
   },
   prettierConfig,
