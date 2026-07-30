@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "sanming.travel-horse",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.general-star",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.canopy",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.xianchi",
+      "formalization": "literal-table",
+      "qualification": "unresolved-heavenly-stem-and-nayin-same-category"
+    },
+    {
+      "id": "sanming.robbery",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.lost-spirit",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.disaster",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.six-misfortune",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.lonely",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.widow",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.heavenly-noble",
+      "formalization": "literal-table",
+      "splitPolicy": "unsplit-pair"
+    },
+    {
+      "id": "sanming.lu",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.literary-star",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.blade-after-lu-all-stems",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.blade-yang-stems-only",
+      "formalization": "literal-table"
+    }
+  ]
+}

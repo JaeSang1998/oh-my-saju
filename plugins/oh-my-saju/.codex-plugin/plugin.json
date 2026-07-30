@@ -1,0 +1,31 @@
+{
+  "name": "oh-my-saju",
+  "version": "0.4.0",
+  "description": "Auditable Korean Saju, traditional-system calculations, election ranking, and grounded readings.",
+  "author": {
+    "name": "Jaesang Lee",
+    "url": "https://github.com/JaeSang1998"
+  },
+  "homepage": "https://github.com/JaeSang1998/oh-my-saju",
+  "repository": "https://github.com/JaeSang1998/oh-my-saju",
+  "license": "Apache-2.0",
+  "keywords": ["saju", "four-pillars", "korean", "agent-skill"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Oh My Saju",
+    "shortDescription": "Auditable Saju and traditional-system calculations.",
+    "longDescription": "Calculate Korean Four Pillars with explicit time and calendar assumptions, compare versioned Tradition Packs, rank election dates with transparent policy scores, and run source-profiled Tojeong, I Ching, Zi Wei, and Liu Ren mechanics.",
+    "developerName": "Jaesang Lee",
+    "category": "Productivity",
+    "capabilities": ["Analysis", "Calendar"],
+    "websiteURL": "https://github.com/JaeSang1998/oh-my-saju",
+    "defaultPrompt": [
+      "내 사주를 계산 근거와 학파별 차이까지 보여줘.",
+      "태어난 시간이 불확실한데 공통점과 달라지는 부분을 분석해줘.",
+      "이 사주 풀이가 계산 근거를 벗어나 단정했는지 감사해줘.",
+      "결혼이나 이사 후보일을 점수 근거와 함께 비교해줘.",
+      "주역·토정비결·자미두수·육임 계산 과정을 보여줘."
+    ],
+    "brandColor": "#765A3D"
+  }
+}

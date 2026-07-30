@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "interpretation-fixtures-v1:ziping-month-command",
+      "paths": ["plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"]
+    }
+  ]
+}

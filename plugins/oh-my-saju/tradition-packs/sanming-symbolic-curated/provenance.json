@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "sanming-tonghui-travel-horse-v1",
+      "catalogUrl": "https://ctext.org/wiki.pl?chapter=117077&if=en",
+      "scanUrl": null,
+      "publication": "Chinese Text Project 《三命通會》 transcription; exact scan edition lock pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-triad-symbolic-stars-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)",
+      "scanUrl": null,
+      "publication": "Wikisource 四庫全書本 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-lonely-widow-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)",
+      "scanUrl": null,
+      "publication": "Wikisource 四庫全書本 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-heavenly-noble-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/三命通會/卷三",
+      "scanUrl": null,
+      "publication": "Wikisource 《三命通會》卷三 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-lu-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/三命通會/卷三",
+      "scanUrl": null,
+      "publication": "Wikisource 《三命通會》卷三 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "selection-1867-literary-star-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/選擇紀要",
+      "scanUrl": null,
+      "publication": "Wikisource 《選擇紀要》 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-blade-variants-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)",
+      "scanUrl": null,
+      "publication": "Wikisource 四庫全書本 public transcription; scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "sanming.travel-horse",
+      "sourceReferenceIds": ["sanming-tonghui-travel-horse-v1"],
+      "sourceLocators": ["Chinese Text Project chapter 117077, transcription lines 1-5"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.general-star",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論將星華蓋咸池 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.canopy",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論將星華蓋咸池 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.xianchi",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論將星華蓋咸池 항목; 天干納音 자격은 unresolved"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.robbery",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論劫煞 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.lost-spirit",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論亡神 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.disaster",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論災煞 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.six-misfortune",
+      "sourceReferenceIds": ["sanming-tonghui-triad-symbolic-stars-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論六厄 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.lonely",
+      "sourceReferenceIds": ["sanming-tonghui-lonely-widow-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論孤辰寡宿 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.widow",
+      "sourceReferenceIds": ["sanming-tonghui-lonely-widow-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論孤辰寡宿 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.heavenly-noble",
+      "sourceReferenceIds": ["sanming-tonghui-heavenly-noble-v1"],
+      "sourceLocators": ["卷三, 論天乙貴人 항목; unsplit-pair"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.lu",
+      "sourceReferenceIds": ["sanming-tonghui-lu-v1"],
+      "sourceLocators": ["卷三, 論祿 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.literary-star",
+      "sourceReferenceIds": ["selection-1867-literary-star-v1"],
+      "sourceLocators": ["《選擇紀要》上編, 年月日時吉神 표의 文昌 항목"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.blade-after-lu-all-stems",
+      "sourceReferenceIds": ["sanming-tonghui-blade-variants-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論陽刃 항목의 녹후일위 전 간 정의"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.blade-yang-stems-only",
+      "sourceReferenceIds": ["sanming-tonghui-blade-variants-v1"],
+      "sourceLocators": ["四庫全書本 全覽, 論陽刃 항목의 오양간 전용 정의"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

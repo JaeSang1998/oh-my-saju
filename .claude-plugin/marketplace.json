@@ -1,0 +1,14 @@
+{
+  "name": "oh-my-saju-marketplace",
+  "description": "Auditable Korean Saju, traditional-system modules, grounded readings, and host adapters.",
+  "owner": {
+    "name": "Jaesang Lee"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-saju",
+      "source": "./plugins/oh-my-saju",
+      "description": "Auditable Korean Saju, election ranking, and source-profiled traditional-system calculations."
+    }
+  ]
+}

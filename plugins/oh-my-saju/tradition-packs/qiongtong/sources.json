@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "qiongtong-day-stem-month-climate-v1",
+      "kind": "classical-text",
+      "title": "《窮通寶鑑》十干별 월령 조후 절",
+      "citation": "《窮通寶鑑》, 甲木부터 癸水까지 각 일간의 정월~십이월 조후 후보를 나열한 절; 대표 fixture는 1937 《窮通寶鑑評註》 판면과 교차 대조",
+      "url": "https://zh.wikisource.org/w/index.php?oldid=2294674&title=%E7%A9%B7%E9%80%9A%E5%AE%9D%E9%89%B4",
+      "locator": "fixed Wikisource oldid 2294674; curated rules at lines 230-252, 348-358, 1427-1441, 1544-1560",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "oh-my-saju-qiongtong-lookup-v1",
+      "kind": "modern-convention",
+      "title": "Oh My Saju Qiongtong 10 stems × 12 month branches lookup",
+      "citation": "대표 5개 규칙의 후보 순서를 출전 대조하고 나머지 셀은 실험 전사로 명시한 120칸 조회표; 조건부 성패·길흉 문장은 구현하지 않음",
+      "url": "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      "locator": "plugins/oh-my-saju/tradition-packs/qiongtong/qiongtong-table-v1.ts; plugins/oh-my-saju/tradition-packs/qiongtong/evaluate.ts",
+      "textualLayer": "modern-analysis",
+      "verification": "engine-tested"
+    },
+    {
+      "id": "korean-yongshin-methods-study-v1",
+      "kind": "academic-study",
+      "title": "사주명리에서 중화사상과 용신론의 전개",
+      "citation": "한국 학술 문헌에서 억부·조후·통관·순응·격국 용신을 구별해 논의한 연구. 시장점유율 자료는 아님.",
+      "url": "https://kiss.kstudy.com/Detail/Ar?key=4181992",
+      "locator": "abstract and method taxonomy",
+      "textualLayer": "modern-analysis",
+      "verification": "bibliographic-only"
+    }
+  ]
+}

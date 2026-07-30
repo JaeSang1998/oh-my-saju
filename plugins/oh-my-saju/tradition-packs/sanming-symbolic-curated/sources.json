@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "sanming-tonghui-travel-horse-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》驛馬 표",
+      "citation": "萬民英, 《三命通會》 「論驛馬」의 生人 조회표: 寅午戌→申, 申子辰→寅, 巳酉丑→亥, 亥卯未→巳. 이 Pack은 生人을 연지로 한정한다.",
+      "url": "https://ctext.org/wiki.pl?chapter=117077&if=en",
+      "locator": "Chinese Text Project chapter 117077, transcription lines 1-5",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-tonghui-triad-symbolic-stars-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》 삼합계 신살 표",
+      "citation": "萬民英, 《三命通會》의 將星·華蓋·咸池·劫煞·亡神·災煞·六厄 산식을 연지 삼합군의 원시 지지 표로 독립 전사했다.",
+      "url": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)/全覽",
+      "locator": "四庫全書本 全覽, 論將星華蓋咸池 및 劫煞亡神災煞六厄 항목",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-tonghui-lonely-widow-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》孤辰寡宿 표",
+      "citation": "萬民英, 《三命通會》의 계절 세 지지 다음·이전 모서리 산식을 연지군별 지지 표로 독립 전사했다.",
+      "url": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)/全覽",
+      "locator": "四庫全書本 全覽, 論孤辰寡宿 항목",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-tonghui-heavenly-noble-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》天乙貴人 후보 쌍",
+      "citation": "萬民英, 《三命通會》 권3의 일간별 두 후보 지지를 분할설 없이 함께 검사한다.",
+      "url": "https://zh.wikisource.org/zh-hant/三命通會/卷三",
+      "locator": "卷三, 論天乙貴人 항목",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-tonghui-lu-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》祿 표",
+      "citation": "萬民英, 《三命通會》 권3의 일간별 祿 지지를 원시 일치 표로 독립 전사했다.",
+      "url": "https://zh.wikisource.org/zh-hant/三命通會/卷三",
+      "locator": "卷三, 論祿 항목",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "selection-1867-literary-star-v1",
+      "kind": "classical-text",
+      "title": "《選擇紀要》文昌 표",
+      "citation": "南秉吉, 《選擇紀要》 상편의 일간별 文昌 지지를 원시 일치 표로 독립 전사했다.",
+      "url": "https://zh.wikisource.org/zh-hant/選擇紀要/上編",
+      "locator": "上編, 年月日時吉神 표의 文昌 항목",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-tonghui-blade-variants-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》陽刃 두 정의",
+      "citation": "萬民英, 《三命通會》 한 권 안의 녹후일위 전 간 표와 오양간 전용 정의를 서로 다른 규칙으로 보존했다.",
+      "url": "https://zh.wikisource.org/zh-hant/三命通會_(四庫全書本)/全覽",
+      "locator": "四庫全書本 全覽, 論陽刃 항목의 두 정의",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    }
+  ]
+}

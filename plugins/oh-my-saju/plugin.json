@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "oh-my-saju",
+  "version": "0.4.0",
+  "description": "Auditable Korean Saju, traditional-system calculations, election ranking, and grounded readings for agent hosts.",
+  "author": {
+    "name": "Jaesang Lee"
+  },
+  "homepage": "https://github.com/JaeSang1998/oh-my-saju",
+  "repository": "https://github.com/JaeSang1998/oh-my-saju",
+  "license": "Apache-2.0",
+  "keywords": [
+    "saju",
+    "four-pillars",
+    "korean",
+    "agent-skill",
+    "bazi",
+    "iching",
+    "ziwei",
+    "liuren",
+    "election"
+  ]
+}

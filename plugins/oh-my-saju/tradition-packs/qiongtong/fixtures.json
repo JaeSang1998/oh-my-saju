@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "qiongtong-climate-v1:120-structural-cells-5-source-fixtures-7-checked-cells",
+      "paths": [
+        "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts",
+        "plugins/oh-my-saju/tradition-packs/qiongtong/qiongtong-table-v1.test.ts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "qiongtong.climate-candidates",
+      "formalization": "reconstruction"
+    }
+  ]
+}

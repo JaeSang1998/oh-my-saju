@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "saju-engine-calculation-contract-v1",
+      "catalogUrl": "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      "scanUrl": null,
+      "publication": "saju-engine calculation API and advanced structural-analysis contract",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-growth-stages-v1",
+      "catalogUrl": "https://commons.wikimedia.org/wiki/File:NCL-06589_1_%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83.pdf",
+      "scanUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NCL-06589_1_%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83.pdf",
+      "publication": "1578년 《三命通會》 공개 스캔; 정확한 판면 체크섬 고정 대기",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "core.day-master",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.day-master"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.pillar-year",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.pillar-year"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.pillar-month",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.pillar-month"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.pillar-day",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.pillar-day"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.pillar-hour",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.pillar-hour"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.element-balance",
+      "sourceReferenceIds": [
+        "saju-engine-calculation-contract-v1",
+        "saju-engine-structural-analysis-v1"
+      ],
+      "sourceLocators": ["saju-engine/advanced#analyzeKnownPillarStructure"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.yin-yang-balance",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.yin-yang-balance"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.ten-gods",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.ten-gods"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.relationships",
+      "sourceReferenceIds": [
+        "saju-engine-calculation-contract-v1",
+        "saju-engine-structural-analysis-v1"
+      ],
+      "sourceLocators": ["saju-engine/advanced#analyzeStructure"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.growth-stages",
+      "sourceReferenceIds": ["sanming-tonghui-growth-stages-v1"],
+      "sourceLocators": [
+        "plugins/oh-my-saju/tradition-packs/calculation-baseline/growth-stages.ts#GROWTH_STAGE_TABLE_V1"
+      ],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "core.void-branches",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": ["plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.void-branches"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "oh-my-saju",
+  "displayName": "Oh My Saju",
+  "version": "0.4.0",
+  "description": "Auditable Korean Saju, traditional-system calculations, election ranking, and grounded readings.",
+  "author": {
+    "name": "Jaesang Lee"
+  },
+  "homepage": "https://github.com/JaeSang1998/oh-my-saju",
+  "repository": "https://github.com/JaeSang1998/oh-my-saju",
+  "license": "Apache-2.0",
+  "skills": "./skills/"
+}

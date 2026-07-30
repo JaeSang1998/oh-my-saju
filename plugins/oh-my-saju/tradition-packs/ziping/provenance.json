@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "ziping-zhenquan-month-command-v1",
+      "catalogUrl": "https://commons.wikimedia.org/wiki/File:NLC416-11jh010455-35296_%E5%AD%90%E5%B9%B3%E7%9C%9F%E8%A9%AE.pdf",
+      "scanUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NLC416-11jh010455-35296_%E5%AD%90%E5%B9%B3%E7%9C%9F%E8%A9%AE.pdf",
+      "publication": "中國國家圖書館藏 《子平真詮》 scan; exact edition lock pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "ziping.month-command",
+      "sourceReferenceIds": [
+        "ziping-zhenquan-month-command-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      "sourceLocators": ["論用神; 月令 and hidden-stem evidence"],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ziping.pattern-candidate",
+      "sourceReferenceIds": [
+        "ziping-zhenquan-month-command-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      "sourceLocators": ["論用神; 論用神成敗救應; Pack reconstruction v1"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

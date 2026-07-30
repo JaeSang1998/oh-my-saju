@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "ditianshui-strength-flow-v1",
+      "kind": "classical-text",
+      "title": "《滴天髓闡微》月令·衰旺·중화 관련 장",
+      "citation": "《滴天髓闡微》, 「月令」「衰旺」「中和」: 得時와 전 원국의 손익을 함께 살피며 고정된 단일 판정을 경계함",
+      "url": "https://ctext.org/wiki.pl?chapter=826601&if=en",
+      "locator": "sections 15-18; CText transcription lines around 451-454",
+      "textualLayer": "commentary",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "sanming-seasonal-state-table-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》旺相休囚死 표",
+      "citation": "萬民英, 《三命通會》 권2, 「論五行旺相休囚死並寄生十二宮」",
+      "url": "https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83/%E5%8D%B7%E4%BA%8C",
+      "locator": "卷二, 論五行旺相休囚死並寄生十二宮",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "oh-my-saju-ditianshui-evidence-v1",
+      "kind": "modern-convention",
+      "title": "Oh My Saju Ditianshui strength evidence reconstruction",
+      "citation": "월령의 旺相休囚死 상태와 전 원국의 생조·동류 및 설극耗 증거를 판정 없이 병렬 제시하는 Pack 규칙",
+      "url": "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      "locator": "plugins/oh-my-saju/tradition-packs/ditianshui/evaluate.ts",
+      "textualLayer": "modern-analysis",
+      "verification": "engine-tested"
+    },
+    {
+      "id": "korean-yongshin-methods-study-v1",
+      "kind": "academic-study",
+      "title": "사주명리에서 중화사상과 용신론의 전개",
+      "citation": "한국 학술 문헌에서 억부·조후·통관·순응·격국 용신을 구별해 논의한 연구. 시장점유율 자료는 아님.",
+      "url": "https://kiss.kstudy.com/Detail/Ar?key=4181992",
+      "locator": "abstract and method taxonomy",
+      "textualLayer": "modern-analysis",
+      "verification": "bibliographic-only"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../..",
+    "rootDir": "../..",
+    "outDir": "../../dist/oh-my-saju-types",
+    "resolveJsonModule": true,
+    "paths": {
+      "saju-engine": ["src/index.ts"],
+      "saju-engine/advanced": ["src/advanced.ts"],
+      "saju-engine/timing": ["src/timing.ts"]
+    }
+  },
+  "include": ["runtime/**/*.ts", "tradition-packs/**/*.ts"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+}

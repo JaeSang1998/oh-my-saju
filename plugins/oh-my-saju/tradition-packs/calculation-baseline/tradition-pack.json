@@ -1,0 +1,46 @@
+{
+  "$schema": "../tradition-pack.schema.json",
+  "schemaVersion": "1",
+  "kind": "oh-my-saju-tradition-pack",
+  "id": "calculation-baseline",
+  "version": "1.1.0",
+  "displayName": "공통 계산 구조",
+  "compatibility": {
+    "coreEngineSchemaVersions": ["5"],
+    "runtimeContract": "oh-my-saju-tradition-runtime-v1"
+  },
+  "knowledge": {
+    "providerContract": "tradition-knowledge-provider-v1",
+    "adapter": "static-files",
+    "supportedAdapters": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"],
+    "snapshot": {
+      "kind": "static-file-snapshot",
+      "version": "1.0.0",
+      "immutability": "content-addressed",
+      "algorithm": "sha256",
+      "canonicalization": "ordered-file-bytes-with-path-v1",
+      "digest": "6c0ebde3b81aac964a7a6124bb4cb2cc62f6a7d70fae595b3ac1ae0cf081e796",
+      "provenanceContract": "tradition-provenance-v1",
+      "queryContract": "static-resource-query-v1"
+    },
+    "sources": ["sources.json"],
+    "tables": ["growth-stages.ts"],
+    "rules": ["rules.json", "profile.ts"],
+    "fixtures": ["fixtures.json"],
+    "provenance": ["provenance.json"]
+  },
+  "runtime": {
+    "execution": "statically-registered-built-in",
+    "profileModule": "profile.ts",
+    "helperModules": ["growth-stages.ts"]
+  },
+  "outputContract": {
+    "kind": "isolated-finding-set",
+    "profileIsolation": "no-cross-pack-voting"
+  },
+  "ontology": {
+    "namespace": "urn:oh-my-saju:tradition:calculation-baseline:v1",
+    "materialization": "not-built",
+    "snapshot": null
+  }
+}

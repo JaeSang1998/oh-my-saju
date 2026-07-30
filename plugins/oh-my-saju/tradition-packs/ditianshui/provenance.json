@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "ditianshui-strength-flow-v1",
+      "catalogUrl": "https://commons.wikimedia.org/wiki/File:SSID-11335994_%E6%BB%B4%E5%A4%A9%E9%AB%93%E9%97%A1%E5%BE%AE.pdf",
+      "scanUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/SSID-11335994_%E6%BB%B4%E5%A4%A9%E9%AB%93%E9%97%A1%E5%BE%AE.pdf",
+      "publication": "1947 《滴天髓闡微》 scan; exact edition lock pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "ditianshui.seasonal-state",
+      "sourceReferenceIds": ["sanming-seasonal-state-table-v1"],
+      "sourceLocators": ["卷二, 論五行旺相休囚死並寄生十二宮"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ditianshui.support-ledger",
+      "sourceReferenceIds": ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      "sourceLocators": ["衰旺; Pack evidence-ledger reconstruction v1"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

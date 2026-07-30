@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    "core.day-master",
+    "core.pillar-year",
+    "core.pillar-month",
+    "core.pillar-day",
+    "core.pillar-hour",
+    "core.element-balance",
+    "core.yin-yang-balance",
+    "core.ten-gods",
+    "core.relationships",
+    "core.growth-stages",
+    "core.void-branches"
+  ]
+}
