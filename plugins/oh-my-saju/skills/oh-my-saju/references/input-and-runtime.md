@@ -5,6 +5,20 @@ response to stdout. The full analysis is often tens of kilobytes, so omit `--pre
 agent execution and use it only for human inspection. Exit code is zero for success, one for a
 domain/validation failure, and two for unreadable JSON or CLI options.
 
+## Korean civil-time defaults
+
+For a Korean-language Saju request with an unqualified numbered date, whether the birth time is
+supplied or unknown, use `calendar: "gregorian"` and `timeZone: "Asia/Seoul"` when the user gives
+no contrary calendar, birthplace, zone, or offset evidence. Use civil time and do not apply a
+local apparent solar-time correction. Do not ask a blocking confirmation; state the assumption in
+the first line of the answer and proceed. When no birth time is supplied, use
+`time: { "kind": "unknown" }` instead of asking merely to complete the field.
+
+Clarify or override the default when the user explicitly says the date is lunar, says they were
+born outside Korea, supplies another time zone or UTC offset, requests apparent solar time, or
+provides conflicting evidence. For a Korean lunar date, the runtime still requires
+`monthKind: "regular" | "leap"`.
+
 ## Exact birth time
 
 ```json

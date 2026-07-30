@@ -14,6 +14,10 @@ Use this reference while drafting each profile output and assembling the validat
 
 Do not compensate for weak evidence with confident prose.
 
+Confidence calibration should be local, not repetitive. Qualify the one conclusion affected by
+conflicting or candidate-dependent evidence; do not make every sentence sound provisional merely
+because the system is interpretive.
+
 ## Use a causal chain
 
 For every major conclusion, connect:
@@ -88,6 +92,26 @@ from what follows from skill, money, eligibility, motivation, resources, or avai
 - Never use candidate support duration as probability.
 - Do not select one candidate because it makes a better story.
 
+## Broad interpretation default
+
+When the user simply asks for a Saju reading, answer the implied question first: “What kind of
+person does this chart describe?” A useful broad reading normally covers:
+
+1. personality and decision style;
+2. how the central strength changes under pressure;
+3. work, study, and execution;
+4. relationships and communication;
+5. money or resource handling only when supported.
+
+Use two or three chart mechanisms to connect these areas rather than assigning a different doctrine
+label to each heading. Across the answer, include at least three concrete, recognizable
+manifestations. Each should name a situation, the likely response, and the cost or result. Favor
+examples such as how the person starts, decides, finishes, disagrees, delegates, or reacts to an
+unclear boundary over abstract labels such as `추진력이 있다`.
+
+The answer should still feel like a reading, not a psychological checklist. Open with a memorable
+one-paragraph portrait, then unfold why that portrait follows from the chart.
+
 ## Natural response shape
 
 For a first substantive answer:
@@ -95,15 +119,24 @@ For a first substantive answer:
 1. one-line assumptions;
 2. compact pillar/ten-god table;
 3. compact five-element table if available;
-4. one central structure;
-5. two or three mechanisms with a cost;
-6. profile agreement and disagreement only where material;
-7. direct answer;
-8. short limitation that changes the decision.
+4. a direct portrait of the person;
+5. personality and decision style;
+6. work, study, and execution;
+7. relationships and communication;
+8. only the limitations that materially change one of those conclusions.
 
 Explain a technical term once in plain Korean, then continue with the plain meaning. Keep engine
 names, local file paths, process narration, and full audit IDs out of the main prose unless the user
 asks for methodology or an audit.
 
+Do not lead with or repeatedly narrate the calculation and validation workflow. Do not create an
+`아직 확정할 수 없는 부분` section by default. Integrate one meaningful counterforce where it
+sharpens the portrait; omit a catalog of every unresolved 격국, 용신, 신살, and profile
+limitation.
+
+Do not append a generic scientific-validity disclaimer to an ordinary reading. Preserve the
+runtime notice in audit metadata. Mention scientific status only when the user asks about it,
+requests a guaranteed prediction, or the distinction is necessary to answer the exact question.
 Do not promise admission, employment, marriage, illness, wealth, investment return, or a dated
-event. Traditional interpretation has no established predictive validity.
+event; set that boundary briefly at the requested claim instead of ending every reading with a
+general defense paragraph.

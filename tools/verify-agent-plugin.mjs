@@ -79,8 +79,11 @@ try {
   const thirdPartyNotices = readFileSync(join(pluginRoot, 'THIRD_PARTY_NOTICES.md'), 'utf8');
   assert.match(skill, /^---\nname: oh-my-saju\n/m);
   assert.match(skill, /^license: Apache-2\.0$/mu);
-  assert.match(skillInterface, /display_name: "Oh My Saju"/u);
-  assert.match(skillInterface, /default_prompt: "Use \$oh-my-saju /u);
+  assert.match(skillInterface, /display_name: ['"]Oh My Saju['"]/u);
+  assert.match(
+    skillInterface,
+    /default_prompt: ['"]Use \$oh-my-saju .*natural Korean interpretation/u,
+  );
   assert.equal(
     versions.skills['oh-my-saju'],
     portable.version,

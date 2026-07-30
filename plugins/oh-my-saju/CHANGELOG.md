@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.1 — 2026-07-30
+
+- Default Korean-language birth requests to Gregorian dates, `Asia/Seoul`,
+  civil time, and no apparent-solar correction unless the user supplies
+  contrary evidence; a missing birth time remains an unknown-time reading.
+- Make open-ended readings explain the person through concrete personality,
+  pressure, work, execution, and relationship patterns.
+- Keep generic workflow narration, unresolved-doctrine dumps, and scientific
+  validity disclaimers out of ordinary readings while retaining audit metadata.
+
 ## 0.4.0 — 2026-07-30
 
 - Expanded `sanming-symbolic-curated` to 1.1.0 with 15 cited, raw
@@ -13,7 +23,7 @@
   the existing `prepare-reading` and `validate-reading` workflow compatible.
 - Every new system returns source/profile versions, explicit conventions,
   reproducible traces, limitations, and `predictiveValidity:
-  "not-established"`; no unverified modern interpretation corpus is bundled.
+"not-established"`; no unverified modern interpretation corpus is bundled.
 
 ## 0.3.0 — 2026-07-30
 

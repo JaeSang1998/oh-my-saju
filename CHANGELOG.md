@@ -1,5 +1,14 @@
 # Changelog
 
+## Oh My Saju plugin 0.4.1 — 2026-07-30
+
+- Applied Korean civil-time defaults without blocking confirmation, including
+  unknown-time readings when only the birth date is supplied.
+- Expanded open-ended readings into concrete personality, work/execution, and
+  relationship interpretation.
+- Moved generic workflow, limitation, and scientific-validity prose out of the
+  ordinary user-facing reading while preserving the validated audit record.
+
 ## Oh My Saju plugin 0.4.0 — 2026-07-30
 
 - Expanded `sanming-symbolic-curated` to 1.1.0 with 15 cited raw symbolic-star

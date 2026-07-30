@@ -1,4 +1,4 @@
 interface:
-  display_name: "Oh My Saju"
-  short_description: "Audited Saju and traditional-system calculations"
-  default_prompt: "Use $oh-my-saju to calculate this Korean Saju or traditional-system request with source-profiled evidence and explicit limits."
+  display_name: 'Oh My Saju'
+  short_description: 'Korean Saju calculation and grounded interpretation'
+  default_prompt: 'Use $oh-my-saju to calculate this Korean Saju request and give a concrete, natural Korean interpretation grounded in the validated chart.'
