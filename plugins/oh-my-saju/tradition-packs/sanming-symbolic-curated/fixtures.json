@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "sanming-travel-horse-v1:12-year-anchor-cells-exact-partial-absence",
+      "paths": ["plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.test.ts"]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../tradition-pack.schema.json",
+  "schemaVersion": "1",
+  "kind": "oh-my-saju-tradition-pack",
+  "id": "qiongtong",
+  "version": "1.0.0",
+  "displayName": "궁통보감 조후",
+  "compatibility": {
+    "coreEngineSchemaVersions": ["5"],
+    "runtimeContract": "oh-my-saju-tradition-runtime-v1"
+  },
+  "knowledge": {
+    "providerContract": "tradition-knowledge-provider-v1",
+    "adapter": "static-files",
+    "supportedAdapters": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"],
+    "snapshot": {
+      "kind": "static-file-snapshot",
+      "version": "1.0.0",
+      "immutability": "content-addressed",
+      "algorithm": "sha256",
+      "canonicalization": "ordered-file-bytes-with-path-v1",
+      "digest": "9a27906d9d7fc41eff5af9cd13fc7121431264cb56b4f7b707a79ee2e024f76e",
+      "provenanceContract": "tradition-provenance-v1",
+      "queryContract": "static-resource-query-v1"
+    },
+    "sources": ["sources.json"],
+    "tables": ["qiongtong-table-v1.ts"],
+    "rules": ["rules.json", "profile.ts", "evaluate.ts"],
+    "fixtures": ["fixtures.json"],
+    "provenance": ["provenance.json"]
+  },
+  "runtime": {
+    "execution": "statically-registered-built-in",
+    "profileModule": "profile.ts",
+    "helperModules": ["evaluate.ts", "qiongtong-table-v1.ts"]
+  },
+  "outputContract": {
+    "kind": "isolated-finding-set",
+    "profileIsolation": "no-cross-pack-voting"
+  },
+  "ontology": {
+    "namespace": "urn:oh-my-saju:tradition:qiongtong:v1",
+    "materialization": "not-built",
+    "snapshot": null
+  }
+}

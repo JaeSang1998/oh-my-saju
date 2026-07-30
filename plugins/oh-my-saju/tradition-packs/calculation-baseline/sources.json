@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "saju-engine-calculation-contract-v1",
+      "kind": "engine-rule",
+      "title": "saju-engine deterministic calculation contract",
+      "citation": "saju-engine docs/ARCHITECTURE.md, calculation invariants and public reports",
+      "url": "https://github.com/JaeSang1998/baby-saju/blob/main/docs/ARCHITECTURE.md",
+      "locator": "docs/ARCHITECTURE.md",
+      "textualLayer": "not-applicable",
+      "verification": "engine-tested"
+    },
+    {
+      "id": "saju-engine-structural-analysis-v1",
+      "kind": "modern-convention",
+      "title": "saju-engine structural analysis profile",
+      "citation": "Visible stems weight 1 and each branch hidden-stem membership is normalized to weight 1",
+      "url": "https://github.com/JaeSang1998/baby-saju/blob/main/src/analysis/structural-analysis.ts",
+      "locator": "saju-engine/advanced#analyzeKnownPillarStructure",
+      "textualLayer": "modern-analysis",
+      "verification": "engine-tested"
+    },
+    {
+      "id": "sanming-tonghui-growth-stages-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》 권2 오행 기생 십이궁",
+      "citation": "萬民英, 《三命通會》 권2 「論五行旺相休囚死並寄生十二宮」",
+      "url": "https://ctext.org/wiki.pl?chapter=17423&if=en",
+      "locator": "卷二, 論五行旺相休囚死並寄生十二宮",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+/.idea
+/node_modules
+/.pnpm-store
+/dist
+*.log
+.DS_Store
+coverage/
+.vscode/
+test/.browser-smoke/
+tools/.kasi-cache.json
+tools/.kasi-build.log
+/artifacts/*.tgz
+/output/

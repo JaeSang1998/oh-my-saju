@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "ditianshui.seasonal-state",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "ditianshui.support-ledger",
+      "formalization": "reconstruction"
+    }
+  ]
+}

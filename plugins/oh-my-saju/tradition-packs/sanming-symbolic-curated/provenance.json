@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "sanming-tonghui-travel-horse-v1",
+      "catalogUrl": "https://ctext.org/wiki.pl?chapter=117077&if=en",
+      "scanUrl": null,
+      "publication": "Chinese Text Project 《三命通會》 transcription; exact scan edition lock pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "sanming.travel-horse",
+      "sourceReferenceIds": ["sanming-tonghui-travel-horse-v1"],
+      "sourceLocators": ["Chinese Text Project chapter 117077, transcription lines 1-5"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "sanming.travel-horse",
+      "formalization": "literal-table"
+    }
+  ]
+}

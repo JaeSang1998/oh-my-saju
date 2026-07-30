@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JaeSang1998/baby-saju/blob/main/plugins/oh-my-saju/tradition-packs/tradition-pack.schema.json",
+  "title": "Oh My Saju Tradition Pack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "id",
+    "version",
+    "displayName",
+    "compatibility",
+    "knowledge",
+    "runtime",
+    "outputContract",
+    "ontology"
+  ],
+  "properties": {
+    "$schema": { "const": "../tradition-pack.schema.json" },
+    "schemaVersion": { "const": "1" },
+    "kind": { "const": "oh-my-saju-tradition-pack" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "displayName": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coreEngineSchemaVersions", "runtimeContract"],
+      "properties": {
+        "coreEngineSchemaVersions": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[0-9]+$" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "runtimeContract": { "const": "oh-my-saju-tradition-runtime-v1" }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "providerContract",
+        "adapter",
+        "supportedAdapters",
+        "snapshot",
+        "sources",
+        "tables",
+        "rules",
+        "fixtures",
+        "provenance"
+      ],
+      "properties": {
+        "providerContract": { "const": "tradition-knowledge-provider-v1" },
+        "adapter": {
+          "enum": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"]
+        },
+        "supportedAdapters": {
+          "type": "array",
+          "items": {
+            "enum": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "snapshot": { "$ref": "#/$defs/knowledgeSnapshot" },
+        "sources": { "$ref": "#/$defs/resourceList" },
+        "tables": { "$ref": "#/$defs/resourceList" },
+        "rules": { "$ref": "#/$defs/resourceList" },
+        "fixtures": { "$ref": "#/$defs/resourceList" },
+        "provenance": { "$ref": "#/$defs/resourceList" }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["execution", "profileModule", "helperModules"],
+      "properties": {
+        "execution": { "const": "statically-registered-built-in" },
+        "profileModule": { "$ref": "#/$defs/resourcePath" },
+        "helperModules": { "$ref": "#/$defs/resourceList" }
+      }
+    },
+    "outputContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "profileIsolation"],
+      "properties": {
+        "kind": { "const": "isolated-finding-set" },
+        "profileIsolation": { "const": "no-cross-pack-voting" }
+      }
+    },
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "materialization", "snapshot"],
+      "properties": {
+        "namespace": { "type": "string", "pattern": "^urn:oh-my-saju:tradition:" },
+        "materialization": { "enum": ["not-built", "versioned-snapshot"] },
+        "snapshot": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "allOf": [
+                { "$ref": "#/$defs/knowledgeSnapshot" },
+                {
+                  "properties": {
+                    "kind": {
+                      "enum": ["ontology-snapshot", "knowledge-graph-snapshot"]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "resourcePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "resourceList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resourcePath" },
+      "uniqueItems": true
+    },
+    "knowledgeSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "version",
+        "immutability",
+        "algorithm",
+        "canonicalization",
+        "digest",
+        "provenanceContract",
+        "queryContract"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["static-file-snapshot", "ontology-snapshot", "knowledge-graph-snapshot"]
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+        },
+        "immutability": { "const": "content-addressed" },
+        "algorithm": { "const": "sha256" },
+        "canonicalization": { "const": "ordered-file-bytes-with-path-v1" },
+        "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "provenanceContract": { "const": "tradition-provenance-v1" },
+        "queryContract": {
+          "enum": ["static-resource-query-v1", "ontology-query-v1", "knowledge-graph-query-v1"]
+        }
+      }
+    }
+  }
+}

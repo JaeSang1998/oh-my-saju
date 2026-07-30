@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "oh-my-saju",
+  "version": "0.3.0",
+  "description": "Deterministic Korean Saju core, versioned Tradition Packs, and grounded reading workflow for agent hosts.",
+  "author": {
+    "name": "Jaesang Lee"
+  },
+  "homepage": "https://github.com/JaeSang1998/baby-saju",
+  "repository": "https://github.com/JaeSang1998/baby-saju",
+  "license": "Apache-2.0",
+  "keywords": ["saju", "four-pillars", "korean", "agent-skill", "bazi"]
+}

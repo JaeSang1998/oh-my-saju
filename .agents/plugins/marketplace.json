@@ -1,0 +1,20 @@
+{
+  "name": "oh-my-saju-marketplace",
+  "interface": {
+    "displayName": "Oh My Saju"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-saju",
+      "source": {
+        "source": "local",
+        "path": "./plugins/oh-my-saju"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

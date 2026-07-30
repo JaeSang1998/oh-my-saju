@@ -1,0 +1,14 @@
+{
+  "name": "oh-my-saju-marketplace",
+  "description": "Korean Saju Tradition Packs, grounded reading workflow, and host adapters.",
+  "owner": {
+    "name": "Jaesang Lee"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-saju",
+      "source": "./plugins/oh-my-saju",
+      "description": "Deterministic Korean Saju calculation with versioned Tradition Packs and grounded readings."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "ziping-zhenquan-month-command-v1",
+      "kind": "classical-text",
+      "title": "《子平真詮評注》月令·用神·격국 관련 장",
+      "citation": "《子平真詮評注》, 「論用神」: 八字用神專求月令; 「論用神成敗救應」 및 「論建祿月劫」",
+      "url": "https://ctext.org/wiki.pl?chapter=974137&if=en",
+      "locator": "sections 8-10 and 45-48; CText transcription lines around 91-101",
+      "textualLayer": "commentary",
+      "verification": "transcription-reviewed"
+    },
+    {
+      "id": "oh-my-saju-ziping-reconstruction-v1",
+      "kind": "modern-convention",
+      "title": "Oh My Saju Ziping month-command candidate reconstruction",
+      "citation": "월지 지장간 투간 후보와 본기, 건록·양인·월겁 예외를 분리해 후보만 산출하는 Pack 규칙",
+      "url": "https://github.com/JaeSang1998/baby-saju/tree/main/plugins/oh-my-saju",
+      "locator": "plugins/oh-my-saju/tradition-packs/ziping/evaluate.ts",
+      "textualLayer": "modern-analysis",
+      "verification": "engine-tested"
+    },
+    {
+      "id": "korean-yongshin-methods-study-v1",
+      "kind": "academic-study",
+      "title": "사주명리에서 중화사상과 용신론의 전개",
+      "citation": "한국 학술 문헌에서 억부·조후·통관·순응·격국 용신을 구별해 논의한 연구. 시장점유율 자료는 아님.",
+      "url": "https://kiss.kstudy.com/Detail/Ar?key=4181992",
+      "locator": "abstract and method taxonomy",
+      "textualLayer": "modern-analysis",
+      "verification": "bibliographic-only"
+    }
+  ]
+}

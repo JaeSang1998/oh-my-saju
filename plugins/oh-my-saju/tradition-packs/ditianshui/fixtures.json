@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "interpretation-fixtures-v1:wang-xiang-xiu-qiu-si-25-cells",
+      "paths": [
+        "plugins/oh-my-saju/runtime/traditions/doctrine-rules.test.ts",
+        "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"
+      ]
+    }
+  ]
+}

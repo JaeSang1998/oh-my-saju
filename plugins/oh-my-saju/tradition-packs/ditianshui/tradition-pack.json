@@ -1,0 +1,46 @@
+{
+  "$schema": "../tradition-pack.schema.json",
+  "schemaVersion": "1",
+  "kind": "oh-my-saju-tradition-pack",
+  "id": "ditianshui",
+  "version": "1.0.0",
+  "displayName": "적천수 왕쇠 근거",
+  "compatibility": {
+    "coreEngineSchemaVersions": ["5"],
+    "runtimeContract": "oh-my-saju-tradition-runtime-v1"
+  },
+  "knowledge": {
+    "providerContract": "tradition-knowledge-provider-v1",
+    "adapter": "static-files",
+    "supportedAdapters": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"],
+    "snapshot": {
+      "kind": "static-file-snapshot",
+      "version": "1.0.0",
+      "immutability": "content-addressed",
+      "algorithm": "sha256",
+      "canonicalization": "ordered-file-bytes-with-path-v1",
+      "digest": "4a7e5be48f71d298125ba5167745fd60dc5aeaa3bcfc4e073fbcec931646e6fd",
+      "provenanceContract": "tradition-provenance-v1",
+      "queryContract": "static-resource-query-v1"
+    },
+    "sources": ["sources.json"],
+    "tables": ["seasonal-state-table.json"],
+    "rules": ["rules.json", "profile.ts", "evaluate.ts"],
+    "fixtures": ["fixtures.json"],
+    "provenance": ["provenance.json"]
+  },
+  "runtime": {
+    "execution": "statically-registered-built-in",
+    "profileModule": "profile.ts",
+    "helperModules": ["evaluate.ts"]
+  },
+  "outputContract": {
+    "kind": "isolated-finding-set",
+    "profileIsolation": "no-cross-pack-voting"
+  },
+  "ontology": {
+    "namespace": "urn:oh-my-saju:tradition:ditianshui:v1",
+    "materialization": "not-built",
+    "snapshot": null
+  }
+}

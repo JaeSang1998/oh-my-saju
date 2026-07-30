@@ -1,0 +1,129 @@
+{
+  "name": "saju-engine",
+  "version": "0.9.0",
+  "description": "Auditable Korean Saju calculation core with exact time-zone, calendar, uncertainty, and timing facts",
+  "homepage": "https://github.com/JaeSang1998/baby-saju#readme",
+  "bugs": {
+    "url": "https://github.com/JaeSang1998/baby-saju/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaeSang1998/baby-saju.git"
+  },
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./calendar": {
+      "import": {
+        "types": "./dist/calendar.d.ts",
+        "default": "./dist/calendar.js"
+      },
+      "require": {
+        "types": "./dist/calendar.d.cts",
+        "default": "./dist/calendar.cjs"
+      }
+    },
+    "./advanced": {
+      "import": {
+        "types": "./dist/advanced.d.ts",
+        "default": "./dist/advanced.js"
+      },
+      "require": {
+        "types": "./dist/advanced.d.cts",
+        "default": "./dist/advanced.cjs"
+      }
+    },
+    "./timing": {
+      "import": {
+        "types": "./dist/timing.d.ts",
+        "default": "./dist/timing.js"
+      },
+      "require": {
+        "types": "./dist/timing.d.cts",
+        "default": "./dist/timing.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "docs/ARCHITECTURE.md",
+    "docs/UNKNOWN_BIRTH_TIME_RESEARCH.md",
+    "docs/VALIDATION.md",
+    "CONTEXT.md",
+    "README.md",
+    "LICENSE",
+    "LICENSES",
+    "NOTICE.md",
+    "test/fixtures/kasi-lunar-dataset.json",
+    "test/fixtures/kasi-lunar-dataset.provenance.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "saju",
+    "korean",
+    "fortune-telling",
+    "bazi",
+    "four-pillars",
+    "true-solar-time",
+    "lunar-calendar",
+    "kasi",
+    "사주",
+    "만세력",
+    "진태양시"
+  ],
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "build:plugin": "node tools/build-agent-plugin.mjs",
+    "verify:plugin": "node tools/verify-agent-plugin.mjs",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p plugins/oh-my-saju/tsconfig.json",
+    "test": "node ./node_modules/vitest/vitest.mjs",
+    "test:run": "node ./node_modules/vitest/vitest.mjs run",
+    "test:browser:bundle": "node tools/build-browser-smoke.mjs",
+    "test:coverage": "node ./node_modules/vitest/vitest.mjs run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.ts\" \"plugins/oh-my-saju/**/*.ts\" \"plugins/oh-my-saju/**/*.json\" \"test/**/*.ts\" \"test/**/*.cts\" \"test/**/*.html\" \"tools/**/*.mjs\" \"*.mjs\" \"*.md\" \"docs/**/*.md\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"plugins/oh-my-saju/**/*.ts\" \"plugins/oh-my-saju/**/*.json\" \"test/**/*.ts\" \"test/**/*.cts\" \"test/**/*.html\" \"tools/**/*.mjs\" \"*.mjs\" \"*.md\" \"docs/**/*.md\"",
+    "verify:package": "node tools/verify-package.mjs",
+    "verify:artifact": "node tools/verify-packed-artifact.mjs",
+    "check": "node tools/check.mjs",
+    "prepack": "node tools/build.mjs && node tools/verify-package.mjs",
+    "prepublishOnly": "node tools/check.mjs"
+  },
+  "dependencies": {
+    "astronomy-engine": "2.1.19",
+    "moment": "2.30.1",
+    "moment-timezone": "0.6.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.31.0",
+    "@types/node": "24.0.13",
+    "@typescript-eslint/eslint-plugin": "8.36.0",
+    "@typescript-eslint/parser": "8.36.0",
+    "@vitest/coverage-v8": "3.2.6",
+    "eslint": "9.31.0",
+    "eslint-config-prettier": "10.1.5",
+    "fast-check": "4.3.0",
+    "prettier": "3.6.2",
+    "tsup": "8.5.0",
+    "typescript": "5.8.3",
+    "vitest": "3.2.6"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "sanming-tonghui-travel-horse-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》驛馬 표",
+      "citation": "萬民英, 《三命通會》 「論驛馬」의 生人 조회표: 寅午戌→申, 申子辰→寅, 巳酉丑→亥, 亥卯未→巳. 이 Pack은 生人을 연지로 한정한다.",
+      "url": "https://ctext.org/wiki.pl?chapter=117077&if=en",
+      "locator": "Chinese Text Project chapter 117077, transcription lines 1-5",
+      "textualLayer": "base-text",
+      "verification": "transcription-reviewed"
+    }
+  ]
+}

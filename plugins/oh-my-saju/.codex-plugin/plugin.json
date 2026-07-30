@@ -1,0 +1,29 @@
+{
+  "name": "oh-my-saju",
+  "version": "0.3.0",
+  "description": "Deterministic Korean Saju calculation with versioned Tradition Packs and grounded readings.",
+  "author": {
+    "name": "Jaesang Lee",
+    "url": "https://github.com/JaeSang1998"
+  },
+  "homepage": "https://github.com/JaeSang1998/baby-saju",
+  "repository": "https://github.com/JaeSang1998/baby-saju",
+  "license": "Apache-2.0",
+  "keywords": ["saju", "four-pillars", "korean", "agent-skill"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Oh My Saju",
+    "shortDescription": "Traceable Saju calculation and Tradition Pack readings.",
+    "longDescription": "Calculate Korean Four Pillars with explicit time and calendar assumptions, keep deterministic core facts separate from versioned Tradition Packs, and validate every narrated claim against one Pack's findings without cross-Pack voting.",
+    "developerName": "Jaesang Lee",
+    "category": "Productivity",
+    "capabilities": ["Analysis"],
+    "websiteURL": "https://github.com/JaeSang1998/baby-saju",
+    "defaultPrompt": [
+      "내 사주를 계산 근거와 학파별 차이까지 보여줘.",
+      "태어난 시간이 불확실한데 공통점과 달라지는 부분을 분석해줘.",
+      "이 사주 풀이가 계산 근거를 벗어나 단정했는지 감사해줘."
+    ],
+    "brandColor": "#765A3D"
+  }
+}

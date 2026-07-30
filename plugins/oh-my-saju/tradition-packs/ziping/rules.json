@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "ziping.month-command",
+      "formalization": "formalized-prose"
+    },
+    {
+      "id": "ziping.pattern-candidate",
+      "formalization": "reconstruction"
+    }
+  ]
+}

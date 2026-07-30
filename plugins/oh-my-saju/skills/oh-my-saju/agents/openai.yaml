@@ -1,0 +1,4 @@
+interface:
+  display_name: "Oh My Saju"
+  short_description: "Audited Saju calculation with Tradition Packs"
+  default_prompt: "Use $oh-my-saju to calculate this Korean Saju chart and explain each Tradition Pack’s evidence separately."

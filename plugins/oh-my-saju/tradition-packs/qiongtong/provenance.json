@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "qiongtong-day-stem-month-climate-v1",
+      "catalogUrl": "https://commons.wikimedia.org/wiki/File:NLC416-12jh004238-48608_%E7%AA%AE%E9%80%9A%E5%AF%B6%E9%91%91%E8%A9%95%E8%A8%BB.pdf",
+      "scanUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/NLC416-12jh004238-48608_%E7%AA%AE%E9%80%9A%E5%AF%B6%E9%91%91%E8%A9%95%E8%A8%BB.pdf",
+      "publication": "1937 《窮通寶鑑評註》 scan; exact archive checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "qiongtong.climate-candidates",
+      "sourceReferenceIds": [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      "sourceLocators": ["day-stem sections, 正月 through 十二月; seven curated cells"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

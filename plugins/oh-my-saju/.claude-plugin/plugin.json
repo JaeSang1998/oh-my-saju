@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "oh-my-saju",
+  "displayName": "Oh My Saju",
+  "version": "0.3.0",
+  "description": "Deterministic Korean Saju calculation with versioned Tradition Packs and grounded readings.",
+  "author": {
+    "name": "Jaesang Lee"
+  },
+  "homepage": "https://github.com/JaeSang1998/baby-saju",
+  "repository": "https://github.com/JaeSang1998/baby-saju",
+  "license": "Apache-2.0",
+  "skills": "./skills/"
+}

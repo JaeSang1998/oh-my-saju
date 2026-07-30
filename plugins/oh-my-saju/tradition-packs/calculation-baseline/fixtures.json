@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "common-structural-v1-exhaustive",
+      "paths": [
+        "plugins/oh-my-saju/tradition-packs/calculation-baseline/growth-stages.test.ts",
+        "plugins/oh-my-saju/runtime/traditions/interpretation.test.ts",
+        "plugins/oh-my-saju/runtime/traditions/korean-analysis.test.ts"
+      ]
+    }
+  ]
+}
