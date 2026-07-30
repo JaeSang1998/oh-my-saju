@@ -10592,11 +10592,35 @@ function isArrayOf(value, predicate) {
   return true;
 }
 
+// plugins/oh-my-saju/runtime/reading/prompt-contract.ts
+var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
+  id: "saju-grounded-narration",
+  version: "3.0.0"
+});
+var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
+  mode: "compact-layperson",
+  format: "sectioned-bullets",
+  maxParagraphSentences: 2,
+  maxSections: 4,
+  maxParagraphsPerSection: 2,
+  maxNarrativeCharacters: 2400,
+  maxParagraphCharacters: 800,
+  advancedDoctrine: "only-when-explicitly-requested",
+  neverEndWithLimitations: true,
+  broadReading: {
+    finalSelectionRequired: true,
+    minimumDistinctParagraphs: 9,
+    maxSelectedParagraphCharacters: 240,
+    maxPresentationCharacters: 1e3,
+    structuredLivedPatternRequired: true
+  }
+});
+
 // plugins/oh-my-saju/runtime/manifest.ts
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.4.0",
+    version: "0.4.3",
     schemaVersion: "1"
   },
   compatibility: {
@@ -10610,12 +10634,9 @@ var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
     crossPackVoting: false
   },
   reading: {
-    promptTemplate: {
-      id: "saju-grounded-narration",
-      version: "2.0.0"
-    },
-    outputSchemaVersion: "2",
-    claimGateVersion: "2"
+    promptTemplate: SAJU_NARRATION_PROMPT_TEMPLATE,
+    outputSchemaVersion: "3",
+    claimGateVersion: "3"
   }
 });
 
@@ -11127,6 +11148,7 @@ var SHARED_TRADITION_RUNTIME_PATHS = [
   "plugins/oh-my-saju/runtime/internal/canonical-json.ts",
   "plugins/oh-my-saju/runtime/internal/deep-freeze.ts",
   "plugins/oh-my-saju/runtime/internal/guards.ts",
+  "plugins/oh-my-saju/runtime/reading/prompt-contract.ts",
   "plugins/oh-my-saju/runtime/traditions/catalog.ts",
   "plugins/oh-my-saju/runtime/traditions/domain.ts",
   "plugins/oh-my-saju/runtime/traditions/evaluate.ts",
@@ -11176,7 +11198,7 @@ function artifactDigests(value) {
 var artifacts_default = {
   schemaVersion: "1",
   knowledgeSnapshot: "6c0ebde3b81aac964a7a6124bb4cb2cc62f6a7d70fae595b3ac1ae0cf081e796",
-  rules: "61a13764735234073de5825d810cc93e8830f26273ff7f7971df63d7f0c9ca99",
+  rules: "727bbc4d116ce59ccfa51fb94537d02553993b9518db25a89497cc23a52ba3a4",
   fixtures: "c85cd4ff6577150d2c16964a73a2fe4253efd38a5fa284a19607ec9eb4b5819c"
 };
 
@@ -11463,7 +11485,7 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 var artifacts_default2 = {
   schemaVersion: "1",
   knowledgeSnapshot: "b09030e80fbf397129f9cc9717eca2688b88427cb112d5972d9dd7e8a3dd1a13",
-  rules: "7d4b7574777a9f90096a79ae65930817369f550596d035895d3c5d29a7825e98",
+  rules: "f73778aca0aab5cbce72e5b41eec0bb17efb1734a93e7d24458bed0d85ddc3bb",
   fixtures: "3c5be0ad7ed6adb9cc5e36631454066adf3b7562375d24f4ea2cbddceed12aa1"
 };
 
@@ -11640,7 +11662,7 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 var artifacts_default3 = {
   schemaVersion: "1",
   knowledgeSnapshot: "ab9bc189fe82e36e8a112668f4799967a400a6ee0a899fd85ebea327d87c5227",
-  rules: "bdbeaf0a45a0ced9cc81150b2a84ab57b5718776e452133af5e92674107da4c8",
+  rules: "4b6dc8e67781d6eb960268c1584bd3c989a7f9ce4a6b79e4c4885a8c94b63ddb",
   fixtures: "fa1e1cbea176782d98785aefd292e61186bb37253c8983fbbe309e49e3100039"
 };
 
@@ -12244,7 +12266,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 var artifacts_default4 = {
   schemaVersion: "1",
   knowledgeSnapshot: "892b4223fe0d17c7042072e37fbdacd398a8e776b6f34cc691438aec6f3a5353",
-  rules: "883072738e0a59965fa6263fe0f386e703f81292cc9b36cdedab61c58088fa73",
+  rules: "0c13d09622c5b580a23e3f601cfb8ea03e0f61060e1897f8dfd93e83fa4ac8b5",
   fixtures: "83140f3303f946ef0ac70ef20d8ffae884fa0e489de8593a44a92539a6cff7b7"
 };
 
@@ -12569,7 +12591,7 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 var artifacts_default5 = {
   schemaVersion: "1",
   knowledgeSnapshot: "92c19f40a2cf080bfe5035c66ccc8c7741743521e077384b4f0b1b74c7af8ed9",
-  rules: "93df7f4e6d49fd9ad8c19476d5617379e54c20c6ffcc48025dcd322a98a5f999",
+  rules: "a8dd154135cbf1f3e7e9bfa5ab6af45da84d40bf176b2312feeb40dce67c3b3f",
   fixtures: "89a61e9f2e371e876f89ee18d632bef7ceb5bb64474e58085fcc1106daa64ac7"
 };
 
@@ -12930,8 +12952,7 @@ function contract(profile, provenance, aiEnabled) {
       fixturesArtifact: provenance.fixturesArtifact
     },
     aiPromptTemplate: aiEnabled ? {
-      id: "saju-grounded-narration",
-      version: "2.0.0",
+      ...SAJU_NARRATION_PROMPT_TEMPLATE,
       findingsFromOnePackOnly: true
     } : null
   });
@@ -15254,7 +15275,7 @@ var SAJU_TOPIC_TITLES = deepFreeze2({
 });
 var SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze2({
   $schema: "https://json-schema.org/draft/2020-12/schema",
-  $id: "https://saju-engine.local/schemas/ai-narrative-v2.json",
+  $id: "https://saju-engine.local/schemas/ai-narrative-v3.json",
   title: "Saju finding-referenced narrative",
   type: "object",
   additionalProperties: false,
@@ -15263,7 +15284,7 @@ var SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze2({
     summary: { $ref: "#/$defs/paragraph" },
     sections: {
       type: "array",
-      maxItems: 15,
+      maxItems: SAJU_NARRATION_PRESENTATION_POLICY.maxSections,
       items: {
         type: "object",
         additionalProperties: false,
@@ -15273,7 +15294,7 @@ var SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze2({
           paragraphs: {
             type: "array",
             minItems: 1,
-            maxItems: 12,
+            maxItems: SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection,
             items: { $ref: "#/$defs/paragraph" }
           }
         }
@@ -15289,7 +15310,7 @@ var SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze2({
         text: {
           type: "string",
           minLength: 1,
-          maxLength: 4e3
+          maxLength: SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters
         },
         findingIds: {
           type: "array",
@@ -15359,6 +15380,145 @@ function snapshotNarrator(value, field = "narrator") {
     requestedModel,
     narrate: value.narrate
   });
+}
+
+// plugins/oh-my-saju/runtime/reading/reading-policy.ts
+var DOCTRINE_DISCLOSURE_RULES = [
+  {
+    id: "day-master",
+    topics: ["day-master"],
+    outputPattern: /(?:일간|월령|투간|지장간|통근)/u,
+    requestPattern: /(?:일간|월령|투간|지장간|통근)/u
+  },
+  {
+    id: "five-elements",
+    topics: ["five-elements"],
+    outputPattern: /(?:오행|목화토금수\s*(?:분포|비율|점수)?)/u,
+    requestPattern: /(?:오행|목화토금수)/u
+  },
+  {
+    id: "yin-yang",
+    topics: ["yin-yang"],
+    outputPattern: /(?:음양|음기|양기)/u,
+    requestPattern: /(?:음양|음기|양기)/u
+  },
+  {
+    id: "ten-gods",
+    topics: ["ten-gods"],
+    outputPattern: /(?:십신|비견|겁재|식상|관살|정재|편재|정관|편관|정인|편인)/u,
+    requestPattern: /(?:십신|비견|겁재|식상|관살|정재|편재|정관|편관|정인|편인)/u
+  },
+  {
+    id: "strength",
+    topics: ["strength"],
+    outputPattern: /(?:신강|신약|강약)/u,
+    requestPattern: /(?:신강|신약|강약)/u
+  },
+  {
+    id: "pattern",
+    topics: ["pattern"],
+    outputPattern: /(?:격국|양인격|월겁격)/u,
+    requestPattern: /(?:격국|양인격|월겁격)/u
+  },
+  {
+    id: "useful-god",
+    topics: ["useful-god"],
+    outputPattern: /(?:조후|용신|희신|기신)/u,
+    requestPattern: /(?:조후|용신|희신|기신)/u
+  },
+  {
+    id: "void-branches",
+    topics: ["void-branches"],
+    outputPattern: /공망/u,
+    requestPattern: /공망/u
+  },
+  {
+    id: "growth-stages",
+    topics: ["growth-stages"],
+    outputPattern: /(?:십이운성|운성|(?:장생|목욕|관대|건록|제왕)\s*(?:지|운|단계|해석|의미|해당))/u,
+    requestPattern: /(?:십이운성|운성|(?:장생|목욕|관대|건록|제왕)\s*(?:단계|운|해석|의미|해당))/u
+  },
+  {
+    id: "luck-cycles",
+    topics: ["luck-cycles"],
+    outputPattern: /(?:대운|세운)/u,
+    requestPattern: /(?:대운|세운)/u
+  },
+  {
+    id: "symbolic-stars",
+    topics: ["symbolic-stars"],
+    outputPattern: /(?:신살|화개|천을귀인|역마|도화|양인(?!격)|육해)/u,
+    requestPattern: /(?:신살|화개|천을귀인|역마|도화|양인(?!격)|육해)/u
+  }
+];
+var SCIENCE_META_REQUEST_PATTERN = /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}(?:(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,12}(?:근거|검증|타당|맞|사실|아닙|아니|인가|이야|입니까)|(?:검증|타당성)[^.?!\n]{0,12}(?:과학|실증))|(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,20}(?:사주|명리|운세|해석|예측)[^.?!\n]{0,20}(?:맞|검증|근거|타당|사실)|(?:scientific|empirical)[^.?!\n]{0,20}(?:saju|fortune|reading|prediction)|현실\s*예측\s*(?:근거|검증|타당성))/iu;
+var UNCERTAINTY_META_REQUEST_PATTERN = /(?:(?:사주|명리|해석|판정|결론)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종)|(?:확정|단정|불확실|한계|최종)[^.?!\n]{0,24}(?:사주|명리|해석|판정|결론)|(?:격국|용신|조후|신살|신강|신약|강약)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종|후보)|(?:확정|단정|불확실|한계|최종|후보)[^.?!\n]{0,24}(?:격국|용신|조후|신살|신강|신약|강약))/u;
+var AUDIT_META_REQUEST_PATTERN = /(?:\bpack(?:ref)?\b|\bfinding(?:s|ids?)?\b|\bprofileref\b|(?:전통|규칙)\s*팩|팩\s*(?:ID|버전|근거|규칙|감사|참조)|(?:profile|프로필)\s*(?:ID|version|버전|근거|규칙|감사)|(?:규칙|계산|명리)\s*프로필|근거\s*ID|감사\s*(?:추적|로그|정보|자료)|\baudit\b|학파(?:별)?\s*(?:비교|근거|규칙)|전통\s*규칙[^.?!\n]{0,30}(?:검증|근거)|기술\s*용어[^.?!\n]{0,20}(?:검증|감사))/iu;
+var SCIENCE_META_OUTPUT_PATTERN = /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}과학[^.?!\n]{0,20}(?:아닙|아니|않|없)|(?:과학(?:적(?:으로)?)?|실증(?:적)?)\s*[^.?!\n]{0,24}(?:타당성|검증|근거)[^.?!\n]{0,24}(?:아닙|아니|않|없|확립되지|있지\s*않)|현실\s*예측[^.?!\n]{0,24}(?:타당성|검증되지|확립되지)|(?:객관적으로\s*)?(?:검증|입증)된?\s*(?:내용|사실)?[^.?!\n]{0,20}(?:아닙|아니|않)|정확성[^.?!\n]{0,20}보장[^.?!\n]{0,20}(?:아니|않|없)|(?:이\s*(?:결과|해석|내용|자료)|사주|명리|운세|풀이)[^.?!\n]{0,20}(?:재미|참고)\s*(?:용|정도)?(?:으로|로)?만|(?:재미|참고)\s*(?:용|정도)?(?:으로|로)?만\s*(?:보|확인|읽|받아들|생각))/u;
+var UNCERTAINTY_META_OUTPUT_PATTERN = /(?:확정할 수 없|확정되지 않|단정할 수 없|최종 [^.?!\n]{0,24}(?:판정|결론)(?:은|이)?\s*(?:아니|못|없)|(?:결론|판정|판단|확답)[^.?!\n]{0,18}(?:내리|하|정하)[^.?!\n]{0,12}(?:어렵|힘들|곤란)|(?:불확실성|한계)(?:가|는|를|로|입니다|때문))/u;
+var AUDIT_META_OUTPUT_PATTERN = /(?:전통\s*규칙상|\bpack(?:ref)?\b|\bfinding(?:s|ids?)?\b|\bprofileref\b|(?:전통|규칙)\s*팩|팩\s*(?:ID|버전|근거|규칙|감사|참조)|근거\s*ID|(?:규칙|계산|명리)\s*프로필|프로필\s*(?:ID|버전|근거|규칙|감사)|구현되지 않)/iu;
+var OPEN_ENDED_SAJU_REQUEST_PATTERN = /사주(?:를)?\s*(?:좀\s*)?(?:봐|보|풀이|해석)/u;
+var EXPLICIT_BROAD_SCOPE_PATTERN = /(?:전체(?:적|적으로)?|전반(?:적|적으로)?|종합(?:적|적으로)?|어떤\s*사람|기본\s*(?:풀이|해석))/u;
+var FOCUSED_DOMAIN_PATTERN = /(?:직업|진로|적성|업무|공부|시험|연애|결혼|궁합|관계|대인|성격|재물|돈|투자|건강|질병|임신|이직|퇴사|선택|비교|시기|올해|내년|대운|세운)/u;
+var GENERAL_PURPOSE_PATTERN = /(?:general|broad|school-comparison)/u;
+function assertReadingModePreference(value, field = "readingMode") {
+  if (value !== "auto" && value !== "broad" && value !== "focused" && value !== "technical-audit") {
+    throw new AiReadingError("INVALID_REQUEST", `${field} is not supported.`);
+  }
+  return value;
+}
+function resolveSajuReadingPolicy(question, purpose, preference) {
+  const userQuestion = question ?? "";
+  const requestedDoctrineIds = DOCTRINE_DISCLOSURE_RULES.filter(
+    ({ requestPattern }) => requestPattern.test(userQuestion)
+  ).map(({ id }) => id);
+  const scienceMetaRequested = SCIENCE_META_REQUEST_PATTERN.test(userQuestion);
+  const uncertaintyMetaRequested = UNCERTAINTY_META_REQUEST_PATTERN.test(userQuestion);
+  const auditMetaRequested = AUDIT_META_REQUEST_PATTERN.test(userQuestion);
+  const clearlyBroadRequest = EXPLICIT_BROAD_SCOPE_PATTERN.test(userQuestion) || OPEN_ENDED_SAJU_REQUEST_PATTERN.test(userQuestion) && !FOCUSED_DOMAIN_PATTERN.test(userQuestion);
+  let mode;
+  if (preference !== "auto") {
+    mode = preference;
+  } else if (auditMetaRequested) {
+    mode = "technical-audit";
+  } else if (question === null) {
+    mode = GENERAL_PURPOSE_PATTERN.test(purpose) ? "broad" : "focused";
+  } else {
+    mode = clearlyBroadRequest ? "broad" : "focused";
+  }
+  return deepFreeze2({
+    mode,
+    structuredBroadPresentation: preference === "broad",
+    requestedDoctrineIds,
+    scienceMetaRequested,
+    uncertaintyMetaRequested,
+    auditMetaRequested
+  });
+}
+function doctrineAllowed(rule, policy) {
+  return policy.requestedDoctrineIds.some((id) => id === rule.id);
+}
+function findSajuDisclosureViolation(text, policy) {
+  for (const rule of DOCTRINE_DISCLOSURE_RULES) {
+    if (rule.outputPattern.test(text) && !doctrineAllowed(rule, policy)) return rule.id;
+  }
+  if (SCIENCE_META_OUTPUT_PATTERN.test(text) && !policy.scienceMetaRequested) {
+    return "science-meta";
+  }
+  if (UNCERTAINTY_META_OUTPUT_PATTERN.test(text) && !policy.uncertaintyMetaRequested) {
+    return "uncertainty-meta";
+  }
+  if (AUDIT_META_OUTPUT_PATTERN.test(text) && !policy.auditMetaRequested) {
+    return "audit-meta";
+  }
+  return null;
+}
+function isSajuInterpretationTopicAllowed(topic, policy) {
+  const rule = DOCTRINE_DISCLOSURE_RULES.find(({ topics }) => topics.includes(topic));
+  return rule === void 0 || doctrineAllowed(rule, policy);
+}
+function doctrineDisclosureIdForTopic(topic) {
+  return DOCTRINE_DISCLOSURE_RULES.find(({ topics }) => topics.includes(topic))?.id ?? null;
 }
 
 // plugins/oh-my-saju/runtime/reading/create-reading.ts
@@ -15488,7 +15648,7 @@ function copyUnavailableRule(rule, index) {
     candidateIds: [...rule.candidateIds]
   };
 }
-function buildNarrationRequest(assessment, locale, purpose, audience, question, variantPolicy) {
+function buildNarrationRequest(assessment, locale, purpose, audience, question, variantPolicy, readingMode) {
   const allFindings = assessment.findings.map(copyNarrationFinding);
   const profileFindingPrefix = `${assessment.profile.id}@${assessment.profile.version}:`;
   if (allFindings.some(({ id }) => !id.startsWith(profileFindingPrefix))) {
@@ -15502,19 +15662,18 @@ function buildNarrationRequest(assessment, locale, purpose, audience, question, 
     throw new AiReadingError("INVALID_REQUEST", "assessment finding IDs must be unique.");
   }
   return deepFreeze2({
-    schemaVersion: "2",
+    schemaVersion: "3",
     task: {
       mode: "grounded-interpretation",
       answerUserQuestionDirectly: true,
-      responseOrder: ["chart-facts", "school-rules", "inference", "counterevidence", "conclusion"],
+      responseOrder: ["direct-answer", "lived-patterns", "applications", "concise-conclusion"],
       keepCalculationAndInterpretationDistinct: true,
       topicNeutral: true,
-      omitCalendarAndGanzhiClaimsWithoutEvidence: true
+      omitCalendarAndGanzhiClaimsWithoutEvidence: true,
+      presentation: SAJU_NARRATION_PRESENTATION_POLICY,
+      readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode)
     },
-    template: {
-      id: "saju-grounded-narration",
-      version: "2.0.0"
-    },
+    template: SAJU_NARRATION_PROMPT_TEMPLATE,
     grounding: {
       id: "saju-finding-references",
       version: "2.0.0",
@@ -15532,13 +15691,16 @@ function buildNarrationRequest(assessment, locale, purpose, audience, question, 
         id: assessment.profile.id,
         version: assessment.profile.version
       },
-      profileLimitations: assessment.profile.knownLimitations.map((id) => ({
-        id,
-        message: profileLimitationMessage(id)
-      })),
       subject: copySubject(assessment.subject),
       findings,
-      unavailableRules: assessment.unavailableRules.map(copyUnavailableRule)
+      nonDisplayGuardrails: {
+        neverQuoteOrParaphrase: true,
+        profileLimitations: assessment.profile.knownLimitations.map((id) => ({
+          id,
+          message: profileLimitationMessage(id)
+        })),
+        unavailableRules: assessment.unavailableRules.map(copyUnavailableRule)
+      }
     },
     outputSchema: SAJU_NARRATIVE_JSON_SCHEMA
   });
@@ -15571,10 +15733,10 @@ function copyNarratorText(value, path) {
     throw new AiReadingError("INVALID_NARRATOR_OUTPUT", `${path} must be a string.`);
   }
   const text = value.normalize("NFKC").trim();
-  if (text.length === 0 || text.length > 4e3 || containsInvisibleOrControl(text) || HTML_OR_URL_PATTERN.test(text)) {
+  if (text.length === 0 || text.length > SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters || containsInvisibleOrControl(text) || HTML_OR_URL_PATTERN.test(text)) {
     throw new AiReadingError(
       "INVALID_NARRATOR_OUTPUT",
-      `${path} must be plain text between 1 and 4,000 characters.`
+      `${path} must be plain text between 1 and ${SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters} characters.`
     );
   }
   return text;
@@ -15617,6 +15779,65 @@ function isSentenceBoundaryAt(text, index) {
     return false;
   }
   return character !== void 0 && SENTENCE_BOUNDARY_CHARACTERS.has(character);
+}
+function countSentences(text) {
+  let count = 0;
+  let hasText = false;
+  for (let index = 0; index < text.length; index += 1) {
+    if (isSentenceBoundaryAt(text, index)) {
+      if (hasText) count += 1;
+      hasText = false;
+    } else if (!/\s/u.test(text[index])) {
+      hasText = true;
+    }
+  }
+  return count + (hasText ? 1 : 0);
+}
+function assertCompactParagraphShape(text, path) {
+  const sentenceCount = countSentences(text);
+  if (sentenceCount > SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphSentences) {
+    throw new AiReadingError(
+      "INVALID_NARRATOR_OUTPUT",
+      "Narrator paragraphs must follow the compact presentation contract.",
+      {
+        details: {
+          path,
+          policy: "compact-presentation",
+          sentenceCount,
+          maximumSentenceCount: SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphSentences
+        }
+      }
+    );
+  }
+}
+function assertNoUnrequestedAdvancedDoctrine(text, policy, path) {
+  const violation = findSajuDisclosureViolation(text, policy);
+  if (violation === null) return;
+  throw new AiReadingError(
+    "INVALID_NARRATOR_OUTPUT",
+    "Advanced doctrine requires explicit user opt-in.",
+    {
+      details: {
+        path,
+        policy: "advanced-doctrine-explicit-opt-in",
+        doctrine: violation
+      }
+    }
+  );
+}
+function assertTopicWasRequested(topic, policy, path) {
+  if (isSajuInterpretationTopicAllowed(topic, policy)) return;
+  throw new AiReadingError(
+    "INVALID_NARRATOR_OUTPUT",
+    "Advanced topic requires explicit user opt-in.",
+    {
+      details: {
+        path,
+        policy: "advanced-doctrine-explicit-opt-in",
+        doctrine: doctrineDisclosureIdForTopic(topic)
+      }
+    }
+  );
 }
 function sentenceContainingCandidate(text, candidate) {
   let start = candidate.start;
@@ -15662,7 +15883,7 @@ function assertNoUnsupportedCalendarGanzhiClaims(text, path) {
     }
   );
 }
-function validateAndLabelParagraph(text, findingIds, findingsById, path) {
+function validateAndLabelParagraph(text, findingIds, findingsById, path, policy) {
   const unknownIds = findingIds.filter((findingId) => !findingsById.has(findingId));
   if (unknownIds.length > 0) {
     throw new AiReadingError(
@@ -15671,6 +15892,20 @@ function validateAndLabelParagraph(text, findingIds, findingsById, path) {
       { details: { path, unknownCount: unknownIds.length } }
     );
   }
+  assertCompactParagraphShape(text, path);
+  if (policy.structuredBroadPresentation && countSentences(text) !== 1) {
+    throw new AiReadingError(
+      "INVALID_NARRATOR_OUTPUT",
+      "Structured broad-reading paragraphs must contain exactly one atomic sentence.",
+      {
+        details: {
+          path,
+          policy: "atomic-broad-paragraph"
+        }
+      }
+    );
+  }
+  assertNoUnrequestedAdvancedDoctrine(text, policy, path);
   assertNoUnsupportedCalendarGanzhiClaims(text, path);
   const findings = findingIds.map((findingId) => findingsById.get(findingId));
   const conditionalFindings = findings.filter(
@@ -15696,25 +15931,23 @@ function validateAndLabelParagraph(text, findingIds, findingsById, path) {
   }
   const candidateDependent = conditionalFindings.length > 0;
   const conditional = candidateDependent || containsPartialFinding;
-  const uncertaintyLabels = [
-    ...candidateDependent ? ["\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4."] : [],
-    ...containsPartialFinding ? ["\uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4."] : []
-  ];
-  const labeledText = uncertaintyLabels.length === 0 ? text : `${uncertaintyLabels.join(" ")} ${text}`;
-  if (labeledText.length > 4100) {
+  const uncertaintyLabel = candidateDependent && containsPartialFinding ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uB294, \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4." : candidateDependent ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4." : containsPartialFinding ? "\uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4." : null;
+  const labeledText = uncertaintyLabel === null ? text : `${uncertaintyLabel} ${text}`;
+  if (labeledText.length > SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters + (uncertaintyLabel?.length ?? 0) + (uncertaintyLabel === null ? 0 : 1)) {
     throw new AiReadingError(
       "INVALID_NARRATOR_OUTPUT",
       "The uncertainty label produces an excessively long paragraph.",
       { details: { path } }
     );
   }
+  assertCompactParagraphShape(labeledText, path);
   return {
     text: labeledText,
     findingIds: [...findingIds],
     certainty: conditional ? "conditional" : "grounded"
   };
 }
-function parseParagraphPlan(value, path, findingsById) {
+function parseParagraphPlan(value, path, findingsById, policy) {
   if (!isRecord2(value)) {
     throw new AiReadingError("INVALID_NARRATOR_OUTPUT", `${path} must be an object.`);
   }
@@ -15723,10 +15956,11 @@ function parseParagraphPlan(value, path, findingsById) {
     copyNarratorText(value.text, `${path}.text`),
     copyFindingIds(value.findingIds, `${path}.findingIds`),
     findingsById,
-    path
+    path,
+    policy
   );
 }
-function parseSectionPlan(value, index, findingsById) {
+function parseSectionPlan(value, index, findingsById, policy) {
   const path = `sections[${index}]`;
   if (!isRecord2(value)) {
     throw new AiReadingError("INVALID_NARRATOR_OUTPUT", `${path} must be an object.`);
@@ -15738,15 +15972,16 @@ function parseSectionPlan(value, index, findingsById) {
       `${path}.topic is not a supported interpretation topic.`
     );
   }
-  if (!Array.isArray(value.paragraphs) || value.paragraphs.length === 0 || value.paragraphs.length > 12) {
+  if (!Array.isArray(value.paragraphs) || value.paragraphs.length === 0 || value.paragraphs.length > SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection) {
     throw new AiReadingError(
       "INVALID_NARRATOR_OUTPUT",
-      `${path}.paragraphs must contain 1 through 12 items.`
+      `${path}.paragraphs must contain 1 through ${SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection} items.`
     );
   }
   const topic = value.topic;
+  assertTopicWasRequested(topic, policy, `${path}.topic`);
   const paragraphs = value.paragraphs.map(
-    (paragraph, paragraphIndex) => parseParagraphPlan(paragraph, `${path}.paragraphs[${paragraphIndex}]`, findingsById)
+    (paragraph, paragraphIndex) => parseParagraphPlan(paragraph, `${path}.paragraphs[${paragraphIndex}]`, findingsById, policy)
   );
   for (const [paragraphIndex, paragraph] of paragraphs.entries()) {
     if (paragraph.findingIds.some((findingId) => findingsById.get(findingId)?.topic !== topic)) {
@@ -15763,25 +15998,42 @@ function parseSectionPlan(value, index, findingsById) {
     paragraphs
   };
 }
-function parseNarrative(raw, findings) {
+function parseNarrative(raw, findings, policy) {
   if (!isRecord2(raw)) {
     throw new AiReadingError("INVALID_NARRATOR_OUTPUT", "Narrator output must be a JSON object.");
   }
   assertOnlyKeys(raw, ["summary", "sections"], "output");
-  if (!Array.isArray(raw.sections) || raw.sections.length > 15) {
+  if (!Array.isArray(raw.sections) || raw.sections.length > SAJU_NARRATION_PRESENTATION_POLICY.maxSections) {
     throw new AiReadingError(
       "INVALID_NARRATOR_OUTPUT",
-      "sections must be an array with at most 15 items."
+      `sections must be an array with at most ${SAJU_NARRATION_PRESENTATION_POLICY.maxSections} items.`
     );
   }
   const findingsById = new Map(findings.map((finding) => [finding.id, finding]));
-  const summary = parseParagraphPlan(raw.summary, "summary", findingsById);
+  const summary = parseParagraphPlan(raw.summary, "summary", findingsById, policy);
   const sections = raw.sections.map(
-    (section, index) => parseSectionPlan(section, index, findingsById)
+    (section, index) => parseSectionPlan(section, index, findingsById, policy)
   );
   const sectionIds = sections.map(({ id }) => id);
   if (new Set(sectionIds).size !== sectionIds.length) {
     throw new AiReadingError("INVALID_NARRATOR_OUTPUT", "section topics must be unique.");
+  }
+  const characterCount = [summary, ...sections.flatMap(({ paragraphs }) => paragraphs)].reduce(
+    (total, paragraph) => total + paragraph.text.length,
+    0
+  );
+  if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.maxNarrativeCharacters) {
+    throw new AiReadingError(
+      "INVALID_NARRATOR_OUTPUT",
+      "Narrator output exceeds the compact presentation contract.",
+      {
+        details: {
+          policy: "compact-presentation",
+          characterCount,
+          maximumCharacterCount: SAJU_NARRATION_PRESENTATION_POLICY.maxNarrativeCharacters
+        }
+      }
+    );
   }
   return { title: SAJU_NARRATIVE_TITLE, summary, sections };
 }
@@ -15985,7 +16237,11 @@ async function createAiSajuReading(input) {
       );
     }
     parsedResponse = parseNarratorResponse(safeProviderResponse);
-    narrative = parseNarrative(parsedResponse.output, request.evidence.findings);
+    narrative = parseNarrative(
+      parsedResponse.output,
+      request.evidence.findings,
+      request.task.readingPolicy
+    );
   }
   const generatedByAI = parsedResponse !== null;
   const result = {
@@ -15995,6 +16251,8 @@ async function createAiSajuReading(input) {
     narrative,
     notice: {
       code: "TRADITIONAL_INTERPRETATION",
+      displayPolicy: "audit-only",
+      defaultDisplay: false,
       message: generatedByAI ? "\uC0DD\uC131\uD615 AI\uAC00 \uC5D4\uC9C4\uC758 \uACC4\uC0B0\xB7\uD559\uD30C finding\uC744 \uC778\uC6A9\uD574 \uC791\uC131\uD55C \uC804\uD1B5 \uBA85\uB9AC \uD574\uC11D\uC785\uB2C8\uB2E4. \uD574\uB2F9 \uADDC\uCE59\uC758 \uD604\uC2E4 \uC608\uCE21 \uD0C0\uB2F9\uC131\uC740 \uD655\uB9BD\uB418\uC9C0 \uC54A\uC558\uC73C\uBA70, \uC778\uC6A9 \uADFC\uAC70\uC640 \uD504\uB85C\uD544 \uD55C\uACC4\uB294 \uD568\uAED8 \uBCF4\uC874\uB429\uB2C8\uB2E4." : "\uD604\uC7AC \uC785\uB825\uACFC \uD504\uB85C\uD544\uC5D0 \uC778\uC6A9 \uAC00\uB2A5\uD55C finding\uC774 \uC5C6\uC5B4 \uACC4\uC0B0\uB41C \uC81C\uD55C\uC0AC\uD56D\uB9CC \uBC18\uD658\uD588\uC2B5\uB2C8\uB2E4.",
       empiricalValidation: "not-established",
       limitations: buildReadingLimitations(
@@ -16016,10 +16274,7 @@ async function createAiSajuReading(input) {
         providerRequestId: parsedResponse?.providerRequestId ?? null,
         finishReason: parsedResponse?.finishReason ?? null
       },
-      promptTemplate: {
-        id: "saju-grounded-narration",
-        version: "2.0.0"
-      },
+      promptTemplate: SAJU_NARRATION_PROMPT_TEMPLATE,
       grounding: {
         id: "saju-finding-references",
         version: "2.0.0",
@@ -16028,7 +16283,7 @@ async function createAiSajuReading(input) {
         calendarGanzhiClaimsAllowed: false,
         quotedOrRefutedClaimsExempted: false
       },
-      outputSchemaVersion: "2",
+      outputSchemaVersion: "3",
       privacy: {
         structuredBirthRequestSentToNarrator: false,
         chronologySentToNarrator: false,
@@ -16042,7 +16297,9 @@ async function createAiSajuReading(input) {
         providerTextAccepted: generatedByAI,
         conditionalClaimsLabeled: true,
         plainTextValidated: true,
-        unsupportedCalendarGanzhiClaimsRejected: true
+        unsupportedCalendarGanzhiClaimsRejected: true,
+        compactPresentationValidated: true,
+        unrequestedAdvancedDoctrineRejected: true
       }
     }
   };
@@ -16058,13 +16315,15 @@ function prepareAiSajuNarrationRequest(input) {
   const audience = assertReadingAudience(input.audience ?? DEFAULT_AUDIENCE);
   const variantPolicy = assertReadingVariantPolicy(input.variantPolicy ?? DEFAULT_VARIANT_POLICY);
   const question = assertQuestion(input.question);
+  const readingMode = assertReadingModePreference(input.readingMode ?? "auto");
   return buildNarrationRequest(
     input.assessment,
     locale,
     purpose,
     audience,
     question,
-    variantPolicy
+    variantPolicy,
+    readingMode
   );
 }
 
@@ -16073,7 +16332,8 @@ var DEFAULT_COMPARISON_READING_OPTIONS = deepFreeze2({
   locale: "ko-KR",
   purpose: "school-comparison",
   audience: "general",
-  variantPolicy: "include-candidate-dependent"
+  variantPolicy: "include-candidate-dependent",
+  readingMode: "auto"
 });
 var MAXIMUM_PACK_COUNT = 16;
 function snapshotPackRefs(value) {
@@ -16131,6 +16391,10 @@ function snapshotOptions(options) {
     variantPolicy: assertReadingVariantPolicy(
       options.variantPolicy ?? DEFAULT_COMPARISON_READING_OPTIONS.variantPolicy,
       "options.variantPolicy"
+    ),
+    readingMode: assertReadingModePreference(
+      options.readingMode ?? DEFAULT_COMPARISON_READING_OPTIONS.readingMode,
+      "options.readingMode"
     )
   });
 }
@@ -16161,6 +16425,7 @@ function comparisonPackReadingInput(defaults, request, packResult) {
     purpose: request.purpose ?? defaults.purpose,
     audience: request.audience ?? defaults.audience,
     variantPolicy: request.variantPolicy ?? defaults.variantPolicy,
+    readingMode: request.readingMode ?? defaults.readingMode,
     ...request.question === void 0 ? {} : { question: request.question }
   };
 }
@@ -19864,9 +20129,566 @@ function isOhMySajuApplicationError(value) {
   return hasBrand(value);
 }
 
+// plugins/oh-my-saju/runtime/application/broad-presentation.ts
+var PILLAR_POSITIONS2 = [
+  "year",
+  "month",
+  "day",
+  "hour"
+];
+var SITUATION_END_PATTERN = /(?:할 때|일 때|될 때|때는|때에|때|하면|다면|으면|면|할수록|일수록|수록|경우|상황|에서는|에서도)$/u;
+var GENERIC_SITUATION_PATTERN = /^(?:(?:새로운|낯선|어려운|힘든|좋은|나쁜|중요한|여러|다양한|어떤)\s*)?(?:상황|경우|삶|일상|평소)(?:에서는|에서도|라면|이면|일 때)?$/u;
+var BEHAVIOR_PATTERN = /(?:고|며|면서|해서|하여|해|하고|하려|하는|는|찾아|하면|습니다)$/u;
+var RESULT_PATTERN = /(?:니다|됩니다|집니다|납니다|수 있습니다)$/u;
+var SPECIFIC_BEHAVIOR_PATTERN = /(?:살피|훑|비교|정리|설명|검토|찾|잡|나누|구조화|밀고|미루|조율|확인|분리|질문|기록|완성|집중|추진|맞추|바꾸|연결|말하|대응|점검|압축|구분|조정|우선순위|계획|기다리|재확인|분석|합의|시작|마무리)/u;
+var SPECIFIC_RESULT_PATTERN = /(?:늦|빨라|길어|짧아|줄|늘|높|낮|살아|흐려|분명|놓치|오해|마무리|완성도|성과|부담|갈등|안정|집중|정확|효율|지연|막히|소진|과해|압박)/u;
+var BENEFIT_RESULT_PATTERN = /(?:(?:속도|완성도|성과|안정|집중|정확도?|효율|힘|강점|실행|결론|방향|기준)[^.?!\n]{0,16}(?:빨라|높|살아|분명|좋아|향상|안정|잡|찾|정리|진행)|(?:오해|갈등|부담|누락|빠뜨림|지연|실수|소진|압박|비용|시간|기간|대기)[^.?!\n]{0,12}(?:줄|낮|덜|짧|막|피하))/u;
+var COST_RESULT_PATTERN = /(?:(?:결정|마무리|실행|시작|진행|기준|방향)[^.?!\n]{0,18}(?:늦|길어|흐려|막히|놓치|미루|못)|(?:속도|완성도|성과|집중|정확도?|효율)[^.?!\n]{0,14}(?:낮|떨어|줄어)|(?:오해|갈등|부담|지연|실수|소진|압박|비용)[^.?!\n]{0,12}(?:늘|커|높|생기|쌓|과해)|(?:늦어|지연되|놓치|막히|소진되|과해지|압박이\s*커))/u;
+var NEGATED_DIRECTION_PATTERN = /(?:지(?:는|도)?\s*(?:못|않)|안\s*(?:하|되|줄|높|낮|늘|살|잡|찾|막|피하)|못\s*(?:하|되|줄|높|낮|늘|살|잡|찾|막|피하)|않(?:습|아|았|을|는)|아니|아닙)/u;
+var GENERIC_BARNUM_PATTERN = /(?:책임감|성실|신뢰|배려|열정|긍정|노력|리더십|인정받|주변\s*사람|충분히\s*생각|신중하게\s*판단|(?:더\s*)?좋은\s*(?:결과|선택)|최선의\s*선택|잘\s*(?:됩니다|풀립니다))/u;
+var PORTRAIT_IDENTITY_PATTERN = /(?:사람|방식|성향|편입니다|편이다)/u;
+var DOMAIN_PATTERNS = {
+  disposition: /(?:정보|변수|맥락|관점|기준|생각|감정|관찰|낯선|문제|선택|판단)/u,
+  execution: /(?:결정|실행|마감|속도|완주|시작|계획|우선순위|추진|준비|선택)/u,
+  relationships: /(?:관계|사이|의견|대화|오해|갈등|상대|역할|합의|소통|말(?:을|로|하면|할))/u,
+  "work-study": /(?:업무|직장|과제|공부|학습|시험|제출|자료|보고서|성과|완성도|프로젝트|피드백)/u
+};
+function fail(message, details = {}) {
+  throw new OhMySajuApplicationError("INVALID_PRESENTATION_DRAFT", message, { details });
+}
+function assertOnlyKeys2(value, allowed, path) {
+  const allowedSet = new Set(allowed);
+  if (Object.keys(value).some((key) => !allowedSet.has(key))) {
+    fail(`${path} contains unsupported keys.`, { path });
+  }
+}
+function copyPackRef2(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["id", "version"], path);
+  try {
+    return {
+      id: assertSafeIdentifier(value.id, `${path}.id`),
+      version: assertSafeIdentifier(value.version, `${path}.version`)
+    };
+  } catch {
+    fail(`${path} must identify a safe Tradition Pack.`, { path });
+  }
+}
+function copySource(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  if (value.kind === "summary") {
+    assertOnlyKeys2(value, ["kind"], path);
+    return { kind: "summary" };
+  }
+  if (value.kind !== "section") fail(`${path}.kind is not supported.`, { path });
+  assertOnlyKeys2(value, ["kind", "topic", "paragraphIndex"], path);
+  if (typeof value.topic !== "string" || !(value.topic in SAJU_TOPIC_TITLES) || value.paragraphIndex !== 0 && value.paragraphIndex !== 1) {
+    fail(`${path} must select a supported section paragraph.`, { path });
+  }
+  return {
+    kind: "section",
+    topic: value.topic,
+    paragraphIndex: value.paragraphIndex
+  };
+}
+function copyParagraphRef(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["packRef", "source"], path);
+  return {
+    packRef: copyPackRef2(value.packRef, `${path}.packRef`),
+    source: copySource(value.source, `${path}.source`)
+  };
+}
+function copyFacet(value, path) {
+  if (typeof value !== "string") fail(`${path} must be a string.`, { path });
+  const normalized = value.normalize("NFKC").replace(/\s+/gu, " ").trim();
+  if (normalized.length < 4 || normalized.length > 120) {
+    fail(`${path} must be a compact, non-empty text span.`, { path });
+  }
+  return normalized;
+}
+function copyLivedPatternRef(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["paragraph", "structure"], path);
+  if (!isRecord2(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys2(
+    value.structure,
+    ["domain", "direction", "situation", "behavior", "result"],
+    `${path}.structure`
+  );
+  if (value.structure.domain !== "disposition" && value.structure.domain !== "execution" && value.structure.domain !== "relationships" && value.structure.domain !== "work-study") {
+    fail(`${path}.structure.domain is not supported.`, { path });
+  }
+  if (value.structure.direction !== "benefit" && value.structure.direction !== "cost" && value.structure.direction !== "descriptive") {
+    fail(`${path}.structure.direction is not supported.`, { path });
+  }
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      domain: value.structure.domain,
+      direction: value.structure.direction,
+      situation: copyFacet(value.structure.situation, `${path}.structure.situation`),
+      behavior: copyFacet(value.structure.behavior, `${path}.structure.behavior`),
+      result: copyFacet(value.structure.result, `${path}.structure.result`)
+    }
+  };
+}
+function copyPortraitRef(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["paragraph", "structure"], path);
+  if (!isRecord2(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys2(value.structure, ["process", "identity"], `${path}.structure`);
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      process: copyFacet(value.structure.process, `${path}.structure.process`),
+      identity: copyFacet(value.structure.identity, `${path}.structure.identity`)
+    }
+  };
+}
+function copyConclusionRef(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["paragraph", "structure"], path);
+  if (!isRecord2(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys2(value.structure, ["condition", "payoff"], `${path}.structure`);
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      condition: copyFacet(value.structure.condition, `${path}.structure.condition`),
+      payoff: copyFacet(value.structure.payoff, `${path}.structure.payoff`)
+    }
+  };
+}
+function copyLivedPair(value, keys, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, keys, path);
+  return Object.fromEntries(
+    keys.map((key) => [key, copyLivedPatternRef(value[key], `${path}.${key}`)])
+  );
+}
+function copyRefList(value, path) {
+  if (!Array.isArray(value) || value.length < 1 || value.length > 2) {
+    fail(`${path} must contain one or two paragraph references.`, { path });
+  }
+  const first = copyLivedPatternRef(value[0], `${path}[0]`);
+  const second = value[1] === void 0 ? void 0 : copyLivedPatternRef(value[1], `${path}[1]`);
+  return second === void 0 ? [first] : [first, second];
+}
+function copyBroadPresentationDraft(value) {
+  if (!isRecord2(value)) fail("presentationDraft must be an object.");
+  assertOnlyKeys2(
+    value,
+    [
+      "schemaVersion",
+      "kind",
+      "portrait",
+      "atAGlance",
+      "doubleEdge",
+      "workStudy",
+      "relationships",
+      "conclusion"
+    ],
+    "presentationDraft"
+  );
+  if (value.schemaVersion !== "1" || value.kind !== "broad-reading") {
+    fail("presentationDraft has an unsupported schema or kind.");
+  }
+  const atAGlance = copyLivedPair(
+    value.atAGlance,
+    ["disposition", "execution", "relationships"],
+    "presentationDraft.atAGlance"
+  );
+  const doubleEdge = copyLivedPair(
+    value.doubleEdge,
+    ["strength", "friction"],
+    "presentationDraft.doubleEdge"
+  );
+  return {
+    schemaVersion: "1",
+    kind: "broad-reading",
+    portrait: copyPortraitRef(value.portrait, "presentationDraft.portrait"),
+    atAGlance: {
+      disposition: atAGlance.disposition,
+      execution: atAGlance.execution,
+      relationships: atAGlance.relationships
+    },
+    doubleEdge: {
+      strength: doubleEdge.strength,
+      friction: doubleEdge.friction
+    },
+    workStudy: copyRefList(value.workStudy, "presentationDraft.workStudy"),
+    relationships: copyRefList(value.relationships, "presentationDraft.relationships"),
+    conclusion: copyConclusionRef(value.conclusion, "presentationDraft.conclusion")
+  };
+}
+function sourceKey(source) {
+  return source.kind === "summary" ? "summary" : `section:${source.topic}:${source.paragraphIndex}`;
+}
+function paragraphForSource(packReading, source) {
+  if (source.kind === "summary") return packReading.reading.narrative.summary;
+  const section = packReading.reading.narrative.sections.find(({ id }) => id === source.topic);
+  const paragraph = section?.paragraphs[source.paragraphIndex];
+  if (paragraph === void 0) {
+    fail("A presentation reference does not resolve to a validated paragraph.", {
+      policy: "validated-paragraph-reference"
+    });
+  }
+  return paragraph;
+}
+function forbiddenIdentityTokens(reading) {
+  return [
+    ...reading.packReadings.flatMap(({ packRef, profileRef: profileRef2, interpretation }) => [
+      packRef.id,
+      `${packRef.id}@${packRef.version}`,
+      profileRef2.id,
+      `${profileRef2.id}@${profileRef2.version}`,
+      interpretation.profile.displayName
+    ])
+  ].map((token) => token.normalize("NFKC").toLocaleLowerCase("en")).filter((token) => token.length > 2);
+}
+function presentationText(paragraph) {
+  if (paragraph.certainty === "grounded") {
+    return { text: paragraph.text, uncertaintyMarker: null };
+  }
+  const labels = [
+    {
+      prefix: "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uB294, \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4. ",
+      marker: "\u25B3\u25C7"
+    },
+    { prefix: "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4. ", marker: "\u25B3" },
+    { prefix: "\uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4. ", marker: "\u25C7" }
+  ];
+  const label = labels.find(({ prefix }) => paragraph.text.startsWith(prefix));
+  if (label === void 0) {
+    fail("Conditional prose must retain its validated uncertainty metadata.", {
+      policy: "conditional-presentation-marker"
+    });
+  }
+  return {
+    text: paragraph.text.slice(label.prefix.length),
+    uncertaintyMarker: label.marker
+  };
+}
+function resolveParagraphRef(reading, ref, forbiddenTokens) {
+  const packReading = reading.packReadings.find(
+    ({ packRef }) => packRef.id === ref.packRef.id && packRef.version === ref.packRef.version
+  );
+  if (packReading === void 0 || !packReading.reading.generatedByAI) {
+    fail("A presentation reference does not identify generated, validated Pack prose.", {
+      policy: "validated-paragraph-reference"
+    });
+  }
+  const paragraph = paragraphForSource(packReading, ref.source);
+  if (paragraph.findingIds.length === 0) {
+    fail("A presentation reference cannot select limitation-only prose.", {
+      policy: "finding-backed-presentation"
+    });
+  }
+  if (paragraph.text.length > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxSelectedParagraphCharacters) {
+    fail("A selected presentation paragraph is too long.", {
+      policy: "compact-broad-presentation",
+      maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxSelectedParagraphCharacters
+    });
+  }
+  const normalizedText = paragraph.text.normalize("NFKC").toLocaleLowerCase("en");
+  if (forbiddenTokens.some((token) => normalizedText.includes(token))) {
+    fail("Pack and profile identities cannot appear in ordinary presentation prose.", {
+      policy: "no-internal-identities"
+    });
+  }
+  const display = presentationText(paragraph);
+  return {
+    ref,
+    refKey: `${ref.packRef.id}@${ref.packRef.version}:${sourceKey(ref.source)}`,
+    text: display.text,
+    findingIds: paragraph.findingIds,
+    uncertaintyMarker: display.uncertaintyMarker
+  };
+}
+function orderedFacetPositions(text, facets) {
+  const positions = [];
+  let fromIndex = 0;
+  for (const facet of facets) {
+    const position2 = text.indexOf(facet, fromIndex);
+    if (position2 < 0) return null;
+    positions.push(position2);
+    fromIndex = position2 + facet.length;
+  }
+  return positions;
+}
+function assertLivedPatternStructure(resolved, structure, path, expected) {
+  const { domain, direction, situation, behavior, result } = structure;
+  if (orderedFacetPositions(resolved.text, [situation, behavior, result]) === null) {
+    fail("Lived-pattern structure must quote three ordered, non-overlapping paragraph spans.", {
+      policy: "structured-lived-pattern",
+      path
+    });
+  }
+  if (!SITUATION_END_PATTERN.test(situation) || GENERIC_SITUATION_PATTERN.test(situation) || !BEHAVIOR_PATTERN.test(behavior) || !RESULT_PATTERN.test(result) || !SPECIFIC_BEHAVIOR_PATTERN.test(behavior) || !SPECIFIC_RESULT_PATTERN.test(result) || GENERIC_BARNUM_PATTERN.test(`${behavior} ${result}`)) {
+    fail("A lived pattern must name a concrete situation, behavior, and observable result.", {
+      policy: "structured-lived-pattern",
+      path
+    });
+  }
+  const roleText = `${situation} ${result}`;
+  const conflictsWithNeighborDomain = domain === "work-study" && DOMAIN_PATTERNS.relationships.test(roleText) || domain === "relationships" && DOMAIN_PATTERNS["work-study"].test(roleText);
+  if (!expected.domains.includes(domain) || !DOMAIN_PATTERNS[domain].test(roleText) || conflictsWithNeighborDomain) {
+    fail("A lived pattern must match the semantic role of its presentation slot.", {
+      policy: "structured-lived-pattern-role",
+      path,
+      domain
+    });
+  }
+  const benefitResult = BENEFIT_RESULT_PATTERN.test(result);
+  const costResult = COST_RESULT_PATTERN.test(result);
+  const negatedDirection = NEGATED_DIRECTION_PATTERN.test(result);
+  if (expected.direction !== void 0 && (direction !== expected.direction || direction === "benefit" && (!benefitResult || costResult || negatedDirection) || direction === "cost" && (!costResult || benefitResult || negatedDirection))) {
+    fail("A double-edge pattern must point in the declared benefit or cost direction.", {
+      policy: "structured-lived-pattern-direction",
+      path,
+      direction
+    });
+  }
+  return { ...resolved, structure };
+}
+function assertPortraitStructure(resolved, structure) {
+  if (orderedFacetPositions(resolved.text, [structure.process, structure.identity]) === null || !BEHAVIOR_PATTERN.test(structure.process) || !SPECIFIC_BEHAVIOR_PATTERN.test(structure.process) || GENERIC_BARNUM_PATTERN.test(structure.process) || !PORTRAIT_IDENTITY_PATTERN.test(structure.identity)) {
+    fail("The portrait must connect a concrete mental or behavioral process to identity.", {
+      policy: "structured-portrait"
+    });
+  }
+}
+function assertConclusionStructure(resolved, structure) {
+  if (orderedFacetPositions(resolved.text, [structure.condition, structure.payoff]) === null || !SITUATION_END_PATTERN.test(structure.condition) || GENERIC_SITUATION_PATTERN.test(structure.condition) || !RESULT_PATTERN.test(structure.payoff) || !SPECIFIC_RESULT_PATTERN.test(structure.payoff) || GENERIC_BARNUM_PATTERN.test(structure.payoff)) {
+    fail("The conclusion must connect a concrete condition to an observable payoff.", {
+      policy: "structured-conclusion"
+    });
+  }
+}
+function resolveBroadPresentation(reading, draft) {
+  const forbiddenTokens = forbiddenIdentityTokens(reading);
+  const resolve = (ref) => resolveParagraphRef(reading, ref, forbiddenTokens);
+  const resolveLived = (value, path, expected) => assertLivedPatternStructure(resolve(value.paragraph), value.structure, path, expected);
+  const portrait = resolve(draft.portrait.paragraph);
+  assertPortraitStructure(portrait, draft.portrait.structure);
+  const conclusion = resolve(draft.conclusion.paragraph);
+  assertConclusionStructure(conclusion, draft.conclusion.structure);
+  const resolved = {
+    portrait,
+    atAGlance: {
+      disposition: resolveLived(draft.atAGlance.disposition, "atAGlance.disposition", {
+        domains: ["disposition"],
+        direction: "descriptive"
+      }),
+      execution: resolveLived(draft.atAGlance.execution, "atAGlance.execution", {
+        domains: ["execution"],
+        direction: "descriptive"
+      }),
+      relationships: resolveLived(draft.atAGlance.relationships, "atAGlance.relationships", {
+        domains: ["relationships"],
+        direction: "descriptive"
+      })
+    },
+    doubleEdge: {
+      strength: resolveLived(draft.doubleEdge.strength, "doubleEdge.strength", {
+        domains: ["disposition", "execution", "relationships", "work-study"],
+        direction: "benefit"
+      }),
+      friction: resolveLived(draft.doubleEdge.friction, "doubleEdge.friction", {
+        domains: ["disposition", "execution", "relationships", "work-study"],
+        direction: "cost"
+      })
+    },
+    workStudy: draft.workStudy.filter((ref) => ref !== void 0).map(
+      (ref, index) => resolveLived(ref, `workStudy[${index}]`, {
+        domains: ["work-study"],
+        direction: "descriptive"
+      })
+    ),
+    relationships: draft.relationships.filter((ref) => ref !== void 0).map(
+      (ref, index) => resolveLived(ref, `relationships[${index}]`, {
+        domains: ["relationships"],
+        direction: "descriptive"
+      })
+    ),
+    conclusion
+  };
+  const all = [
+    resolved.portrait,
+    ...Object.values(resolved.atAGlance),
+    ...Object.values(resolved.doubleEdge),
+    ...resolved.workStudy,
+    ...resolved.relationships,
+    resolved.conclusion
+  ];
+  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+    fail("The broad reading is missing required presentation slots.", {
+      policy: "broad-presentation-required"
+    });
+  }
+  if (new Set(all.map(({ refKey: refKey2 }) => refKey2)).size !== all.length) {
+    fail("Each broad-reading slot must select a distinct validated paragraph.", {
+      policy: "distinct-presentation-sources"
+    });
+  }
+  const normalizedTexts = all.map(
+    ({ text }) => text.normalize("NFKC").replace(/\s+/gu, " ").trim()
+  );
+  if (new Set(normalizedTexts).size !== normalizedTexts.length) {
+    fail("The same prose cannot be copied into multiple broad-reading slots.", {
+      policy: "distinct-presentation-prose"
+    });
+  }
+  const { strength, friction } = resolved.doubleEdge;
+  if (strength.ref.packRef.id !== friction.ref.packRef.id || strength.ref.packRef.version !== friction.ref.packRef.version || strength.structure.domain !== friction.structure.domain || !strength.findingIds.some((findingId) => friction.findingIds.includes(findingId))) {
+    fail(
+      "The strength and friction cells must use two sides of the same finding-backed mechanism.",
+      {
+        policy: "shared-double-edge-mechanism"
+      }
+    );
+  }
+  if (all.some(({ text }) => text.length < 24)) {
+    fail("Every broad-reading slot must contain a substantive compact paragraph.", {
+      policy: "substantive-broad-paragraph"
+    });
+  }
+  const characterCount = all.reduce((total, item) => total + item.text.length, 0);
+  if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters) {
+    fail("The selected broad reading is too long.", {
+      policy: "compact-broad-presentation",
+      characterCount,
+      maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters
+    });
+  }
+  return resolved;
+}
+function inputCalendarLabel(date) {
+  if (date.calendar === "gregorian") return "\uC591\uB825";
+  return `\uD55C\uAD6D \uC74C\uB825 ${date.monthKind === "leap" ? "\uC724\uB2EC" : "\uD3C9\uB2EC"}`;
+}
+function dateText(date) {
+  return `${date.year}.${String(date.month).padStart(2, "0")}.${String(date.day).padStart(2, "0")}`;
+}
+function timeZoneLabel(timeZone) {
+  return timeZone === "Asia/Seoul" ? "\uD55C\uAD6D \uD45C\uC900\uC2DC" : timeZone;
+}
+function exactBasis(reading) {
+  if (reading.calculationKind !== "exact") fail("Expected an exact calculation.");
+  const chronology = reading.calculation.chronology;
+  const time = /T(\d{2}:\d{2})/u.exec(chronology.civilDateTime)?.[1] ?? "\uC2DC\uAC01 \uBBF8\uC0C1";
+  return `\uAE30\uC900: ${inputCalendarLabel(chronology.inputDate)} ${dateText(
+    chronology.inputDate
+  )} ${time}, ${timeZoneLabel(chronology.timeZone)}`;
+}
+function possibilityBasis(reading) {
+  if (reading.calculationKind !== "possibilities") fail("Expected a possibility calculation.");
+  const input = reading.calculation.input;
+  const time = input.time.kind === "unknown" ? "\uC0DD\uC2DC \uBBF8\uC0C1" : input.time.kind === "day-period" ? input.time.period === "am" ? "\uC624\uC804" : "\uC624\uD6C4" : input.time.kind === "approximate" ? `\uC57D ${String(input.time.time.hour).padStart(2, "0")}:${String(
+    input.time.time.minute
+  ).padStart(2, "0")}` : `${String(input.time.startInclusive.hour).padStart(2, "0")}:${String(
+    input.time.startInclusive.minute
+  ).padStart(2, "0")}~${String(input.time.endExclusive.hour).padStart(
+    2,
+    "0"
+  )}:${String(input.time.endExclusive.minute).padStart(2, "0")}`;
+  return `\uAE30\uC900: ${inputCalendarLabel(input.date)} ${dateText(input.date)}, ${time}, ${timeZoneLabel(
+    input.timeZone
+  )}`;
+}
+function pillarTexts(reading) {
+  if (reading.calculationKind === "exact") {
+    return PILLAR_POSITIONS2.map((position2) => reading.calculation.pillars[position2].korean);
+  }
+  return PILLAR_POSITIONS2.map((position2) => {
+    const pillar = reading.calculation.stablePillars[position2];
+    if (pillar !== null) return pillar.korean;
+    if (position2 === "hour" && reading.calculation.hourPillar === "omitted") return "\uBBF8\uC0C1";
+    return "\uD6C4\uBCF4\uBCC4";
+  });
+}
+function escapeBroadPresentationMarkdownText(value) {
+  const escaped = value.normalize("NFKC").replace(/\s+/gu, " ").trim().replace(/\\/gu, "\\\\").replace(/([*_`[\]#>~])/gu, "\\$1").replaceAll("|", "\\|");
+  return escaped.replace(/^([-+])\s/u, "\\$1 ").replace(/^(\d+)([.)])\s/u, "$1\\$2 ").replace(/^(-{3,})/u, "\\$1");
+}
+function markedMarkdownText(value) {
+  const marker = value.uncertaintyMarker;
+  return `${marker === null ? "" : `${marker} `}${escapeBroadPresentationMarkdownText(value.text)}`;
+}
+function presentationItems(resolved) {
+  return [
+    resolved.portrait,
+    ...Object.values(resolved.atAGlance),
+    ...Object.values(resolved.doubleEdge),
+    ...resolved.workStudy,
+    ...resolved.relationships,
+    resolved.conclusion
+  ];
+}
+function uncertaintyLegend(resolved) {
+  const markers = presentationItems(resolved).map(({ uncertaintyMarker }) => uncertaintyMarker).filter((marker) => marker !== null);
+  if (markers.length === 0) return null;
+  const includesCandidate = markers.some((marker) => marker.includes("\u25B3"));
+  const includesPartial = markers.some((marker) => marker.includes("\u25C7"));
+  return [
+    "\uC870\uAC74 \uD45C\uC2DC:",
+    ...includesCandidate ? ["\u25B3 \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uBD80\uBD84"] : [],
+    ...includesPartial ? ["\u25C7 \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uB9CC \uBC18\uC601\uD55C \uBD80\uBD84"] : []
+  ].join(" \xB7 ");
+}
+function renderMarkdown(reading, resolved) {
+  const pillars = pillarTexts(reading);
+  const legend = uncertaintyLegend(resolved);
+  const lines = [
+    reading.calculationKind === "exact" ? exactBasis(reading) : possibilityBasis(reading),
+    ...legend === null ? [] : ["", legend],
+    "",
+    "| \uB144\uC8FC | \uC6D4\uC8FC | \uC77C\uC8FC | \uC2DC\uC8FC |",
+    "| --- | --- | --- | --- |",
+    `| ${pillars.join(" | ")} |`,
+    "",
+    markedMarkdownText(resolved.portrait),
+    "",
+    "## \uD55C\uB208\uC5D0 \uBCF4\uBA74",
+    "",
+    `- **\uC911\uC2EC \uC131\uD5A5:** ${markedMarkdownText(resolved.atAGlance.disposition)}`,
+    `- **\uACB0\uC815\uACFC \uC2E4\uD589:** ${markedMarkdownText(resolved.atAGlance.execution)}`,
+    `- **\uC0AC\uB78C\uC744 \uB300\uD560 \uB54C:** ${markedMarkdownText(resolved.atAGlance.relationships)}`,
+    "",
+    "## \uAC15\uC810\uC774 \uC0B4\uC544\uB0A0 \uB54C / \uAF2C\uC77C \uB54C",
+    "",
+    "| \uC798 \uD480\uB9B4 \uB54C | \uAF2C\uC77C \uB54C |",
+    "| --- | --- |",
+    `| ${markedMarkdownText(resolved.doubleEdge.strength)} | ${markedMarkdownText(
+      resolved.doubleEdge.friction
+    )} |`,
+    "",
+    "## \uC77C\xB7\uACF5\uBD80",
+    "",
+    ...resolved.workStudy.map((item) => `- ${markedMarkdownText(item)}`),
+    "",
+    "## \uAD00\uACC4",
+    "",
+    ...resolved.relationships.map((item) => `- ${markedMarkdownText(item)}`),
+    "",
+    `**\uD55C \uC904 \uC815\uB9AC:** ${markedMarkdownText(resolved.conclusion)}`
+  ];
+  return lines.join("\n");
+}
+function validateAndRenderOhMySajuBroadPresentation(value, reading) {
+  const sourceRefs = copyBroadPresentationDraft(value);
+  const resolved = resolveBroadPresentation(reading, sourceRefs);
+  return deepFreeze2({
+    schemaVersion: "1",
+    kind: "broad-reading",
+    sourceRefs,
+    markdown: renderMarkdown(reading, resolved)
+  });
+}
+
 // plugins/oh-my-saju/runtime/application/execute.ts
 var MAXIMUM_DRAFT_COUNT = 16;
-function assertOnlyKeys2(value, allowed, field, code = "INVALID_COMMAND") {
+function assertOnlyKeys3(value, allowed, field, code = "INVALID_COMMAND") {
   const allowedSet = new Set(allowed);
   const unexpected = Object.keys(value).filter((key) => !allowedSet.has(key));
   if (unexpected.length > 0) {
@@ -19893,6 +20715,47 @@ function narrationTasks(analysis, request) {
     };
   });
 }
+function assertBroadPresentationCapacity(tasks) {
+  const presentationPolicies = new Set(
+    tasks.map(({ request }) => request.task.readingPolicy.structuredBroadPresentation)
+  );
+  if (presentationPolicies.size !== 1) {
+    throw new OhMySajuApplicationError(
+      "INTERNAL_ERROR",
+      "Prepared narration tasks disagree on the broad-presentation policy."
+    );
+  }
+  if (!presentationPolicies.has(true)) return;
+  const taskCapacities = tasks.map((task) => {
+    if (!task.requiresDraft) return 0;
+    const policy = task.request.task.readingPolicy;
+    const allowedTopics = new Set(
+      task.request.evidence.findings.map(({ topic }) => topic).filter((topic) => isSajuInterpretationTopicAllowed(topic, policy))
+    );
+    return 1 + Math.min(allowedTopics.size, SAJU_NARRATION_PRESENTATION_POLICY.maxSections) * SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection;
+  });
+  const availableParagraphSlots = taskCapacities.reduce((total, capacity) => total + capacity, 0);
+  const hasDoubleEdgeSource = tasks.some((task) => {
+    const policy = task.request.task.readingPolicy;
+    return task.request.evidence.findings.some(
+      ({ topic }) => isSajuInterpretationTopicAllowed(topic, policy)
+    );
+  });
+  const requiredParagraphSlots = SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs;
+  if (availableParagraphSlots >= requiredParagraphSlots && hasDoubleEdgeSource) return;
+  throw new OhMySajuApplicationError(
+    "INVALID_COMMAND",
+    "The selected evidence policy cannot supply the required broad-reading presentation.",
+    {
+      details: {
+        policy: "insufficient-broad-presentation-capacity",
+        availableParagraphSlots,
+        requiredParagraphSlots,
+        recommendation: "use-include-candidate-dependent-or-focused"
+      }
+    }
+  );
+}
 function assertServiceRequest2(value) {
   if (!isRecord2(value) || !isRecord2(value.calculation) || value.calculation.kind !== "exact" && value.calculation.kind !== "possibilities" || !("request" in value.calculation)) {
     throw new OhMySajuApplicationError(
@@ -19900,23 +20763,23 @@ function assertServiceRequest2(value) {
       "request must contain an exact or possibilities calculation."
     );
   }
-  assertOnlyKeys2(
+  assertOnlyKeys3(
     value,
-    ["calculation", "question", "locale", "purpose", "audience", "variantPolicy"],
+    ["calculation", "question", "locale", "purpose", "audience", "variantPolicy", "readingMode"],
     "request"
   );
-  assertOnlyKeys2(value.calculation, ["kind", "request"], "request.calculation");
+  assertOnlyKeys3(value.calculation, ["kind", "request"], "request.calculation");
 }
 function assertCommandVersion(value) {
   if (value !== void 0 && value !== "1") {
     throw new OhMySajuApplicationError("INVALID_COMMAND", 'schemaVersion must be "1".');
   }
 }
-function copyPackRef2(value, field) {
+function copyPackRef3(value, field) {
   if (!isRecord2(value)) {
     throw new OhMySajuApplicationError("INVALID_DRAFT_SET", `${field} must be an object.`);
   }
-  assertOnlyKeys2(value, ["id", "version"], field, "INVALID_DRAFT_SET");
+  assertOnlyKeys3(value, ["id", "version"], field, "INVALID_DRAFT_SET");
   return {
     id: assertDraftIdentifier(value.id, `${field}.id`),
     version: assertDraftIdentifier(value.version, `${field}.version`)
@@ -19947,13 +20810,13 @@ function copyDrafts(value) {
         `drafts[${index}] must contain packRef and output.`
       );
     }
-    assertOnlyKeys2(
+    assertOnlyKeys3(
       entry,
       ["packRef", "output", "metadata"],
       `drafts[${index}]`,
       "INVALID_DRAFT_SET"
     );
-    const packRef = copyPackRef2(entry.packRef, `drafts[${index}].packRef`);
+    const packRef = copyPackRef3(entry.packRef, `drafts[${index}].packRef`);
     const key = refKey(packRef);
     if (seen.has(key)) {
       throw new OhMySajuApplicationError(
@@ -19970,7 +20833,7 @@ function copyDrafts(value) {
     }
     const metadata = entry.metadata;
     if (metadata !== void 0) {
-      assertOnlyKeys2(
+      assertOnlyKeys3(
         metadata,
         ["actualModel", "providerRequestId", "finishReason"],
         `drafts[${index}].metadata`,
@@ -20074,7 +20937,7 @@ function calculateRequestedTiming(request, value) {
       "timing must be an object when supplied."
     );
   }
-  assertOnlyKeys2(value, ["fromYear", "throughYear", "gender", "luckPillarCount"], "timing");
+  assertOnlyKeys3(value, ["fromYear", "throughYear", "gender", "luckPillarCount"], "timing");
   if (request.calculation.kind !== "exact") {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -20117,13 +20980,14 @@ function prepareOhMySajuReadingFromUnknown(command) {
       "command must be a prepare-reading object."
     );
   }
-  assertOnlyKeys2(command, ["schemaVersion", "command", "request", "timing"], "command");
+  assertOnlyKeys3(command, ["schemaVersion", "command", "request", "timing"], "command");
   assertCommandVersion(command.schemaVersion);
   assertServiceRequest2(command.request);
   const analysis = calculateKoreanSajuAnalysis(command.request.calculation);
   assertPresetIntegrity(analysis.preset);
   const timing = calculateRequestedTiming(command.request, command.timing);
   const tasks = narrationTasks(analysis, command.request);
+  assertBroadPresentationCapacity(tasks);
   return deepFreeze2({
     schemaVersion: "1",
     calculationKind: analysis.calculationKind,
@@ -20140,9 +21004,18 @@ async function validateOhMySajuReadingFromUnknown(command) {
       "command must be a validate-reading object."
     );
   }
-  assertOnlyKeys2(
+  assertOnlyKeys3(
     command,
-    ["schemaVersion", "command", "request", "timing", "preparedDigest", "narrator", "drafts"],
+    [
+      "schemaVersion",
+      "command",
+      "request",
+      "timing",
+      "preparedDigest",
+      "narrator",
+      "drafts",
+      "presentationDraft"
+    ],
     "command"
   );
   assertCommandVersion(command.schemaVersion);
@@ -20150,7 +21023,7 @@ async function validateOhMySajuReadingFromUnknown(command) {
   if (!isRecord2(command.narrator)) {
     throw new OhMySajuApplicationError("INVALID_COMMAND", "narrator must be an object.");
   }
-  assertOnlyKeys2(command.narrator, ["id", "requestedModel"], "narrator");
+  assertOnlyKeys3(command.narrator, ["id", "requestedModel"], "narrator");
   const narrator = {
     id: assertSafeIdentifier(command.narrator.id, "narrator.id"),
     requestedModel: assertSafeIdentifier(
@@ -20209,12 +21082,42 @@ async function validateOhMySajuReadingFromUnknown(command) {
     }
   });
   const reading = await service.read(command.request);
+  const presentationPolicies = new Set(
+    prepared.narrationTasks.map(
+      ({ request }) => request.task.readingPolicy.structuredBroadPresentation
+    )
+  );
+  if (presentationPolicies.size !== 1) {
+    throw new OhMySajuApplicationError(
+      "INTERNAL_ERROR",
+      "Prepared narration tasks disagree on the broad-presentation policy."
+    );
+  }
+  const structuredBroadPresentation = prepared.narrationTasks[0]?.request.task.readingPolicy.structuredBroadPresentation ?? false;
+  let presentation = null;
+  if (structuredBroadPresentation) {
+    if (command.presentationDraft === void 0) {
+      throw new OhMySajuApplicationError(
+        "INVALID_COMMAND",
+        "A broad reading requires a final presentationDraft.",
+        { details: { policy: "broad-presentation-required" } }
+      );
+    }
+    presentation = validateAndRenderOhMySajuBroadPresentation(command.presentationDraft, reading);
+  } else if (command.presentationDraft !== void 0) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "presentationDraft is only accepted for a broad reading.",
+      { details: { policy: "broad-presentation-only" } }
+    );
+  }
   return deepFreeze2({
     schemaVersion: "1",
     calculationKind: reading.calculationKind,
     binding: prepared.binding,
     reading,
-    timing: prepared.timing
+    timing: prepared.timing,
+    presentation
   });
 }
 function executeTraditionalSystemCommandFromUnknown(command) {
@@ -20224,7 +21127,7 @@ function executeTraditionalSystemCommandFromUnknown(command) {
       "command must be a run-traditional-system object."
     );
   }
-  assertOnlyKeys2(command, ["schemaVersion", "command", "request"], "command");
+  assertOnlyKeys3(command, ["schemaVersion", "command", "request"], "command");
   assertCommandVersion(command.schemaVersion);
   return runTraditionalSystem(command.request);
 }

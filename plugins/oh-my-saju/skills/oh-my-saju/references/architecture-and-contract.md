@@ -101,9 +101,17 @@ The preparation binding covers:
 - the analysis, timing report, and complete narration task set.
 
 `validate-reading` recalculates that contract and then enforces the exact expected Pack/draft set,
-plain-text output schema, allowed finding references for every paragraph, uncertainty labels, and
-narrator audit metadata. The digest detects mismatch; it is not a secret, signature, or publisher
-identity.
+plain-text output schema, allowed finding references for every paragraph, uncertainty status, and
+narrator audit metadata. For an explicitly requested broad reading it additionally validates final
+role-to-atomic-paragraph references, their declared `domain` and `direction`, and their exact
+situation/behavior/result structure. The fixed slot contract requires matching disposition,
+execution, relationship, and work/study domains; the two sides of one double edge use
+`benefit`/`cost`. The application then deterministically renders the compact Korean Markdown
+presentation. It converts repeated validator uncertainty text into local `△` (candidate-dependent),
+`◇` (partial), or `△◇` markers and emits the definitions once near the presentation's basis line.
+Uncertainty therefore stays attached to each affected claim without repeating a defensive
+sentence, and no free-form rewriting occurs after selection. The digest detects mismatch; it is
+not a secret, signature, or publisher identity.
 
 The host still sees the user's conversation. This boundary limits a separate narration call; it
 does not claim that the host itself never received the birth input.

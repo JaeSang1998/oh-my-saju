@@ -11,6 +11,7 @@ export const SHARED_TRADITION_RUNTIME_PATHS = [
   'plugins/oh-my-saju/runtime/internal/canonical-json.ts',
   'plugins/oh-my-saju/runtime/internal/deep-freeze.ts',
   'plugins/oh-my-saju/runtime/internal/guards.ts',
+  'plugins/oh-my-saju/runtime/reading/prompt-contract.ts',
   'plugins/oh-my-saju/runtime/traditions/catalog.ts',
   'plugins/oh-my-saju/runtime/traditions/domain.ts',
   'plugins/oh-my-saju/runtime/traditions/evaluate.ts',

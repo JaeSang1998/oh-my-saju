@@ -2,6 +2,7 @@
 export type OhMySajuApplicationErrorCode =
   | 'INVALID_COMMAND'
   | 'INVALID_DRAFT_SET'
+  | 'INVALID_PRESENTATION_DRAFT'
   | 'PREPARATION_MISMATCH'
   | 'INTERNAL_ERROR';
 

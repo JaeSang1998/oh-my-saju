@@ -38,6 +38,30 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       expect(policy).toContain('work, study, and execution');
       expect(policy).toContain('relationships and communication');
       expect(policy).toMatch(/three concrete, recognizable\s+manifestations/u);
+      expect(policy).toContain('Default broad-reading display contract');
+      expect(policy).toContain('`한눈에 보면`');
+      expect(policy).toContain('`강점이 살아날 때 / 꼬일 때`');
+      expect(policy).toContain('Prefer bullets and small tables');
+      expect(policy).toContain('Each broad-reading paragraph is one atomic sentence');
+    }
+  });
+
+  test('keeps advanced doctrine behind progressive disclosure', () => {
+    const skill = readSkillFile('SKILL.md');
+    const style = readSkillFile('references/korean-interpretation-style.md');
+
+    for (const policy of [skill, style]) {
+      expect(policy).toContain('Progressive disclosure');
+      expect(policy).toContain('Do not mention these terms in a broad reading');
+      for (const term of ['격국', '조후', '용신', '신살', '공망']) {
+        expect(policy).toContain(`\`${term}\``);
+      }
+      expect(policy).toContain(
+        'Never end a broad reading with a limitations or unresolved-doctrine paragraph',
+      );
+      expect(policy).toContain(
+        'If a finding cannot support a plain-language implication, omit the finding entirely',
+      );
     }
   });
 
@@ -48,10 +72,30 @@ describe('Oh My Saju agent-skill conversation policy', () => {
 
     for (const policy of [skill, style]) {
       expect(policy).toContain('Do not append a generic scientific-validity disclaimer');
-      expect(policy).toContain('audit metadata');
+      expect(policy).toContain('`displayPolicy: "audit-only"`');
+      expect(policy).toContain('`defaultDisplay: false`');
     }
     expect(interfaceMetadata).not.toContain('explicit limits');
     expect(interfaceMetadata).toContain('natural Korean interpretation');
+    expect(interfaceMetadata).toContain('short, sectioned, and layperson-first');
+    expect(interfaceMetadata).toContain('omit advanced doctrine unless the user asks for it');
+  });
+
+  test('requires the validated deterministic presentation for a broad reading', () => {
+    const skill = readSkillFile('SKILL.md');
+    const inputReference = readSkillFile('references/input-and-runtime.md');
+
+    expect(skill).toContain('Set `request.readingMode` explicitly');
+    expect(skill).toContain('For `readingMode: "broad"`, `presentationDraft` is required');
+    expect(skill).toContain('output `result.presentation.markdown` exactly');
+    expect(skill).toMatch(/Do not\s+rephrase it/u);
+    expect(inputReference).toContain('nine distinct atomic paragraphs');
+    expect(inputReference).toMatch(/`situation`, `behavior`, and\s+`result`/u);
+    expect(inputReference).toContain('declares a matching `domain` and `direction`');
+    expect(inputReference).toContain('replaces repeated uncertainty prose with a local `△` marker');
+    expect(inputReference).toContain('one legend near the basis line');
+    expect(inputReference).toContain('already passed the Pack claim gate');
+    expect(inputReference).toMatch(/show\s+that Markdown as-is/u);
   });
 
   test('ships the conversation-policy improvement as a new plugin patch version', () => {
@@ -69,7 +113,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       skills: { 'oh-my-saju': string };
     };
 
-    expect(portable.version).toBe('0.4.1');
+    expect(portable.version).toBe('0.4.3');
     expect(codex.version).toBe(portable.version);
     expect(claude.version).toBe(portable.version);
     expect(versions.plugin).toBe(portable.version);

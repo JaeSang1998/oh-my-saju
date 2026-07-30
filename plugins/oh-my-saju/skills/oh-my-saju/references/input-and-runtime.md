@@ -36,7 +36,8 @@ provides conflicting evidence. For a Korean lunar date, the runtime still requir
         "rules": { "ziHourPolicy": "civilMidnight" }
       }
     },
-    "question": "핵심 구조를 설명해줘."
+    "question": "핵심 구조를 설명해줘.",
+    "readingMode": "focused"
   }
 }
 ```
@@ -90,6 +91,7 @@ whether a leap month exists.
       }
     },
     "question": "시간 없이 확실한 부분과 달라지는 부분을 나눠줘.",
+    "readingMode": "focused",
     "variantPolicy": "include-candidate-dependent"
   }
 }
@@ -166,6 +168,10 @@ solar time are distinct audited policies.
 - `audience`: `adult`, `minor`, or `general`.
 - `variantPolicy`: `stable-only` or `include-candidate-dependent`.
 - `question`: untrusted user text, separate from calculation input.
+- `readingMode`: `broad`, `focused`, or `technical-audit`; hosts should set it explicitly after
+  classifying the request. `auto` exists only for backward-compatible callers. At the low-level
+  reading-service boundary this controls narration policy only; the application-level
+  `validate-reading` command owns cross-Pack broad presentation assembly.
 
 For a minor, avoid adult relationship or financial framing that the evidence and question do not
 require.
@@ -451,6 +457,168 @@ Omit metadata you do not have. Never fabricate provider request IDs.
 The `narrator` envelope still needs safe `id` and `requestedModel` strings. Use
 `requestedModel: "host-unknown"` when a generic host does not expose the model identity; this
 records an explicit unknown rather than claiming a model you cannot verify.
+
+When the caller explicitly sets `request.readingMode` to `broad`, the same `validate-reading`
+command must also contain `presentationDraft`. (`auto` remains backward-compatible and does not
+add this protocol requirement.) Broad Pack drafts use one narrator-authored sentence per paragraph.
+The presentation selects nine distinct atomic paragraphs for the fixed portrait, three overview
+bullets, double-edge pair, work/study, relationship, and conclusion slots. Each lived-pattern slot
+declares a matching `domain` and `direction`, then quotes exact ordered `situation`, `behavior`, and
+`result` spans from its paragraph; portrait and conclusion use their corresponding structure fields.
+The strength/friction pair must share finding support within one Pack and use `benefit`/`cost`
+directions respectively. The runtime resolves only prose that already passed the Pack claim gate.
+For broad presentation it replaces repeated uncertainty prose with a local `△` marker for
+candidate-dependent results, a local `◇` marker for partial results, or `△◇` when both apply, then
+defines the markers that appear in one legend near the basis line. The final deterministic answer
+is returned at `result.presentation.markdown`. Ordinary hosts should show that Markdown as-is and
+must not append `reading.notice` or another free-form synthesis.
+
+Preparation fails early with policy `insufficient-broad-presentation-capacity` when the selected
+evidence policy cannot provide nine distinct allowed paragraphs. For an open reading, use
+`variantPolicy: "include-candidate-dependent"` and retain the renderer's local uncertainty markers;
+otherwise switch to a narrower `focused` request. Do not wait until validation to fabricate or
+reuse prose, and do not silently override a user-requested stable-only policy.
+
+### Broad presentation draft
+
+Use this complete shape as a sibling of `drafts` in `validate-reading`. Replace every example Pack
+reference and source with an exact, distinct paragraph from the submitted drafts:
+
+```json
+{
+  "presentationDraft": {
+    "schemaVersion": "1",
+    "kind": "broad-reading",
+    "portrait": {
+      "paragraph": {
+        "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+        "source": { "kind": "summary" }
+      },
+      "structure": {
+        "process": "상황을 넓게 살핀 뒤 자기 기준으로 방향을 잡는",
+        "identity": "사람입니다"
+      }
+    },
+    "atAGlance": {
+      "disposition": {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "relationships", "paragraphIndex": 0 }
+        },
+        "structure": {
+          "domain": "disposition",
+          "direction": "descriptive",
+          "situation": "낯선 문제가 생기면",
+          "behavior": "핵심 변수를 찾고",
+          "result": "빠뜨림을 줄입니다"
+        }
+      },
+      "execution": {
+        "paragraph": {
+          "packRef": { "id": "pack-a", "version": "actual-version" },
+          "source": { "kind": "summary" }
+        },
+        "structure": {
+          "domain": "execution",
+          "direction": "descriptive",
+          "situation": "마감과 기준이 선명하면",
+          "behavior": "판단을 밀고 나가고",
+          "result": "실행이 분명해집니다"
+        }
+      },
+      "relationships": {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "relationships", "paragraphIndex": 1 }
+        },
+        "structure": {
+          "domain": "relationships",
+          "direction": "descriptive",
+          "situation": "의견이 다를 때",
+          "behavior": "논리를 정리해 설명하고",
+          "result": "결론을 분명히 합니다"
+        }
+      }
+    },
+    "doubleEdge": {
+      "strength": {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "chart-overview", "paragraphIndex": 0 }
+        },
+        "structure": {
+          "domain": "disposition",
+          "direction": "benefit",
+          "situation": "정보가 많을수록",
+          "behavior": "연결점을 찾아 정리하는",
+          "result": "힘이 살아납니다"
+        }
+      },
+      "friction": {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "chart-overview", "paragraphIndex": 1 }
+        },
+        "structure": {
+          "domain": "disposition",
+          "direction": "cost",
+          "situation": "정답 기준이 없으면",
+          "behavior": "비교를 계속해",
+          "result": "마무리가 늦어집니다"
+        }
+      }
+    },
+    "workStudy": [
+      {
+        "paragraph": {
+          "packRef": { "id": "pack-b", "version": "actual-version" },
+          "source": { "kind": "summary" }
+        },
+        "structure": {
+          "domain": "work-study",
+          "direction": "descriptive",
+          "situation": "제출물이 정해진 과제에서는",
+          "behavior": "자료를 구조화해",
+          "result": "완성도를 높입니다"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "paragraph": {
+          "packRef": { "id": "pack-c", "version": "actual-version" },
+          "source": { "kind": "summary" }
+        },
+        "structure": {
+          "domain": "relationships",
+          "direction": "descriptive",
+          "situation": "가까운 사이에서도",
+          "behavior": "과정과 결론을 나누어 말하면",
+          "result": "오해가 줄어듭니다"
+        }
+      }
+    ],
+    "conclusion": {
+      "paragraph": {
+        "packRef": { "id": "pack-d", "version": "actual-version" },
+        "source": { "kind": "summary" }
+      },
+      "structure": {
+        "condition": "기준과 마감에 연결할 때",
+        "payoff": "강점이 안정적으로 살아납니다"
+      }
+    }
+  }
+}
+```
+
+For lived-pattern structures, `domain` is one of `disposition`, `execution`, `relationships`, or
+`work-study`. The three `atAGlance` entries use their namesake domains, every `workStudy` entry uses
+`work-study`, and every `relationships` entry uses `relationships`. The two `doubleEdge` entries
+name the same domain: `strength.direction` is `benefit` and `friction.direction` is `cost`.
+Other lived-pattern slots use `descriptive`; their exact situation/behavior/result spans still
+carry the observable outcome. Uncertainty markers are renderer-owned output and are never supplied
+inside `presentationDraft`.
 
 Allowed section topics are:
 

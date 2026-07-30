@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oh-my-saju",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "Auditable Korean Saju, traditional-system calculations, election ranking, and grounded readings for agent hosts.",
   "author": {
     "name": "Jaesang Lee"

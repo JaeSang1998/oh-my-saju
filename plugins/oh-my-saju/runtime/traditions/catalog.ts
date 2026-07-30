@@ -1,5 +1,6 @@
 /** Plugin-owned catalog of installed Tradition Packs. */
 import { deepFreeze } from '../internal/deep-freeze';
+import { SAJU_NARRATION_PROMPT_TEMPLATE } from '../reading/prompt-contract';
 import { COMMON_STRUCTURAL_PROFILE_V1 } from '../../tradition-packs/calculation-baseline/profile';
 import { CALCULATION_BASELINE_PROVENANCE } from '../../tradition-packs/calculation-baseline/provenance';
 import { DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 } from '../../tradition-packs/ditianshui/profile';
@@ -64,8 +65,7 @@ function contract(
     },
     aiPromptTemplate: aiEnabled
       ? {
-          id: 'saju-grounded-narration',
-          version: '2.0.0',
+          ...SAJU_NARRATION_PROMPT_TEMPLATE,
           findingsFromOnePackOnly: true,
         }
       : null,

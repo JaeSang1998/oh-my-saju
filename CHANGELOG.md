@@ -1,5 +1,30 @@
 # Changelog
 
+## Oh My Saju plugin 0.4.3 — 2026-07-30
+
+- Added a required broad-reading presentation contract that selects
+  finding-backed atomic paragraphs, verifies domain/direction and
+  situation/behavior/result structure, and deterministically renders the final
+  four-section Markdown without a post-validation free-form rewrite.
+- Replaced repeated birth-time uncertainty sentences in broad output with local
+  `△`/`◇` claim markers and one shared legend near the basis line.
+- Added a prepare-time capacity check so sparse stable-only evidence cannot
+  enter a broad-reading workflow that has no valid nine-slot presentation.
+- Separated named-doctrine requests from science, uncertainty, and audit
+  metadata opt-ins so narrow technical questions cannot re-enable generic
+  defense paragraphs.
+
+## Oh My Saju plugin 0.4.2 — 2026-07-30
+
+- Made open-ended readings compact, sectioned, and focused on recognizable
+  personality, execution, and relationship patterns.
+- Hid advanced doctrine and unresolved candidates until the user explicitly
+  asks for technical detail.
+- Reclassified profile limitations and unavailable rules as internal
+  non-display guardrails instead of user-facing caveats.
+- Enforced the compact, jargon-opt-in contract during local narrator-output
+  validation and marked runtime notices as audit-only.
+
 ## Oh My Saju plugin 0.4.1 — 2026-07-30
 
 - Applied Korean civil-time defaults without blocking confirmation, including

@@ -8,6 +8,8 @@ import {
 import { prepareAiSajuNarrationRequest } from '../reading/create-reading';
 import { isAiReadingError } from '../reading/errors';
 import { assertSafeIdentifier } from '../reading/option-validation';
+import { SAJU_NARRATION_PRESENTATION_POLICY } from '../reading/prompt-contract';
+import { isSajuInterpretationTopicAllowed } from '../reading/reading-policy';
 import type { AiSajuServiceRequest, SajuNarratorResponse } from '../reading/types';
 import { isSajuError } from 'saju-engine';
 import { runTraditionalSystem } from '../systems/registry';
@@ -30,6 +32,7 @@ import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { calculateSajuTiming } from 'saju-engine/timing';
 import type { SajuTimingReport } from 'saju-engine/timing';
 import { OhMySajuApplicationError, isOhMySajuApplicationError } from './errors';
+import { validateAndRenderOhMySajuBroadPresentation } from './broad-presentation';
 import type {
   OhMySajuCommand,
   OhMySajuFailure,
@@ -88,6 +91,57 @@ function narrationTasks(
   });
 }
 
+function assertBroadPresentationCapacity(tasks: readonly OhMySajuNarrationTask[]): void {
+  const presentationPolicies = new Set(
+    tasks.map(({ request }) => request.task.readingPolicy.structuredBroadPresentation),
+  );
+  if (presentationPolicies.size !== 1) {
+    throw new OhMySajuApplicationError(
+      'INTERNAL_ERROR',
+      'Prepared narration tasks disagree on the broad-presentation policy.',
+    );
+  }
+  if (!presentationPolicies.has(true)) return;
+
+  const taskCapacities = tasks.map((task) => {
+    if (!task.requiresDraft) return 0;
+    const policy = task.request.task.readingPolicy;
+    const allowedTopics = new Set(
+      task.request.evidence.findings
+        .map(({ topic }) => topic)
+        .filter((topic) => isSajuInterpretationTopicAllowed(topic, policy)),
+    );
+    return (
+      1 +
+      Math.min(allowedTopics.size, SAJU_NARRATION_PRESENTATION_POLICY.maxSections) *
+        SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection
+    );
+  });
+  const availableParagraphSlots = taskCapacities.reduce((total, capacity) => total + capacity, 0);
+  const hasDoubleEdgeSource = tasks.some((task) => {
+    const policy = task.request.task.readingPolicy;
+    return task.request.evidence.findings.some(({ topic }) =>
+      isSajuInterpretationTopicAllowed(topic, policy),
+    );
+  });
+  const requiredParagraphSlots =
+    SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs;
+  if (availableParagraphSlots >= requiredParagraphSlots && hasDoubleEdgeSource) return;
+
+  throw new OhMySajuApplicationError(
+    'INVALID_COMMAND',
+    'The selected evidence policy cannot supply the required broad-reading presentation.',
+    {
+      details: {
+        policy: 'insufficient-broad-presentation-capacity',
+        availableParagraphSlots,
+        requiredParagraphSlots,
+        recommendation: 'use-include-candidate-dependent-or-focused',
+      },
+    },
+  );
+}
+
 function assertServiceRequest(value: unknown): asserts value is AiSajuServiceRequest {
   if (
     !isRecord(value) ||
@@ -102,7 +156,7 @@ function assertServiceRequest(value: unknown): asserts value is AiSajuServiceReq
   }
   assertOnlyKeys(
     value,
-    ['calculation', 'question', 'locale', 'purpose', 'audience', 'variantPolicy'],
+    ['calculation', 'question', 'locale', 'purpose', 'audience', 'variantPolicy', 'readingMode'],
     'request',
   );
   assertOnlyKeys(value.calculation, ['kind', 'request'], 'request.calculation');
@@ -357,6 +411,7 @@ function prepareOhMySajuReadingFromUnknown(command: unknown): PreparedOhMySajuRe
   assertPresetIntegrity(analysis.preset);
   const timing = calculateRequestedTiming(command.request, command.timing);
   const tasks = narrationTasks(analysis, command.request);
+  assertBroadPresentationCapacity(tasks);
   return deepFreeze({
     schemaVersion: '1',
     calculationKind: analysis.calculationKind,
@@ -384,7 +439,16 @@ async function validateOhMySajuReadingFromUnknown(
   }
   assertOnlyKeys(
     command,
-    ['schemaVersion', 'command', 'request', 'timing', 'preparedDigest', 'narrator', 'drafts'],
+    [
+      'schemaVersion',
+      'command',
+      'request',
+      'timing',
+      'preparedDigest',
+      'narrator',
+      'drafts',
+      'presentationDraft',
+    ],
     'command',
   );
   assertCommandVersion(command.schemaVersion);
@@ -461,12 +525,43 @@ async function validateOhMySajuReadingFromUnknown(
     },
   });
   const reading = await service.read(command.request);
+  const presentationPolicies = new Set(
+    prepared.narrationTasks.map(
+      ({ request }) => request.task.readingPolicy.structuredBroadPresentation,
+    ),
+  );
+  if (presentationPolicies.size !== 1) {
+    throw new OhMySajuApplicationError(
+      'INTERNAL_ERROR',
+      'Prepared narration tasks disagree on the broad-presentation policy.',
+    );
+  }
+  const structuredBroadPresentation =
+    prepared.narrationTasks[0]?.request.task.readingPolicy.structuredBroadPresentation ?? false;
+  let presentation: ValidatedOhMySajuReading['presentation'] = null;
+  if (structuredBroadPresentation) {
+    if (command.presentationDraft === undefined) {
+      throw new OhMySajuApplicationError(
+        'INVALID_COMMAND',
+        'A broad reading requires a final presentationDraft.',
+        { details: { policy: 'broad-presentation-required' } },
+      );
+    }
+    presentation = validateAndRenderOhMySajuBroadPresentation(command.presentationDraft, reading);
+  } else if (command.presentationDraft !== undefined) {
+    throw new OhMySajuApplicationError(
+      'INVALID_COMMAND',
+      'presentationDraft is only accepted for a broad reading.',
+      { details: { policy: 'broad-presentation-only' } },
+    );
+  }
   return deepFreeze({
     schemaVersion: '1',
     calculationKind: reading.calculationKind,
     binding: prepared.binding,
     reading,
     timing: prepared.timing,
+    presentation,
   });
 }
 

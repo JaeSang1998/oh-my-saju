@@ -4,8 +4,10 @@ import type {
   AiSajuServiceRequest,
   SajuNarrationRequest,
 } from '../reading/types';
+import type { SajuNarrationPromptTemplate } from '../reading/prompt-contract';
 import type {
   ExactKoreanSajuAnalysisResult,
+  InterpretationTopic,
   PossibilityKoreanSajuAnalysisResult,
   TraditionProfileRef,
   TraditionPackRef,
@@ -82,12 +84,9 @@ export interface PreparedOhMySajuReading {
       };
     }[];
     readonly reading: {
-      readonly promptTemplate: {
-        readonly id: 'saju-grounded-narration';
-        readonly version: '2.0.0';
-      };
-      readonly outputSchemaVersion: '2';
-      readonly claimGateVersion: '2';
+      readonly promptTemplate: SajuNarrationPromptTemplate;
+      readonly outputSchemaVersion: '3';
+      readonly claimGateVersion: '3';
     };
   };
 }
@@ -115,6 +114,78 @@ export interface OhMySajuNarrationDraft {
   };
 }
 
+export type OhMySajuParagraphSource =
+  | {
+      readonly kind: 'summary';
+    }
+  | {
+      readonly kind: 'section';
+      readonly topic: InterpretationTopic;
+      readonly paragraphIndex: 0 | 1;
+    };
+
+/** Selects one atomic paragraph that already passed the Pack claim gate. */
+export interface OhMySajuParagraphRef {
+  readonly packRef: TraditionPackRef;
+  readonly source: OhMySajuParagraphSource;
+}
+
+export interface OhMySajuLivedPatternRef {
+  readonly paragraph: OhMySajuParagraphRef;
+  /** Exact, ordered substrings of the selected paragraph. */
+  readonly structure: {
+    readonly domain: 'disposition' | 'execution' | 'relationships' | 'work-study';
+    readonly direction: 'benefit' | 'cost' | 'descriptive';
+    readonly situation: string;
+    readonly behavior: string;
+    readonly result: string;
+  };
+}
+
+export interface OhMySajuPortraitRef {
+  readonly paragraph: OhMySajuParagraphRef;
+  /** Exact, ordered substrings that describe a process and the resulting self-portrait. */
+  readonly structure: {
+    readonly process: string;
+    readonly identity: string;
+  };
+}
+
+export interface OhMySajuConclusionRef {
+  readonly paragraph: OhMySajuParagraphRef;
+  /** Exact, ordered substrings that connect a condition to a concrete payoff. */
+  readonly structure: {
+    readonly condition: string;
+    readonly payoff: string;
+  };
+}
+
+export interface OhMySajuBroadPresentationDraft {
+  readonly schemaVersion: '1';
+  readonly kind: 'broad-reading';
+  readonly portrait: OhMySajuPortraitRef;
+  readonly atAGlance: {
+    readonly disposition: OhMySajuLivedPatternRef;
+    readonly execution: OhMySajuLivedPatternRef;
+    readonly relationships: OhMySajuLivedPatternRef;
+  };
+  readonly doubleEdge: {
+    readonly strength: OhMySajuLivedPatternRef;
+    readonly friction: OhMySajuLivedPatternRef;
+  };
+  readonly workStudy: readonly [OhMySajuLivedPatternRef, OhMySajuLivedPatternRef?];
+  readonly relationships: readonly [OhMySajuLivedPatternRef, OhMySajuLivedPatternRef?];
+  readonly conclusion: OhMySajuConclusionRef;
+}
+
+export interface OhMySajuBroadPresentation {
+  readonly schemaVersion: '1';
+  readonly kind: 'broad-reading';
+  /** Canonical references retained for audits; ordinary display uses only markdown. */
+  readonly sourceRefs: OhMySajuBroadPresentationDraft;
+  readonly markdown: string;
+}
+
 export interface PrepareOhMySajuReadingCommand {
   readonly schemaVersion?: '1';
   readonly command: 'prepare-reading';
@@ -123,10 +194,9 @@ export interface PrepareOhMySajuReadingCommand {
   readonly timing?: OhMySajuTimingOptions;
 }
 
-export interface ValidateOhMySajuReadingCommand {
+interface ValidateOhMySajuReadingCommandBase {
   readonly schemaVersion?: '1';
   readonly command: 'validate-reading';
-  readonly request: AiSajuServiceRequest;
   /** Must match the timing options used during preparation, when any. */
   readonly timing?: OhMySajuTimingOptions;
   /** Copy `result.binding.digest` from the matching prepare-reading response. */
@@ -134,6 +204,19 @@ export interface ValidateOhMySajuReadingCommand {
   readonly narrator: OhMySajuNarratorIdentity;
   readonly drafts: readonly OhMySajuNarrationDraft[];
 }
+
+/** The type contract mirrors the runtime: only explicit broad mode requires final assembly. */
+export type ValidateOhMySajuReadingCommand =
+  | (ValidateOhMySajuReadingCommandBase & {
+      readonly request: AiSajuServiceRequest & { readonly readingMode: 'broad' };
+      readonly presentationDraft: OhMySajuBroadPresentationDraft;
+    })
+  | (ValidateOhMySajuReadingCommandBase & {
+      readonly request: AiSajuServiceRequest & {
+        readonly readingMode?: 'auto' | 'focused' | 'technical-audit';
+      };
+      readonly presentationDraft?: never;
+    });
 
 export interface RunTraditionalSystemCommand {
   readonly schemaVersion?: '1';
@@ -174,6 +257,7 @@ export interface ValidatedOhMySajuReading {
   readonly binding: PreparedOhMySajuReading['binding'];
   readonly reading: AiSajuComparisonServiceResult;
   readonly timing: SajuTimingReport | null;
+  readonly presentation: OhMySajuBroadPresentation | null;
 }
 
 export interface OhMySajuFailure {

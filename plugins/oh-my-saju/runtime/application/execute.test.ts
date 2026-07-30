@@ -115,16 +115,16 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.4.0',
+        version: '0.4.3',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '2.0.0',
+          version: '3.0.0',
         },
-        outputSchemaVersion: '2',
-        claimGateVersion: '2',
+        outputSchemaVersion: '3',
+        claimGateVersion: '3',
       },
     });
     expect(response.result.binding.packs.map(({ packRef }) => packRef.id)).toEqual([
@@ -170,6 +170,25 @@ describe('executeOhMySaju', () => {
         audience: 'general',
       });
       expect(task.request.grounding.variantPolicy).toBe('include-candidate-dependent');
+      expect(task.request.task.presentation).toEqual({
+        mode: 'compact-layperson',
+        format: 'sectioned-bullets',
+        maxParagraphSentences: 2,
+        maxSections: 4,
+        maxParagraphsPerSection: 2,
+        maxNarrativeCharacters: 2_400,
+        maxParagraphCharacters: 800,
+        advancedDoctrine: 'only-when-explicitly-requested',
+        neverEndWithLimitations: true,
+        broadReading: {
+          finalSelectionRequired: true,
+          minimumDistinctParagraphs: 9,
+          maxSelectedParagraphCharacters: 240,
+          maxPresentationCharacters: 1_000,
+          structuredLivedPatternRequired: true,
+        },
+      });
+      expect(task.request.evidence.nonDisplayGuardrails.neverQuoteOrParaphrase).toBe(true);
       expect(
         task.request.evidence.findings.every(({ id }) =>
           id.startsWith(

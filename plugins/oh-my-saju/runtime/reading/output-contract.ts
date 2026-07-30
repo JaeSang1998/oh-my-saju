@@ -1,5 +1,6 @@
 /** Local schema used to constrain narration output. */
 import { deepFreeze } from '../internal/deep-freeze';
+import { SAJU_NARRATION_PRESENTATION_POLICY } from './prompt-contract';
 
 export const SAJU_NARRATIVE_TITLE = '사주 해석';
 
@@ -24,7 +25,7 @@ export const SAJU_TOPIC_TITLES = deepFreeze({
 /** Provider-facing prose contract with mandatory package finding references. */
 export const SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze({
   $schema: 'https://json-schema.org/draft/2020-12/schema',
-  $id: 'https://saju-engine.local/schemas/ai-narrative-v2.json',
+  $id: 'https://saju-engine.local/schemas/ai-narrative-v3.json',
   title: 'Saju finding-referenced narrative',
   type: 'object',
   additionalProperties: false,
@@ -33,7 +34,7 @@ export const SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze({
     summary: { $ref: '#/$defs/paragraph' },
     sections: {
       type: 'array',
-      maxItems: 15,
+      maxItems: SAJU_NARRATION_PRESENTATION_POLICY.maxSections,
       items: {
         type: 'object',
         additionalProperties: false,
@@ -43,7 +44,7 @@ export const SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze({
           paragraphs: {
             type: 'array',
             minItems: 1,
-            maxItems: 12,
+            maxItems: SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection,
             items: { $ref: '#/$defs/paragraph' },
           },
         },
@@ -59,7 +60,7 @@ export const SAJU_NARRATIVE_JSON_SCHEMA = deepFreeze({
         text: {
           type: 'string',
           minLength: 1,
-          maxLength: 4000,
+          maxLength: SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters,
         },
         findingIds: {
           type: 'array',

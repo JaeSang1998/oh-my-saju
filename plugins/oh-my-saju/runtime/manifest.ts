@@ -1,10 +1,11 @@
 import { deepFreeze } from './internal/deep-freeze';
+import { SAJU_NARRATION_PROMPT_TEMPLATE } from './reading/prompt-contract';
 
 /** Provenance owned by the plugin runtime, deliberately separate from ENGINE_MANIFEST. */
 export const OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze({
   runtime: {
     name: 'oh-my-saju',
-    version: '0.4.0',
+    version: '0.4.3',
     schemaVersion: '1',
   },
   compatibility: {
@@ -18,12 +19,9 @@ export const OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze({
     crossPackVoting: false,
   },
   reading: {
-    promptTemplate: {
-      id: 'saju-grounded-narration',
-      version: '2.0.0',
-    },
-    outputSchemaVersion: '2',
-    claimGateVersion: '2',
+    promptTemplate: SAJU_NARRATION_PROMPT_TEMPLATE,
+    outputSchemaVersion: '3',
+    claimGateVersion: '3',
   },
 } as const);
 

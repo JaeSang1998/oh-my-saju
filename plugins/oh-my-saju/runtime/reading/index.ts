@@ -11,6 +11,12 @@ export { createAiSajuService } from './create-reading';
 export { AiReadingError, isAiReadingError } from './errors';
 export { SAJU_NARRATIVE_JSON_SCHEMA } from './output-contract';
 export type {
+  ResolvedSajuReadingPolicy,
+  SajuDoctrineDisclosureId,
+  SajuReadingMode,
+  SajuReadingModePreference,
+} from './reading-policy';
+export type {
   AiReadingErrorCode,
   AiKoreanSajuService,
   AiSajuComparisonService,

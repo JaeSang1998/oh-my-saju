@@ -33,12 +33,14 @@ import type {
   SajuReadingPurpose,
   SajuVariantPolicy,
 } from './types';
+import { assertReadingModePreference, type SajuReadingModePreference } from './reading-policy';
 
 export interface ComparisonReadingDefaults {
   readonly locale: SajuReadingLocale;
   readonly purpose: SajuReadingPurpose;
   readonly audience: SajuReadingAudience;
   readonly variantPolicy: SajuVariantPolicy;
+  readonly readingMode: SajuReadingModePreference;
 }
 
 /** Shared by the comparison service and provider-neutral agent preparation seam. */
@@ -47,6 +49,7 @@ export const DEFAULT_COMPARISON_READING_OPTIONS: ComparisonReadingDefaults = dee
   purpose: 'school-comparison',
   audience: 'general',
   variantPolicy: 'include-candidate-dependent',
+  readingMode: 'auto',
 });
 const MAXIMUM_PACK_COUNT = 16;
 
@@ -119,6 +122,10 @@ function snapshotOptions(options: unknown): ComparisonServiceSnapshot {
       options.variantPolicy ?? DEFAULT_COMPARISON_READING_OPTIONS.variantPolicy,
       'options.variantPolicy',
     ),
+    readingMode: assertReadingModePreference(
+      options.readingMode ?? DEFAULT_COMPARISON_READING_OPTIONS.readingMode,
+      'options.readingMode',
+    ),
   });
 }
 
@@ -164,6 +171,7 @@ export function comparisonPackReadingInput(
     purpose: request.purpose ?? defaults.purpose,
     audience: request.audience ?? defaults.audience,
     variantPolicy: request.variantPolicy ?? defaults.variantPolicy,
+    readingMode: request.readingMode ?? defaults.readingMode,
     ...(request.question === undefined ? {} : { question: request.question }),
   };
 }

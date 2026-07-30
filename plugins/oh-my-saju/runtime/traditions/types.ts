@@ -7,6 +7,7 @@ import type {
   SajuReport,
   SajuRequest,
 } from 'saju-engine';
+import type { SajuNarrationPromptTemplate } from '../reading/prompt-contract';
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue =
@@ -371,11 +372,11 @@ export interface TraditionPackContract {
       };
     };
   };
-  readonly aiPromptTemplate: {
-    readonly id: 'saju-grounded-narration';
-    readonly version: '2.0.0';
-    readonly findingsFromOnePackOnly: true;
-  } | null;
+  readonly aiPromptTemplate:
+    | (SajuNarrationPromptTemplate & {
+        readonly findingsFromOnePackOnly: true;
+      })
+    | null;
 }
 
 /** Pack-local declaration consumed by the plugin's built-in registry. */

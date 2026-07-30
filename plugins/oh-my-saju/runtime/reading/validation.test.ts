@@ -24,6 +24,7 @@ const ASSESSMENT = evaluateSajuInterpretation(calculateSaju(EXACT_REQUEST), {
   profile: COMMON_STRUCTURAL_PROFILE_V1,
 });
 const FINDING = ASSESSMENT.findings[0]!;
+const FIVE_ELEMENT_FINDING = ASSESSMENT.findings.find(({ topic }) => topic === 'five-elements')!;
 
 function plan(
   findingIds: readonly string[] = [FINDING.id],
@@ -43,9 +44,10 @@ function response(output: unknown = plan()): SajuNarratorResponse {
   return { output, metadata: { actualModel: 'fixture-actual' } };
 }
 
-function inputReturning(output: unknown): CreateAiSajuReadingInput {
+function inputReturning(output: unknown, question?: string): CreateAiSajuReadingInput {
   return {
     assessment: ASSESSMENT,
+    ...(question === undefined ? {} : { question }),
     narrator: {
       id: 'validation-fixture',
       requestedModel: 'fixture',
@@ -56,7 +58,7 @@ function inputReturning(output: unknown): CreateAiSajuReadingInput {
   };
 }
 
-describe('AI request and error validation v2', () => {
+describe('AI request and error validation v3', () => {
   test('별도 오류 타입을 유지하되 provider 원인은 공개 오류에서 제거한다', async () => {
     const error = new AiReadingError('INVALID_REQUEST', 'invalid', {
       details: { field: 'locale' },
@@ -87,6 +89,7 @@ describe('AI request and error validation v2', () => {
     { name: '공백 purpose', patch: { purpose: 'education comparison' } },
     { name: '지원하지 않는 audience', patch: { audience: 'employer' } },
     { name: '지원하지 않는 variant policy', patch: { variantPolicy: 'random-candidate' } },
+    { name: '지원하지 않는 reading mode', patch: { readingMode: 'generic' } },
     { name: 'zero-width question', patch: { question: '핵\u200b심' } },
   ])('$name 입력을 모델 호출 전에 거부한다', async ({ patch }) => {
     const narrate = vi.fn(async () => response());
@@ -219,10 +222,15 @@ describe('AI request and error validation v2', () => {
     expect(
       SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.minItems,
     ).toBe(1);
+    expect(SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.maxItems).toBe(4);
+    expect(
+      SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.maxItems,
+    ).toBe(2);
+    expect(SAJU_NARRATIVE_JSON_SCHEMA.$defs.paragraph.properties.text.maxLength).toBe(800);
   });
 });
 
-describe('AI output validation v2', () => {
+describe('AI output validation v3', () => {
   test.each([
     { name: '객체가 아닌 출력', raw: 'plain text', code: 'INVALID_NARRATOR_OUTPUT' },
     {
@@ -318,10 +326,366 @@ describe('AI output validation v2', () => {
     ).rejects.toMatchObject({ code: 'INVALID_NARRATOR_OUTPUT' });
   });
 
-  test('임의의 평문 prose는 의미 스캔 없이 참조 계약만 충족하면 유지한다', async () => {
+  test('좁은 질문의 평문 prose는 참조 계약만 충족하면 한 문단으로 유지한다', async () => {
     const text = '이 구조를 직업 선택의 참고 관점으로 설명할 수 있습니다.';
-    const reading = await createAiSajuReading(inputReturning(plan([FINDING.id], text)));
+    const reading = await createAiSajuReading(
+      inputReturning(plan([FINDING.id], text), '직업 선택을 간단히 설명해줘.'),
+    );
     expect(reading.narrative.summary.text).toBe(text);
+  });
+
+  test('두 문장을 넘는 줄글과 지나치게 긴 문단을 compact 출력 경계에서 거부한다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan(
+            [FINDING.id],
+            '첫 번째 설명입니다. 두 번째 설명입니다. 세 번째 설명까지 이어집니다.',
+          ),
+          '사주 봐줘.',
+        ),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        path: 'summary',
+        policy: 'compact-presentation',
+        sentenceCount: 3,
+        maximumSentenceCount: 2,
+      },
+    });
+
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], '가'.repeat(801)), '사주 봐줘.')),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+    });
+  });
+
+  test.each([
+    '전통 규칙상 양인격과 월겁격이 격국 후보로 표시됩니다.',
+    '조후 후보가 있지만 최종 용신 판정은 아닙니다.',
+    '신살에는 화개와 천을귀인이 잡힙니다.',
+    '공망은 아직 확정할 수 없는 자료입니다.',
+    '현실 예측의 과학적 타당성은 확립돼 있지 않습니다.',
+  ])('요청하지 않은 전문 교리·방어 문구 %j을 기본 해석에서 거부한다', async (text) => {
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], text), '사주 봐줘.')),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        path: 'summary',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+  });
+
+  test('사용자가 오행을 직접 물었을 때만 해당 전문 용어와 section을 허용한다', async () => {
+    const output = {
+      summary: paragraph([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
+      sections: [
+        {
+          topic: 'five-elements',
+          paragraphs: [
+            paragraph(
+              [FIVE_ELEMENT_FINDING.id],
+              '오행 비율은 구조를 보여주는 보조 자료로 읽습니다.',
+            ),
+          ],
+        },
+      ],
+    };
+
+    await expect(createAiSajuReading(inputReturning(output, '사주 봐줘.'))).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        policy: 'advanced-doctrine-explicit-opt-in',
+        doctrine: 'five-elements',
+      },
+    });
+
+    await expect(
+      createAiSajuReading(inputReturning(output, '오행 분포를 자세히 설명해줘.')),
+    ).resolves.toMatchObject({
+      narrative: {
+        sections: [{ id: 'five-elements' }],
+      },
+    });
+
+    await expect(
+      createAiSajuReading(inputReturning(output, '학파별 전통 규칙을 기술 용어로 검증해줘.')),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'five-elements',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+
+    await expect(
+      createAiSajuReading(
+        inputReturning(output, '오행을 학파별 전통 규칙과 함께 기술적으로 검증해줘.'),
+      ),
+    ).resolves.toMatchObject({
+      narrative: { sections: [{ id: 'five-elements' }] },
+    });
+  });
+
+  test.each([
+    '현실 예측의 과학적 타당성은 확립돼 있지 않습니다.',
+    '전통 규칙상 아직 확정할 수 없는 자료입니다.',
+    '이 프로필의 한계 때문에 최종 결론을 단정할 수 없습니다.',
+  ])('오행 질문에서도 관련 없는 방어 문구 %j을 거부한다', async (text) => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(plan([FIVE_ELEMENT_FINDING.id], text), '오행 분포를 알려줘.'),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        path: 'summary',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+  });
+
+  test('명리 이론이라는 포괄어만으로 모든 전문 교리를 열지 않는다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
+          '명리 이론으로 봐줘.',
+        ),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'five-elements',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+  });
+
+  test('과학적 타당성을 직접 물었을 때만 과학성 문구를 허용한다', async () => {
+    const output = plan(
+      [FINDING.id],
+      '사주 해석의 현실 예측에 관한 과학적 타당성은 확립돼 있지 않습니다.',
+    );
+
+    await expect(createAiSajuReading(inputReturning(output, '사주 봐줘.'))).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'science-meta',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+
+    await expect(
+      createAiSajuReading(inputReturning(output, '사주의 과학적 타당성은 어때?')),
+    ).resolves.toMatchObject({
+      narrative: {
+        summary: {
+          text: '사주 해석의 현실 예측에 관한 과학적 타당성은 확립돼 있지 않습니다.',
+        },
+      },
+    });
+
+    await expect(
+      createAiSajuReading(inputReturning(output, '과학적으로 사주가 맞는지 검증해줘.')),
+    ).resolves.toMatchObject({
+      narrative: {
+        summary: {
+          text: '사주 해석의 현실 예측에 관한 과학적 타당성은 확립돼 있지 않습니다.',
+        },
+      },
+    });
+  });
+
+  test.each([
+    '이 해석은 과학적으로 검증된 내용은 아니므로 참고용으로만 보세요.',
+    '명리는 과학이 아닙니다.',
+    '이 결과는 참고용으로만 확인하세요.',
+    '객관적으로 입증된 사실이 아니니 재미로만 보세요.',
+    '정확성을 보장하지 않으니 참고 정도로만 보세요.',
+  ])('자연어로 바꾼 과학성 방어 문구 %j도 기본 해석에서 거부한다', async (text) => {
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], text), '사주 봐줘.')),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'science-meta',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+  });
+
+  test('생활 장면의 재미로만이라는 표현을 과학성 면책으로 오인하지 않는다', async () => {
+    const text = '새 과제를 재미로만 시작하면 집중 시간이 짧아집니다.';
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], text), '과제 접근 방식을 알려줘.')),
+    ).resolves.toMatchObject({
+      narrative: { summary: { text } },
+    });
+  });
+
+  test('과학 공부 적성 질문은 과학성 면책 권한으로 오인하지 않는다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan([FINDING.id], '명리는 과학이 아니므로 참고용으로만 보세요.'),
+          '사주로 과학 공부 적성을 알려줘.',
+        ),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: { doctrine: 'science-meta' },
+    });
+  });
+
+  test('backpacking이라는 일상 영단어를 기술 감사 요청으로 오인하지 않는다', async () => {
+    let capturedMode: string | null = null;
+    const text = '야외 활동에서는 준비물을 목록으로 정리해 빠뜨림을 줄입니다.';
+    const reading = await createAiSajuReading({
+      assessment: ASSESSMENT,
+      question: 'backpacking 취미에서 드러나는 내 방식을 설명해줘.',
+      narrator: {
+        id: 'backpacking-fixture',
+        requestedModel: 'fixture',
+        async narrate(request) {
+          capturedMode = request.task.readingPolicy.mode;
+          return response(plan([FINDING.id], text));
+        },
+      },
+    });
+
+    expect(capturedMode).toBe('focused');
+    expect(reading.narrative.summary.text).toBe(text);
+  });
+
+  test.each(['packRef와 findingIds를 보여줘.', '전통 팩 근거와 버전을 보여줘.'])(
+    '공개 감사 용어가 포함된 %j 요청은 technical-audit로 분류한다',
+    async (question) => {
+      let capturedMode: string | null = null;
+      const text = 'packRef와 findingIds를 확인했습니다.';
+      const reading = await createAiSajuReading({
+        assessment: ASSESSMENT,
+        question,
+        narrator: {
+          id: 'audit-term-fixture',
+          requestedModel: 'fixture',
+          async narrate(request) {
+            capturedMode = request.task.readingPolicy.mode;
+            return response(plan([FINDING.id], text));
+          },
+        },
+      });
+
+      expect(capturedMode).toBe('technical-audit');
+      expect(reading.narrative.summary.text).toBe(text);
+    },
+  );
+
+  test('요청하지 않은 canonical 감사 필드명도 기본 해석에서 거부한다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(plan([FINDING.id], 'packRef와 findingIds를 확인했습니다.'), '사주 봐줘.'),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: { doctrine: 'audit-meta' },
+    });
+  });
+
+  test('직업 후보라는 일상 표현은 해석 불확실성 권한으로 오인하지 않는다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan([FINDING.id], '이 자료만으로 결론을 내리기 어렵습니다.'),
+          '사주에 맞는 직업 후보를 알려줘.',
+        ),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: { doctrine: 'uncertainty-meta' },
+    });
+  });
+
+  test('결론을 내리기 어렵다는 변형 방어 문구도 직접 요청하지 않으면 거부한다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(plan([FINDING.id], '이 자료만으로 결론을 내리기 어렵습니다.'), '사주 봐줘.'),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: { doctrine: 'uncertainty-meta' },
+    });
+  });
+
+  test('technical-audit mode 자체는 요청하지 않은 교리를 열지 않는다', async () => {
+    await expect(
+      createAiSajuReading({
+        ...inputReturning(
+          plan([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
+          'Pack 근거 ID와 감사 로그만 보여줘.',
+        ),
+        readingMode: 'technical-audit',
+      }),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'five-elements',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
+  });
+
+  test('성격 프로필이라는 일상 표현은 기술 감사 요청으로 오인하지 않는다', async () => {
+    const text = '성격 프로필을 구체적인 생활 장면으로 정리합니다.';
+    const reading = await createAiSajuReading(
+      inputReturning(plan([FINDING.id], text), '내 성격 프로필을 알려줘.'),
+    );
+    expect(reading.narrative.summary.text).toBe(text);
+  });
+
+  test('일상어 목욕은 십이운성 권한으로 오인하지 않는다', async () => {
+    const text = '목욕 습관처럼 일상 루틴을 정리하는 방식으로 설명합니다.';
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], text), '목욕 습관은 어때?')),
+    ).resolves.toMatchObject({
+      narrative: { summary: { text } },
+    });
+  });
+
+  test('용신의 후보·확정 여부를 직접 물어도 과학성 문구까지 열리지는 않는다', async () => {
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan([FINDING.id], '용신 후보는 이 규칙에서 하나로 확정할 수 없습니다.'),
+          '용신 후보가 왜 확정이 아닌지 설명해줘.',
+        ),
+      ),
+    ).resolves.toMatchObject({
+      narrative: {
+        summary: {
+          text: '용신 후보는 이 규칙에서 하나로 확정할 수 없습니다.',
+        },
+      },
+    });
+
+    await expect(
+      createAiSajuReading(
+        inputReturning(
+          plan([FINDING.id], '현실 예측의 과학적 타당성은 확립돼 있지 않습니다.'),
+          '용신 후보가 왜 확정이 아닌지 설명해줘.',
+        ),
+      ),
+    ).rejects.toMatchObject({
+      code: 'INVALID_NARRATOR_OUTPUT',
+      details: {
+        doctrine: 'science-meta',
+        policy: 'advanced-doctrine-explicit-opt-in',
+      },
+    });
   });
 
   test.each([
@@ -449,7 +813,6 @@ describe('AI output validation v2', () => {
   );
 
   test.each([
-    '오행 점수는 20점 중 6점입니다.',
     '2026개의 예시를 들지 않고 이 구조만 설명합니다.',
     '60갑자라는 분류 이름은 달력 연도 판정이 아닙니다.',
     '갑자와 병오를 전통 분류 용어로 비교합니다.',

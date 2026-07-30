@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.4.3 — 2026-07-30
+
+- Require a role-complete `presentationDraft` for broad readings, select only
+  already-validated atomic Pack paragraphs, require explicit domain/direction/
+  situation/behavior/result structure, and render the final four-section Korean
+  Markdown deterministically.
+- Preserve birth-time uncertainty with local `△`/`◇` claim markers and one shared
+  legend near the basis line instead of repeating a full qualifier in each
+  selected paragraph.
+- Fail broad preparation early when sparse stable-only evidence cannot supply
+  the required nine distinct presentation paragraphs.
+- Resolve doctrine opt-in separately from scientific, uncertainty, and audit
+  metadata requests, so asking for 오행 no longer unlocks defensive boilerplate.
+
+## 0.4.2 — 2026-07-30
+
+- Replace the default broad-reading wall of prose with a compact four-section
+  layout built from bullets, a paired strength/cost view, and plain Korean.
+- Keep advanced doctrine such as 격국, 조후, 용신, 신살, and unresolved Pack
+  candidates behind explicit user opt-in.
+- Mark profile limitations and unavailable rules as non-display narrator
+  guardrails so internal audit language no longer leaks into ordinary readings.
+- Reject overlong narrator paragraphs and unrequested advanced-doctrine prose
+  at the local validation boundary, and mark runtime notices audit-only.
+- Omit element percentages and ten-god detail from the default view unless the
+  user asks for them.
+
 ## 0.4.1 — 2026-07-30
 
 - Default Korean-language birth requests to Gregorian dates, `Asia/Seoul`,

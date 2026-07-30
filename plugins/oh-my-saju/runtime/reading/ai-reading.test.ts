@@ -45,7 +45,7 @@ function paragraph(
   return { text, findingIds: [findingId] };
 }
 
-describe('createAiSajuReading v2', () => {
+describe('createAiSajuReading', () => {
   test('진학·직업·성격 질문을 내용으로 차단하지 않고 근거 참조를 가진 AI 문단을 반환한다', async () => {
     const assessment = evaluateSajuInterpretation(calculateSaju(EXACT_REQUEST), {
       profile: COMMON_STRUCTURAL_PROFILE_V1,
@@ -69,13 +69,46 @@ describe('createAiSajuReading v2', () => {
     });
 
     expect(narrate).toHaveBeenCalledOnce();
-    expect(narrate.mock.calls[0]?.[0].task).toEqual({
-      mode: 'grounded-interpretation',
-      answerUserQuestionDirectly: true,
-      responseOrder: ['chart-facts', 'school-rules', 'inference', 'counterevidence', 'conclusion'],
-      keepCalculationAndInterpretationDistinct: true,
-      topicNeutral: true,
-      omitCalendarAndGanzhiClaimsWithoutEvidence: true,
+    expect(narrate.mock.calls[0]?.[0]).toMatchObject({
+      schemaVersion: '3',
+      task: {
+        mode: 'grounded-interpretation',
+        answerUserQuestionDirectly: true,
+        responseOrder: ['direct-answer', 'lived-patterns', 'applications', 'concise-conclusion'],
+        keepCalculationAndInterpretationDistinct: true,
+        topicNeutral: true,
+        omitCalendarAndGanzhiClaimsWithoutEvidence: true,
+        presentation: {
+          mode: 'compact-layperson',
+          format: 'sectioned-bullets',
+          maxParagraphSentences: 2,
+          maxSections: 4,
+          maxParagraphsPerSection: 2,
+          maxNarrativeCharacters: 2_400,
+          maxParagraphCharacters: 800,
+          advancedDoctrine: 'only-when-explicitly-requested',
+          neverEndWithLimitations: true,
+          broadReading: {
+            finalSelectionRequired: true,
+            minimumDistinctParagraphs: 9,
+            maxSelectedParagraphCharacters: 240,
+            maxPresentationCharacters: 1_000,
+            structuredLivedPatternRequired: true,
+          },
+        },
+        readingPolicy: {
+          mode: 'focused',
+          structuredBroadPresentation: false,
+          requestedDoctrineIds: [],
+          scienceMetaRequested: false,
+          uncertaintyMetaRequested: false,
+          auditMetaRequested: false,
+        },
+      },
+      template: {
+        id: 'saju-grounded-narration',
+        version: '3.0.0',
+      },
     });
     expect(reading).toMatchObject({
       schemaVersion: '2',
@@ -89,14 +122,20 @@ describe('createAiSajuReading v2', () => {
           certainty: 'grounded',
         },
       },
+      notice: {
+        displayPolicy: 'audit-only',
+        defaultDisplay: false,
+      },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '2.0.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '3.0.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,
           findingReferencesValidated: true,
           providerTextAccepted: true,
           plainTextValidated: true,
+          compactPresentationValidated: true,
+          unrequestedAdvancedDoctrineRejected: true,
         },
       },
     });
@@ -128,6 +167,12 @@ describe('createAiSajuReading v2', () => {
     expect(serializedRequest).not.toContain('"originalText"');
     expect(serializedRequest).not.toContain('"values"');
     expect(captured?.evidence.profile).toEqual({ id: 'common-structural', version: '1.1.0' });
+    expect(captured?.evidence.nonDisplayGuardrails).toMatchObject({
+      neverQuoteOrParaphrase: true,
+      profileLimitations: expect.any(Array),
+      unavailableRules: expect.any(Array),
+    });
+    expect(captured?.evidence.nonDisplayGuardrails.profileLimitations.length).toBeGreaterThan(0);
     expect(
       captured?.evidence.findings.every(({ id }) => id.startsWith('common-structural@1.1.0:')),
     ).toBe(true);
@@ -192,7 +237,7 @@ describe('createAiSajuReading v2', () => {
         requestedModel: 'fixture',
         async narrate() {
           return narratorResponse({
-            summary: paragraph(conditional.id, '이 후보에서만 나타나는 전통적 해석 단서입니다.'),
+            summary: paragraph(conditional.id, '이 조건에서만 나타나는 해석 단서입니다.'),
             sections: [],
           });
         },
@@ -200,7 +245,7 @@ describe('createAiSajuReading v2', () => {
     });
 
     expect(reading.narrative.summary).toEqual({
-      text: '생시 후보에 따라 달라질 수 있습니다. 이 후보에서만 나타나는 전통적 해석 단서입니다.',
+      text: '생시 후보에 따라 달라질 수 있습니다. 이 조건에서만 나타나는 해석 단서입니다.',
       findingIds: [conditional.id],
       certainty: 'conditional',
     });
@@ -353,7 +398,10 @@ describe('createAiSajuReading v2', () => {
           requestedModel: 'fixture',
           async narrate() {
             return narratorResponse({
-              summary: { text: '후보별 결과를 섞었습니다.', findingIds: [first.id, second.id] },
+              summary: {
+                text: '서로 다른 조건의 결과를 섞었습니다.',
+                findingIds: [first.id, second.id],
+              },
               sections: [],
             });
           },
@@ -378,7 +426,7 @@ describe('createAiSajuReading v2', () => {
         narratorResponse({
           summary: paragraph(
             finding.id,
-            '계산된 finding을 바탕으로 질문의 맥락에서 전통적으로 해석합니다.',
+            '계산된 근거를 바탕으로 질문의 맥락에서 전통적으로 해석합니다.',
           ),
           sections: [],
         }),
@@ -401,7 +449,7 @@ describe('createAiSajuReading v2', () => {
   );
 });
 
-describe('createAiSajuService v2', () => {
+describe('createAiSajuService', () => {
   test('계산 → 단일 Pack 평가 → AI prose + finding references를 한 호출로 수행한다', async () => {
     const narrate = vi.fn(async (request: SajuNarrationRequest) => {
       const first = request.evidence.findings[0];

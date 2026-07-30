@@ -13,7 +13,7 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" />
   <img alt="Node.js 18+" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" />
   <img alt="saju-engine 0.9.0" src="https://img.shields.io/badge/saju--engine-0.9.0-765A3D" />
-  <img alt="Oh My Saju plugin 0.4.1" src="https://img.shields.io/badge/plugin-0.4.1-A66A3F" />
+  <img alt="Oh My Saju plugin 0.4.3" src="https://img.shields.io/badge/plugin-0.4.3-A66A3F" />
   <img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
 </p>
 
@@ -41,7 +41,7 @@ Oh My Saju는 만세력 계산부터 전통 규칙 평가와 AI 해설까지 한
 | 배포물              | 역할                                                                 |
 | ------------------- | -------------------------------------------------------------------- |
 | `saju-engine@0.9.0` | 원국, 한국 음양력, 절기, 시간대, 생시 후보, 세운·절월·대운·일진 계산 |
-| `oh-my-saju@0.4.1`  | 전통 규칙 팩, 택일·토정·주역·자미두수·육임, 근거형 AI 해설 워크플로  |
+| `oh-my-saju@0.4.3`  | 전통 규칙 팩, 택일·토정·주역·자미두수·육임, 근거형 AI 해설 워크플로  |
 
 ## 빠른 시작
 
@@ -150,11 +150,21 @@ prepare-reading
   → 규칙 팩별 판정 근거 ID 생성
   → 호스트 모델이 근거 ID를 인용해 초안 작성
   → validate-reading이 근거와 생시 불확실성 검증
+  → 기본 풀이는 검증된 문장만 고정 섹션 Markdown으로 렌더링
 ```
 
 계산 결과, 규칙 팩의 판정, 모델이 작성한 문장을 별도 필드로 유지합니다. 다른 규칙
 팩의 근거를 잘못 섞거나 특정 생시 후보에만 해당하는 내용을 확정적으로 쓰면 검증
 단계에서 찾을 수 있습니다.
+
+열린 질문은 `readingMode: "broad"`로 보내며, 검증 명령의
+`presentationDraft`가 이미 검증된 한 문장짜리 원자 문단만 성향·실행·강점/꼬임·
+일/공부·관계 슬롯에 배치합니다. 각 생활 해석은 상황·행동·결과가 문장 안에 실제로
+분리되어 있어야 하며, `domain`으로 슬롯 역할을, `direction`으로 장점·비용·서술 방향을
+선언합니다. 생시 후보에 따라 달라지는 내용은 `△`, 확인된 기둥 범위만 반영한 내용은
+`◇`를 해당 문장에 표시하고, 설명은 기준 줄 다음의 범례에서 한 번만 제공합니다. 최종
+답변은 `result.presentation.markdown`으로 반환되므로 검증 뒤 다시 줄글로
+재작성하거나 감사용 notice를 붙이지 않습니다.
 
 ## TypeScript API
 

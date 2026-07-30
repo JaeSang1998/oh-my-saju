@@ -1,4 +1,4 @@
 interface:
   display_name: 'Oh My Saju'
   short_description: 'Korean Saju calculation and grounded interpretation'
-  default_prompt: 'Use $oh-my-saju to calculate this Korean Saju request and give a concrete, natural Korean interpretation grounded in the validated chart.'
+  default_prompt: 'Use $oh-my-saju to calculate this Korean Saju request and give a concrete, natural Korean interpretation grounded in the validated chart. Classify open requests as broad, validate the final presentation slots, and return the runtime-rendered compact Markdown without adding audit caveats. Keep answers short, sectioned, and layperson-first; omit advanced doctrine unless the user asks for it.'

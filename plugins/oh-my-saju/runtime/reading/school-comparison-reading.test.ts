@@ -23,7 +23,7 @@ describe('createAiSajuComparisonService', () => {
           return {
             output: {
               summary: {
-                text: '이 학파의 finding을 독립적으로 해석합니다.',
+                text: '이 방법에서 나온 근거를 다른 방법과 섞지 않고 해석합니다.',
                 findingIds: [request.evidence.findings[0]!.id],
               },
               sections: [],
@@ -89,7 +89,7 @@ describe('createAiSajuComparisonService', () => {
           return {
             output: {
               summary: {
-                text: '확인된 삼주 finding을 바탕으로 해석합니다.',
+                text: '확인된 세 기둥의 근거만 바탕으로 해석합니다.',
                 findingIds: [request.evidence.findings[0]!.id],
               },
               sections: [],

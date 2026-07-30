@@ -17,6 +17,11 @@ import type {
   TraditionProfileRef,
   UnavailableInterpretationRule,
 } from '../traditions/types';
+import type {
+  SajuNarrationPresentationPolicy,
+  SajuNarrationPromptTemplate,
+} from './prompt-contract';
+import type { ResolvedSajuReadingPolicy, SajuReadingModePreference } from './reading-policy';
 
 /** Caller-defined, short machine identifier describing the requested reading. */
 export type SajuReadingPurpose = string;
@@ -41,25 +46,23 @@ export type SajuNarrationEvidenceFinding = Pick<
 >;
 
 export interface SajuNarrationRequest {
-  readonly schemaVersion: '2';
+  readonly schemaVersion: '3';
   readonly task: {
     readonly mode: 'grounded-interpretation';
     readonly answerUserQuestionDirectly: true;
     readonly responseOrder: readonly [
-      'chart-facts',
-      'school-rules',
-      'inference',
-      'counterevidence',
-      'conclusion',
+      'direct-answer',
+      'lived-patterns',
+      'applications',
+      'concise-conclusion',
     ];
     readonly keepCalculationAndInterpretationDistinct: true;
     readonly topicNeutral: true;
     readonly omitCalendarAndGanzhiClaimsWithoutEvidence: true;
+    readonly presentation: SajuNarrationPresentationPolicy;
+    readonly readingPolicy: ResolvedSajuReadingPolicy;
   };
-  readonly template: {
-    readonly id: 'saju-grounded-narration';
-    readonly version: '2.0.0';
-  };
+  readonly template: SajuNarrationPromptTemplate;
   readonly grounding: {
     readonly id: 'saju-finding-references';
     readonly version: '2.0.0';
@@ -85,13 +88,21 @@ export interface SajuNarrationRequest {
       readonly id: string;
       readonly version: string;
     };
-    readonly profileLimitations: readonly {
-      readonly id: ProfileLimitationId;
-      readonly message: string;
-    }[];
     readonly subject: SajuInterpretationReport['subject'];
     readonly findings: readonly SajuNarrationEvidenceFinding[];
-    readonly unavailableRules: readonly UnavailableInterpretationRule[];
+    /**
+     * Safety constraints for avoiding overclaiming. They are never user-facing
+     * content and must not be quoted, paraphrased, summarized, or used as a
+     * closing limitations section.
+     */
+    readonly nonDisplayGuardrails: {
+      readonly neverQuoteOrParaphrase: true;
+      readonly profileLimitations: readonly {
+        readonly id: ProfileLimitationId;
+        readonly message: string;
+      }[];
+      readonly unavailableRules: readonly UnavailableInterpretationRule[];
+    };
   };
   readonly outputSchema: Readonly<Record<string, unknown>>;
 }
@@ -138,6 +149,9 @@ export interface AiSajuReadingReport {
   readonly narrative: SajuNarrative;
   readonly notice: {
     readonly code: 'TRADITIONAL_INTERPRETATION';
+    /** Preserve for audits; ordinary user-facing readings must not render this block. */
+    readonly displayPolicy: 'audit-only';
+    readonly defaultDisplay: false;
     readonly message: string;
     readonly empiricalValidation: 'not-established';
     readonly limitations: readonly {
@@ -168,10 +182,7 @@ export interface AiSajuReadingReport {
       readonly providerRequestId: string | null;
       readonly finishReason: string | null;
     };
-    readonly promptTemplate: {
-      readonly id: 'saju-grounded-narration';
-      readonly version: '2.0.0';
-    };
+    readonly promptTemplate: SajuNarrationPromptTemplate;
     readonly grounding: {
       readonly id: 'saju-finding-references';
       readonly version: '2.0.0';
@@ -180,7 +191,7 @@ export interface AiSajuReadingReport {
       readonly calendarGanzhiClaimsAllowed: false;
       readonly quotedOrRefutedClaimsExempted: false;
     };
-    readonly outputSchemaVersion: '2';
+    readonly outputSchemaVersion: '3';
     readonly privacy: {
       readonly structuredBirthRequestSentToNarrator: false;
       readonly chronologySentToNarrator: false;
@@ -195,6 +206,8 @@ export interface AiSajuReadingReport {
       readonly conditionalClaimsLabeled: true;
       readonly plainTextValidated: true;
       readonly unsupportedCalendarGanzhiClaimsRejected: true;
+      readonly compactPresentationValidated: true;
+      readonly unrequestedAdvancedDoctrineRejected: true;
     };
   };
 }
@@ -207,6 +220,7 @@ export interface CreateAiSajuReadingInput {
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
   readonly question?: string;
+  readonly readingMode?: SajuReadingModePreference;
 }
 
 /**
@@ -223,6 +237,7 @@ export interface CreateAiSajuServiceOptions {
   readonly purpose?: SajuReadingPurpose;
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
+  readonly readingMode?: SajuReadingModePreference;
 }
 
 export interface CreateAiSajuComparisonServiceOptions {
@@ -236,6 +251,7 @@ export interface CreateAiSajuComparisonServiceOptions {
   readonly purpose?: SajuReadingPurpose;
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
+  readonly readingMode?: SajuReadingModePreference;
 }
 
 export type CreateAiKoreanSajuServiceOptions = Omit<
@@ -253,6 +269,7 @@ export interface ExactAiSajuServiceRequest {
   readonly purpose?: SajuReadingPurpose;
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
+  readonly readingMode?: SajuReadingModePreference;
 }
 
 export interface PossibilityAiSajuServiceRequest {
@@ -265,6 +282,7 @@ export interface PossibilityAiSajuServiceRequest {
   readonly purpose?: SajuReadingPurpose;
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
+  readonly readingMode?: SajuReadingModePreference;
 }
 
 export type AiSajuServiceRequest = ExactAiSajuServiceRequest | PossibilityAiSajuServiceRequest;

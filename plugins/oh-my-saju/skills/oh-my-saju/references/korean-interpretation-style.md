@@ -14,9 +14,15 @@ Use this reference while drafting each profile output and assembling the validat
 
 Do not compensate for weak evidence with confident prose.
 
+The Korean wording in this table is for internal drafting and technical audits. In an ordinary
+broad reading, do not expose profile names, candidates, or evidence-level labels. Translate a
+supported conclusion into everyday Korean; if there is no supported everyday conclusion, omit it.
+
 Confidence calibration should be local, not repetitive. Qualify the one conclusion affected by
 conflicting or candidate-dependent evidence; do not make every sentence sound provisional merely
-because the system is interpretive.
+because the system is interpretive. In a broad presentation, use a local `△` or `◇` marker on the
+affected claim and define the markers once near the basis line instead of repeating the same
+qualifier.
 
 ## Use a causal chain
 
@@ -53,6 +59,10 @@ If yes, omit it or add the exact mechanism, trigger, and recognizable failure mo
 Negative clichés are also Barnum language. `상처가 많다`, `배신을 겪는다`, and
 `혼자 감당한다` need specific evidence and conditions.
 
+Every user-facing interpretive bullet should contain a specific situation, the person's likely
+response, and the benefit or cost. A bullet containing only advice, praise, or a profession list
+fails this test.
+
 ## Strength and cost are one mechanism
 
 Do not write detached 장점/단점 lists. Explain the double edge:
@@ -88,7 +98,9 @@ from what follows from skill, money, eligibility, motivation, resources, or avai
 
 - Mark the hour pillar as unknown or candidate.
 - Present stable facts first.
-- Label candidate-dependent differences next.
+- Mark a candidate-dependent selected claim with `△`.
+- Mark a selected claim based on partial pillar coverage with `◇`; use `△◇` when both apply.
+- Define only the markers that appear, once near the basis line.
 - Never use candidate support duration as probability.
 - Do not select one candidate because it makes a better story.
 
@@ -109,30 +121,94 @@ manifestations. Each should name a situation, the likely response, and the cost 
 examples such as how the person starts, decides, finishes, disagrees, delegates, or reacts to an
 unclear boundary over abstract labels such as `추진력이 있다`.
 
-The answer should still feel like a reading, not a psychological checklist. Open with a memorable
-one-paragraph portrait, then unfold why that portrait follows from the chart.
+The answer should still feel like a reading rather than a list of adjectives. Readable bullets are
+welcome; what to avoid is an unconnected psychological checklist. Open with a memorable portrait of
+one sentence, then show the same central mechanisms in recognizable situations.
+
+## Default broad-reading display contract
+
+For a first substantive broad reading, use the literal headings `한눈에 보면` and
+`강점이 살아날 때 / 꼬일 때` in this shape:
+
+```markdown
+기준: 양력 YYYY.MM.DD HH:mm, 한국 표준시
+
+[표식이 쓰였을 때만 한 번: 조건 표시: △ 생시 후보에 따라 달라지는 부분 · ◇ 확인된
+기둥 범위만 반영한 부분]
+
+| 년주 | 월주 | 일주 | 시주 |
+| ---- | ---- | ---- | ---- |
+| 간지 | 간지 | 간지 | 간지 |
+
+[△/◇ if applicable] [이 사람이 어떤 사람인지 핵심 성향을 한 문장으로 설명]
+
+## 한눈에 보면
+
+- **중심 성향:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
+- **결정과 실행:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
+- **사람을 대할 때:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
+
+## 강점이 살아날 때 / 꼬일 때
+
+| 잘 풀릴 때                             | 꼬일 때                                          |
+| -------------------------------------- | ------------------------------------------------ |
+| [△/◇ if applicable] [같은 성향의 장점] | [△/◇ if applicable] [그 성향이 과해질 때의 비용] |
+
+## 일·공부
+
+- [△/◇ if applicable] [실제 일하거나 배우는 장면을 포함한 해석]
+- [△/◇ if applicable] [성과가 막히는 구체적 조건]
+
+## 관계
+
+- [△/◇ if applicable] [가까운 관계에서 드러나는 구체적 모습]
+- [△/◇ if applicable] [오해나 충돌이 생기는 구체적 지점]
+
+**한 줄 정리:** [△/◇ if applicable] [평이한 말로 핵심을 압축]
+```
+
+Prefer bullets and small tables. Each broad-reading paragraph is one atomic sentence. Use no more than four
+headings after the chart table. Keep each section to the information needed to answer what kind of
+person the chart describes; do not add sections merely because findings exist.
+
+In `presentationDraft`, every lived-pattern selection also declares its semantic role. Use
+`domain: disposition`, `execution`, or `relationships` for the matching at-a-glance slot,
+`domain: work-study` for work/study bullets, and `domain: relationships` for relationship bullets.
+Use `direction: descriptive` for those slots. The double-edge pair names one shared domain and uses
+`direction: benefit` for strength and `direction: cost` for friction. These fields classify the
+selected sentence; they do not appear in the user-facing Korean.
+
+The default four-pillar table does not need a ten-god row. Omit the element-percentage table from a
+broad reading unless the user asks about elements. If shown for a focused answer, keep it compact
+and never derive a personality trait from proportions alone.
+
+## Progressive disclosure
+
+Do not mention these terms in a broad reading unless the user explicitly asks about that technical
+topic: `격국`, `조후`, `용신`, `신살`, `공망`. Also keep `양인격`, `월겁격`, `비견`, `겁재`,
+`식상`, `관살`, Pack/profile names, candidate status, and unresolved school comparisons out of
+ordinary prose. Do not report a technical candidate simply to retract it in the next clause.
+
+If a finding cannot support a plain-language implication, omit the finding entirely. Treat
+`nonDisplayGuardrails`, profile limitations, and unavailable rules as internal overclaim controls,
+not answer content. Never quote or paraphrase their messages.
+
+Treat a validated reading's `notice` the same way when it has `displayPolicy: "audit-only"` and
+`defaultDisplay: false`. Preserve it for audits but do not render or paraphrase it in an ordinary
+reading.
+
+Never end a broad reading with a limitations or unresolved-doctrine paragraph. If the user
+explicitly asks about an advanced doctrine, define it once in plain Korean and answer that focused
+question without dumping unrelated candidates.
 
 ## Natural response shape
 
-For a first substantive answer:
-
-1. one-line assumptions;
-2. compact pillar/ten-god table;
-3. compact five-element table if available;
-4. a direct portrait of the person;
-5. personality and decision style;
-6. work, study, and execution;
-7. relationships and communication;
-8. only the limitations that materially change one of those conclusions.
-
-Explain a technical term once in plain Korean, then continue with the plain meaning. Keep engine
-names, local file paths, process narration, and full audit IDs out of the main prose unless the user
-asks for methodology or an audit.
+Keep engine names, local file paths, process narration, full audit IDs, and internal validation
+language out of the main prose unless the user asks for methodology or an audit.
 
 Do not lead with or repeatedly narrate the calculation and validation workflow. Do not create an
 `아직 확정할 수 없는 부분` section by default. Integrate one meaningful counterforce where it
-sharpens the portrait; omit a catalog of every unresolved 격국, 용신, 신살, and profile
-limitation.
+sharpens the portrait in everyday language; omit the underlying unresolved doctrine.
 
 Do not append a generic scientific-validity disclaimer to an ordinary reading. Preserve the
 runtime notice in audit metadata. Mention scientific status only when the user asks about it,
