@@ -83,40 +83,44 @@ narrow question narrow.
 
 #### Default broad-reading display contract
 
-For an open-ended reading, use this compact user-facing order:
+For an open-ended reading, use this chart-first order:
 
 1. one quiet sentence stating the calendar, civil-time zone, and any genuinely missing input;
-2. one horizontal four-pillar table with `년주`, `월주`, `일주`, and `시주`; omit the ten-god row
-   unless the user asked for technical detail;
-3. a direct one-sentence portrait of the person;
-4. `한눈에 보면` with exactly three bullets for the central disposition, decision/execution
-   pattern, and relationship pattern;
-5. `강점이 살아날 때 / 꼬일 때` as a two-column table or paired bullets showing the same mechanism
-   working well and becoming costly;
-6. `일·공부` and `관계`, with at most two bullets each;
-7. one plain-language closing line that synthesizes the reading.
+2. one horizontal four-pillar table with both `간지` and `십신` rows;
+3. one compact five-element table labeled `오행 분포(지장간 포함)` for an exact chart;
+4. a finding-backed `핵심 요약`;
+5. `핵심 구조` with the two chart mechanisms that organize the reading;
+6. `어떤 사람인가`, showing one mechanism as a strength and as a blind spot;
+7. `일·재능` and `관계`, plus `돈과 현실 감각` only when the findings support a distinct money
+   reading.
 
-Prefer bullets and small tables. Each broad-reading paragraph is one atomic sentence. Use no more than four
-user-facing headings after the chart table, and aim for roughly 600–1,000 Korean characters of
-interpretation excluding the table. Each interpretive bullet must contain a recognizable situation,
-the likely response, and the resulting benefit or cost. Do not fill the answer with generic advice;
-the reading should be mostly interpretation.
+Use short sections and bullets, but allow one to three connected sentences when a causal bridge
+needs them. Aim for roughly 1,200–1,800 Korean characters of interpretation excluding the tables.
+Do not force every paragraph into a situation-behavior-result grammar. A major conclusion instead
+needs a visible chart basis, its traditional function, and the lived implication. Prefer five
+strong ideas over nine weak variations of the same coaching advice.
 
 When birth-time uncertainty affects selected prose, keep the uncertainty local with `△` for a
 candidate-dependent result and `◇` for a partial result (`△◇` when both apply). Define only the
 markers that appear, once near the basis line of the broad presentation; do not repeat a full
 uncertainty sentence in every affected bullet.
 
-Do not show an element-percentage table in a default broad reading. Show it only when the user asks
-about the five elements or when it is necessary for a focused answer, and never infer a modern
-personality trait from percentages alone.
+The element table is a structural orientation, not the personality proof. Never infer a modern
+trait from percentages alone; connect the reading through season, placement, repetition, and
+ten-god function.
 
 #### Progressive disclosure
 
-Do not mention these terms in a broad reading unless the user explicitly asks about the named
-technical doctrine: `격국`, `조후`, `용신`, `신살`, `공망`. The same opt-in rule applies to labels
-such as `양인격`, `월겁격`, `비견`, `겁재`, `식상`, `관살`, Pack/profile names, rule candidates,
-and unresolved school comparisons. Do not expose a candidate merely to say that it is not final.
+Keep the basic vocabulary needed to show the reasoning: `일간`, `월지` or `월령`, `오행`,
+`십신`, and basic ten-god groups such as `비견·겁재`, `식상`, `재성`, `관성`, and `인성`.
+At first use, translate the term immediately and explain how it works in this chart. Do not mention
+`격국`, `조후`, `용신`, `신살`, `공망`, named pattern candidates, Pack/profile names, or unresolved
+school comparisons unless the user explicitly asks about that doctrine. Do not expose a candidate
+merely to retract it.
+
+Prefer visible placements over raw ledger counts. Do not leave labels such as `왕`, `휴`,
+`인성 1`, or `식상 2` unexplained: write the ordinary meaning in the same sentence, for example
+`왕(계절의 힘을 크게 받는 상태)` or `식상, 즉 생각을 표현하고 결과물로 만드는 작용`.
 
 If a finding cannot support a plain-language implication, omit the finding entirely. Internal
 limitations and unavailable rules are non-display guardrails: never quote, paraphrase, summarize,
@@ -288,17 +292,31 @@ methodology disclaimer, a list of raw findings, or a restatement that the Pack i
 Treat `evidence.nonDisplayGuardrails.profileLimitations` and
 `evidence.nonDisplayGuardrails.unavailableRules` only as constraints against overclaiming. Never
 quote, paraphrase, summarize, or cite them as content. Technical candidates remain internal unless
-the user's question explicitly requests that doctrine. For a broad reading, every drafted paragraph
-must be one presentation-ready atomic sentence and express a lived pattern rather than methodology.
+the user's question explicitly requests that doctrine. For a broad reading, each selected paragraph
+may use one to three sentences to keep the chart fact, traditional function, and lived meaning
+together.
 
 Before writing broad-reading drafts, assign the final presentation slots across the available
-Pack tasks. The final layout needs nine distinct, validated paragraphs: portrait; three at-a-glance
-items; strength and friction; at least one work/study item; at least one relationship item; and a
-conclusion. Each paragraph must contain exactly one narrator-authored sentence. The strength and
-friction paragraphs must come from the same Pack and share at least one finding ID. Do not reuse a
-source paragraph or copy the same prose into multiple slots. Preserve validator uncertainty
-metadata: the broad renderer adds a local `△`, `◇`, or `△◇` marker to each affected selection and
-one shared legend to the final answer.
+Pack tasks. The v2 default profile needs seven distinct validated paragraphs: one thesis, two
+central mechanisms, a strength and blind spot from the same mechanism, at least one work item, and
+at least one relationship item. Add one or two money items only when ten-god placement or another
+allowed finding supports a distinct reading. The strength and blind-spot paragraphs must come from
+the same Pack and share at least one finding ID. Do not reuse a source paragraph or copy prose into
+multiple slots. The two central mechanisms must each have finding support that the other does not.
+Work prose must actually name a work, study, role, or output pattern; relationship prose must name
+a relationship dynamic; optional money prose must name a money or resource pattern and cite
+ten-god evidence. Preserve validator uncertainty metadata: the renderer adds a local `△`, `◇`, or
+`△◇` marker to each affected selection and one shared legend.
+
+Use `chart-overview`, `day-master`, `five-elements`, `ten-gods`, `relationships`, and `strength`
+for a default profile. Do not turn a `pattern`, `useful-god`, `void-branches`, `growth-stages`,
+`luck-cycles`, or `symbolic-stars` finding into generic personality prose through a summary. If a
+Pack supplies no allowed default-profile topic, draft its required isolated response for
+validation but do not select it into `presentationDraft`. In that non-display draft, do not repeat
+the hidden doctrine name or invent a behavioral meaning; use one neutral finding-backed sentence
+such as `이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.` This exception is
+only protocol filler for an otherwise required Pack draft and never appears in
+`result.presentation.markdown`.
 
 The draft output shape is:
 
@@ -347,7 +365,7 @@ Build one `validate-reading` command with the original request and exactly one d
       "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
       "output": {
         "summary": {
-          "text": "선택할 생활 장면을 상황과 반응이 드러나는 한 문장으로 씁니다.",
+          "text": "명식 근거와 그 작동을 이어 설명하는 짧은 문단입니다.",
           "findingIds": ["actual-finding-id"]
         },
         "sections": []
@@ -367,18 +385,16 @@ Copy `result.binding.digest` from the prepare response into `preparedDigest`. Th
 recalculates the contract and refuses drafts prepared for a different question, chart, timing
 range, Pack task, Pack rule digest, reading runtime, or engine build.
 
-For `readingMode: "broad"`, `presentationDraft` is required. Every reference must point to a
-one-sentence paragraph in the submitted Pack drafts: `source.kind: "summary"` selects the summary,
-while `source.kind: "section"` also requires the exact `topic` and zero-based `paragraphIndex`.
-Every lived-pattern slot supplies exact ordered `situation`, `behavior`, and `result` spans from
-that paragraph and declares its `domain` as `disposition`, `execution`, `relationships`, or
-`work-study`, plus its `direction` as `benefit`, `cost`, or `descriptive`. The at-a-glance and
-section slots must use the matching domain; the paired strength/friction slots use `benefit` and
-`cost` for the same mechanism. Portrait and conclusion use their own exact structure spans. The
-runtime rejects missing or mismatched roles, repeated sources or copied prose, generic/unstructured
-claims, unknown references, overly long selections, Pack/profile names, and a strength/friction
-pair without shared finding support. Omit `presentationDraft` for `focused` and
-`technical-audit`. Copy the complete shape from
+For `readingMode: "broad"`, the v2 `presentationDraft` is required. Every reference points to an
+already validated Pack paragraph: `source.kind: "summary"` selects the summary, while
+`source.kind: "section"` also supplies the exact `topic` and zero-based `paragraphIndex`. The
+thesis quotes exact ordered `basis` and `portrait` spans. Every other item declares its section
+`role` and quotes exact ordered `basis` and `interpretation` spans. The basis must name the actual
+placement, season, repetition, relationship, or ten-god mechanism; it is not a generic life
+situation. The runtime rejects missing roles, repeated sources or prose, specialist-topic
+laundering, season-as-environment wording, unknown references, internal audit language, and a
+strength/blind-spot pair without shared finding support. Omit `presentationDraft` for `focused`
+and `technical-audit`. Copy the complete v2 shape from
 [references/input-and-runtime.md](references/input-and-runtime.md), under `Broad presentation
 draft`.
 
@@ -392,8 +408,8 @@ Do not bypass a failed validation. In particular:
 - `PREPARATION_MISMATCH`: request, timing, task set, engine build, or digest differs from the
   preparation; restore the identical inputs and digest, or run `prepare-reading` again;
 - `INVALID_DRAFT_SET`: draft/Pack set does not match the prepared tasks;
-- `INVALID_PRESENTATION_DRAFT`: the broad-reading slots do not point to compact, distinct,
-  already-validated atomic Pack paragraphs with the required structure;
+- `INVALID_PRESENTATION_DRAFT`: the broad-reading slots do not point to distinct, already-validated
+  Pack paragraphs with the required chart-to-interpretation bridge;
 - `UNGROUNDED_OUTPUT`: a paragraph cites a finding that its Pack did not produce;
 - `UNCERTAINTY_VIOLATION`: candidate-dependent evidence was stated as unconditional fact;
 - `INVALID_NARRATOR_OUTPUT`: schema or text-safety contract failed.
@@ -413,9 +429,9 @@ command-line workflow still uses the complete JSON response for drafting and val
 
 For a first substantive broad reading, output `result.presentation.markdown` exactly. Do not
 rephrase it, append another interpretation, render `reading.notice`, or rebuild the template from
-the Pack readings. The runtime has already fixed the pillar table, four headings, bullets,
-strength/friction table, one-line conclusion, and—when needed—the local `△`/`◇` markers with one
-shared legend. For a focused question, keep the same layperson-first, sectioned style but omit
+the Pack readings. The runtime has already fixed the chart and ten-god table, exact-chart element
+table, chart-first profile sections, and—when needed—the local `△`/`◇` markers with one shared
+legend. For a focused question, keep the same layperson-first, evidence-visible style but omit
 irrelevant sections. Do not make the answer longer merely because the runtime returned more
 findings.
 
@@ -461,9 +477,12 @@ Before answering, verify:
 - the broad reading follows the compact display contract, with bullets instead of a wall of prose;
 - the broad answer is the validated `result.presentation.markdown`, without post-validation
   rewriting or appended caveats;
-- every interpretive bullet includes a situation, response, and benefit or cost;
-- every lived-pattern slot has the matching domain and direction, and uncertainty uses local
-  `△`/`◇` markers with no more than one shared legend;
+- every major conclusion keeps its exact chart basis and plain-language implication together;
+- the thesis and core combine day-master or seasonal evidence with a second placement,
+  relationship, or ten-god mechanism;
+- strength and blind spot explain two sides of one supported mechanism;
+- season was not rewritten as a real-world environment, and uncertainty uses local `△`/`◇`
+  markers with no more than one shared legend;
 - no advanced doctrine or internal non-display guardrail leaked into a broad reading;
 - no trait was inferred from an element percentage alone;
 - generic audit, limitation, and scientific-validity prose stayed out of an ordinary reading;

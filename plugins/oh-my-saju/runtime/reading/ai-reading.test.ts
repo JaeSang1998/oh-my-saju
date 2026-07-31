@@ -79,21 +79,23 @@ describe('createAiSajuReading', () => {
         topicNeutral: true,
         omitCalendarAndGanzhiClaimsWithoutEvidence: true,
         presentation: {
-          mode: 'compact-layperson',
-          format: 'sectioned-bullets',
-          maxParagraphSentences: 2,
+          mode: 'chart-first-profile',
+          format: 'chart-and-short-sections',
+          maxParagraphSentences: 3,
           maxSections: 4,
           maxParagraphsPerSection: 2,
-          maxNarrativeCharacters: 2_400,
-          maxParagraphCharacters: 800,
+          maxNarrativeCharacters: 3_200,
+          maxParagraphCharacters: 900,
           advancedDoctrine: 'only-when-explicitly-requested',
           neverEndWithLimitations: true,
           broadReading: {
             finalSelectionRequired: true,
-            minimumDistinctParagraphs: 9,
-            maxSelectedParagraphCharacters: 240,
-            maxPresentationCharacters: 1_000,
-            structuredLivedPatternRequired: true,
+            minimumDistinctParagraphs: 7,
+            legacyMinimumDistinctParagraphs: 9,
+            maxSelectedParagraphCharacters: 420,
+            maxPresentationCharacters: 2_200,
+            structuredLivedPatternRequired: false,
+            structuredEvidenceBridgeRequired: true,
           },
         },
         readingPolicy: {
@@ -107,7 +109,7 @@ describe('createAiSajuReading', () => {
       },
       template: {
         id: 'saju-grounded-narration',
-        version: '3.0.0',
+        version: '4.0.0',
       },
     });
     expect(reading).toMatchObject({
@@ -127,7 +129,7 @@ describe('createAiSajuReading', () => {
         defaultDisplay: false,
       },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '3.0.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '4.0.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,

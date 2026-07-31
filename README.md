@@ -13,7 +13,7 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" />
   <img alt="Node.js 18+" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" />
   <img alt="saju-engine 0.9.0" src="https://img.shields.io/badge/saju--engine-0.9.0-765A3D" />
-  <img alt="Oh My Saju plugin 0.4.3" src="https://img.shields.io/badge/plugin-0.4.3-A66A3F" />
+  <img alt="Oh My Saju plugin 0.4.4" src="https://img.shields.io/badge/plugin-0.4.4-A66A3F" />
   <img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
 </p>
 
@@ -41,7 +41,7 @@ Oh My Saju는 만세력 계산부터 전통 규칙 평가와 AI 해설까지 한
 | 배포물              | 역할                                                                 |
 | ------------------- | -------------------------------------------------------------------- |
 | `saju-engine@0.9.0` | 원국, 한국 음양력, 절기, 시간대, 생시 후보, 세운·절월·대운·일진 계산 |
-| `oh-my-saju@0.4.3`  | 전통 규칙 팩, 택일·토정·주역·자미두수·육임, 근거형 AI 해설 워크플로  |
+| `oh-my-saju@0.4.4`  | 전통 규칙 팩, 택일·토정·주역·자미두수·육임, 근거형 AI 해설 워크플로  |
 
 ## 빠른 시작
 

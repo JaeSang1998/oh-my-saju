@@ -10595,24 +10595,26 @@ function isArrayOf(value, predicate) {
 // plugins/oh-my-saju/runtime/reading/prompt-contract.ts
 var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
   id: "saju-grounded-narration",
-  version: "3.0.0"
+  version: "4.0.0"
 });
 var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
-  mode: "compact-layperson",
-  format: "sectioned-bullets",
-  maxParagraphSentences: 2,
+  mode: "chart-first-profile",
+  format: "chart-and-short-sections",
+  maxParagraphSentences: 3,
   maxSections: 4,
   maxParagraphsPerSection: 2,
-  maxNarrativeCharacters: 2400,
-  maxParagraphCharacters: 800,
+  maxNarrativeCharacters: 3200,
+  maxParagraphCharacters: 900,
   advancedDoctrine: "only-when-explicitly-requested",
   neverEndWithLimitations: true,
   broadReading: {
     finalSelectionRequired: true,
-    minimumDistinctParagraphs: 9,
-    maxSelectedParagraphCharacters: 240,
-    maxPresentationCharacters: 1e3,
-    structuredLivedPatternRequired: true
+    minimumDistinctParagraphs: 7,
+    legacyMinimumDistinctParagraphs: 9,
+    maxSelectedParagraphCharacters: 420,
+    maxPresentationCharacters: 2200,
+    structuredLivedPatternRequired: false,
+    structuredEvidenceBridgeRequired: true
   }
 });
 
@@ -10620,7 +10622,7 @@ var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.4.3",
+    version: "0.4.4",
     schemaVersion: "1"
   },
   compatibility: {
@@ -11198,7 +11200,7 @@ function artifactDigests(value) {
 var artifacts_default = {
   schemaVersion: "1",
   knowledgeSnapshot: "6c0ebde3b81aac964a7a6124bb4cb2cc62f6a7d70fae595b3ac1ae0cf081e796",
-  rules: "727bbc4d116ce59ccfa51fb94537d02553993b9518db25a89497cc23a52ba3a4",
+  rules: "389133d6c3887275722e848daa2d3ea65b77471eebab73e92a752a8167448f02",
   fixtures: "c85cd4ff6577150d2c16964a73a2fe4253efd38a5fa284a19607ec9eb4b5819c"
 };
 
@@ -11485,7 +11487,7 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 var artifacts_default2 = {
   schemaVersion: "1",
   knowledgeSnapshot: "b09030e80fbf397129f9cc9717eca2688b88427cb112d5972d9dd7e8a3dd1a13",
-  rules: "f73778aca0aab5cbce72e5b41eec0bb17efb1734a93e7d24458bed0d85ddc3bb",
+  rules: "477f02fdd8b56ff4cd889ed974c89ebafe4158a1c9876033b079e6981ae3afee",
   fixtures: "3c5be0ad7ed6adb9cc5e36631454066adf3b7562375d24f4ea2cbddceed12aa1"
 };
 
@@ -11662,7 +11664,7 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 var artifacts_default3 = {
   schemaVersion: "1",
   knowledgeSnapshot: "ab9bc189fe82e36e8a112668f4799967a400a6ee0a899fd85ebea327d87c5227",
-  rules: "4b6dc8e67781d6eb960268c1584bd3c989a7f9ce4a6b79e4c4885a8c94b63ddb",
+  rules: "28f4f5d54466fc000ec30d459822181a343e24f0a0606b32761720a4e2fa9e97",
   fixtures: "fa1e1cbea176782d98785aefd292e61186bb37253c8983fbbe309e49e3100039"
 };
 
@@ -12266,7 +12268,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 var artifacts_default4 = {
   schemaVersion: "1",
   knowledgeSnapshot: "892b4223fe0d17c7042072e37fbdacd398a8e776b6f34cc691438aec6f3a5353",
-  rules: "0c13d09622c5b580a23e3f601cfb8ea03e0f61060e1897f8dfd93e83fa4ac8b5",
+  rules: "a7b71498fd7badf69599752f3c09f18d92dc111f8d2dfb82c663450d6efd34cd",
   fixtures: "83140f3303f946ef0ac70ef20d8ffae884fa0e489de8593a44a92539a6cff7b7"
 };
 
@@ -12591,7 +12593,7 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 var artifacts_default5 = {
   schemaVersion: "1",
   knowledgeSnapshot: "92c19f40a2cf080bfe5035c66ccc8c7741743521e077384b4f0b1b74c7af8ed9",
-  rules: "a8dd154135cbf1f3e7e9bfa5ab6af45da84d40bf176b2312feeb40dce67c3b3f",
+  rules: "27593159e8e909f1c36aac5ffc8479fc353a8f45b031246090c0f8d2924f7d60",
   fixtures: "89a61e9f2e371e876f89ee18d632bef7ceb5bb64474e58085fcc1106daa64ac7"
 };
 
@@ -14627,7 +14629,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: partial ? `\uD655\uC778\uB41C \uC0BC\uC8FC\uC758 \uD569\uC131 \uC624\uD589 \uC18C\uACC4\uB294 ${compact}\uC785\uB2C8\uB2E4. \uC2DC\uC8FC\uAC00 \uBE60\uC9C4 \uBD80\uBD84 \uACB0\uACFC\uC774\uBA70 \uC2E0\uAC15\xB7\uC2E0\uC57D \uD310\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4.` : `\uD569\uC131 \uC624\uD589 \uBD84\uD3EC\uB294 ${compact}\uC785\uB2C8\uB2E4. \uC774 \uAC12\uC740 \uC2E0\uAC15\xB7\uC2E0\uC57D \uD310\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4.`,
+          statement: partial ? `\uD655\uC778\uB41C \uC5F0\uC8FC\xB7\uC6D4\uC8FC\xB7\uC77C\uC8FC\uC758 \uC9C0\uC7A5\uAC04 \uAC00\uC911 \uC624\uD589 \uC18C\uACC4\uB294 ${compact}\uC774\uBA70 \uC2DC\uC8FC\uB294 \uD3EC\uD568\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.` : `\uC9C0\uC7A5\uAC04 \uAC00\uC911\uCE58\uB97C \uD3EC\uD568\uD55C \uC624\uD589 \uBD84\uD3EC\uB294 ${compact}\uC785\uB2C8\uB2E4.`,
           topic: "five-elements",
           values,
           evidence: structuralEvidence(candidate, "facts.structure.elementBalance"),
@@ -14694,12 +14696,20 @@ function evaluateCandidateRule(candidate, ruleId) {
         omittedPillars: omittedPillars2
       };
     }
+    const tenGodPositions = partial ? ["year", "month", "day"] : ALL_PILLARS;
+    const tenGodSummary = tenGodPositions.map((position3) => {
+      const pair = values[position3];
+      if (!isRecord2(pair) || typeof pair.stem !== "string" || typeof pair.branch !== "string") {
+        return null;
+      }
+      return `${RELATION_POSITION_LABELS[position3]}\uC8FC ${pair.stem}\xB7${pair.branch}`;
+    }).filter((entry) => entry !== null).join(", ");
     return {
       kind: "matches",
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: partial ? "\uC77C\uAC04 \uAE30\uC900 \uC2ED\uC2E0 \uAD00\uACC4\uB97C \uD655\uC778\uB41C \uC5F0\uC8FC\xB7\uC6D4\uC8FC\xB7\uC77C\uC8FC\uC758 \uD45C\uBA74 \uCC9C\uAC04\uACFC \uC9C0\uC9C0 \uBCF8\uAE30\uB85C \uACC4\uC0B0\uD588\uC2B5\uB2C8\uB2E4. \uC2DC\uC8FC \uC2ED\uC2E0\uC740 \uBBF8\uC815\uC785\uB2C8\uB2E4." : "\uC77C\uAC04 \uAE30\uC900 \uC2ED\uC2E0 \uAD00\uACC4\uB97C \uD45C\uBA74 \uCC9C\uAC04\uACFC \uC9C0\uC9C0 \uBCF8\uAE30\uB85C \uACC4\uC0B0\uD588\uC2B5\uB2C8\uB2E4.",
+          statement: partial ? `\uC77C\uAC04 \uAE30\uC900 \uC2ED\uC2E0\uC740 ${tenGodSummary}\uC774\uBA70 \uC2DC\uC8FC \uC2ED\uC2E0\uC740 \uBBF8\uC815\uC785\uB2C8\uB2E4. \uC9C0\uC9C0\uB294 \uBCF8\uAE30\uB97C \uAE30\uC900\uC73C\uB85C \uD45C\uC2DC\uD588\uC2B5\uB2C8\uB2E4.` : `\uC77C\uAC04 \uAE30\uC900 \uC2ED\uC2E0\uC740 ${tenGodSummary}\uC785\uB2C8\uB2E4. \uC9C0\uC9C0\uB294 \uBCF8\uAE30\uB97C \uAE30\uC900\uC73C\uB85C \uD45C\uC2DC\uD588\uC2B5\uB2C8\uB2E4.`,
           topic: "ten-gods",
           values,
           evidence: structuralEvidence(candidate, "facts.tenGods"),
@@ -15441,7 +15451,7 @@ var DOCTRINE_DISCLOSURE_RULES = [
   {
     id: "luck-cycles",
     topics: ["luck-cycles"],
-    outputPattern: /(?:대운|세운)/u,
+    outputPattern: /(?:대운|세운)(?=$|[\s,.;:!?，。；：！？]*(?:은|는|이|가|을|를|의|에서|으로|상|흐름|주기|시기|연도|해|분석|해석))/u,
     requestPattern: /(?:대운|세운)/u
   },
   {
@@ -15451,6 +15461,12 @@ var DOCTRINE_DISCLOSURE_RULES = [
     requestPattern: /(?:신살|화개|천을귀인|역마|도화|양인(?!격)|육해)/u
   }
 ];
+var BROAD_DEFAULT_DOCTRINE_IDS = /* @__PURE__ */ new Set([
+  "day-master",
+  "five-elements",
+  "ten-gods",
+  "strength"
+]);
 var SCIENCE_META_REQUEST_PATTERN = /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}(?:(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,12}(?:근거|검증|타당|맞|사실|아닙|아니|인가|이야|입니까)|(?:검증|타당성)[^.?!\n]{0,12}(?:과학|실증))|(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,20}(?:사주|명리|운세|해석|예측)[^.?!\n]{0,20}(?:맞|검증|근거|타당|사실)|(?:scientific|empirical)[^.?!\n]{0,20}(?:saju|fortune|reading|prediction)|현실\s*예측\s*(?:근거|검증|타당성))/iu;
 var UNCERTAINTY_META_REQUEST_PATTERN = /(?:(?:사주|명리|해석|판정|결론)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종)|(?:확정|단정|불확실|한계|최종)[^.?!\n]{0,24}(?:사주|명리|해석|판정|결론)|(?:격국|용신|조후|신살|신강|신약|강약)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종|후보)|(?:확정|단정|불확실|한계|최종|후보)[^.?!\n]{0,24}(?:격국|용신|조후|신살|신강|신약|강약))/u;
 var AUDIT_META_REQUEST_PATTERN = /(?:\bpack(?:ref)?\b|\bfinding(?:s|ids?)?\b|\bprofileref\b|(?:전통|규칙)\s*팩|팩\s*(?:ID|버전|근거|규칙|감사|참조)|(?:profile|프로필)\s*(?:ID|version|버전|근거|규칙|감사)|(?:규칙|계산|명리)\s*프로필|근거\s*ID|감사\s*(?:추적|로그|정보|자료)|\baudit\b|학파(?:별)?\s*(?:비교|근거|규칙)|전통\s*규칙[^.?!\n]{0,30}(?:검증|근거)|기술\s*용어[^.?!\n]{0,20}(?:검증|감사))/iu;
@@ -15496,7 +15512,7 @@ function resolveSajuReadingPolicy(question, purpose, preference) {
   });
 }
 function doctrineAllowed(rule, policy) {
-  return policy.requestedDoctrineIds.some((id) => id === rule.id);
+  return policy.requestedDoctrineIds.some((id) => id === rule.id) || policy.mode === "broad" && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id);
 }
 function findSajuDisclosureViolation(text, policy) {
   for (const rule of DOCTRINE_DISCLOSURE_RULES) {
@@ -15893,18 +15909,6 @@ function validateAndLabelParagraph(text, findingIds, findingsById, path, policy)
     );
   }
   assertCompactParagraphShape(text, path);
-  if (policy.structuredBroadPresentation && countSentences(text) !== 1) {
-    throw new AiReadingError(
-      "INVALID_NARRATOR_OUTPUT",
-      "Structured broad-reading paragraphs must contain exactly one atomic sentence.",
-      {
-        details: {
-          path,
-          policy: "atomic-broad-paragraph"
-        }
-      }
-    );
-  }
   assertNoUnrequestedAdvancedDoctrine(text, policy, path);
   assertNoUnsupportedCalendarGanzhiClaims(text, path);
   const findings = findingIds.map((findingId) => findingsById.get(findingId));
@@ -20153,6 +20157,33 @@ var DOMAIN_PATTERNS = {
   relationships: /(?:관계|사이|의견|대화|오해|갈등|상대|역할|합의|소통|말(?:을|로|하면|할))/u,
   "work-study": /(?:업무|직장|과제|공부|학습|시험|제출|자료|보고서|성과|완성도|프로젝트|피드백)/u
 };
+var PROFILE_ROLE_VALUES = /* @__PURE__ */ new Set([
+  "core",
+  "strength",
+  "blind-spot",
+  "work",
+  "money",
+  "relationships"
+]);
+var PROFILE_BASIS_PATTERN = /(?:일간|월령|연지|월지|일지|시지|연주|월주|일주|시주|천간|지지|지장간|계절|사령|통근|뿌리|투간|반복|중첩|겹치|오행|음양|비견|겁재|인성|식상|상관|재성|정재|편재|관성|정관|편관|천간합|지지합|합충|충형|형파|파해|(?:봄|여름|가을|겨울|한겨울)(?:철|의)?|(?:목|화|토|금|수|나무|불|흙|쇠|물)(?:의|\s)?(?:기운|세력)|[갑을병정무기경신임계](?:목|화|토|금|수)|[자축인묘진사오미신유술해]월|[갑을병정무기경신임계][자축인묘진사오미신유술해])/u;
+var MISFRAMED_SEASON_PATTERN = /(?:봄|여름|가을|겨울|계절)\s*(?:기운|기세)?[^.?!\n]{0,20}(?:환경|상황)(?:에서는|에서|일 때)/u;
+var PRESENTATION_AUDIT_PATTERN = /(?:최종\s*(?:판정|확정)|확정할 수 없|과학적\s*타당성|현실\s*예측|프로필|\bfinding\b|\bpack\b)/iu;
+var PROFILE_ROLE_PATTERNS = {
+  work: /(?:업무|직업|직장|조직|프로젝트|과제|공부|학습|시험|기획|분석|창작|표현|전문성|결과물|성과|마감|실행|일하는|역할)/u,
+  money: /(?:돈|재물|수입|지출|소비|저축|축적|현금|보상|비용|투자|자원|재정|경제|재성|정재|편재)/u,
+  relationships: /(?:관계|상대|사람|가까운|대화|소통|의견|갈등|조언|통제|독립\s*영역|힘겨루기|연애|배우자|친구|동료)/u
+};
+var PROFILE_STRENGTH_PATTERN = /(?:강점|힘|유지|밀고|끝내|완주|집중|주도|독립|버티|붙들|파고들|흔들리지|선명|빠르|높|살아)/u;
+var PROFILE_BLIND_SPOT_PATTERN = /(?:과해|늦|굳|간섭|갈등|힘겨루기|막히|고집|소진|압박|놓치|미루|부담|좁아|독단)/u;
+var PROFILE_GENERIC_COACHING_PATTERN = /(?:여러\s*조건을\s*빠르게\s*읽|맥락과\s*논리를\s*함께\s*정리|판단\s*기준이\s*다를\s*때|이유를\s*먼저\s*공유|현재\s*환경의\s*규칙|실제\s*행동\s*기준|마무리\s*속도가\s*빨라|관계의\s*오해가\s*줄)/u;
+var DEFAULT_PROFILE_TOPICS = /* @__PURE__ */ new Set([
+  "chart-overview",
+  "day-master",
+  "five-elements",
+  "ten-gods",
+  "relationships",
+  "strength"
+]);
 function fail(message, details = {}) {
   throw new OhMySajuApplicationError("INVALID_PRESENTATION_DRAFT", message, { details });
 }
@@ -20274,7 +20305,7 @@ function copyRefList(value, path) {
   const second = value[1] === void 0 ? void 0 : copyLivedPatternRef(value[1], `${path}[1]`);
   return second === void 0 ? [first] : [first, second];
 }
-function copyBroadPresentationDraft(value) {
+function copyLegacyBroadPresentationDraft(value) {
   if (!isRecord2(value)) fail("presentationDraft must be an object.");
   assertOnlyKeys2(
     value,
@@ -20319,6 +20350,96 @@ function copyBroadPresentationDraft(value) {
     workStudy: copyRefList(value.workStudy, "presentationDraft.workStudy"),
     relationships: copyRefList(value.relationships, "presentationDraft.relationships"),
     conclusion: copyConclusionRef(value.conclusion, "presentationDraft.conclusion")
+  };
+}
+function copyProfileParagraphRef(value, path, expectedRole) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["paragraph", "structure"], path);
+  if (!isRecord2(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys2(value.structure, ["role", "basis", "interpretation"], `${path}.structure`);
+  if (!PROFILE_ROLE_VALUES.has(value.structure.role)) {
+    fail(`${path}.structure.role is not supported.`, { path });
+  }
+  if (value.structure.role !== expectedRole) {
+    fail(`${path}.structure.role does not match its profile section.`, {
+      path,
+      expectedRole
+    });
+  }
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      role: expectedRole,
+      basis: copyFacet(value.structure.basis, `${path}.structure.basis`),
+      interpretation: copyFacet(value.structure.interpretation, `${path}.structure.interpretation`)
+    }
+  };
+}
+function copyProfileRefList(value, path, role) {
+  if (!Array.isArray(value) || value.length < 1 || value.length > 2) {
+    fail(`${path} must contain one or two paragraph references.`, { path });
+  }
+  const first = copyProfileParagraphRef(value[0], `${path}[0]`, role);
+  const second = value[1] === void 0 ? void 0 : copyProfileParagraphRef(value[1], `${path}[1]`, role);
+  return second === void 0 ? [first] : [first, second];
+}
+function copyProfileThesisRef(value, path) {
+  if (!isRecord2(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys2(value, ["paragraph", "structure"], path);
+  if (!isRecord2(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys2(value.structure, ["basis", "portrait"], `${path}.structure`);
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      basis: copyFacet(value.structure.basis, `${path}.structure.basis`),
+      portrait: copyFacet(value.structure.portrait, `${path}.structure.portrait`)
+    }
+  };
+}
+function copyDefaultProfileDraft(value) {
+  if (!isRecord2(value)) fail("presentationDraft must be an object.");
+  assertOnlyKeys2(
+    value,
+    ["schemaVersion", "kind", "thesis", "core", "temperament", "work", "money", "relationships"],
+    "presentationDraft"
+  );
+  if (value.schemaVersion !== "2" || value.kind !== "default-profile") {
+    fail("presentationDraft has an unsupported schema or kind.");
+  }
+  if (!Array.isArray(value.core) || value.core.length !== 2) {
+    fail("presentationDraft.core must contain exactly two central mechanisms.");
+  }
+  if (!isRecord2(value.temperament)) {
+    fail("presentationDraft.temperament must be an object.");
+  }
+  assertOnlyKeys2(value.temperament, ["strength", "blindSpot"], "presentationDraft.temperament");
+  const coreFirst = copyProfileParagraphRef(value.core[0], "presentationDraft.core[0]", "core");
+  const coreSecond = copyProfileParagraphRef(value.core[1], "presentationDraft.core[1]", "core");
+  const money = value.money === void 0 ? void 0 : copyProfileRefList(value.money, "presentationDraft.money", "money");
+  return {
+    schemaVersion: "2",
+    kind: "default-profile",
+    thesis: copyProfileThesisRef(value.thesis, "presentationDraft.thesis"),
+    core: [coreFirst, coreSecond],
+    temperament: {
+      strength: copyProfileParagraphRef(
+        value.temperament.strength,
+        "presentationDraft.temperament.strength",
+        "strength"
+      ),
+      blindSpot: copyProfileParagraphRef(
+        value.temperament.blindSpot,
+        "presentationDraft.temperament.blindSpot",
+        "blind-spot"
+      )
+    },
+    work: copyProfileRefList(value.work, "presentationDraft.work", "work"),
+    ...money === void 0 ? {} : { money },
+    relationships: copyProfileRefList(
+      value.relationships,
+      "presentationDraft.relationships",
+      "relationships"
+    )
   };
 }
 function sourceKey(source) {
@@ -20397,11 +20518,20 @@ function resolveParagraphRef(reading, ref, forbiddenTokens) {
     });
   }
   const display = presentationText(paragraph);
+  const findingTopics = new Map(
+    packReading.interpretation.findings.map(({ id, topic }) => [id, topic])
+  );
+  const topics = [
+    ...new Set(
+      paragraph.findingIds.map((findingId) => findingTopics.get(findingId)).filter((topic) => topic !== void 0)
+    )
+  ];
   return {
     ref,
     refKey: `${ref.packRef.id}@${ref.packRef.version}:${sourceKey(ref.source)}`,
     text: display.text,
     findingIds: paragraph.findingIds,
+    topics,
     uncertaintyMarker: display.uncertaintyMarker
   };
 }
@@ -20521,7 +20651,7 @@ function resolveBroadPresentation(reading, draft) {
     ...resolved.relationships,
     resolved.conclusion
   ];
-  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.legacyMinimumDistinctParagraphs) {
     fail("The broad reading is missing required presentation slots.", {
       policy: "broad-presentation-required"
     });
@@ -20556,6 +20686,150 @@ function resolveBroadPresentation(reading, draft) {
   const characterCount = all.reduce((total, item) => total + item.text.length, 0);
   if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters) {
     fail("The selected broad reading is too long.", {
+      policy: "compact-broad-presentation",
+      characterCount,
+      maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters
+    });
+  }
+  return resolved;
+}
+function assertProfileBridge(resolved, structure, path) {
+  if (orderedFacetPositions(resolved.text, [structure.basis, structure.interpretation]) === null) {
+    fail("A default-profile paragraph must quote its chart basis before its interpretation.", {
+      policy: "chart-to-interpretation-bridge",
+      path
+    });
+  }
+  if (!PROFILE_BASIS_PATTERN.test(structure.basis) || structure.interpretation.length < 12 || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text)) {
+    fail("A default-profile paragraph must expose a specific Saju basis and its plain meaning.", {
+      policy: "chart-to-interpretation-bridge",
+      path
+    });
+  }
+  if (PROFILE_GENERIC_COACHING_PATTERN.test(structure.interpretation)) {
+    fail("A default-profile interpretation cannot substitute generic coaching for chart meaning.", {
+      policy: "generic-profile-coaching",
+      path
+    });
+  }
+  if (structure.role === "work" && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation) || structure.role === "money" && (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) || !resolved.topics.includes("ten-gods")) || structure.role === "relationships" && !PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation) || structure.role === "strength" && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation) || structure.role === "blind-spot" && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation)) {
+    fail("A default-profile paragraph must match the semantic role of its section.", {
+      policy: "default-profile-role",
+      path,
+      role: structure.role
+    });
+  }
+  if (resolved.topics.length === 0 || resolved.topics.some((topic) => !DEFAULT_PROFILE_TOPICS.has(topic))) {
+    fail("A default profile cannot launder specialist or audit-only topics through a summary.", {
+      policy: "default-profile-topic-boundary",
+      path,
+      topics: resolved.topics
+    });
+  }
+  return { ...resolved, structure };
+}
+function assertProfileThesis(resolved, structure) {
+  if (orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null || !PROFILE_BASIS_PATTERN.test(structure.basis) || structure.portrait.length < 12 || PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text)) {
+    fail("The default-profile thesis must connect specific chart evidence to a clear portrait.", {
+      policy: "chart-to-interpretation-bridge",
+      path: "thesis"
+    });
+  }
+  if (resolved.topics.length === 0 || resolved.topics.some((topic) => !DEFAULT_PROFILE_TOPICS.has(topic))) {
+    fail("A default-profile thesis cannot rely on specialist or audit-only topics.", {
+      policy: "default-profile-topic-boundary",
+      path: "thesis",
+      topics: resolved.topics
+    });
+  }
+}
+function resolveDefaultProfile(reading, draft) {
+  const forbiddenTokens = forbiddenIdentityTokens(reading);
+  const resolve = (ref) => resolveParagraphRef(reading, ref, forbiddenTokens);
+  const resolveProfile = (value, path) => assertProfileBridge(resolve(value.paragraph), value.structure, path);
+  const resolveProfileList = (values, path) => values.filter((value) => value !== void 0).map((value, index) => resolveProfile(value, `${path}[${index}]`));
+  const thesis = resolve(draft.thesis.paragraph);
+  assertProfileThesis(thesis, draft.thesis.structure);
+  const core = [
+    resolveProfile(draft.core[0], "core[0]"),
+    resolveProfile(draft.core[1], "core[1]")
+  ];
+  const work = resolveProfileList(draft.work, "work");
+  const relationships = resolveProfileList(draft.relationships, "relationships");
+  const money = draft.money === void 0 ? void 0 : resolveProfileList(draft.money, "money");
+  const resolved = {
+    thesis,
+    core,
+    temperament: {
+      strength: resolveProfile(draft.temperament.strength, "temperament.strength"),
+      blindSpot: resolveProfile(draft.temperament.blindSpot, "temperament.blindSpot")
+    },
+    work,
+    ...money === void 0 ? {} : { money },
+    relationships
+  };
+  const all = [
+    resolved.thesis,
+    ...resolved.core,
+    resolved.temperament.strength,
+    resolved.temperament.blindSpot,
+    ...resolved.work,
+    ...resolved.money ?? [],
+    ...resolved.relationships
+  ];
+  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+    fail("The default profile is missing required evidence-backed sections.", {
+      policy: "default-profile-required"
+    });
+  }
+  if (new Set(all.map(({ refKey: refKey2 }) => refKey2)).size !== all.length) {
+    fail("Each default-profile item must select a distinct validated paragraph.", {
+      policy: "distinct-presentation-sources"
+    });
+  }
+  const normalizedTexts = all.map(
+    ({ text }) => text.normalize("NFKC").replace(/\s+/gu, " ").trim()
+  );
+  if (new Set(normalizedTexts).size !== normalizedTexts.length) {
+    fail("The same prose cannot be copied into multiple default-profile sections.", {
+      policy: "distinct-presentation-prose"
+    });
+  }
+  const centralTopics = new Set(
+    [resolved.thesis, ...resolved.core].flatMap(({ topics }) => topics)
+  );
+  if (!["day-master", "strength"].some((topic) => centralTopics.has(topic)) || !["chart-overview", "five-elements", "ten-gods", "relationships"].some(
+    (topic) => centralTopics.has(topic)
+  )) {
+    fail(
+      "The central profile must combine seasonal/day-master evidence with chart relationships.",
+      {
+        policy: "central-mechanism-evidence",
+        topics: [...centralTopics]
+      }
+    );
+  }
+  const firstCoreFindingIds = new Set(resolved.core[0].findingIds);
+  const secondCoreFindingIds = new Set(resolved.core[1].findingIds);
+  if (!resolved.core[0].findingIds.some((findingId) => !secondCoreFindingIds.has(findingId)) || !resolved.core[1].findingIds.some((findingId) => !firstCoreFindingIds.has(findingId))) {
+    fail("The two central mechanisms must be supported by meaningfully distinct findings.", {
+      policy: "distinct-central-mechanisms"
+    });
+  }
+  const { strength, blindSpot } = resolved.temperament;
+  if (strength.ref.packRef.id !== blindSpot.ref.packRef.id || strength.ref.packRef.version !== blindSpot.ref.packRef.version || !strength.findingIds.some((findingId) => blindSpot.findingIds.includes(findingId))) {
+    fail("Strength and blind spot must explain two sides of one finding-backed mechanism.", {
+      policy: "shared-double-edge-mechanism"
+    });
+  }
+  if (all.some(({ text }) => text.length < 36)) {
+    fail("Every default-profile item must contain a substantive interpretation.", {
+      policy: "substantive-profile-paragraph"
+    });
+  }
+  const characterCount = all.reduce((total, item) => total + item.text.length, 0);
+  if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters) {
+    fail("The selected default profile is too long.", {
       policy: "compact-broad-presentation",
       characterCount,
       maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters
@@ -20607,6 +20881,53 @@ function pillarTexts(reading) {
     return "\uD6C4\uBCF4\uBCC4";
   });
 }
+function profilePillarTexts(reading) {
+  if (reading.calculationKind === "exact") {
+    return PILLAR_POSITIONS2.map((position2) => {
+      const pillar = reading.calculation.pillars[position2];
+      return `${pillar.korean}(${pillar.hanja})`;
+    });
+  }
+  return PILLAR_POSITIONS2.map((position2) => {
+    const pillar = reading.calculation.stablePillars[position2];
+    if (pillar !== null) return `${pillar.korean}(${pillar.hanja})`;
+    if (position2 === "hour" && reading.calculation.hourPillar === "omitted") return "\uBBF8\uC0C1";
+    return "\uD6C4\uBCF4\uBCC4";
+  });
+}
+function profileTenGodTexts(reading) {
+  if (reading.calculationKind === "exact") {
+    return PILLAR_POSITIONS2.map((position2) => {
+      const pair = reading.calculation.facts.tenGods[position2];
+      return `${pair.stem}\xB7${pair.branch}`;
+    });
+  }
+  const dayMaster = reading.calculation.stablePillars.day?.stem.korean;
+  if (dayMaster === void 0) return null;
+  return PILLAR_POSITIONS2.map((position2) => {
+    const pillar = reading.calculation.stablePillars[position2];
+    if (pillar === null) {
+      return position2 === "hour" && reading.calculation.hourPillar === "omitted" ? "\uBBF8\uC0C1" : "\uD6C4\uBCF4\uBCC4";
+    }
+    const stem = position2 === "day" ? "\uC77C\uAC04" : getTenGod2(dayMaster, pillar.stem.korean);
+    const branch = getBranchTenGod2(dayMaster, pillar.branch.korean);
+    return `${stem}\xB7${branch}`;
+  });
+}
+function formatPercentage(value) {
+  return `${Number.isInteger(value) ? value : String(value)}%`;
+}
+function profileElementTable(reading) {
+  if (reading.calculationKind !== "exact") return [];
+  const percentages = reading.calculation.facts.structure.elementBalance.percentages;
+  return [
+    "**\uC624\uD589 \uBD84\uD3EC(\uC9C0\uC7A5\uAC04 \uD3EC\uD568)**",
+    "",
+    "| \uBAA9 | \uD654 | \uD1A0 | \uAE08 | \uC218 |",
+    "| ---: | ---: | ---: | ---: | ---: |",
+    `| ${["\uBAA9", "\uD654", "\uD1A0", "\uAE08", "\uC218"].map((element) => formatPercentage(percentages[element])).join(" | ")} |`
+  ];
+}
 function escapeBroadPresentationMarkdownText(value) {
   const escaped = value.normalize("NFKC").replace(/\s+/gu, " ").trim().replace(/\\/gu, "\\\\").replace(/([*_`[\]#>~])/gu, "\\$1").replaceAll("|", "\\|");
   return escaped.replace(/^([-+])\s/u, "\\$1 ").replace(/^(\d+)([.)])\s/u, "$1\\$2 ").replace(/^(-{3,})/u, "\\$1");
@@ -20626,15 +20947,18 @@ function presentationItems(resolved) {
   ];
 }
 function uncertaintyLegend(resolved) {
-  const markers = presentationItems(resolved).map(({ uncertaintyMarker }) => uncertaintyMarker).filter((marker) => marker !== null);
+  return uncertaintyLegendForItems(presentationItems(resolved));
+}
+function uncertaintyLegendForItems(items) {
+  const markers = items.map(({ uncertaintyMarker }) => uncertaintyMarker).filter((marker) => marker !== null);
   if (markers.length === 0) return null;
   const includesCandidate = markers.some((marker) => marker.includes("\u25B3"));
   const includesPartial = markers.some((marker) => marker.includes("\u25C7"));
-  return [
-    "\uC870\uAC74 \uD45C\uC2DC:",
+  const definitions = [
     ...includesCandidate ? ["\u25B3 \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uBD80\uBD84"] : [],
     ...includesPartial ? ["\u25C7 \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uB9CC \uBC18\uC601\uD55C \uBD80\uBD84"] : []
-  ].join(" \xB7 ");
+  ];
+  return `\uC870\uAC74 \uD45C\uC2DC: ${definitions.join(" \xB7 ")}`;
 }
 function renderMarkdown(reading, resolved) {
   const pillars = pillarTexts(reading);
@@ -20675,8 +20999,71 @@ function renderMarkdown(reading, resolved) {
   ];
   return lines.join("\n");
 }
+function defaultProfileItems(resolved) {
+  return [
+    resolved.thesis,
+    ...resolved.core,
+    resolved.temperament.strength,
+    resolved.temperament.blindSpot,
+    ...resolved.work,
+    ...resolved.money ?? [],
+    ...resolved.relationships
+  ];
+}
+function renderDefaultProfileMarkdown(reading, resolved) {
+  const pillars = profilePillarTexts(reading);
+  const tenGods = profileTenGodTexts(reading);
+  const legend = uncertaintyLegendForItems(defaultProfileItems(resolved));
+  const moneyLines = resolved.money === void 0 ? [] : [
+    "",
+    "## \uB3C8\uACFC \uD604\uC2E4 \uAC10\uAC01",
+    "",
+    ...resolved.money.map((item) => `- ${markedMarkdownText(item)}`)
+  ];
+  const lines = [
+    reading.calculationKind === "exact" ? exactBasis(reading) : possibilityBasis(reading),
+    ...legend === null ? [] : ["", legend],
+    "",
+    "| \uAD6C\uBD84 | \uB144\uC8FC | \uC6D4\uC8FC | \uC77C\uC8FC | \uC2DC\uC8FC |",
+    "| --- | --- | --- | --- | --- |",
+    `| \uAC04\uC9C0 | ${pillars.join(" | ")} |`,
+    ...tenGods === null ? [] : [`| \uC2ED\uC2E0 | ${tenGods.join(" | ")} |`],
+    ...profileElementTable(reading).length === 0 ? [] : ["", ...profileElementTable(reading)],
+    "",
+    `**\uD575\uC2EC \uC694\uC57D:** ${markedMarkdownText(resolved.thesis)}`,
+    "",
+    "## \uD575\uC2EC \uAD6C\uC870",
+    "",
+    ...resolved.core.map((item) => `- ${markedMarkdownText(item)}`),
+    "",
+    "## \uC5B4\uB5A4 \uC0AC\uB78C\uC778\uAC00",
+    "",
+    `- **\uAC15\uC810:** ${markedMarkdownText(resolved.temperament.strength)}`,
+    `- **\uAC15\uC810\uC774 \uACFC\uD574\uC9C8 \uB54C:** ${markedMarkdownText(resolved.temperament.blindSpot)}`,
+    "",
+    "## \uC77C\xB7\uC7AC\uB2A5",
+    "",
+    ...resolved.work.map((item) => `- ${markedMarkdownText(item)}`),
+    ...moneyLines,
+    "",
+    "## \uAD00\uACC4",
+    "",
+    ...resolved.relationships.map((item) => `- ${markedMarkdownText(item)}`)
+  ];
+  return lines.join("\n");
+}
 function validateAndRenderOhMySajuBroadPresentation(value, reading) {
-  const sourceRefs = copyBroadPresentationDraft(value);
+  if (isRecord2(value) && value.schemaVersion === "2" && value.kind === "default-profile") {
+    const sourceRefs2 = copyDefaultProfileDraft(value);
+    const resolved2 = resolveDefaultProfile(reading, sourceRefs2);
+    return deepFreeze2({
+      schemaVersion: "2",
+      kind: "default-profile",
+      sourceRefs: sourceRefs2,
+      markdown: renderDefaultProfileMarkdown(reading, resolved2)
+    });
+  }
+  const sourceRefs = copyLegacyBroadPresentationDraft(value);
   const resolved = resolveBroadPresentation(reading, sourceRefs);
   return deepFreeze2({
     schemaVersion: "1",
@@ -20732,6 +21119,7 @@ function assertBroadPresentationCapacity(tasks) {
     const allowedTopics = new Set(
       task.request.evidence.findings.map(({ topic }) => topic).filter((topic) => isSajuInterpretationTopicAllowed(topic, policy))
     );
+    if (allowedTopics.size === 0) return 0;
     return 1 + Math.min(allowedTopics.size, SAJU_NARRATION_PRESENTATION_POLICY.maxSections) * SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphsPerSection;
   });
   const availableParagraphSlots = taskCapacities.reduce((total, capacity) => total + capacity, 0);

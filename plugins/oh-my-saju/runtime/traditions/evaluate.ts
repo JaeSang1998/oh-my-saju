@@ -820,8 +820,8 @@ function evaluateCandidateRule(
         {
           key: canonicalJsonStringify(values),
           statement: partial
-            ? `확인된 삼주의 합성 오행 소계는 ${compact}입니다. 시주가 빠진 부분 결과이며 신강·신약 판정이 아닙니다.`
-            : `합성 오행 분포는 ${compact}입니다. 이 값은 신강·신약 판정이 아닙니다.`,
+            ? `확인된 연주·월주·일주의 지장간 가중 오행 소계는 ${compact}이며 시주는 포함하지 않았습니다.`
+            : `지장간 가중치를 포함한 오행 분포는 ${compact}입니다.`,
           topic: 'five-elements',
           values,
           evidence: structuralEvidence(candidate, 'facts.structure.elementBalance'),
@@ -896,14 +896,27 @@ function evaluateCandidateRule(
         omittedPillars,
       };
     }
+    const tenGodPositions: readonly PillarPosition[] = partial
+      ? ['year', 'month', 'day']
+      : ALL_PILLARS;
+    const tenGodSummary = tenGodPositions
+      .map((position) => {
+        const pair = values[position];
+        if (!isRecord(pair) || typeof pair.stem !== 'string' || typeof pair.branch !== 'string') {
+          return null;
+        }
+        return `${RELATION_POSITION_LABELS[position]}주 ${pair.stem}·${pair.branch}`;
+      })
+      .filter((entry): entry is string => entry !== null)
+      .join(', ');
     return {
       kind: 'matches',
       matches: [
         {
           key: canonicalJsonStringify(values),
           statement: partial
-            ? '일간 기준 십신 관계를 확인된 연주·월주·일주의 표면 천간과 지지 본기로 계산했습니다. 시주 십신은 미정입니다.'
-            : '일간 기준 십신 관계를 표면 천간과 지지 본기로 계산했습니다.',
+            ? `일간 기준 십신은 ${tenGodSummary}이며 시주 십신은 미정입니다. 지지는 본기를 기준으로 표시했습니다.`
+            : `일간 기준 십신은 ${tenGodSummary}입니다. 지지는 본기를 기준으로 표시했습니다.`,
           topic: 'ten-gods',
           values,
           evidence: structuralEvidence(candidate, 'facts.tenGods'),

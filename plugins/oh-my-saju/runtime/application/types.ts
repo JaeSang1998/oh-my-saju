@@ -160,7 +160,8 @@ export interface OhMySajuConclusionRef {
   };
 }
 
-export interface OhMySajuBroadPresentationDraft {
+/** @deprecated Accepted for 0.4.3 compatibility; new hosts should use the v2 default profile. */
+export interface OhMySajuLegacyBroadPresentationDraft {
   readonly schemaVersion: '1';
   readonly kind: 'broad-reading';
   readonly portrait: OhMySajuPortraitRef;
@@ -178,13 +179,73 @@ export interface OhMySajuBroadPresentationDraft {
   readonly conclusion: OhMySajuConclusionRef;
 }
 
-export interface OhMySajuBroadPresentation {
-  readonly schemaVersion: '1';
-  readonly kind: 'broad-reading';
-  /** Canonical references retained for audits; ordinary display uses only markdown. */
-  readonly sourceRefs: OhMySajuBroadPresentationDraft;
-  readonly markdown: string;
+export type OhMySajuProfileSectionRole =
+  | 'core'
+  | 'strength'
+  | 'blind-spot'
+  | 'work'
+  | 'money'
+  | 'relationships';
+
+/**
+ * Selects finding-backed prose and exposes the exact chart-to-interpretation
+ * bridge without prescribing Korean sentence endings or coaching vocabulary.
+ */
+export interface OhMySajuProfileParagraphRef {
+  readonly paragraph: OhMySajuParagraphRef;
+  readonly structure: {
+    readonly role: OhMySajuProfileSectionRole;
+    /** Exact substring naming the chart placement, season, repetition, or ten-god mechanism. */
+    readonly basis: string;
+    /** Exact substring translating that mechanism into a lived interpretation. */
+    readonly interpretation: string;
+  };
 }
+
+export interface OhMySajuProfileThesisRef {
+  readonly paragraph: OhMySajuParagraphRef;
+  readonly structure: {
+    /** Exact substring naming the chart's central evidence. */
+    readonly basis: string;
+    /** Exact substring giving the memorable plain-language portrait. */
+    readonly portrait: string;
+  };
+}
+
+/** Chart-first, evidence-visible default profile used by new broad readings. */
+export interface OhMySajuDefaultProfileDraft {
+  readonly schemaVersion: '2';
+  readonly kind: 'default-profile';
+  readonly thesis: OhMySajuProfileThesisRef;
+  readonly core: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef];
+  readonly temperament: {
+    readonly strength: OhMySajuProfileParagraphRef;
+    readonly blindSpot: OhMySajuProfileParagraphRef;
+  };
+  readonly work: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+  readonly money?: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+  readonly relationships: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+}
+
+export type OhMySajuBroadPresentationDraft =
+  | OhMySajuLegacyBroadPresentationDraft
+  | OhMySajuDefaultProfileDraft;
+
+export type OhMySajuBroadPresentation =
+  | {
+      readonly schemaVersion: '1';
+      readonly kind: 'broad-reading';
+      /** Canonical references retained for audits; ordinary display uses only markdown. */
+      readonly sourceRefs: OhMySajuLegacyBroadPresentationDraft;
+      readonly markdown: string;
+    }
+  | {
+      readonly schemaVersion: '2';
+      readonly kind: 'default-profile';
+      /** Canonical references retained for audits; ordinary display uses only markdown. */
+      readonly sourceRefs: OhMySajuDefaultProfileDraft;
+      readonly markdown: string;
+    };
 
 export interface PrepareOhMySajuReadingCommand {
   readonly schemaVersion?: '1';

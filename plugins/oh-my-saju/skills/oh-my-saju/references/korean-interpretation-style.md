@@ -59,9 +59,9 @@ If yes, omit it or add the exact mechanism, trigger, and recognizable failure mo
 Negative clichés are also Barnum language. `상처가 많다`, `배신을 겪는다`, and
 `혼자 감당한다` need specific evidence and conditions.
 
-Every user-facing interpretive bullet should contain a specific situation, the person's likely
-response, and the benefit or cost. A bullet containing only advice, praise, or a profession list
-fails this test.
+Every major conclusion should keep its chart basis nearby and give a lived implication that could
+be checked against experience. Do not force the same situation-response-result syntax into every
+paragraph; a bullet containing only advice, praise, or a profession list still fails this test.
 
 ## Strength and cost are one mechanism
 
@@ -122,13 +122,12 @@ examples such as how the person starts, decides, finishes, disagrees, delegates,
 unclear boundary over abstract labels such as `추진력이 있다`.
 
 The answer should still feel like a reading rather than a list of adjectives. Readable bullets are
-welcome; what to avoid is an unconnected psychological checklist. Open with a memorable portrait of
-one sentence, then show the same central mechanisms in recognizable situations.
+welcome; what to avoid is an unconnected psychological checklist. Open with the chart's memorable
+central mechanism, then show how it changes across the supported life areas.
 
 ## Default broad-reading display contract
 
-For a first substantive broad reading, use the literal headings `한눈에 보면` and
-`강점이 살아날 때 / 꼬일 때` in this shape:
+For a first substantive broad reading, use this chart-first shape:
 
 ```markdown
 기준: 양력 YYYY.MM.DD HH:mm, 한국 표준시
@@ -136,58 +135,66 @@ For a first substantive broad reading, use the literal headings `한눈에 보�
 [표식이 쓰였을 때만 한 번: 조건 표시: △ 생시 후보에 따라 달라지는 부분 · ◇ 확인된
 기둥 범위만 반영한 부분]
 
-| 년주 | 월주 | 일주 | 시주 |
-| ---- | ---- | ---- | ---- |
-| 간지 | 간지 | 간지 | 간지 |
+| 구분 | 년주 | 월주 | 일주      | 시주 |
+| ---- | ---- | ---- | --------- | ---- |
+| 간지 | 간지 | 간지 | 간지      | 간지 |
+| 십신 | 십신 | 십신 | 일간·십신 | 십신 |
 
-[△/◇ if applicable] [이 사람이 어떤 사람인지 핵심 성향을 한 문장으로 설명]
+**오행 분포(지장간 포함)**
 
-## 한눈에 보면
+|  목 |  화 |  토 |  금 |  수 |
+| --: | --: | --: | --: | --: |
+|  값 |  값 |  값 |  값 |  값 |
 
-- **중심 성향:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
-- **결정과 실행:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
-- **사람을 대할 때:** [△/◇ if applicable] [특정 상황 → 반응 → 결과]
+**핵심 요약:** [△/◇ if applicable] [명식 근거 → 이 사람을 관통하는 중심축]
 
-## 강점이 살아날 때 / 꼬일 때
+## 핵심 구조
 
-| 잘 풀릴 때                             | 꼬일 때                                          |
-| -------------------------------------- | ------------------------------------------------ |
-| [△/◇ if applicable] [같은 성향의 장점] | [△/◇ if applicable] [그 성향이 과해질 때의 비용] |
+- [△/◇ if applicable] [일간·계절·뿌리 또는 반복 → 전통적 기능 → 의미]
+- [△/◇ if applicable] [표현·결과·통제·지원의 실제 배치 → 의미]
 
-## 일·공부
+## 어떤 사람인가
 
-- [△/◇ if applicable] [실제 일하거나 배우는 장면을 포함한 해석]
-- [△/◇ if applicable] [성과가 막히는 구체적 조건]
+- **강점:** [△/◇ if applicable] [중심 작용이 잘 쓰일 때]
+- **강점이 과해질 때:** [△/◇ if applicable] [같은 작용의 비용]
+
+## 일·재능
+
+- [△/◇ if applicable] [업무 방식과 근거를 연결한 해석]
+
+## 돈과 현실 감각
+
+- [근거가 있을 때만 표시]
 
 ## 관계
 
-- [△/◇ if applicable] [가까운 관계에서 드러나는 구체적 모습]
-- [△/◇ if applicable] [오해나 충돌이 생기는 구체적 지점]
-
-**한 줄 정리:** [△/◇ if applicable] [평이한 말로 핵심을 압축]
+- [△/◇ if applicable] [관계 방식과 근거를 연결한 해석]
 ```
 
-Prefer bullets and small tables. Each broad-reading paragraph is one atomic sentence. Use no more than four
-headings after the chart table. Keep each section to the information needed to answer what kind of
-person the chart describes; do not add sections merely because findings exist.
+Prefer bullets and small tables. A paragraph may contain one to three connected sentences. Keep
+each section to the information needed to answer what kind of person the chart describes; omit
+money or another area when its evidence does not differ from the general personality reading.
 
-In `presentationDraft`, every lived-pattern selection also declares its semantic role. Use
-`domain: disposition`, `execution`, or `relationships` for the matching at-a-glance slot,
-`domain: work-study` for work/study bullets, and `domain: relationships` for relationship bullets.
-Use `direction: descriptive` for those slots. The double-edge pair names one shared domain and uses
-`direction: benefit` for strength and `direction: cost` for friction. These fields classify the
-selected sentence; they do not appear in the user-facing Korean.
+In the v2 `presentationDraft`, the thesis quotes exact `basis` and `portrait` spans. Other
+selections declare `role` and quote exact `basis` and `interpretation` spans. The chart basis must
+precede its meaning in the selected paragraph. The strength and blind-spot selections share a
+finding-backed mechanism. These fields do not appear in the user-facing Korean.
 
-The default four-pillar table does not need a ten-god row. Omit the element-percentage table from a
-broad reading unless the user asks about elements. If shown for a focused answer, keep it compact
-and never derive a personality trait from proportions alone.
+Show the ten-god row and exact-chart element table by default. The table is orientation, not a
+strength score; never derive a personality trait from proportions alone.
 
 ## Progressive disclosure
 
-Do not mention these terms in a broad reading unless the user explicitly asks about that technical
-topic: `격국`, `조후`, `용신`, `신살`, `공망`. Also keep `양인격`, `월겁격`, `비견`, `겁재`,
-`식상`, `관살`, Pack/profile names, candidate status, and unresolved school comparisons out of
-ordinary prose. Do not report a technical candidate simply to retract it in the next clause.
+Use `일간`, `월지` or `월령`, `오행`, `십신`, and the basic ten-god groups when they make the
+reasoning visible. Translate each term at first use: `시주의 을목 상관, 즉 생각을 밖으로
+표현하는 작용` is better than either hiding `상관` or merely listing it. Keep `격국`, `조후`,
+`용신`, `신살`, `공망`, named candidates, Pack/profile names, and unresolved school comparisons
+out of ordinary prose unless the user asks about them. Do not report a technical candidate simply
+to retract it in the next clause.
+
+Prefer placements to bare ledger counts. A reader should never have to know what `왕`, `휴`,
+`인성 1`, or `식상 2` means before reading the sentence: translate the state or ten-god function
+immediately, or omit the label and keep the plain meaning.
 
 If a finding cannot support a plain-language implication, omit the finding entirely. Treat
 `nonDisplayGuardrails`, profile limitations, and unavailable rules as internal overclaim controls,

@@ -226,7 +226,7 @@ describe('AI request and error validation v3', () => {
     expect(
       SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.maxItems,
     ).toBe(2);
-    expect(SAJU_NARRATIVE_JSON_SCHEMA.$defs.paragraph.properties.text.maxLength).toBe(800);
+    expect(SAJU_NARRATIVE_JSON_SCHEMA.$defs.paragraph.properties.text.maxLength).toBe(900);
   });
 });
 
@@ -334,13 +334,13 @@ describe('AI output validation v3', () => {
     expect(reading.narrative.summary.text).toBe(text);
   });
 
-  test('두 문장을 넘는 줄글과 지나치게 긴 문단을 compact 출력 경계에서 거부한다', async () => {
+  test('세 문장을 넘는 줄글과 지나치게 긴 문단을 compact 출력 경계에서 거부한다', async () => {
     await expect(
       createAiSajuReading(
         inputReturning(
           plan(
             [FINDING.id],
-            '첫 번째 설명입니다. 두 번째 설명입니다. 세 번째 설명까지 이어집니다.',
+            '첫 번째 설명입니다. 두 번째 설명입니다. 세 번째 설명입니다. 네 번째 설명까지 이어집니다.',
           ),
           '사주 봐줘.',
         ),
@@ -350,13 +350,13 @@ describe('AI output validation v3', () => {
       details: {
         path: 'summary',
         policy: 'compact-presentation',
-        sentenceCount: 3,
-        maximumSentenceCount: 2,
+        sentenceCount: 4,
+        maximumSentenceCount: 3,
       },
     });
 
     await expect(
-      createAiSajuReading(inputReturning(plan([FINDING.id], '가'.repeat(801)), '사주 봐줘.')),
+      createAiSajuReading(inputReturning(plan([FINDING.id], '가'.repeat(901)), '사주 봐줘.')),
     ).rejects.toMatchObject({
       code: 'INVALID_NARRATOR_OUTPUT',
     });
@@ -380,7 +380,17 @@ describe('AI output validation v3', () => {
     });
   });
 
-  test('사용자가 오행을 직접 물었을 때만 해당 전문 용어와 section을 허용한다', async () => {
+  test('일반 동사인 “기준을 세운 뒤”를 세운(歲運) 교리로 오탐하지 않는다', async () => {
+    const text =
+      '월주와 일주의 반복은 스스로 납득한 기준을 세운 뒤 움직이려는 성향으로 이어집니다.';
+    await expect(
+      createAiSajuReading(inputReturning(plan([FINDING.id], text), '사주 봐줘.')),
+    ).resolves.toMatchObject({
+      narrative: { summary: { text } },
+    });
+  });
+
+  test('기본 broad에서는 오행을 보여주고 focused·audit에서는 명시적으로 물을 때만 연다', async () => {
     const output = {
       summary: paragraph([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
       sections: [
@@ -396,12 +406,8 @@ describe('AI output validation v3', () => {
       ],
     };
 
-    await expect(createAiSajuReading(inputReturning(output, '사주 봐줘.'))).rejects.toMatchObject({
-      code: 'INVALID_NARRATOR_OUTPUT',
-      details: {
-        policy: 'advanced-doctrine-explicit-opt-in',
-        doctrine: 'five-elements',
-      },
+    await expect(createAiSajuReading(inputReturning(output, '사주 봐줘.'))).resolves.toMatchObject({
+      narrative: { sections: [{ id: 'five-elements' }] },
     });
 
     await expect(

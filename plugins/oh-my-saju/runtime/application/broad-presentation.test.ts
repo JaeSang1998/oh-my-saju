@@ -325,7 +325,7 @@ describe('broad-reading presentation contract', () => {
     });
   });
 
-  test('stable-only 근거가 9개 슬롯을 만들 수 없으면 prepare에서 일찍 설명한다', async () => {
+  test('stable-only 근거가 7개 기본 프로필 슬롯을 만들 수 없으면 prepare에서 일찍 설명한다', async () => {
     const sparseRequest = {
       calculation: {
         kind: 'possibilities' as const,
@@ -358,7 +358,7 @@ describe('broad-reading presentation contract', () => {
         code: 'INVALID_COMMAND',
         details: {
           policy: 'insufficient-broad-presentation-capacity',
-          requiredParagraphSlots: 9,
+          requiredParagraphSlots: 7,
           recommendation: 'use-include-candidate-dependent-or-focused',
         },
       },
@@ -657,7 +657,7 @@ describe('broad-reading presentation contract', () => {
     });
   });
 
-  test('두 문장을 한 broad 원자 문단에 넣으면 narrator 단계에서 거부한다', async () => {
+  test('schema 1 호환 입력도 두 문장의 연결된 해석을 유지한다', async () => {
     const prepared = await prepareBroadReading();
     const drafts = broadDraftsFor(prepared.narrationTasks).map((draft) =>
       draft.packRef.id === 'ziping'
@@ -676,12 +676,9 @@ describe('broad-reading presentation contract', () => {
     const result = await validateBroad(prepared, drafts);
 
     expect(result).toMatchObject({
-      ok: false,
+      ok: true,
       command: 'validate-reading',
-      error: {
-        code: 'INVALID_NARRATOR_OUTPUT',
-        details: { policy: 'atomic-broad-paragraph' },
-      },
+      result: { presentation: { kind: 'broad-reading' } },
     });
   });
 
@@ -1026,6 +1023,7 @@ describe('broad-reading presentation contract', () => {
     const markdown = result.result.presentation?.markdown ?? '';
     expect(markdown.match(/조건 표시:/gu)).toHaveLength(1);
     expect(markdown).toContain('◇ 확인된 기둥 범위만 반영한 부분');
+    expect(markdown).not.toContain('조건 표시: ·');
     expect(markdown).toContain('◇ ');
     expect(markdown).not.toContain('확인된 기둥 범위의 부분 결과입니다.');
   });

@@ -105,7 +105,8 @@ const DOCTRINE_DISCLOSURE_RULES: readonly DoctrineDisclosureRule[] = [
   {
     id: 'luck-cycles',
     topics: ['luck-cycles'],
-    outputPattern: /(?:대운|세운)/u,
+    outputPattern:
+      /(?:대운|세운)(?=$|[\s,.;:!?，。；：！？]*(?:은|는|이|가|을|를|의|에서|으로|상|흐름|주기|시기|연도|해|분석|해석))/u,
     requestPattern: /(?:대운|세운)/u,
   },
   {
@@ -115,6 +116,19 @@ const DOCTRINE_DISCLOSURE_RULES: readonly DoctrineDisclosureRule[] = [
     requestPattern: /(?:신살|화개|천을귀인|역마|도화|양인(?!격)|육해)/u,
   },
 ] as const;
+
+/**
+ * These are the ordinary vocabulary of a chart-first profile, not specialist
+ * audit topics. Broad readings may use them when each term is translated in
+ * place; pattern, useful-god, void, growth-stage, luck-cycle, and symbolic-star
+ * material still require explicit user opt-in.
+ */
+const BROAD_DEFAULT_DOCTRINE_IDS = new Set<SajuDoctrineDisclosureId>([
+  'day-master',
+  'five-elements',
+  'ten-gods',
+  'strength',
+]);
 
 const SCIENCE_META_REQUEST_PATTERN =
   /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}(?:(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,12}(?:근거|검증|타당|맞|사실|아닙|아니|인가|이야|입니까)|(?:검증|타당성)[^.?!\n]{0,12}(?:과학|실증))|(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,20}(?:사주|명리|운세|해석|예측)[^.?!\n]{0,20}(?:맞|검증|근거|타당|사실)|(?:scientific|empirical)[^.?!\n]{0,20}(?:saju|fortune|reading|prediction)|현실\s*예측\s*(?:근거|검증|타당성))/iu;
@@ -185,7 +199,10 @@ export function resolveSajuReadingPolicy(
 }
 
 function doctrineAllowed(rule: DoctrineDisclosureRule, policy: ResolvedSajuReadingPolicy): boolean {
-  return policy.requestedDoctrineIds.some((id) => id === rule.id);
+  return (
+    policy.requestedDoctrineIds.some((id) => id === rule.id) ||
+    (policy.mode === 'broad' && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id))
+  );
 }
 
 export function findSajuDisclosureViolation(

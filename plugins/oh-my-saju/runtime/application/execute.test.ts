@@ -115,13 +115,13 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.4.3',
+        version: '0.4.4',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '3.0.0',
+          version: '4.0.0',
         },
         outputSchemaVersion: '3',
         claimGateVersion: '3',
@@ -171,21 +171,23 @@ describe('executeOhMySaju', () => {
       });
       expect(task.request.grounding.variantPolicy).toBe('include-candidate-dependent');
       expect(task.request.task.presentation).toEqual({
-        mode: 'compact-layperson',
-        format: 'sectioned-bullets',
-        maxParagraphSentences: 2,
+        mode: 'chart-first-profile',
+        format: 'chart-and-short-sections',
+        maxParagraphSentences: 3,
         maxSections: 4,
         maxParagraphsPerSection: 2,
-        maxNarrativeCharacters: 2_400,
-        maxParagraphCharacters: 800,
+        maxNarrativeCharacters: 3_200,
+        maxParagraphCharacters: 900,
         advancedDoctrine: 'only-when-explicitly-requested',
         neverEndWithLimitations: true,
         broadReading: {
           finalSelectionRequired: true,
-          minimumDistinctParagraphs: 9,
-          maxSelectedParagraphCharacters: 240,
-          maxPresentationCharacters: 1_000,
-          structuredLivedPatternRequired: true,
+          minimumDistinctParagraphs: 7,
+          legacyMinimumDistinctParagraphs: 9,
+          maxSelectedParagraphCharacters: 420,
+          maxPresentationCharacters: 2_200,
+          structuredLivedPatternRequired: false,
+          structuredEvidenceBridgeRequired: true,
         },
       });
       expect(task.request.evidence.nonDisplayGuardrails.neverQuoteOrParaphrase).toBe(true);

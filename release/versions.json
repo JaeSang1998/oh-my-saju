@@ -1,8 +1,8 @@
 {
   "engine": "0.9.0",
-  "plugin": "0.4.3",
+  "plugin": "0.4.4",
   "skills": {
-    "oh-my-saju": "0.4.3"
+    "oh-my-saju": "0.4.4"
   },
   "traditionPacks": {
     "calculation-baseline": "1.1.0",

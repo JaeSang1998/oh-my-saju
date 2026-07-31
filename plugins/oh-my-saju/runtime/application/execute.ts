@@ -111,6 +111,7 @@ function assertBroadPresentationCapacity(tasks: readonly OhMySajuNarrationTask[]
         .map(({ topic }) => topic)
         .filter((topic) => isSajuInterpretationTopicAllowed(topic, policy)),
     );
+    if (allowedTopics.size === 0) return 0;
     return (
       1 +
       Math.min(allowedTopics.size, SAJU_NARRATION_PRESENTATION_POLICY.maxSections) *

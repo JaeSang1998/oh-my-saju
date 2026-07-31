@@ -102,16 +102,17 @@ The preparation binding covers:
 
 `validate-reading` recalculates that contract and then enforces the exact expected Pack/draft set,
 plain-text output schema, allowed finding references for every paragraph, uncertainty status, and
-narrator audit metadata. For an explicitly requested broad reading it additionally validates final
-role-to-atomic-paragraph references, their declared `domain` and `direction`, and their exact
-situation/behavior/result structure. The fixed slot contract requires matching disposition,
-execution, relationship, and work/study domains; the two sides of one double edge use
-`benefit`/`cost`. The application then deterministically renders the compact Korean Markdown
-presentation. It converts repeated validator uncertainty text into local `△` (candidate-dependent),
-`◇` (partial), or `△◇` markers and emits the definitions once near the presentation's basis line.
+narrator audit metadata. For an explicitly requested broad reading, schema 2 additionally validates
+the final chart-to-interpretation references: the thesis quotes `basis` and `portrait`; the core and
+life-area selections declare a `role` and quote ordered `basis` and `interpretation` spans. It
+requires two central mechanisms, keeps strength and blind spot on shared finding support, and
+blocks specialist-topic summaries from being laundered into a default personality claim. The
+application then renders chart, ten-god, element, and short profile sections deterministically.
+It converts repeated validator uncertainty text into local `△` (candidate-dependent), `◇`
+(partial), or `△◇` markers and emits the definitions once near the presentation's basis line.
 Uncertainty therefore stays attached to each affected claim without repeating a defensive
-sentence, and no free-form rewriting occurs after selection. The digest detects mismatch; it is
-not a secret, signature, or publisher identity.
+sentence, and no free-form rewriting occurs after selection. Schema 1 remains accepted for 0.4.3
+compatibility. The digest detects mismatch; it is not a secret, signature, or publisher identity.
 
 The host still sees the user's conversation. This boundary limits a separate narration call; it
 does not claim that the host itself never received the birth input.

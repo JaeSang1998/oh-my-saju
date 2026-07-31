@@ -5,6 +5,7 @@ import { isRecord } from '../internal/guards';
 import { assertSafeIdentifier } from '../reading/option-validation';
 import { SAJU_TOPIC_TITLES } from '../reading/output-contract';
 import { SAJU_NARRATION_PRESENTATION_POLICY } from '../reading/prompt-contract';
+import { getBranchTenGod, getTenGod } from '../traditions/domain';
 import type {
   AiSajuComparisonPackReading,
   AiSajuComparisonServiceResult,
@@ -14,12 +15,16 @@ import type { InterpretationTopic, TraditionPackRef } from '../traditions/types'
 import { OhMySajuApplicationError } from './errors';
 import type {
   OhMySajuBroadPresentation,
-  OhMySajuBroadPresentationDraft,
   OhMySajuConclusionRef,
+  OhMySajuDefaultProfileDraft,
+  OhMySajuLegacyBroadPresentationDraft,
   OhMySajuLivedPatternRef,
   OhMySajuParagraphRef,
   OhMySajuParagraphSource,
   OhMySajuPortraitRef,
+  OhMySajuProfileParagraphRef,
+  OhMySajuProfileSectionRole,
+  OhMySajuProfileThesisRef,
 } from './types';
 
 const PILLAR_POSITIONS = [
@@ -53,6 +58,40 @@ const DOMAIN_PATTERNS = {
   relationships: /(?:관계|사이|의견|대화|오해|갈등|상대|역할|합의|소통|말(?:을|로|하면|할))/u,
   'work-study': /(?:업무|직장|과제|공부|학습|시험|제출|자료|보고서|성과|완성도|프로젝트|피드백)/u,
 } as const;
+const PROFILE_ROLE_VALUES = new Set<OhMySajuProfileSectionRole>([
+  'core',
+  'strength',
+  'blind-spot',
+  'work',
+  'money',
+  'relationships',
+]);
+const PROFILE_BASIS_PATTERN =
+  /(?:일간|월령|연지|월지|일지|시지|연주|월주|일주|시주|천간|지지|지장간|계절|사령|통근|뿌리|투간|반복|중첩|겹치|오행|음양|비견|겁재|인성|식상|상관|재성|정재|편재|관성|정관|편관|천간합|지지합|합충|충형|형파|파해|(?:봄|여름|가을|겨울|한겨울)(?:철|의)?|(?:목|화|토|금|수|나무|불|흙|쇠|물)(?:의|\s)?(?:기운|세력)|[갑을병정무기경신임계](?:목|화|토|금|수)|[자축인묘진사오미신유술해]월|[갑을병정무기경신임계][자축인묘진사오미신유술해])/u;
+const MISFRAMED_SEASON_PATTERN =
+  /(?:봄|여름|가을|겨울|계절)\s*(?:기운|기세)?[^.?!\n]{0,20}(?:환경|상황)(?:에서는|에서|일 때)/u;
+const PRESENTATION_AUDIT_PATTERN =
+  /(?:최종\s*(?:판정|확정)|확정할 수 없|과학적\s*타당성|현실\s*예측|프로필|\bfinding\b|\bpack\b)/iu;
+const PROFILE_ROLE_PATTERNS = {
+  work: /(?:업무|직업|직장|조직|프로젝트|과제|공부|학습|시험|기획|분석|창작|표현|전문성|결과물|성과|마감|실행|일하는|역할)/u,
+  money: /(?:돈|재물|수입|지출|소비|저축|축적|현금|보상|비용|투자|자원|재정|경제|재성|정재|편재)/u,
+  relationships:
+    /(?:관계|상대|사람|가까운|대화|소통|의견|갈등|조언|통제|독립\s*영역|힘겨루기|연애|배우자|친구|동료)/u,
+} as const;
+const PROFILE_STRENGTH_PATTERN =
+  /(?:강점|힘|유지|밀고|끝내|완주|집중|주도|독립|버티|붙들|파고들|흔들리지|선명|빠르|높|살아)/u;
+const PROFILE_BLIND_SPOT_PATTERN =
+  /(?:과해|늦|굳|간섭|갈등|힘겨루기|막히|고집|소진|압박|놓치|미루|부담|좁아|독단)/u;
+const PROFILE_GENERIC_COACHING_PATTERN =
+  /(?:여러\s*조건을\s*빠르게\s*읽|맥락과\s*논리를\s*함께\s*정리|판단\s*기준이\s*다를\s*때|이유를\s*먼저\s*공유|현재\s*환경의\s*규칙|실제\s*행동\s*기준|마무리\s*속도가\s*빨라|관계의\s*오해가\s*줄)/u;
+const DEFAULT_PROFILE_TOPICS = new Set<InterpretationTopic>([
+  'chart-overview',
+  'day-master',
+  'five-elements',
+  'ten-gods',
+  'relationships',
+  'strength',
+]);
 
 type LivedPatternDomain = OhMySajuLivedPatternRef['structure']['domain'];
 type LivedPatternDirection = OhMySajuLivedPatternRef['structure']['direction'];
@@ -68,6 +107,7 @@ interface ResolvedParagraphRef {
   readonly refKey: string;
   readonly text: string;
   readonly findingIds: readonly string[];
+  readonly topics: readonly InterpretationTopic[];
   readonly uncertaintyMarker: UncertaintyMarker | null;
 }
 
@@ -89,6 +129,22 @@ interface ResolvedBroadPresentation {
   readonly workStudy: readonly ResolvedLivedPatternRef[];
   readonly relationships: readonly ResolvedLivedPatternRef[];
   readonly conclusion: ResolvedParagraphRef;
+}
+
+interface ResolvedProfileParagraphRef extends ResolvedParagraphRef {
+  readonly structure: OhMySajuProfileParagraphRef['structure'];
+}
+
+interface ResolvedDefaultProfile {
+  readonly thesis: ResolvedParagraphRef;
+  readonly core: readonly [ResolvedProfileParagraphRef, ResolvedProfileParagraphRef];
+  readonly temperament: {
+    readonly strength: ResolvedProfileParagraphRef;
+    readonly blindSpot: ResolvedProfileParagraphRef;
+  };
+  readonly work: readonly ResolvedProfileParagraphRef[];
+  readonly money?: readonly ResolvedProfileParagraphRef[];
+  readonly relationships: readonly ResolvedProfileParagraphRef[];
 }
 
 function fail(message: string, details: Readonly<Record<string, unknown>> = {}): never {
@@ -247,7 +303,7 @@ function copyRefList(
   return second === undefined ? [first] : [first, second];
 }
 
-function copyBroadPresentationDraft(value: unknown): OhMySajuBroadPresentationDraft {
+function copyLegacyBroadPresentationDraft(value: unknown): OhMySajuLegacyBroadPresentationDraft {
   if (!isRecord(value)) fail('presentationDraft must be an object.');
   assertOnlyKeys(
     value,
@@ -292,6 +348,112 @@ function copyBroadPresentationDraft(value: unknown): OhMySajuBroadPresentationDr
     workStudy: copyRefList(value.workStudy, 'presentationDraft.workStudy'),
     relationships: copyRefList(value.relationships, 'presentationDraft.relationships'),
     conclusion: copyConclusionRef(value.conclusion, 'presentationDraft.conclusion'),
+  };
+}
+
+function copyProfileParagraphRef(
+  value: unknown,
+  path: string,
+  expectedRole: OhMySajuProfileSectionRole,
+): OhMySajuProfileParagraphRef {
+  if (!isRecord(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys(value, ['paragraph', 'structure'], path);
+  if (!isRecord(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys(value.structure, ['role', 'basis', 'interpretation'], `${path}.structure`);
+  if (!PROFILE_ROLE_VALUES.has(value.structure.role as OhMySajuProfileSectionRole)) {
+    fail(`${path}.structure.role is not supported.`, { path });
+  }
+  if (value.structure.role !== expectedRole) {
+    fail(`${path}.structure.role does not match its profile section.`, {
+      path,
+      expectedRole,
+    });
+  }
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      role: expectedRole,
+      basis: copyFacet(value.structure.basis, `${path}.structure.basis`),
+      interpretation: copyFacet(value.structure.interpretation, `${path}.structure.interpretation`),
+    },
+  };
+}
+
+function copyProfileRefList(
+  value: unknown,
+  path: string,
+  role: OhMySajuProfileSectionRole,
+): readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?] {
+  if (!Array.isArray(value) || value.length < 1 || value.length > 2) {
+    fail(`${path} must contain one or two paragraph references.`, { path });
+  }
+  const first = copyProfileParagraphRef(value[0], `${path}[0]`, role);
+  const second =
+    value[1] === undefined ? undefined : copyProfileParagraphRef(value[1], `${path}[1]`, role);
+  return second === undefined ? [first] : [first, second];
+}
+
+function copyProfileThesisRef(value: unknown, path: string): OhMySajuProfileThesisRef {
+  if (!isRecord(value)) fail(`${path} must be an object.`, { path });
+  assertOnlyKeys(value, ['paragraph', 'structure'], path);
+  if (!isRecord(value.structure)) fail(`${path}.structure must be an object.`, { path });
+  assertOnlyKeys(value.structure, ['basis', 'portrait'], `${path}.structure`);
+  return {
+    paragraph: copyParagraphRef(value.paragraph, `${path}.paragraph`),
+    structure: {
+      basis: copyFacet(value.structure.basis, `${path}.structure.basis`),
+      portrait: copyFacet(value.structure.portrait, `${path}.structure.portrait`),
+    },
+  };
+}
+
+function copyDefaultProfileDraft(value: unknown): OhMySajuDefaultProfileDraft {
+  if (!isRecord(value)) fail('presentationDraft must be an object.');
+  assertOnlyKeys(
+    value,
+    ['schemaVersion', 'kind', 'thesis', 'core', 'temperament', 'work', 'money', 'relationships'],
+    'presentationDraft',
+  );
+  if (value.schemaVersion !== '2' || value.kind !== 'default-profile') {
+    fail('presentationDraft has an unsupported schema or kind.');
+  }
+  if (!Array.isArray(value.core) || value.core.length !== 2) {
+    fail('presentationDraft.core must contain exactly two central mechanisms.');
+  }
+  if (!isRecord(value.temperament)) {
+    fail('presentationDraft.temperament must be an object.');
+  }
+  assertOnlyKeys(value.temperament, ['strength', 'blindSpot'], 'presentationDraft.temperament');
+  const coreFirst = copyProfileParagraphRef(value.core[0], 'presentationDraft.core[0]', 'core');
+  const coreSecond = copyProfileParagraphRef(value.core[1], 'presentationDraft.core[1]', 'core');
+  const money =
+    value.money === undefined
+      ? undefined
+      : copyProfileRefList(value.money, 'presentationDraft.money', 'money');
+  return {
+    schemaVersion: '2',
+    kind: 'default-profile',
+    thesis: copyProfileThesisRef(value.thesis, 'presentationDraft.thesis'),
+    core: [coreFirst, coreSecond],
+    temperament: {
+      strength: copyProfileParagraphRef(
+        value.temperament.strength,
+        'presentationDraft.temperament.strength',
+        'strength',
+      ),
+      blindSpot: copyProfileParagraphRef(
+        value.temperament.blindSpot,
+        'presentationDraft.temperament.blindSpot',
+        'blind-spot',
+      ),
+    },
+    work: copyProfileRefList(value.work, 'presentationDraft.work', 'work'),
+    ...(money === undefined ? {} : { money }),
+    relationships: copyProfileRefList(
+      value.relationships,
+      'presentationDraft.relationships',
+      'relationships',
+    ),
   };
 }
 
@@ -391,11 +553,22 @@ function resolveParagraphRef(
     });
   }
   const display = presentationText(paragraph);
+  const findingTopics = new Map(
+    packReading.interpretation.findings.map(({ id, topic }) => [id, topic] as const),
+  );
+  const topics = [
+    ...new Set(
+      paragraph.findingIds
+        .map((findingId) => findingTopics.get(findingId))
+        .filter((topic): topic is InterpretationTopic => topic !== undefined),
+    ),
+  ];
   return {
     ref,
     refKey: `${ref.packRef.id}@${ref.packRef.version}:${sourceKey(ref.source)}`,
     text: display.text,
     findingIds: paragraph.findingIds,
+    topics,
     uncertaintyMarker: display.uncertaintyMarker,
   };
 }
@@ -509,7 +682,7 @@ function assertConclusionStructure(
 
 function resolveBroadPresentation(
   reading: AiSajuComparisonServiceResult,
-  draft: OhMySajuBroadPresentationDraft,
+  draft: OhMySajuLegacyBroadPresentationDraft,
 ): ResolvedBroadPresentation {
   const forbiddenTokens = forbiddenIdentityTokens(reading);
   const resolve = (ref: OhMySajuParagraphRef): ResolvedParagraphRef =>
@@ -576,7 +749,9 @@ function resolveBroadPresentation(
     ...resolved.relationships,
     resolved.conclusion,
   ];
-  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+  if (
+    all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.legacyMinimumDistinctParagraphs
+  ) {
     fail('The broad reading is missing required presentation slots.', {
       policy: 'broad-presentation-required',
     });
@@ -616,6 +791,211 @@ function resolveBroadPresentation(
   const characterCount = all.reduce((total, item) => total + item.text.length, 0);
   if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters) {
     fail('The selected broad reading is too long.', {
+      policy: 'compact-broad-presentation',
+      characterCount,
+      maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters,
+    });
+  }
+  return resolved;
+}
+
+function assertProfileBridge(
+  resolved: ResolvedParagraphRef,
+  structure: OhMySajuProfileParagraphRef['structure'],
+  path: string,
+): ResolvedProfileParagraphRef {
+  if (orderedFacetPositions(resolved.text, [structure.basis, structure.interpretation]) === null) {
+    fail('A default-profile paragraph must quote its chart basis before its interpretation.', {
+      policy: 'chart-to-interpretation-bridge',
+      path,
+    });
+  }
+  if (
+    !PROFILE_BASIS_PATTERN.test(structure.basis) ||
+    structure.interpretation.length < 12 ||
+    MISFRAMED_SEASON_PATTERN.test(resolved.text) ||
+    PRESENTATION_AUDIT_PATTERN.test(resolved.text)
+  ) {
+    fail('A default-profile paragraph must expose a specific Saju basis and its plain meaning.', {
+      policy: 'chart-to-interpretation-bridge',
+      path,
+    });
+  }
+  if (PROFILE_GENERIC_COACHING_PATTERN.test(structure.interpretation)) {
+    fail('A default-profile interpretation cannot substitute generic coaching for chart meaning.', {
+      policy: 'generic-profile-coaching',
+      path,
+    });
+  }
+  if (
+    (structure.role === 'work' && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation)) ||
+    (structure.role === 'money' &&
+      (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) ||
+        !resolved.topics.includes('ten-gods'))) ||
+    (structure.role === 'relationships' &&
+      !PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation)) ||
+    (structure.role === 'strength' && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation)) ||
+    (structure.role === 'blind-spot' && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation))
+  ) {
+    fail('A default-profile paragraph must match the semantic role of its section.', {
+      policy: 'default-profile-role',
+      path,
+      role: structure.role,
+    });
+  }
+  if (
+    resolved.topics.length === 0 ||
+    resolved.topics.some((topic) => !DEFAULT_PROFILE_TOPICS.has(topic))
+  ) {
+    fail('A default profile cannot launder specialist or audit-only topics through a summary.', {
+      policy: 'default-profile-topic-boundary',
+      path,
+      topics: resolved.topics,
+    });
+  }
+  return { ...resolved, structure };
+}
+
+function assertProfileThesis(
+  resolved: ResolvedParagraphRef,
+  structure: OhMySajuProfileThesisRef['structure'],
+): void {
+  if (
+    orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null ||
+    !PROFILE_BASIS_PATTERN.test(structure.basis) ||
+    structure.portrait.length < 12 ||
+    PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) ||
+    MISFRAMED_SEASON_PATTERN.test(resolved.text) ||
+    PRESENTATION_AUDIT_PATTERN.test(resolved.text)
+  ) {
+    fail('The default-profile thesis must connect specific chart evidence to a clear portrait.', {
+      policy: 'chart-to-interpretation-bridge',
+      path: 'thesis',
+    });
+  }
+  if (
+    resolved.topics.length === 0 ||
+    resolved.topics.some((topic) => !DEFAULT_PROFILE_TOPICS.has(topic))
+  ) {
+    fail('A default-profile thesis cannot rely on specialist or audit-only topics.', {
+      policy: 'default-profile-topic-boundary',
+      path: 'thesis',
+      topics: resolved.topics,
+    });
+  }
+}
+
+function resolveDefaultProfile(
+  reading: AiSajuComparisonServiceResult,
+  draft: OhMySajuDefaultProfileDraft,
+): ResolvedDefaultProfile {
+  const forbiddenTokens = forbiddenIdentityTokens(reading);
+  const resolve = (ref: OhMySajuParagraphRef): ResolvedParagraphRef =>
+    resolveParagraphRef(reading, ref, forbiddenTokens);
+  const resolveProfile = (
+    value: OhMySajuProfileParagraphRef,
+    path: string,
+  ): ResolvedProfileParagraphRef =>
+    assertProfileBridge(resolve(value.paragraph), value.structure, path);
+  const resolveProfileList = (
+    values: readonly (OhMySajuProfileParagraphRef | undefined)[],
+    path: string,
+  ): readonly ResolvedProfileParagraphRef[] =>
+    values
+      .filter((value): value is OhMySajuProfileParagraphRef => value !== undefined)
+      .map((value, index) => resolveProfile(value, `${path}[${index}]`));
+  const thesis = resolve(draft.thesis.paragraph);
+  assertProfileThesis(thesis, draft.thesis.structure);
+  const core = [
+    resolveProfile(draft.core[0], 'core[0]'),
+    resolveProfile(draft.core[1], 'core[1]'),
+  ] as const;
+  const work = resolveProfileList(draft.work, 'work');
+  const relationships = resolveProfileList(draft.relationships, 'relationships');
+  const money = draft.money === undefined ? undefined : resolveProfileList(draft.money, 'money');
+  const resolved: ResolvedDefaultProfile = {
+    thesis,
+    core,
+    temperament: {
+      strength: resolveProfile(draft.temperament.strength, 'temperament.strength'),
+      blindSpot: resolveProfile(draft.temperament.blindSpot, 'temperament.blindSpot'),
+    },
+    work,
+    ...(money === undefined ? {} : { money }),
+    relationships,
+  };
+  const all = [
+    resolved.thesis,
+    ...resolved.core,
+    resolved.temperament.strength,
+    resolved.temperament.blindSpot,
+    ...resolved.work,
+    ...(resolved.money ?? []),
+    ...resolved.relationships,
+  ];
+  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+    fail('The default profile is missing required evidence-backed sections.', {
+      policy: 'default-profile-required',
+    });
+  }
+  if (new Set(all.map(({ refKey }) => refKey)).size !== all.length) {
+    fail('Each default-profile item must select a distinct validated paragraph.', {
+      policy: 'distinct-presentation-sources',
+    });
+  }
+  const normalizedTexts = all.map(({ text }) =>
+    text.normalize('NFKC').replace(/\s+/gu, ' ').trim(),
+  );
+  if (new Set(normalizedTexts).size !== normalizedTexts.length) {
+    fail('The same prose cannot be copied into multiple default-profile sections.', {
+      policy: 'distinct-presentation-prose',
+    });
+  }
+  const centralTopics = new Set(
+    [resolved.thesis, ...resolved.core].flatMap(({ topics }) => topics),
+  );
+  if (
+    !['day-master', 'strength'].some((topic) => centralTopics.has(topic as InterpretationTopic)) ||
+    !['chart-overview', 'five-elements', 'ten-gods', 'relationships'].some((topic) =>
+      centralTopics.has(topic as InterpretationTopic),
+    )
+  ) {
+    fail(
+      'The central profile must combine seasonal/day-master evidence with chart relationships.',
+      {
+        policy: 'central-mechanism-evidence',
+        topics: [...centralTopics],
+      },
+    );
+  }
+  const firstCoreFindingIds = new Set(resolved.core[0].findingIds);
+  const secondCoreFindingIds = new Set(resolved.core[1].findingIds);
+  if (
+    !resolved.core[0].findingIds.some((findingId) => !secondCoreFindingIds.has(findingId)) ||
+    !resolved.core[1].findingIds.some((findingId) => !firstCoreFindingIds.has(findingId))
+  ) {
+    fail('The two central mechanisms must be supported by meaningfully distinct findings.', {
+      policy: 'distinct-central-mechanisms',
+    });
+  }
+  const { strength, blindSpot } = resolved.temperament;
+  if (
+    strength.ref.packRef.id !== blindSpot.ref.packRef.id ||
+    strength.ref.packRef.version !== blindSpot.ref.packRef.version ||
+    !strength.findingIds.some((findingId) => blindSpot.findingIds.includes(findingId))
+  ) {
+    fail('Strength and blind spot must explain two sides of one finding-backed mechanism.', {
+      policy: 'shared-double-edge-mechanism',
+    });
+  }
+  if (all.some(({ text }) => text.length < 36)) {
+    fail('Every default-profile item must contain a substantive interpretation.', {
+      policy: 'substantive-profile-paragraph',
+    });
+  }
+  const characterCount = all.reduce((total, item) => total + item.text.length, 0);
+  if (characterCount > SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters) {
+    fail('The selected default profile is too long.', {
       policy: 'compact-broad-presentation',
       characterCount,
       maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters,
@@ -683,6 +1063,64 @@ function pillarTexts(reading: AiSajuComparisonServiceResult): readonly string[] 
   });
 }
 
+function profilePillarTexts(reading: AiSajuComparisonServiceResult): readonly string[] {
+  if (reading.calculationKind === 'exact') {
+    return PILLAR_POSITIONS.map((position) => {
+      const pillar = reading.calculation.pillars[position];
+      return `${pillar.korean}(${pillar.hanja})`;
+    });
+  }
+  return PILLAR_POSITIONS.map((position) => {
+    const pillar = reading.calculation.stablePillars[position];
+    if (pillar !== null) return `${pillar.korean}(${pillar.hanja})`;
+    if (position === 'hour' && reading.calculation.hourPillar === 'omitted') return '미상';
+    return '후보별';
+  });
+}
+
+/** @internal Visible ten-god row for exact charts and the known pillars of possibility charts. */
+export function profileTenGodTexts(
+  reading: AiSajuComparisonServiceResult,
+): readonly string[] | null {
+  if (reading.calculationKind === 'exact') {
+    return PILLAR_POSITIONS.map((position) => {
+      const pair = reading.calculation.facts.tenGods[position];
+      return `${pair.stem}·${pair.branch}`;
+    });
+  }
+  const dayMaster = reading.calculation.stablePillars.day?.stem.korean;
+  if (dayMaster === undefined) return null;
+  return PILLAR_POSITIONS.map((position) => {
+    const pillar = reading.calculation.stablePillars[position];
+    if (pillar === null) {
+      return position === 'hour' && reading.calculation.hourPillar === 'omitted'
+        ? '미상'
+        : '후보별';
+    }
+    const stem = position === 'day' ? '일간' : getTenGod(dayMaster, pillar.stem.korean);
+    const branch = getBranchTenGod(dayMaster, pillar.branch.korean);
+    return `${stem}·${branch}`;
+  });
+}
+
+function formatPercentage(value: number): string {
+  return `${Number.isInteger(value) ? value : String(value)}%`;
+}
+
+function profileElementTable(reading: AiSajuComparisonServiceResult): readonly string[] {
+  if (reading.calculationKind !== 'exact') return [];
+  const percentages = reading.calculation.facts.structure.elementBalance.percentages;
+  return [
+    '**오행 분포(지장간 포함)**',
+    '',
+    '| 목 | 화 | 토 | 금 | 수 |',
+    '| ---: | ---: | ---: | ---: | ---: |',
+    `| ${(['목', '화', '토', '금', '수'] as const)
+      .map((element) => formatPercentage(percentages[element]))
+      .join(' | ')} |`,
+  ];
+}
+
 /** @internal Escape one selected prose line without allowing it to reshape the fixed layout. */
 export function escapeBroadPresentationMarkdownText(value: string): string {
   const escaped = value
@@ -715,17 +1153,21 @@ function presentationItems(resolved: ResolvedBroadPresentation): readonly Resolv
 }
 
 function uncertaintyLegend(resolved: ResolvedBroadPresentation): string | null {
-  const markers = presentationItems(resolved)
+  return uncertaintyLegendForItems(presentationItems(resolved));
+}
+
+function uncertaintyLegendForItems(items: readonly ResolvedParagraphRef[]): string | null {
+  const markers = items
     .map(({ uncertaintyMarker }) => uncertaintyMarker)
     .filter((marker): marker is UncertaintyMarker => marker !== null);
   if (markers.length === 0) return null;
   const includesCandidate = markers.some((marker) => marker.includes('△'));
   const includesPartial = markers.some((marker) => marker.includes('◇'));
-  return [
-    '조건 표시:',
+  const definitions = [
     ...(includesCandidate ? ['△ 생시 후보에 따라 달라지는 부분'] : []),
     ...(includesPartial ? ['◇ 확인된 기둥 범위만 반영한 부분'] : []),
-  ].join(' · ');
+  ];
+  return `조건 표시: ${definitions.join(' · ')}`;
 }
 
 function renderMarkdown(
@@ -771,11 +1213,82 @@ function renderMarkdown(
   return lines.join('\n');
 }
 
+function defaultProfileItems(resolved: ResolvedDefaultProfile): readonly ResolvedParagraphRef[] {
+  return [
+    resolved.thesis,
+    ...resolved.core,
+    resolved.temperament.strength,
+    resolved.temperament.blindSpot,
+    ...resolved.work,
+    ...(resolved.money ?? []),
+    ...resolved.relationships,
+  ];
+}
+
+function renderDefaultProfileMarkdown(
+  reading: AiSajuComparisonServiceResult,
+  resolved: ResolvedDefaultProfile,
+): string {
+  const pillars = profilePillarTexts(reading);
+  const tenGods = profileTenGodTexts(reading);
+  const legend = uncertaintyLegendForItems(defaultProfileItems(resolved));
+  const moneyLines =
+    resolved.money === undefined
+      ? []
+      : [
+          '',
+          '## 돈과 현실 감각',
+          '',
+          ...resolved.money.map((item) => `- ${markedMarkdownText(item)}`),
+        ];
+  const lines = [
+    reading.calculationKind === 'exact' ? exactBasis(reading) : possibilityBasis(reading),
+    ...(legend === null ? [] : ['', legend]),
+    '',
+    '| 구분 | 년주 | 월주 | 일주 | 시주 |',
+    '| --- | --- | --- | --- | --- |',
+    `| 간지 | ${pillars.join(' | ')} |`,
+    ...(tenGods === null ? [] : [`| 십신 | ${tenGods.join(' | ')} |`]),
+    ...(profileElementTable(reading).length === 0 ? [] : ['', ...profileElementTable(reading)]),
+    '',
+    `**핵심 요약:** ${markedMarkdownText(resolved.thesis)}`,
+    '',
+    '## 핵심 구조',
+    '',
+    ...resolved.core.map((item) => `- ${markedMarkdownText(item)}`),
+    '',
+    '## 어떤 사람인가',
+    '',
+    `- **강점:** ${markedMarkdownText(resolved.temperament.strength)}`,
+    `- **강점이 과해질 때:** ${markedMarkdownText(resolved.temperament.blindSpot)}`,
+    '',
+    '## 일·재능',
+    '',
+    ...resolved.work.map((item) => `- ${markedMarkdownText(item)}`),
+    ...moneyLines,
+    '',
+    '## 관계',
+    '',
+    ...resolved.relationships.map((item) => `- ${markedMarkdownText(item)}`),
+  ];
+  return lines.join('\n');
+}
+
 export function validateAndRenderOhMySajuBroadPresentation(
   value: unknown,
   reading: AiSajuComparisonServiceResult,
 ): OhMySajuBroadPresentation {
-  const sourceRefs = copyBroadPresentationDraft(value);
+  if (isRecord(value) && value.schemaVersion === '2' && value.kind === 'default-profile') {
+    const sourceRefs = copyDefaultProfileDraft(value);
+    const resolved = resolveDefaultProfile(reading, sourceRefs);
+    return deepFreeze({
+      schemaVersion: '2',
+      kind: 'default-profile',
+      sourceRefs,
+      markdown: renderDefaultProfileMarkdown(reading, resolved),
+    });
+  }
+  const sourceRefs = copyLegacyBroadPresentationDraft(value);
   const resolved = resolveBroadPresentation(reading, sourceRefs);
   return deepFreeze({
     schemaVersion: '1',

@@ -1,5 +1,14 @@
 # Changelog
 
+## Oh My Saju plugin 0.4.4 — 2026-07-31
+
+- Rebuilt the default Saju profile around visible chart evidence: pillars, ten gods, element
+  distribution, central mechanisms, temperament, work, optional money, and relationships.
+- Replaced the nine forced situation/behavior/result sentences with schema 2 evidence bridges and
+  short connected paragraphs; schema 1 remains accepted for existing integrations.
+- Basic terms such as 일간, 월지, 오행, and 십신 may now appear with immediate plain-language
+  translation, while unresolved advanced doctrines stay out of ordinary readings.
+
 ## Oh My Saju plugin 0.4.3 — 2026-07-30
 
 - Added a required broad-reading presentation contract that selects

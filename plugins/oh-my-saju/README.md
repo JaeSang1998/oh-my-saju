@@ -12,7 +12,7 @@ saju-engine (calculation facts only)
   ├→ Tradition Packs → isolated finding sets → grounded narration validation
   └→ election / Tojeong / I Ching / Zi Wei / Liu Ren deterministic reports
   → prepare-reading / validate-reading / run-traditional-system protocol
-  → validated atomic-paragraph selection → deterministic broad-reading Markdown
+  → validated chart-to-interpretation profile assembly → deterministic broad-reading Markdown
   → Agent Skill
   → Codex, Claude Code, or another host
 ```
@@ -84,13 +84,16 @@ These views add no narration, 길흉, or event prediction. The full prepared JSO
 to the isolated draft-and-validate workflow.
 
 For an open-ended reading, set `request.readingMode: "broad"` and include the final
-`presentationDraft` in `validate-reading`. The runtime accepts only distinct, one-sentence atomic
-paragraphs from already-validated Pack prose, checks each lived pattern's
-domain/direction/situation/behavior/result structure, and fills the fixed Korean four-section
-layout. Candidate-dependent selections receive a local `△` marker, partial selections receive `◇`,
-and the marker definitions appear once near the basis line rather than repeating an uncertainty
-sentence in every paragraph. The exact user-facing answer is returned at
-`result.presentation.markdown`. Focused and technical-audit requests omit that field.
+schema 2 `presentationDraft` in `validate-reading`. The runtime selects distinct, already-validated
+Pack prose; requires exact chart-basis and interpretation spans; keeps strength and blind spot on
+one finding-backed mechanism; requires distinct finding support for the two central mechanisms;
+checks work, money, and relationship section semantics; and rejects specialist-topic laundering,
+generic coaching substitutions, or season-as-environment wording. It renders the four pillars, ten
+gods, exact-chart element distribution, central mechanisms, temperament, work, optional money, and
+relationships. Candidate-dependent selections receive a local `△` marker, partial selections
+receive `◇`, and the marker definitions appear once near the basis line. Schema 1 remains accepted
+for 0.4.3 callers. The exact user-facing answer is returned at
+`result.presentation.markdown`; focused and technical-audit requests omit that field.
 
 Requires Node.js 18 or newer. See the repository README and `skills/oh-my-saju/SKILL.md` for usage
 and installation. Redistribution notices for the bundled runtime are recorded in `NOTICE.md` and

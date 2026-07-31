@@ -39,11 +39,15 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       expect(policy).toContain('relationships and communication');
       expect(policy).toMatch(/three concrete, recognizable\s+manifestations/u);
       expect(policy).toContain('Default broad-reading display contract');
-      expect(policy).toContain('`한눈에 보면`');
-      expect(policy).toContain('`강점이 살아날 때 / 꼬일 때`');
-      expect(policy).toContain('Prefer bullets and small tables');
-      expect(policy).toContain('Each broad-reading paragraph is one atomic sentence');
+      expect(policy).toMatch(/`?핵심 구조`?/u);
+      expect(policy).toMatch(/`?어떤 사람인가`?/u);
+      expect(policy).toMatch(/`?오행 분포\(지장간 포함\)`?/u);
+      expect(policy).toMatch(/one to three connected sentences/u);
     }
+    expect(style).toContain('Prefer bullets and small tables');
+    expect(skill).toContain(
+      'Do not force every paragraph into a situation-behavior-result grammar',
+    );
   });
 
   test('keeps advanced doctrine behind progressive disclosure', () => {
@@ -52,10 +56,10 @@ describe('Oh My Saju agent-skill conversation policy', () => {
 
     for (const policy of [skill, style]) {
       expect(policy).toContain('Progressive disclosure');
-      expect(policy).toContain('Do not mention these terms in a broad reading');
       for (const term of ['격국', '조후', '용신', '신살', '공망']) {
         expect(policy).toContain(`\`${term}\``);
       }
+      expect(policy).toMatch(/unless the user(?: explicitly)? asks/u);
       expect(policy).toContain(
         'Never end a broad reading with a limitations or unresolved-doctrine paragraph',
       );
@@ -86,15 +90,21 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     const inputReference = readSkillFile('references/input-and-runtime.md');
 
     expect(skill).toContain('Set `request.readingMode` explicitly');
-    expect(skill).toContain('For `readingMode: "broad"`, `presentationDraft` is required');
+    expect(skill).toContain('For `readingMode: "broad"`, the v2 `presentationDraft` is required');
     expect(skill).toContain('output `result.presentation.markdown` exactly');
     expect(skill).toMatch(/Do not\s+rephrase it/u);
-    expect(inputReference).toContain('nine distinct atomic paragraphs');
-    expect(inputReference).toMatch(/`situation`, `behavior`, and\s+`result`/u);
-    expect(inputReference).toContain('declares a matching `domain` and `direction`');
+    expect(inputReference).toMatch(/seven or\s+more distinct validated paragraphs/u);
+    expect(inputReference).toMatch(/quotes exact ordered `basis` and\s+`portrait` spans/u);
+    expect(inputReference).toMatch(
+      /declares its `role` and quotes exact ordered `basis` and\s+`interpretation` spans/u,
+    );
     expect(inputReference).toContain('replaces repeated uncertainty prose with a local `△` marker');
     expect(inputReference).toContain('one legend near the basis line');
     expect(inputReference).toContain('already passed the Pack claim gate');
+    expect(inputReference).toContain(
+      '이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.',
+    );
+    expect(skill).toContain('only protocol filler');
     expect(inputReference).toMatch(/show\s+that Markdown as-is/u);
   });
 
@@ -113,7 +123,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       skills: { 'oh-my-saju': string };
     };
 
-    expect(portable.version).toBe('0.4.3');
+    expect(portable.version).toBe('0.4.4');
     expect(codex.version).toBe(portable.version);
     expect(claude.version).toBe(portable.version);
     expect(versions.plugin).toBe(portable.version);

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.4 — 2026-07-31
+
+- Replace the validator-shaped nine-sentence broad template with a chart-first default profile:
+  four pillars, ten gods, exact-chart element distribution, two central mechanisms, temperament,
+  work, optional money, and relationships.
+- Allow basic Saju vocabulary in ordinary broad readings when it is translated in place, while
+  keeping pattern, useful-god, symbolic-star, void, and other specialist audit topics opt-in.
+- Add schema 2 `default-profile` presentation validation with exact chart-basis/interpretation
+  spans, shared strength/blind-spot evidence, specialist-topic laundering protection, and a
+  season-as-environment rejection; retain schema 1 input compatibility.
+- Include the actual pillar ten-god pairs in narrator evidence and allow one-to-three-sentence
+  causal paragraphs instead of forcing situation/behavior/result keyword grammar.
+
 ## 0.4.3 — 2026-07-30
 
 - Require a role-complete `presentationDraft` for broad readings, select only

@@ -606,18 +606,6 @@ function validateAndLabelParagraph(
     );
   }
   assertCompactParagraphShape(text, path);
-  if (policy.structuredBroadPresentation && countSentences(text) !== 1) {
-    throw new AiReadingError(
-      'INVALID_NARRATOR_OUTPUT',
-      'Structured broad-reading paragraphs must contain exactly one atomic sentence.',
-      {
-        details: {
-          path,
-          policy: 'atomic-broad-paragraph',
-        },
-      },
-    );
-  }
   assertNoUnrequestedAdvancedDoctrine(text, policy, path);
   assertNoUnsupportedCalendarGanzhiClaims(text, path);
   const findings = findingIds.map((findingId) => findingsById.get(findingId)!);

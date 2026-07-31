@@ -460,13 +460,23 @@ records an explicit unknown rather than claiming a model you cannot verify.
 
 When the caller explicitly sets `request.readingMode` to `broad`, the same `validate-reading`
 command must also contain `presentationDraft`. (`auto` remains backward-compatible and does not
-add this protocol requirement.) Broad Pack drafts use one narrator-authored sentence per paragraph.
-The presentation selects nine distinct atomic paragraphs for the fixed portrait, three overview
-bullets, double-edge pair, work/study, relationship, and conclusion slots. Each lived-pattern slot
-declares a matching `domain` and `direction`, then quotes exact ordered `situation`, `behavior`, and
-`result` spans from its paragraph; portrait and conclusion use their corresponding structure fields.
-The strength/friction pair must share finding support within one Pack and use `benefit`/`cost`
-directions respectively. The runtime resolves only prose that already passed the Pack claim gate.
+add this protocol requirement.) New hosts submit schema 2 `default-profile`. It selects seven or
+more distinct validated paragraphs for the thesis, two central mechanisms, strength and blind
+spot, work, and relationships; money is optional. The thesis quotes exact ordered `basis` and
+`portrait` spans. Every other selection declares its `role` and quotes exact ordered `basis` and
+`interpretation` spans. The strength/blind-spot pair must share finding support within one Pack.
+The runtime resolves only prose that already passed the Pack claim gate and rejects specialist
+topic laundering in the default profile. It also requires distinct finding support for the two
+central mechanisms and checks that work, relationships, and optional money prose actually matches
+its declared section rather than trusting the `role` label alone.
+
+Some broad preparations still expose a required isolated draft for a Pack whose findings are all
+outside the default-profile topic allowlist. Do not invent a personality claim from those findings
+and do not repeat the hidden doctrine term. Submit one neutral finding-backed sentence such as
+`이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.` for that Pack, then leave
+the paragraph out of schema 2 `presentationDraft`. It is validation-only protocol filler and is
+not rendered.
+
 For broad presentation it replaces repeated uncertainty prose with a local `△` marker for
 candidate-dependent results, a local `◇` marker for partial results, or `△◇` when both apply, then
 defines the markers that appear in one legend near the basis line. The final deterministic answer
@@ -474,12 +484,115 @@ is returned at `result.presentation.markdown`. Ordinary hosts should show that M
 must not append `reading.notice` or another free-form synthesis.
 
 Preparation fails early with policy `insufficient-broad-presentation-capacity` when the selected
-evidence policy cannot provide nine distinct allowed paragraphs. For an open reading, use
+evidence policy cannot provide seven distinct allowed paragraphs. For an open reading, use
 `variantPolicy: "include-candidate-dependent"` and retain the renderer's local uncertainty markers;
 otherwise switch to a narrower `focused` request. Do not wait until validation to fabricate or
 reuse prose, and do not silently override a user-requested stable-only policy.
 
 ### Broad presentation draft
+
+Use this schema 2 shape for new broad readings:
+
+```json
+{
+  "presentationDraft": {
+    "schemaVersion": "2",
+    "kind": "default-profile",
+    "thesis": {
+      "paragraph": {
+        "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+        "source": { "kind": "summary" }
+      },
+      "structure": {
+        "basis": "자월의 임수 일간에 월주와 일주의 임자가 겹쳐",
+        "portrait": "자기 동력을 어디로 흘려보내느냐가 삶의 중심이 되는 명식입니다"
+      }
+    },
+    "core": [
+      {
+        "paragraph": {
+          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "source": { "kind": "summary" }
+        },
+        "structure": {
+          "role": "core",
+          "basis": "임수는 자월에서 계절적으로 왕하고 비겁 근거가 반복됩니다",
+          "interpretation": "힘이 모자라기보다 강한 자기 동력을 어디로 흘릴지가 중요합니다"
+        }
+      },
+      {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "chart-overview", "paragraphIndex": 0 }
+        },
+        "structure": {
+          "role": "core",
+          "basis": "월주와 일주가 모두 임자로 중첩됩니다",
+          "interpretation": "같은 기둥의 반복이 자기 기준을 명식의 중심축으로 만듭니다"
+        }
+      }
+    ],
+    "temperament": {
+      "strength": {
+        "paragraph": {
+          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "source": { "kind": "section", "topic": "strength", "paragraphIndex": 0 }
+        },
+        "structure": {
+          "role": "strength",
+          "basis": "자월의 임수가 계절 힘을 받고 비겁 근거가 거듭됩니다",
+          "interpretation": "자기 기준이 선 뒤에는 긴 호흡으로 밀고 가는 힘이 있습니다"
+        }
+      },
+      "blindSpot": {
+        "paragraph": {
+          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "source": { "kind": "section", "topic": "strength", "paragraphIndex": 1 }
+        },
+        "structure": {
+          "role": "blind-spot",
+          "basis": "자월의 임수와 비겁 근거가 겹치는 힘이 과해지면",
+          "interpretation": "외부의 제동을 간섭으로 받아들여 방향 수정이 늦어질 수 있습니다"
+        }
+      }
+    },
+    "work": [
+      {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 0 }
+        },
+        "structure": {
+          "role": "work",
+          "basis": "시주의 상관·편재는 표현과 현실 결과로 이어지는 통로입니다",
+          "interpretation": "문제를 정의하고 결과물을 만드는 역할에서 이 축이 잘 살아납니다"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 1 }
+        },
+        "structure": {
+          "role": "relationships",
+          "basis": "월주와 일주의 비견·겁재는 가까운 관계에서도 자기 판단권을 지킵니다",
+          "interpretation": "서로의 독립 영역이 분명할 때 편하고 통제로 느끼면 힘겨루기가 생깁니다"
+        }
+      }
+    ]
+  }
+}
+```
+
+`money` has the same one-or-two-item array shape with `role: "money"` and is optional. Default
+profile selections may use only `chart-overview`, `day-master`, `five-elements`, `ten-gods`,
+`relationships`, and `strength` findings. The two `core` selections, together with the thesis,
+must combine day-master or seasonal-strength evidence with another chart placement, relation, or
+ten-god axis. Every quoted span must appear exactly and in order in the selected paragraph.
+
+### Legacy broad presentation draft (schema 1)
 
 Use this complete shape as a sibling of `drafts` in `validate-reading`. Replace every example Pack
 reference and source with an exact, distinct paragraph from the submitted drafts:
