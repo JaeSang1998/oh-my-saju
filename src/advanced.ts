@@ -10,9 +10,15 @@ export {
   solarTermLongitude,
 } from './astro/astronomical-solar-terms';
 export type { SolarTermBoundary } from './astro/astronomical-solar-terms';
-export { analyzeKnownPillarStructure, analyzeStructure } from './analysis/structural-analysis';
+export {
+  analyzeKnownPillarStructure,
+  analyzePillarPairRelationships,
+  analyzeStructure,
+} from './analysis/structural-analysis';
 export type {
   KnownPillarStructuralAnalysis,
+  PillarPairRelationshipAnalysis,
+  PillarPairPunishmentDirection,
   PillarPosition,
   StructuralAnalysis,
 } from './analysis/structural-analysis';

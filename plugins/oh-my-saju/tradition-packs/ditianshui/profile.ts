@@ -22,7 +22,7 @@ export const DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1: TraditionRuleProfile = dee
   schemaVersion: '1',
   id: 'ditianshui-strength-evidence',
   version: '1.0.0',
-  displayName: '삼명통회 계절표·적천수 왕쇠 증거 장부',
+  displayName: '삼명통회 계절표·적천수 왕쇠 근거',
   school: 'ditianshui-strength-flow-reconstruction',
   textualLayer: 'reconstruction',
   status: 'stable',

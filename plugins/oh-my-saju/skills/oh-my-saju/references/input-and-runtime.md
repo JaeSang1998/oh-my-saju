@@ -176,6 +176,149 @@ solar time are distinct audited policies.
 For a minor, avoid adult relationship or financial framing that the evidence and question do not
 require.
 
+## Two-person compatibility
+
+Use the pair protocol whenever the user asks for `궁합`, `연애 궁합`, `결혼 궁합`, or how two
+specified people fit together. Do not run two unrelated `prepare-reading` commands and manually
+join their conclusions.
+
+Prepare both charts in one command:
+
+```json
+{
+  "schemaVersion": "1",
+  "command": "prepare-compatibility",
+  "request": {
+    "participants": [
+      {
+        "id": "person-a",
+        "label": "A",
+        "calculation": {
+          "kind": "exact",
+          "request": {
+            "birth": {
+              "date": { "calendar": "gregorian", "year": 1994, "month": 3, "day": 12 },
+              "time": { "hour": 8, "minute": 30 },
+              "timeZone": "Asia/Seoul"
+            }
+          }
+        }
+      },
+      {
+        "id": "person-b",
+        "label": "B",
+        "calculation": {
+          "kind": "exact",
+          "request": {
+            "birth": {
+              "date": { "calendar": "gregorian", "year": 1995, "month": 10, "day": 8 },
+              "time": { "hour": 17, "minute": 5 },
+              "timeZone": "Asia/Seoul"
+            }
+          }
+        }
+      }
+    ],
+    "question": "두 사람 궁합을 봐줘.",
+    "locale": "ko-KR",
+    "variantPolicy": "include-candidate-dependent"
+  }
+}
+```
+
+Each participant accepts the same `exact` or `possibilities` calculation contract as a
+single-chart reading. Apply the Korean civil-time defaults to each unqualified Korean input. When
+one birth time is unknown or constrained, preserve that person's actual time evidence; the runtime
+evaluates the Cartesian product and marks pair findings as stable or candidate-dependent.
+
+The successful preparation returns:
+
+- `participants`: chart and ten-god views for both people;
+- `candidatePairCount`: the number of evaluated A-candidate × B-candidate pairs;
+- `findings`: participant facts, A→B and B→A day-master ten gods, shared stems or branches, and
+  cross-chart stem combinations and branch combination/clash/punishment/break/harm matches;
+- `narrationTask`: pair-only evidence, instructions, and the required output schema;
+- `binding.digest`: the two-person preparation binding.
+
+Write one pair draft using only `narrationTask.evidence.findings`. Every paragraph names its chart
+basis first and then translates that basis into a two-person interaction:
+
+```json
+{
+  "schemaVersion": "1",
+  "kind": "compatibility",
+  "summary": {
+    "text": "[두 명식 근거]. [두 사람이 어떻게 맞물리는지 보여 주는 짧은 총평].",
+    "findingIds": ["actual-finding-id", "another-actual-finding-id"],
+    "structure": {
+      "basis": "[text 안에 그대로 있는 두 명식 근거]",
+      "interpretation": "[text 안에서 basis 뒤에 있는 짧은 궁합 총평]"
+    }
+  },
+  "connection": {
+    "text": "[연결 근거]. [서로 끌리거나 보완되는 실제 방식].",
+    "findingIds": ["actual-connection-or-directional-finding-id"],
+    "structure": {
+      "basis": "[text 안의 연결 근거]",
+      "interpretation": "[text 안의 연결 해석]"
+    }
+  },
+  "interaction": {
+    "text": "[A→B와 B→A 십신 근거]. [한 사람의 반응에 다른 사람이 이어서 보이는 반응].",
+    "findingIds": ["actual-a-to-b-id", "actual-b-to-a-id"],
+    "structure": {
+      "basis": "[text 안의 양방향 근거]",
+      "interpretation": "[text 안에서 두 사람이 주고받는 방식]"
+    }
+  },
+  "friction": {
+    "text": "[교차 긴장 또는 방향 차이 근거]. [언제 부딪히기 시작하고 다툼이 어떻게 되풀이되는지].",
+    "findingIds": ["actual-tension-finding-id"],
+    "structure": {
+      "basis": "[text 안의 마찰 근거]",
+      "interpretation": "[text 안의 갈등 해석]"
+    }
+  },
+  "durability": {
+    "text": "[연결 근거와 갈등 근거]. [다툰 뒤 오해를 풀고 오래 지내는 구체적인 방식].",
+    "findingIds": ["actual-connection-or-directional-finding-id", "actual-tension-finding-id"],
+    "structure": {
+      "basis": "[text 안의 장기 관계 근거]",
+      "interpretation": "[text 안의 오래 지내기 위한 구체적인 습관]"
+    }
+  }
+}
+```
+
+`summary` gives the answer in the first quarter of the report. `connection`, `interaction`, and
+`friction` use different evidence sets and all discuss the pair rather than one person in
+isolation. When a cross-chart tension finding exists, `friction` and `durability` cite it.
+`interaction` always cites both day-master directions.
+If a date-crossing or policy range changes either day master, the runtime supplies one
+`day-master-ten-god-range` finding per direction. Name every listed candidate and keep that
+sentence conditional; never select the first candidate as though it were exact.
+
+Validate against the identical request:
+
+```json
+{
+  "schemaVersion": "1",
+  "command": "validate-compatibility",
+  "request": {},
+  "preparedDigest": "copy-result.binding.digest-from-prepare",
+  "narrator": {
+    "id": "agent-host",
+    "requestedModel": "host-unknown"
+  },
+  "draft": {}
+}
+```
+
+Replace both `{}` objects with the identical compatibility request and completed draft. On success,
+show `result.presentation.markdown` exactly. It already renders both charts, both day-master
+directions, the overall reading, the connecting mechanism, interaction loop, friction, and
+long-term condition. Do not append a score, a separate disclaimer, or a generic checklist.
+
 ## Timing options
 
 For exact-time calculations only, the command may include:
@@ -462,7 +605,8 @@ When the caller explicitly sets `request.readingMode` to `broad`, the same `vali
 command must also contain `presentationDraft`. (`auto` remains backward-compatible and does not
 add this protocol requirement.) New hosts submit schema 2 `default-profile`. It selects seven or
 more distinct validated paragraphs for the thesis, two central mechanisms, strength and blind
-spot, work, and relationships; money is optional. The thesis quotes exact ordered `basis` and
+spot, work, and relationships. When the displayed ten-god row has at least two `정재`/`편재`
+placements, a distinct money paragraph is required as an eighth selection. The thesis quotes exact ordered `basis` and
 `portrait` spans. Every other selection declares its `role` and quotes exact ordered `basis` and
 `interpretation` spans. The strength/blind-spot pair must share finding support within one Pack.
 The runtime resolves only prose that already passed the Pack claim gate and rejects specialist
@@ -504,8 +648,8 @@ Use this schema 2 shape for new broad readings:
         "source": { "kind": "summary" }
       },
       "structure": {
-        "basis": "자월의 임수 일간에 월주와 일주의 임자가 겹쳐",
-        "portrait": "자기 동력을 어디로 흘려보내느냐가 삶의 중심이 되는 명식입니다"
+        "basis": "[선택한 summary에서 그대로 복사한 명식 중심 근거]",
+        "portrait": "[같은 summary에서 basis 뒤에 있는 기억하기 쉬운 인물상]"
       }
     },
     "core": [
@@ -516,8 +660,8 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "core",
-          "basis": "임수는 자월에서 계절적으로 왕하고 비겁 근거가 반복됩니다",
-          "interpretation": "힘이 모자라기보다 강한 자기 동력을 어디로 흘릴지가 중요합니다"
+          "basis": "[첫 번째 중심 작용의 실제 계절·자리·반복 근거]",
+          "interpretation": "[그 근거가 실제 행동에서 드러나는 모습]"
         }
       },
       {
@@ -527,8 +671,8 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "core",
-          "basis": "월주와 일주가 모두 임자로 중첩됩니다",
-          "interpretation": "같은 기둥의 반복이 자기 기준을 명식의 중심축으로 만듭니다"
+          "basis": "[첫 번째와 다른 finding을 쓰는 두 번째 배치·십신 근거]",
+          "interpretation": "[첫 번째 설명과 겹치지 않는 또 다른 행동 특성]"
         }
       }
     ],
@@ -540,8 +684,8 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "strength",
-          "basis": "자월의 임수가 계절 힘을 받고 비겁 근거가 거듭됩니다",
-          "interpretation": "자기 기준이 선 뒤에는 긴 호흡으로 밀고 가는 힘이 있습니다"
+          "basis": "[강점과 맹점이 공유하는 실제 명식 근거]",
+          "interpretation": "[강점이 드러나는 구체적인 상황과 행동]"
         }
       },
       "blindSpot": {
@@ -551,8 +695,8 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "blind-spot",
-          "basis": "자월의 임수와 비겁 근거가 겹치는 힘이 과해지면",
-          "interpretation": "외부의 제동을 간섭으로 받아들여 방향 수정이 늦어질 수 있습니다"
+          "basis": "[강점과 같은 finding을 쓰는 실제 명식 근거]",
+          "interpretation": "[같은 성향이 문제가 되기 시작하는 상황·반응·그 결과]"
         }
       }
     },
@@ -564,8 +708,21 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "work",
-          "basis": "시주의 상관·편재는 표현과 현실 결과로 이어지는 통로입니다",
-          "interpretation": "문제를 정의하고 결과물을 만드는 역할에서 이 축이 잘 살아납니다"
+          "basis": "[일·공부와 직접 연결되는 실제 배치·십신 근거]",
+          "interpretation": "[맞는 과업 방식과 그 방식이 실패하는 조건]"
+        }
+      }
+    ],
+    "money": [
+      {
+        "paragraph": {
+          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 2 }
+        },
+        "structure": {
+          "role": "money",
+          "basis": "[돈·자원과 직접 연결되는 실제 재성 배치 근거]",
+          "interpretation": "[돈을 다루는 별도의 습관과 그 때문에 생길 수 있는 문제]"
         }
       }
     ],
@@ -577,8 +734,8 @@ Use this schema 2 shape for new broad readings:
         },
         "structure": {
           "role": "relationships",
-          "basis": "월주와 일주의 비견·겁재는 가까운 관계에서도 자기 판단권을 지킵니다",
-          "interpretation": "서로의 독립 영역이 분명할 때 편하고 통제로 느끼면 힘겨루기가 생깁니다"
+          "basis": "[관계와 직접 연결되는 실제 배치·십신 근거]",
+          "interpretation": "[가까운 관계에서의 반응과 오해가 생기는 구체적 조건]"
         }
       }
     ]
@@ -586,7 +743,8 @@ Use this schema 2 shape for new broad readings:
 }
 ```
 
-`money` has the same one-or-two-item array shape with `role: "money"` and is optional. Default
+`money` has the same one-or-two-item array shape with `role: "money"`. It is required when the
+displayed ten-god row contains at least two `정재`/`편재` placements and otherwise optional. Default
 profile selections may use only `chart-overview`, `day-master`, `five-elements`, `ten-gods`,
 `relationships`, and `strength` findings. The two `core` selections, together with the thesis,
 must combine day-master or seasonal-strength evidence with another chart placement, relation, or
@@ -608,8 +766,8 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "source": { "kind": "summary" }
       },
       "structure": {
-        "process": "상황을 넓게 살핀 뒤 자기 기준으로 방향을 잡는",
-        "identity": "사람입니다"
+        "process": "[선택 문단에서 그대로 복사한 행동 과정]",
+        "identity": "[같은 문단에서 뒤따르는 인물상]"
       }
     },
     "atAGlance": {
@@ -621,9 +779,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "disposition",
           "direction": "descriptive",
-          "situation": "낯선 문제가 생기면",
-          "behavior": "핵심 변수를 찾고",
-          "result": "빠뜨림을 줄입니다"
+          "situation": "[성향이 드러나는 실제 상황]",
+          "behavior": "[그 상황에서의 반응]",
+          "result": "[확인 가능한 결과]"
         }
       },
       "execution": {
@@ -634,9 +792,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "execution",
           "direction": "descriptive",
-          "situation": "마감과 기준이 선명하면",
-          "behavior": "판단을 밀고 나가고",
-          "result": "실행이 분명해집니다"
+          "situation": "[실행 방식이 드러나는 실제 상황]",
+          "behavior": "[그 상황에서의 행동]",
+          "result": "[실제로 달라지는 점]"
         }
       },
       "relationships": {
@@ -647,9 +805,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "relationships",
           "direction": "descriptive",
-          "situation": "의견이 다를 때",
-          "behavior": "논리를 정리해 설명하고",
-          "result": "결론을 분명히 합니다"
+          "situation": "[관계 반응이 드러나는 실제 상황]",
+          "behavior": "[상대에게 보이는 반응]",
+          "result": "[관계에서 생기는 결과]"
         }
       }
     },
@@ -662,9 +820,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "disposition",
           "direction": "benefit",
-          "situation": "정보가 많을수록",
-          "behavior": "연결점을 찾아 정리하는",
-          "result": "힘이 살아납니다"
+          "situation": "[강점이 실제로 필요한 상황]",
+          "behavior": "[해당 강점의 행동]",
+          "result": "[강점이 만드는 결과]"
         }
       },
       "friction": {
@@ -675,9 +833,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "disposition",
           "direction": "cost",
-          "situation": "정답 기준이 없으면",
-          "behavior": "비교를 계속해",
-          "result": "마무리가 늦어집니다"
+          "situation": "[같은 작용이 과해지는 상황]",
+          "behavior": "[과해졌을 때의 반응]",
+          "result": "[그 반응 때문에 생기는 문제]"
         }
       }
     },
@@ -690,9 +848,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "work-study",
           "direction": "descriptive",
-          "situation": "제출물이 정해진 과제에서는",
-          "behavior": "자료를 구조화해",
-          "result": "완성도를 높입니다"
+          "situation": "[일·공부 방식이 드러나는 상황]",
+          "behavior": "[그 상황에서의 작업 방식]",
+          "result": "[업무나 학습의 결과]"
         }
       }
     ],
@@ -705,9 +863,9 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "structure": {
           "domain": "relationships",
           "direction": "descriptive",
-          "situation": "가까운 사이에서도",
-          "behavior": "과정과 결론을 나누어 말하면",
-          "result": "오해가 줄어듭니다"
+          "situation": "[가까운 관계의 실제 상황]",
+          "behavior": "[두 사람이 주고받는 방식]",
+          "result": "[두 사람 사이의 결과]"
         }
       }
     ],
@@ -717,8 +875,8 @@ reference and source with an exact, distinct paragraph from the submitted drafts
         "source": { "kind": "summary" }
       },
       "structure": {
-        "condition": "기준과 마감에 연결할 때",
-        "payoff": "강점이 안정적으로 살아납니다"
+        "condition": "[앞선 해석을 묶는 실제 조건]",
+        "payoff": "[그 조건에서 달라지는 결과]"
       }
     }
   }

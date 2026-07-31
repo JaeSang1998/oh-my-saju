@@ -10,7 +10,7 @@ export const SAJU_TOPIC_TITLES = deepFreeze({
   'five-elements': '오행 분포',
   'yin-yang': '음양 분포',
   'ten-gods': '십신',
-  relationships: '원시 관계',
+  relationships: '합·충 등 기둥 관계',
   'void-branches': '공망',
   strength: '신강·신약',
   pattern: '격국',

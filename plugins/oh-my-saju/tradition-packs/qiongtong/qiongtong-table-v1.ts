@@ -236,7 +236,7 @@ export const QIONGTONG_CLIMATE_TABLE_V1_METADATA = deepFreeze({
 /**
  * 한글 천간·지지 키를 사용하는 10 × 12 완전 조회표.
  *
- * 지지 키의 표기 순서만 자축인묘진사오미신유술해이며, 계산은 절입으로
+ * 지지 키의 표기 순서만 자축인묘진사오미신유술해이며 계산은 절입으로
  * 확정된 월지를 입력받는다. 객체와 모든 후보 배열은 재귀적으로 동결된다.
  */
 export const QIONGTONG_CLIMATE_CANDIDATES_V1: ClimateCandidateTable = deepFreeze({

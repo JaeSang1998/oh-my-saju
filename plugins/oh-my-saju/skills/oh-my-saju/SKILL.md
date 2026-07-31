@@ -1,14 +1,12 @@
 ---
 name: oh-my-saju
-description: Calculate and interpret Korean Saju (Four Pillars), 15 cited raw symbolic-star rules, transparent election-date rankings, Tojeong 144 numbers, I Ching casts, Zi Wei core charts, and Liu Ren transmissions with deterministic, source-profiled reports. Use for 사주·만세력·오행·십신·십이운성·신살·택일·토정비결·주역·자미두수·육임, unknown or approximate birth time, tradition comparison, decision or timing questions, or auditing an existing reading. Do not use for Western astrology, tarot, generic Korean editing, or choices the user does not want viewed through these systems.
+description: Calculate and interpret Korean Saju (Four Pillars), two-person compatibility, 15 cited raw symbolic-star rules, transparent election-date rankings, Tojeong 144 numbers, I Ching casts, Zi Wei core charts, and Liu Ren transmissions with deterministic, source-profiled reports. Use for 사주·만세력·궁합·오행·십신·십이운성·신살·택일·토정비결·주역·자미두수·육임, unknown or approximate birth time, tradition comparison, decision or timing questions, or auditing an existing reading. Do not use for Western astrology, tarot, generic Korean editing, or choices the user does not want viewed through these systems.
 license: Apache-2.0
 ---
 
 # Oh My Saju
 
-Use the bundled runtime as the source of calculation facts and Tradition Pack findings. Your role is to
-collect the right input, run the two-phase protocol, write grounded Korean drafts, validate them,
-and present the validated result naturally.
+Use the bundled runtime as the source of calculation facts and Tradition Pack findings. Collect the right input, run the two-phase protocol, write grounded Korean drafts, validate them, and present the validated result naturally.
 
 Never calculate pillars, solar-term boundaries, ten gods, element weights, or Tradition Pack
 findings from memory. Never replace an unknown time with noon.
@@ -20,18 +18,9 @@ constructing commands. Before user-facing prose, read
 consequential comparison or timing question, also read
 [references/decision-quality.md](references/decision-quality.md).
 
-## Capability baseline
-
-This skill requires only:
-
-1. reading files relative to this skill directory;
-2. writing a temporary JSON file;
-3. running Node.js 18 or newer;
-4. reading JSON stdout.
-
-Subagents, MCP, web access, and host-specific commands are optional. If independent worker contexts
-are available, Pack drafts may be prepared separately; otherwise handle them sequentially in
-the order returned. The protocol and result must stay the same.
+This skill needs local file access, a temporary JSON file, Node.js 18+, and JSON stdout. Prepare Pack
+drafts in independent contexts when available or sequentially in returned order; the protocol and
+result stay the same.
 
 ## Workflow
 
@@ -42,6 +31,7 @@ Classify the request as one or more of:
 - chart calculation or verification;
 - broad interpretation;
 - focused question about behavior, work, study, relationships, or another theme;
+- two-person compatibility using both natal charts;
 - comparison between choices;
 - comparison between traditions or Pack profiles;
 - timing;
@@ -65,6 +55,10 @@ Set `request.readingMode` explicitly after this classification:
 Do not use `technical-audit` merely because the user's focused question contains a term such as
 `오행` or `용신`.
 
+Two-person `궁합` is its own branch, not an ordinary `focused` reading about one person's
+relationships. Use `prepare-compatibility` and `validate-compatibility`; never place the second
+person's birth data only inside the first person's `question`.
+
 #### Broad interpretation default
 
 Treat an open request such as `사주 봐줘`, `사주 해석해줘`, or `나는 어떤 사람이야?` as a
@@ -75,11 +69,11 @@ asking what kind of person the chart describes. Build the answer around:
 - the same pattern working well versus under pressure;
 - work, study, and execution;
 - relationships and communication;
-- money or resource handling only when the available findings materially support it.
+- money or resource handling when placement gives it a distinct basis.
 
-Cover at least three of those areas and give at least three concrete, recognizable manifestations
-across the reading. Do not force a life area that the validated findings cannot support. Keep a
-narrow question narrow.
+Give at least three concrete, recognizable manifestations across the reading. Make each area answer
+a different question; do not recycle `information/choices → own standard → output` or another
+abstract mechanism across three slots. Do not force an unsupported area. Keep a narrow question narrow.
 
 #### Default broad-reading display contract
 
@@ -89,16 +83,19 @@ For an open-ended reading, use this chart-first order:
 2. one horizontal four-pillar table with both `간지` and `십신` rows;
 3. one compact five-element table labeled `오행 분포(지장간 포함)` for an exact chart;
 4. a finding-backed `핵심 요약`;
-5. `핵심 구조` with the two chart mechanisms that organize the reading;
-6. `어떤 사람인가`, showing one mechanism as a strength and as a blind spot;
+5. `성격과 행동 방식` with the two chart mechanisms that organize the reading;
+6. `강점과 주의점`, showing one mechanism when it works well and under pressure;
 7. `일·재능` and `관계`, plus `돈과 현실 감각` only when the findings support a distinct money
    reading.
 
-Use short sections and bullets, but allow one to three connected sentences when a causal bridge
-needs them. Aim for roughly 1,200–1,800 Korean characters of interpretation excluding the tables.
-Do not force every paragraph into a situation-behavior-result grammar. A major conclusion instead
-needs a visible chart basis, its traditional function, and the lived implication. Prefer five
-strong ideas over nine weak variations of the same coaching advice.
+Use short sections and bullets, with one to three connected sentences when a causal bridge needs
+them. Do not force every paragraph into a situation-behavior-result grammar. A major conclusion needs
+a visible chart basis, its traditional function, and the lived implication. Do not narrate raw
+ledger counts. Relationship prose must show a reaction in a close relationship, not project
+management language. Prefer five strong ideas over nine weak variations of one coaching point.
+Write implications in ordinary Korean with a person as the subject and a concrete verb. Reject
+translated phrases such as `현실적 결과로 흘려보낸다`, `복원력으로 쓰인다`, `이중 리듬`,
+and `거리가 회복된다`; keep `작용` or `구조` in the chart basis. Apply the native-Korean copy check in `references/korean-interpretation-style.md`.
 
 When birth-time uncertainty affects selected prose, keep the uncertainty local with `△` for a
 candidate-dependent result and `◇` for a partial result (`△◇` when both apply). Define only the
@@ -120,7 +117,7 @@ merely to retract it.
 
 Prefer visible placements over raw ledger counts. Do not leave labels such as `왕`, `휴`,
 `인성 1`, or `식상 2` unexplained: write the ordinary meaning in the same sentence, for example
-`왕(계절의 힘을 크게 받는 상태)` or `식상, 즉 생각을 표현하고 결과물로 만드는 작용`.
+`왕(계절의 힘을 크게 받는 상태)` or `시주에 식상이 드러나 생각을 말이나 작업으로 꺼냅니다`.
 
 If a finding cannot support a plain-language implication, omit the finding entirely. Internal
 limitations and unavailable rules are non-display guardrails: never quote, paraphrase, summarize,
@@ -167,6 +164,12 @@ Do not echo or store more personal information than the calculation needs. Tempo
 must not be added to the repository.
 
 ### 3. Prepare the audited reading
+
+For two-person compatibility, follow `Two-person compatibility` in the input reference. Use one
+`prepare-compatibility` → pair draft → `validate-compatibility` flow, then present
+`result.presentation.markdown` exactly and stop the single-chart workflow. Give a qualitative
+summary, A→B and B→A directions, connection, interaction loop, friction, and long-term condition
+from both charts. Never substitute a score, disclaimer, missing-rule note, or generic checklist.
 
 If the request is election, Tojeong, I Ching, Zi Wei, or Liu Ren, use the
 `run-traditional-system` command described in
@@ -296,12 +299,12 @@ the user's question explicitly requests that doctrine. For a broad reading, each
 may use one to three sentences to keep the chart fact, traditional function, and lived meaning
 together.
 
-Before writing broad-reading drafts, assign the final presentation slots across the available
-Pack tasks. The v2 default profile needs seven distinct validated paragraphs: one thesis, two
-central mechanisms, a strength and blind spot from the same mechanism, at least one work item, and
-at least one relationship item. Add one or two money items only when ten-god placement or another
-allowed finding supports a distinct reading. The strength and blind-spot paragraphs must come from
-the same Pack and share at least one finding ID. Do not reuse a source paragraph or copy prose into
+Before writing broad-reading drafts, assign the final presentation slots across the available Pack
+tasks. The v2 profile needs seven distinct paragraphs: one thesis, two central mechanisms, a
+strength and blind spot from the same mechanism, work, and relationships. When the displayed
+pillar ten-god row contains at least two `정재`/`편재` placements, draft and select a distinct money
+item as an eighth paragraph; otherwise add money only with separate support. Both sides of the
+strength mechanism must share a Pack and finding ID. Do not reuse a source paragraph or copy prose into
 multiple slots. The two central mechanisms must each have finding support that the other does not.
 Work prose must actually name a work, study, role, or output pattern; relationship prose must name
 a relationship dynamic; optional money prose must name a money or resource pattern and cite
@@ -323,7 +326,7 @@ The draft output shape is:
 ```json
 {
   "summary": {
-    "text": "계산 근거에 직접 연결되는 요약입니다.",
+    "text": "[계산 근거를 한 문장으로 요약]",
     "findingIds": ["profile-id@1.0.0:exact-finding-id"]
   },
   "sections": [
@@ -331,7 +334,7 @@ The draft output shape is:
       "topic": "chart-overview",
       "paragraphs": [
         {
-          "text": "근거와 한계를 함께 설명합니다.",
+          "text": "[선택한 근거가 뜻하는 바를 구체적으로 설명]",
           "findingIds": ["profile-id@1.0.0:exact-finding-id"]
         }
       ]
@@ -365,7 +368,7 @@ Build one `validate-reading` command with the original request and exactly one d
       "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
       "output": {
         "summary": {
-          "text": "명식 근거와 그 작동을 이어 설명하는 짧은 문단입니다.",
+          "text": "명식 근거에 이어 실제 성향을 설명하는 짧은 문단입니다.",
           "findingIds": ["actual-finding-id"]
         },
         "sections": []
@@ -473,6 +476,8 @@ Before answering, verify:
 - no disclosed life fact was used as proof of the chart;
 - Pack disagreement was not hidden by synthesis;
 - the answer addresses the user's actual question;
+- a two-person compatibility request used the pair protocol, compared A→B and B→A, and actually
+  answered the compatibility question instead of exposing a missing-feature disclaimer;
 - a broad reading says what kind of person the chart describes in concrete daily behavior;
 - the broad reading follows the compact display contract, with bullets instead of a wall of prose;
 - the broad answer is the validated `result.presentation.markdown`, without post-validation

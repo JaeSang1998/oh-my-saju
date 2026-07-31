@@ -126,8 +126,8 @@ export function evaluateDitianshuiPackRule(
     return {
       key: canonicalJsonStringify(values),
       statement:
-        `${monthBranch}월을 ${rulerElement} 사령으로 보는 명시적 프로필에서 ${dayStem}${dayElement}의 계절 상태는 ${state}입니다. ` +
-        '이는 신강·신약의 최종 판정이 아닙니다.',
+        `이 관법에서는 ${monthBranch}월을 ${rulerElement} 사령으로 봅니다. ${dayStem}${dayElement}의 계절 상태는 ${state}입니다. ` +
+        '이 값만으로 신강·신약을 정하지 않습니다.',
       topic: 'strength',
       values,
       evidencePaths: ['pillars.day.stem', 'pillars.month.branch'],
@@ -199,8 +199,8 @@ export function evaluateDitianshuiPackRule(
   return {
     key: canonicalJsonStringify(values),
     statement:
-      `계절 상태는 ${state}이고, 표면 장부는 ${ledgerCounts(visibleEvidence)}, 지장간 장부는 ${ledgerCounts(hiddenEvidence)}입니다. ` +
-      '가중치나 최종 신강·신약 라벨은 적용하지 않습니다.',
+      `계절 상태는 ${state}입니다. 천간에 드러난 근거는 ${ledgerCounts(visibleEvidence)}, 지장간에 든 근거는 ${ledgerCounts(hiddenEvidence)}입니다. ` +
+      '가중치를 매기거나 최종 신강·신약 이름을 붙이지 않습니다.',
     topic: 'strength',
     values,
     evidencePaths: ['pillars', 'facts.structure.hiddenStems'],

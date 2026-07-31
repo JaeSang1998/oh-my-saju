@@ -9,10 +9,12 @@ import type {
   ExactKoreanSajuAnalysisResult,
   InterpretationTopic,
   PossibilityKoreanSajuAnalysisResult,
+  SajuInterpretationCalculationRequest,
   TraditionProfileRef,
   TraditionPackRef,
 } from '../traditions/types';
-import type { Gender } from 'saju-engine';
+import type { FiveElement, Gender, TenGod } from 'saju-engine';
+import type { PillarPairPunishmentDirection, PillarPosition } from 'saju-engine/advanced';
 import type { SajuTimingReport } from 'saju-engine/timing';
 import type { TraditionalSystemRequest, TraditionalSystemResult } from '../systems/types';
 
@@ -103,6 +105,170 @@ export interface OhMySajuNarratorIdentity {
   readonly requestedModel: string;
 }
 
+export interface OhMySajuCompatibilityParticipantRequest {
+  readonly id: string;
+  /** Short user-facing label such as `남성`, `여성`, `A`, or a first name. */
+  readonly label: string;
+  readonly calculation: SajuInterpretationCalculationRequest;
+}
+
+export interface OhMySajuCompatibilityRequest {
+  readonly participants: readonly [
+    OhMySajuCompatibilityParticipantRequest,
+    OhMySajuCompatibilityParticipantRequest,
+  ];
+  /** Untrusted user question, supplied to the host only as task context. */
+  readonly question: string | null;
+  readonly locale: 'ko-KR';
+  readonly variantPolicy: 'stable-only' | 'include-candidate-dependent';
+}
+
+export type OhMySajuCompatibilityFindingKind =
+  | 'participant-day-master'
+  | 'participant-month-branch'
+  | 'participant-element-balance'
+  | 'day-master-ten-god'
+  | 'day-master-ten-god-range'
+  | 'shared-stem'
+  | 'shared-branch'
+  | 'stem-combination'
+  | 'branch-combination'
+  | 'branch-clash'
+  | 'branch-punishment'
+  | 'branch-break'
+  | 'branch-harm';
+
+export interface OhMySajuCompatibilityFinding {
+  readonly id: string;
+  readonly kind: OhMySajuCompatibilityFindingKind;
+  readonly tone: 'connection' | 'tension' | 'directional' | 'descriptive';
+  readonly stability: 'stable' | 'candidate-dependent';
+  readonly direction: 'first-to-second' | 'second-to-first' | 'symmetric' | 'participant';
+  readonly participantIds: readonly [string] | readonly [string, string];
+  readonly positions?: readonly [PillarPosition, PillarPosition];
+  readonly punishment?: {
+    readonly kind: 'directed-cycle' | 'mutual' | 'self';
+    readonly direction: PillarPairPunishmentDirection;
+  };
+  readonly members: readonly string[];
+  readonly tenGod?: TenGod;
+  readonly tenGods?: readonly TenGod[];
+  readonly statement: string;
+  readonly candidatePairIds: readonly string[];
+}
+
+export interface OhMySajuCompatibilityParticipantView {
+  readonly id: string;
+  readonly label: string;
+  readonly calculationKind: 'exact' | 'possibilities';
+  readonly candidateCount: number;
+  readonly pillars: Readonly<
+    Record<
+      PillarPosition,
+      {
+        readonly stable: boolean;
+        readonly values: readonly string[];
+      }
+    >
+  >;
+  readonly tenGods: Readonly<
+    Record<
+      PillarPosition,
+      {
+        readonly stable: boolean;
+        readonly values: readonly string[];
+      }
+    >
+  >;
+  readonly dayMasters: readonly string[];
+  readonly monthBranches: readonly string[];
+  readonly elementPercentages: Readonly<
+    Record<
+      FiveElement,
+      {
+        readonly minimum: number;
+        readonly maximum: number;
+      }
+    >
+  >;
+}
+
+export interface OhMySajuCompatibilityNarrationTask {
+  readonly schemaVersion: '1';
+  readonly mode: 'grounded-compatibility';
+  readonly question: string | null;
+  readonly instructions: readonly string[];
+  readonly evidence: {
+    readonly profile: {
+      readonly id: 'ziping-structural-compatibility';
+      readonly version: '1.0.0';
+    };
+    readonly participants: readonly [
+      OhMySajuCompatibilityParticipantView,
+      OhMySajuCompatibilityParticipantView,
+    ];
+    readonly findings: readonly OhMySajuCompatibilityFinding[];
+  };
+  readonly outputSchema: Readonly<Record<string, unknown>>;
+}
+
+export interface OhMySajuCompatibilityParagraphDraft {
+  readonly text: string;
+  readonly findingIds: readonly string[];
+  readonly structure: {
+    /** Exact ordered substring naming the two-chart basis. */
+    readonly basis: string;
+    /** Exact ordered substring translating the basis into an interaction. */
+    readonly interpretation: string;
+  };
+}
+
+export interface OhMySajuCompatibilityDraft {
+  readonly schemaVersion: '1';
+  readonly kind: 'compatibility';
+  readonly summary: OhMySajuCompatibilityParagraphDraft;
+  readonly connection: OhMySajuCompatibilityParagraphDraft;
+  readonly interaction: OhMySajuCompatibilityParagraphDraft;
+  readonly friction: OhMySajuCompatibilityParagraphDraft;
+  readonly durability: OhMySajuCompatibilityParagraphDraft;
+}
+
+export interface PreparedOhMySajuCompatibility {
+  readonly schemaVersion: '1';
+  readonly participants: readonly [
+    OhMySajuCompatibilityParticipantView,
+    OhMySajuCompatibilityParticipantView,
+  ];
+  readonly candidatePairCount: number;
+  readonly findings: readonly OhMySajuCompatibilityFinding[];
+  readonly narrationTask: OhMySajuCompatibilityNarrationTask;
+  readonly binding: {
+    readonly algorithm: 'sha256';
+    readonly canonicalization: 'oh-my-saju-compatibility-preparation-v1';
+    readonly digest: string;
+    readonly runtimeVersion: string;
+    readonly profile: {
+      readonly id: 'ziping-structural-compatibility';
+      readonly version: '1.0.0';
+    };
+  };
+}
+
+export interface ValidatedOhMySajuCompatibility {
+  readonly schemaVersion: '1';
+  readonly binding: PreparedOhMySajuCompatibility['binding'];
+  readonly participants: PreparedOhMySajuCompatibility['participants'];
+  readonly candidatePairCount: number;
+  readonly findings: readonly OhMySajuCompatibilityFinding[];
+  readonly narrator: OhMySajuNarratorIdentity;
+  readonly sourceDraft: OhMySajuCompatibilityDraft;
+  readonly presentation: {
+    readonly schemaVersion: '1';
+    readonly kind: 'compatibility';
+    readonly markdown: string;
+  };
+}
+
 export interface OhMySajuNarrationDraft {
   readonly packRef: TraditionPackRef;
   /** JSON object generated against the matching narration task's outputSchema. */
@@ -121,7 +287,7 @@ export type OhMySajuParagraphSource =
   | {
       readonly kind: 'section';
       readonly topic: InterpretationTopic;
-      readonly paragraphIndex: 0 | 1;
+      readonly paragraphIndex: 0 | 1 | 2;
     };
 
 /** Selects one atomic paragraph that already passed the Pack claim gate. */
@@ -285,9 +451,26 @@ export interface RunTraditionalSystemCommand {
   readonly request: TraditionalSystemRequest;
 }
 
+export interface PrepareOhMySajuCompatibilityCommand {
+  readonly schemaVersion?: '1';
+  readonly command: 'prepare-compatibility';
+  readonly request: OhMySajuCompatibilityRequest;
+}
+
+export interface ValidateOhMySajuCompatibilityCommand {
+  readonly schemaVersion?: '1';
+  readonly command: 'validate-compatibility';
+  readonly request: OhMySajuCompatibilityRequest;
+  readonly preparedDigest: string;
+  readonly narrator: OhMySajuNarratorIdentity;
+  readonly draft: OhMySajuCompatibilityDraft;
+}
+
 export type OhMySajuCommand =
   | PrepareOhMySajuReadingCommand
   | ValidateOhMySajuReadingCommand
+  | PrepareOhMySajuCompatibilityCommand
+  | ValidateOhMySajuCompatibilityCommand
   | RunTraditionalSystemCommand;
 
 export interface OhMySajuPreparedSuccess {
@@ -309,6 +492,20 @@ export interface OhMySajuTraditionalSystemSuccess {
   readonly ok: true;
   readonly command: 'run-traditional-system';
   readonly result: TraditionalSystemResult;
+}
+
+export interface OhMySajuCompatibilityPreparedSuccess {
+  readonly schemaVersion: '1';
+  readonly ok: true;
+  readonly command: 'prepare-compatibility';
+  readonly result: PreparedOhMySajuCompatibility;
+}
+
+export interface OhMySajuCompatibilityValidatedSuccess {
+  readonly schemaVersion: '1';
+  readonly ok: true;
+  readonly command: 'validate-compatibility';
+  readonly result: ValidatedOhMySajuCompatibility;
 }
 
 export interface ValidatedOhMySajuReading {
@@ -337,5 +534,7 @@ export interface OhMySajuFailure {
 export type OhMySajuResponse =
   | OhMySajuPreparedSuccess
   | OhMySajuValidatedSuccess
+  | OhMySajuCompatibilityPreparedSuccess
+  | OhMySajuCompatibilityValidatedSuccess
   | OhMySajuTraditionalSystemSuccess
   | OhMySajuFailure;

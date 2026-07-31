@@ -260,7 +260,7 @@ describe('sanming-symbolic-curated 역마 원시 지지 일치', () => {
       ],
       sourceReferenceIds: ['sanming-tonghui-travel-horse-v1'],
     });
-    expect(result.statement).toBe('연지 인→신 표의 일치 지지는 월지 신입니다.');
+    expect(result.statement).toBe('연지 인→신 표와 대조한 결과, 일치한 지지는 월지 신입니다.');
     expect(JSON.stringify(result)).not.toMatch(/이동|여행|성격|사건|예측|재물|관계/);
   });
 
@@ -304,12 +304,12 @@ describe('sanming-symbolic-curated 역마 원시 지지 일치', () => {
       },
       evidencePaths: ['pillars.year.branch', 'pillars.month.branch', 'pillars.day.branch'],
     });
-    expect(result.statement).toContain('알려진 연·월·일 지지 범위');
-    expect(result.statement).toContain('시지는 미상');
+    expect(result.statement).toContain('확인된 연·월·일 지지');
+    expect(result.statement).toContain('시지를 모르므로');
     expect(JSON.stringify(result.values)).not.toContain('"position":"hour"');
   });
 
-  test('생시 미상이고 알려진 삼주에 일치가 없으면 전체 부재로 확정하지 않는다', () => {
+  test('생시 미상이고 확인된 삼주에 일치가 없으면 신살이 없다고 단정하지 않는다', () => {
     const result = evaluateSanmingSymbolicCuratedRule(
       'sanming.travel-horse',
       context({ year: '인', month: '묘', day: '유', hour: null }),
@@ -323,8 +323,8 @@ describe('sanming-symbolic-curated 역마 원시 지지 일치', () => {
         status: 'indeterminate-omitted-pillar',
       },
     });
-    expect(result.statement).toContain('알려진 연·월·일 지지에서는');
-    expect(result.statement).toContain('전체 부재로 확정하지 않습니다');
+    expect(result.statement).toContain('확인된 연·월·일 지지');
+    expect(result.statement).toContain('해당 신살이 없다고 단정하지 않습니다');
   });
 });
 

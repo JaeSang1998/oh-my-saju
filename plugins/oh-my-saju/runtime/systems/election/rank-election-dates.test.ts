@@ -1,6 +1,7 @@
 import { describe, expect, expectTypeOf, test } from 'vitest';
 import {
   MAX_ELECTION_DATE_SPAN_DAYS,
+  NAM_BYEONG_GIL_ELECTIONAL_PROFILE_V1,
   OH_MY_SAJU_ELECTION_RANKING_POLICY_V1,
   rankElectionDates,
   type ElectionRequest,
@@ -66,6 +67,15 @@ describe('rankElectionDates', () => {
           id: 'election-move-in-direction-excluded-v1',
         }),
       ]),
+    );
+    expect(NAM_BYEONG_GIL_ELECTIONAL_PROFILE_V1.displayName).toBe(
+      '남병길 《선택기요》 택일 사실(검증 범위)',
+    );
+    expect(
+      first.audit.limitations.find(({ id }) => id === 'election-local-noon-representative')
+        ?.message,
+    ).toBe(
+      '요청에 명시한 참가자 시간대의 현지 시각 정오를 각 날짜의 대표 순간으로 삼습니다. 하루 내내 같은 결과가 나온다는 뜻은 아닙니다.',
     );
     expect(JSON.stringify(first.audit.limitations)).not.toMatch(/six-virtue/u);
     expect(first.value.candidates).toHaveLength(3);

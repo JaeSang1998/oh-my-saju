@@ -1,7 +1,11 @@
 /** Tradition runtime behavior tests. */
 import { describe, expect, test } from 'vitest';
 import { calculateSaju } from 'saju-engine';
-import { COMMON_STRUCTURAL_PROFILE_V1, calculateSajuInterpretation } from '../traditions';
+import {
+  COMMON_STRUCTURAL_PROFILE_V1,
+  PROFILE_LIMITATIONS_V1,
+  calculateSajuInterpretation,
+} from '../traditions';
 import { evaluateSajuInterpretation } from './evaluate';
 
 const EXACT_REQUEST = {
@@ -97,6 +101,7 @@ describe('evaluateSajuInterpretation — exact chart', () => {
       candidateIds: ['exact'],
       absentCandidateIds: [],
     });
+    expect(dayMaster?.statement).toBe('일간은 계(癸)이며 음의 수입니다.');
 
     const relationships = first.findings.find((finding) => finding.ruleId === 'core.relationships');
     expect(relationships?.values.matches).toEqual(
@@ -125,6 +130,11 @@ describe('evaluateSajuInterpretation — exact chart', () => {
     );
     expect(relationships?.statement).toContain('월-시 천간합:경을');
     expect(relationships?.statement).toContain('일-시 지지충:유묘');
+    expect(relationships?.statement).toContain('합·충·형·파·해·삼합 표와 대조한 결과는');
+
+    expect(PROFILE_LIMITATIONS_V1['raw-relationships-no-fortune']).toBe(
+      '합·충·형·파·해·삼합 가운데 기둥 위치가 일치하는 관계만 보여 줍니다. 성립 강도와 길흉은 판단하지 않습니다.',
+    );
 
     const sourceIds = new Set(first.profile.references.map((reference) => reference.id));
     for (const finding of first.findings) {

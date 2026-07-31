@@ -429,14 +429,14 @@ export function evaluateSanmingSymbolicCuratedRule(
     )
     .join('·');
   const statement = notApplicable
-    ? `일간 ${dayStem}은 양간전용 표의 적용 대상이 아닙니다.`
+    ? `일간 ${dayStem}은 양간에만 쓰는 이 표의 적용 대상이 아닙니다.`
     : partial
       ? matches.length === 0
-        ? `알려진 연·월·일 지지에서는 ${anchorSummary} 표의 일치가 관찰되지 않았습니다. 시지는 미상이라 전체 부재로 확정하지 않습니다.`
-        : `${anchorSummary} 표의 알려진 연·월·일 지지 범위 일치는 ${matchSummary}입니다. 시지는 미상이라 추가 일치 가능성은 판단하지 않습니다.`
+        ? `확인된 연·월·일 지지를 ${anchorSummary} 표와 대조했지만 일치하지 않았습니다. 시지를 모르므로 해당 신살이 없다고 단정하지 않습니다.`
+        : `${anchorSummary} 표와 확인된 연·월·일 지지를 대조했습니다. 일치한 지지는 ${matchSummary}입니다. 시지를 모르므로 더 있는지는 판단하지 않습니다.`
       : matches.length === 0
         ? `${anchorSummary} 표에서 일치하는 지지가 없습니다.`
-        : `${anchorSummary} 표의 일치 지지는 ${matchSummary}입니다.`;
+        : `${anchorSummary} 표와 대조한 결과, 일치한 지지는 ${matchSummary}입니다.`;
   const evidencePaths = [
     isStemRule ? 'pillars.day.stem' : 'pillars.year.branch',
     ...observedPillars.map(({ position }) => `pillars.${position}.branch`),

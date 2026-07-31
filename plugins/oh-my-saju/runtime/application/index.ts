@@ -13,6 +13,7 @@ export {
   prepareOhMySajuReading,
   validateOhMySajuReading,
 } from './execute';
+export { prepareOhMySajuCompatibility, validateOhMySajuCompatibility } from './compatibility';
 export {
   calculateLiurenChart,
   calculateTojeong144,
@@ -42,6 +43,16 @@ export type {
   OhMySajuCommand,
   OhMySajuBroadPresentation,
   OhMySajuBroadPresentationDraft,
+  OhMySajuCompatibilityDraft,
+  OhMySajuCompatibilityFinding,
+  OhMySajuCompatibilityFindingKind,
+  OhMySajuCompatibilityNarrationTask,
+  OhMySajuCompatibilityParagraphDraft,
+  OhMySajuCompatibilityParticipantRequest,
+  OhMySajuCompatibilityParticipantView,
+  OhMySajuCompatibilityPreparedSuccess,
+  OhMySajuCompatibilityRequest,
+  OhMySajuCompatibilityValidatedSuccess,
   OhMySajuConclusionRef,
   OhMySajuDefaultProfileDraft,
   OhMySajuFailure,
@@ -62,8 +73,12 @@ export type {
   OhMySajuTraditionalSystemSuccess,
   OhMySajuValidatedSuccess,
   PrepareOhMySajuReadingCommand,
+  PrepareOhMySajuCompatibilityCommand,
+  PreparedOhMySajuCompatibility,
   PreparedOhMySajuReading,
   RunTraditionalSystemCommand,
   ValidatedOhMySajuReading,
+  ValidatedOhMySajuCompatibility,
+  ValidateOhMySajuCompatibilityCommand,
   ValidateOhMySajuReadingCommand,
 } from './types';

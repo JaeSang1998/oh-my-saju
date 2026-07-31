@@ -16,7 +16,7 @@ D3  Pack runtime: isolated finding sets + unresolved comparison
  ↓
 D4  Reading runtime: finding-referenced narration + local claim gate
  ↓
-D5  Application protocol: prepare-reading → host drafts → validate-reading
+D5  Application protocol: single-chart and two-person compatibility prepare/validate pairs
  ↓
 D6  Agent Skill workflow
  ↓
@@ -31,6 +31,12 @@ application protocol and does not implement calendar or doctrine rules.
 Timing is a deterministic core/application branch. Plugin 0.4 may display timing facts, but it
 does not turn them into favorable-period, burden, opportunity, or event claims. That would require
 a separately versioned timing Tradition Pack and the same finding claim gate.
+
+Two-person compatibility is a separate application branch. The
+`ziping-structural-compatibility@1.0.0` profile evaluates A-candidate × B-candidate pairs, exposes
+A→B/B→A day-master ten gods, and aggregates symmetric cross-pillar pair-table matches. Its
+`prepare-compatibility → host pair draft → validate-compatibility` protocol does not pool two
+single-chart narrations.
 
 ## Pack, profile, and Agent Skill are different
 
@@ -114,6 +120,15 @@ Uncertainty therefore stays attached to each affected claim without repeating a 
 sentence, and no free-form rewriting occurs after selection. Schema 1 remains accepted for 0.4.3
 compatibility. The digest detects mismatch; it is not a secret, signature, or publisher identity.
 
+`prepare-compatibility` recalculates both participants from structured birth requests and binds
+both chart views, the complete candidate Cartesian product, pair findings, profile version, and
+pair narration task. `validate-compatibility` requires the identical two-person request, validates
+every cited finding and ordered chart-basis span, blocks numeric scores and feature-disclaimer
+fallbacks, and renders the pair report deterministically. Stable and candidate-dependent pair
+findings remain distinct. If candidate charts change a day master, the application also creates a
+stable range finding that lists every A→B or B→A ten-god candidate; the renderer never chooses one
+candidate by array order.
+
 The host still sees the user's conversation. This boundary limits a separate narration call; it
 does not claim that the host itself never received the birth input.
 
@@ -125,7 +140,8 @@ The preset deliberately does not manufacture deterministic final values for:
 - final strength;
 - final useful god;
 - broad symbolic-star coverage or symbolic stars as outcomes;
-- personality, compatibility, or event prediction;
+- deterministic personality, a numeric or event-predictive compatibility verdict, or event
+  prediction;
 - definitive luck-cycle events.
 
 A model may explain Pack evidence and make a labeled, conditional inference. It must not describe

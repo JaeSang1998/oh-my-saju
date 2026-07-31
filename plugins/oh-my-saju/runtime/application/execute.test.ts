@@ -115,13 +115,13 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.4.4',
+        version: '0.4.5',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '4.0.0',
+          version: '4.3.0',
         },
         outputSchemaVersion: '3',
         claimGateVersion: '3',
@@ -175,7 +175,7 @@ describe('executeOhMySaju', () => {
         format: 'chart-and-short-sections',
         maxParagraphSentences: 3,
         maxSections: 4,
-        maxParagraphsPerSection: 2,
+        maxParagraphsPerSection: 3,
         maxNarrativeCharacters: 3_200,
         maxParagraphCharacters: 900,
         advancedDoctrine: 'only-when-explicitly-requested',

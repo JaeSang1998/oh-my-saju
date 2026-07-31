@@ -597,7 +597,7 @@ function uncertaintyLines(reading: PreparedOhMySajuReading): readonly string[] {
     ];
   }
   return [
-    `입력 시간 범위·자시 정책·절기 소스 불확실성에서 원국 후보 ${report.candidates.length}개가 성립; 지원 시간 길이는 확률이 아님`,
+    `입력 시간 범위·자시 정책·절기 소스의 불확실성에 따라 원국 후보 ${report.candidates.length}개가 성립; 지원 시간 길이는 확률이 아님`,
   ];
 }
 
@@ -854,7 +854,7 @@ export function renderOhMySajuCompact(reading: PreparedOhMySajuReading): string 
   const growthStages = growthStageViews(reading);
   const relationships = relationshipStatements(reading);
   const lines = [
-    '오 마이 사주|결정론적 계산 표시',
+    '오 마이 사주|동일 입력·동일 계산 결과',
     `계산유형|${reading.calculationKind === 'exact' ? '정확한 생시' : '생시 가능성'}`,
     compactBirthLine(reading),
     compactConventionLine(reading),
@@ -941,7 +941,7 @@ function markdownDayMasterAndYinYangSection(reading: PreparedOhMySajuReading): r
     ...(dayMasters.length === 0
       ? []
       : [
-          '| 범위 | 일간 | 음양 | 오행 | coverage |',
+          '| 범위 | 일간 | 음양 | 오행 | 적용 범위 |',
           '| --- | --- | --- | --- | --- |',
           ...dayMasters.map(
             (view) =>
@@ -952,7 +952,7 @@ function markdownDayMasterAndYinYangSection(reading: PreparedOhMySajuReading): r
     ...(yinYang.length === 0
       ? []
       : [
-          '| 범위 | 양 | 음 | basis |',
+          '| 범위 | 양 | 음 | 근거 |',
           '| --- | ---: | ---: | --- |',
           ...yinYang.map((view) => {
             const value = (yinOrYang: YinYang): string =>
@@ -972,7 +972,7 @@ function markdownHiddenStemSection(reading: PreparedOhMySajuReading): readonly s
     '',
     '## 지장간',
     '',
-    '가중치는 `visible-stems-1-hidden-stems-normalized-v1` 합성 오행 표시용이며 지장간의 교리적 세력 순위를 뜻하지 않습니다.',
+    '가중치는 `visible-stems-1-hidden-stems-normalized-v1` 방식으로 합성한 오행 값을 표시합니다. 지장간의 교리상 세력 순위와는 다릅니다.',
   ];
   for (const view of views) {
     lines.push(
@@ -1003,9 +1003,9 @@ function markdownGrowthStageSection(reading: PreparedOhMySajuReading): readonly 
     '## 십이운성',
     '',
     ...profileIds.map((profileId) => `- 프로필: \`${profileId}\``),
-    '- 일간 기준 원시 단계만 표시하며 강약·길흉을 판정하지 않습니다.',
+    '- 일간을 기준으로 계산한 단계만 표시합니다. 강약·길흉은 판정하지 않습니다.',
     '',
-    '| 범위 | 일간 | 기둥 | 지지 | 단계 | coverage |',
+    '| 범위 | 일간 | 기둥 | 지지 | 단계 | 적용 범위 |',
     '| --- | --- | --- | --- | --- | --- |',
     ...views.flatMap((view) =>
       POSITIONS.flatMap(({ id, label }) => {
@@ -1052,7 +1052,7 @@ function markdownCandidateSection(reading: PreparedOhMySajuReading): readonly st
     '',
     '### 원국 후보',
     '',
-    '지원 시간 길이는 입력 범위 안에서 후보를 지지하는 실제 시각 구간의 합이며 확률이 아닙니다.',
+    '지원 시간은 해당 후보가 성립하는 실제 시각 구간을 모두 더한 값입니다. 확률이 아닙니다.',
     '',
     '| 후보 ID | 년 | 월 | 일 | 시 | 자시 정책 | 지원 시간(ms, 확률 아님) |',
     '| --- | --- | --- | --- | --- | --- | ---: |',
@@ -1065,7 +1065,7 @@ function markdownCandidateSection(reading: PreparedOhMySajuReading): readonly st
     '',
     '#### 후보 지원 구간',
     '',
-    '| 후보·구간 | 자시 정책 | 현지 `[start,end)` | UTC `[start,end)` | offset | 중복 시각 해소 | 근거 |',
+    '| 후보·구간 | 자시 정책 | 현지 `[start,end)` | UTC `[start,end)` | 시차 | 중복 시각 해소 | 근거 |',
     '| --- | --- | --- | --- | ---: | --- | --- |',
     ...report.candidates.flatMap((candidate) =>
       candidate.occurrences.map(
@@ -1104,9 +1104,9 @@ function markdownElementSection(reading: PreparedOhMySajuReading): readonly stri
     '',
     '## 오행 분포',
     '',
-    '합성 가중치 표시이며 신강·신약 판정이 아닙니다.',
+    '표의 값은 합성 가중치를 나타냅니다. 신강·신약을 판정한 값은 아닙니다.',
     '',
-    '| 범위 | 목 | 화 | 토 | 금 | 수 | coverage |',
+    '| 범위 | 목 | 화 | 토 | 금 | 수 | 적용 범위 |',
     '| --- | ---: | ---: | ---: | ---: | ---: | --- |',
     ...views.map(
       (view) =>
@@ -1147,11 +1147,11 @@ function markdownFindingSection(reading: PreparedOhMySajuReading): readonly stri
   if (rows.length === 0) return [];
   return [
     '',
-    '## Tradition Pack 판정',
+    '## 전통 규칙 팩 판정',
     '',
-    '아래 문장은 각 Pack의 규칙 결과이며 계산 사실과 같은 층위로 합치거나 다수결하지 않습니다.',
+    '아래에는 규칙 팩마다 나온 결과를 따로 적었습니다. 계산 결과와 한데 섞거나, 여러 규칙 팩 가운데 다수 쪽을 정답으로 고르지 않습니다.',
     '',
-    '| Pack | 주제 | coverage | 안정성 | 결정론적 finding | Finding ID |',
+    '| 규칙 팩 | 주제 | 적용 범위 | 안정성 | 규칙 판정 | 근거 ID |',
     '| --- | --- | --- | --- | --- | --- |',
     ...rows,
   ];
@@ -1163,9 +1163,9 @@ function markdownComparisonSection(reading: PreparedOhMySajuReading): readonly s
     '',
     '## 학파 비교',
     '',
-    `비교 결론은 \`${comparison.resolution}\` 상태로 보존합니다. 다수결=${comparison.majorityVoteApplied}, 승자 선택=${comparison.winnerSelected}, 지원 시간의 확률 해석=${comparison.supportDurationsAreProbabilities}.`,
+    `학파별 결과는 아직 하나로 합치지 않았습니다. 내부 상태: \`${comparison.resolution}\`. 다수결 적용: ${comparison.majorityVoteApplied ? '예' : '아니요'}, 하나의 학파를 정답으로 선택: ${comparison.winnerSelected ? '예' : '아니요'}, 후보가 성립하는 시간을 확률로 해석: ${comparison.supportDurationsAreProbabilities ? '예' : '아니요'}.`,
     '',
-    '| 비교 ID | 개념 | 주제 | 상태 | 안정성 | 정의 ID | Pack별 근거 | resolution |',
+    '| 비교 ID | 개념 | 주제 | 상태 | 안정성 | 정의 ID | 규칙 팩별 근거 | 결론 상태 |',
     '| --- | --- | --- | --- | --- | --- | --- | --- |',
     ...comparison.rows.map((row) => {
       const profiles = row.profiles
@@ -1173,9 +1173,9 @@ function markdownComparisonSection(reading: PreparedOhMySajuReading): readonly s
           (profile) =>
             `${profile.packRef.id}@${profile.packRef.version}/${profile.profileRef.id}@${
               profile.profileRef.version
-            }: finding=${profile.findingIds.join(',') || '-'}, outcome=${
+            }: 근거 ID=${profile.findingIds.join(',') || '-'}, 결과 코드=${
               profile.outcomeKeys.join(',') || '-'
-            }, unavailable=${profile.unavailableRuleIds.join(',') || '-'}`,
+            }, 이용 불가 규칙=${profile.unavailableRuleIds.join(',') || '-'}`,
         )
         .join('; ');
       return `| \`${row.id}\` | \`${row.conceptId}\` | ${SAJU_TOPIC_TITLES[row.topic]} | \`${row.status}\` | \`${row.stability}\` | ${row.definitionIds.map((id) => `\`${id}\``).join(', ') || '-'} | ${markdownText(profiles)} | \`${row.resolution}\` |`;
@@ -1266,7 +1266,7 @@ export function renderOhMySajuMarkdown(reading: PreparedOhMySajuReading): string
   const lines = [
     '# 오 마이 사주 계산 보고서',
     '',
-    '> 해석·길흉을 추가하지 않은 결정론적 계산 표시입니다. 계산 사실, convention 결과, Pack 판정을 구분합니다.',
+    '> 같은 입력에는 늘 같은 계산 결과를 반환하며 해석이나 길흉은 덧붙이지 않습니다. 계산 사실, 관법에 따른 결과, 규칙 팩 판정을 나눠 표시합니다.',
     '',
     '## 입력',
     '',
@@ -1276,18 +1276,20 @@ export function renderOhMySajuMarkdown(reading: PreparedOhMySajuReading): string
       ? []
       : [
           `- UTC 순간: \`${exactChronology.instantUtc}\``,
-          `- 시간대 offset·약어: ${exactChronology.offsetSeconds}s, \`${exactChronology.timeZoneAbbreviation}\``,
+          `- 시간대 시차·약어: ${exactChronology.offsetSeconds}s, \`${exactChronology.timeZoneAbbreviation}\``,
           `- 중복 시각 해소: \`${exactChronology.disambiguation}\``,
-          `- DST: isDST=${exactChronology.daylightSaving.isDaylightSavingTime ?? '미확정'}, 보정=${
+          `- 일광 절약 시간: 적용 여부=${
+            exactChronology.daylightSaving.isDaylightSavingTime ?? '미확정'
+          }, 보정=${
             exactChronology.daylightSaving.offsetSeconds === null
               ? '미확정'
               : `${exactChronology.daylightSaving.offsetSeconds}s`
-          }, 표현=\`${exactChronology.daylightSaving.representation}\``,
+          }, 표시 방식=\`${exactChronology.daylightSaving.representation}\``,
         ]),
     ...(possibilityInput === null
       ? []
       : [
-          `- 기록 offset: ${
+          `- 기록된 시차: ${
             possibilityInput.expectedOffsetSeconds === null
               ? '없음'
               : `${possibilityInput.expectedOffsetSeconds}s`
@@ -1323,7 +1325,7 @@ export function renderOhMySajuMarkdown(reading: PreparedOhMySajuReading): string
     ...markdownComparisonSection(reading),
     ...markdownTimingSection(reading.timing),
     '',
-    '## 감사 정보',
+    '## 검증 정보',
     '',
     `- 계산 엔진: \`${reading.binding.core.name}@${reading.binding.core.version}\`, schema \`${reading.binding.core.schemaVersion}\`, source \`${reading.binding.core.sourceRevision}\``,
     `- Pack: ${reading.binding.packs

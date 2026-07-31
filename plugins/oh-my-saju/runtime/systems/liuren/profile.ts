@@ -3,7 +3,7 @@ import type { TraditionalSystemProfile } from '../shared';
 export const LIUREN_QUANSHU_NINE_GATES_PROFILE: TraditionalSystemProfile = Object.freeze({
   id: 'liuren-quanshu-nine-gates',
   version: '1.0.0',
-  displayName: '《六壬指南》·《六壬大全》 월장·사과·구종법 코어',
+  displayName: '《六壬指南》·《六壬大全》 월장·사과·구종법 기본 계산',
   outputBoundary: 'divination-chart-mechanics',
   sources: Object.freeze([
     Object.freeze({

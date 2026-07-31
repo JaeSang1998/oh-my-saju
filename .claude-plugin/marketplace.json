@@ -1,6 +1,6 @@
 {
   "name": "oh-my-saju-marketplace",
-  "description": "Auditable Korean Saju, traditional-system modules, grounded readings, and host adapters.",
+  "description": "한 플러그인에서 한국 사주·궁합을 풀이하고 택일과 전통 술수를 계산합니다.",
   "owner": {
     "name": "Jaesang Lee"
   },
@@ -8,7 +8,7 @@
     {
       "name": "oh-my-saju",
       "source": "./plugins/oh-my-saju",
-      "description": "Auditable Korean Saju, election ranking, and source-profiled traditional-system calculations."
+      "description": "한국 사주와 두 사람 궁합을 풀이하고, 택일과 전통 술수 계산 근거를 함께 보여 줍니다."
     }
   ]
 }

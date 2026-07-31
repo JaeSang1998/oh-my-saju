@@ -10,8 +10,10 @@ directory and does not require an npm install or network connection.
 ```text
 saju-engine (calculation facts only)
   ├→ Tradition Packs → isolated finding sets → grounded narration validation
+  ├→ two natal charts → directional/cross-chart findings → compatibility validation
   └→ election / Tojeong / I Ching / Zi Wei / Liu Ren deterministic reports
-  → prepare-reading / validate-reading / run-traditional-system protocol
+  → prepare-reading / validate-reading / prepare-compatibility / validate-compatibility
+  → run-traditional-system protocol
   → validated chart-to-interpretation profile assembly → deterministic broad-reading Markdown
   → Agent Skill
   → Codex, Claude Code, or another host
@@ -21,7 +23,19 @@ Packs are knowledge artifacts, not Agent Skills. Their `knowledge.providerContra
 where a later version can materialize the same identifiers and provenance from an ontology or
 knowledge graph. Pack findings are kept separate; the runtime never votes them into one verdict.
 
-Plugin 0.4 adds:
+Plugin 0.4.5 adds:
+
+- a dedicated two-person compatibility path that compares A→B and B→A day-master ten gods,
+  cross-chart stem/branch relations, and every uncertain-time candidate pair;
+- a validated qualitative report covering the overall pairing, connecting points, interaction,
+  friction, and conditions for durability without a total score or event prediction;
+- tighter default-profile validation that blocks recycled abstract conclusions, internal audit
+  jargon, chart-specific example language leaking into unrelated readings, and recurring
+  translated-consulting phrases in Korean output;
+- natural Korean wording across ordinary readings, compatibility reports, prompts, and runtime
+  notices.
+
+Plugin 0.4 also includes:
 
 - `sanming-symbolic-curated@1.1.0` with 15 cited raw symbolic-star rules, including triad,
   season-corner, day-stem, and separately named blade variants;
@@ -55,6 +69,14 @@ For example, this command casts six explicit I Ching lines without hidden random
 The result contains 乾 as the base hexagram, line 1 as the moving line, 姤 as the changed hexagram,
 and the complete line-order and lookup audit. The other request shapes are documented in
 `skills/oh-my-saju/references/input-and-runtime.md`.
+
+Two-person compatibility uses its own prepare/validate pair. The prepared result keeps both natal
+charts separate, computes directional ten-god findings in both directions, and records symmetric
+cross-chart combinations, clashes, punishments, breaks, and harms. The validator requires a
+direct qualitative answer and distinct connecting, interaction, friction, and durability sections.
+It rejects numeric compatibility scores, event verdicts, missing-feature disclaimers, and generic
+relationship checklists. Additional historical compatibility methods remain separate future
+profiles rather than being silently mixed into the structural profile.
 
 Source integrations can render the same prepared object without constructing a lossy projection:
 

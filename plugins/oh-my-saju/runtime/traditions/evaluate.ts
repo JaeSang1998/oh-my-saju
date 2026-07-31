@@ -36,6 +36,7 @@ import {
   growthStageFor,
 } from '../../tradition-packs/calculation-baseline/growth-stages';
 import { evaluateBuiltInTraditionPackRule } from './rule-registry';
+import { PILLAR_POSITION_LABEL } from './rule-helpers';
 import {
   INTERPRETATION_RULE_CONTRACTS_V1,
   INTERPRETATION_RULE_IDS_V1,
@@ -754,7 +755,7 @@ function evaluateCandidateRule(
       matches: [
         {
           key: stem.korean,
-          statement: `일간은 ${stem.korean}(${stem.hanja}), ${stem.yinYang}의 ${stem.element}입니다.`,
+          statement: `일간은 ${stem.korean}(${stem.hanja})이며 ${stem.yinYang}의 ${stem.element}입니다.`,
           topic: 'day-master',
           values: {
             stem: stem.korean,
@@ -780,7 +781,7 @@ function evaluateCandidateRule(
       matches: [
         {
           key: `${position}:${pillar.cycleIndex}`,
-          statement: `${position} 기둥은 ${pillar.korean}(${pillar.hanja})입니다.`,
+          statement: `${PILLAR_POSITION_LABEL[position]}는 ${pillar.korean}(${pillar.hanja})입니다.`,
           topic: 'chart-overview',
           values: {
             position,
@@ -820,8 +821,8 @@ function evaluateCandidateRule(
         {
           key: canonicalJsonStringify(values),
           statement: partial
-            ? `확인된 연주·월주·일주의 지장간 가중 오행 소계는 ${compact}이며 시주는 포함하지 않았습니다.`
-            : `지장간 가중치를 포함한 오행 분포는 ${compact}입니다.`,
+            ? `확인된 연주·월주·일주에서 지장간 가중치를 반영한 오행 소계는 ${compact}입니다. 시주는 포함하지 않았습니다.`
+            : `지장간 가중치를 반영한 오행 분포는 ${compact}입니다.`,
           topic: 'five-elements',
           values,
           evidence: structuralEvidence(candidate, 'facts.structure.elementBalance'),
@@ -948,11 +949,11 @@ function evaluateCandidateRule(
           key: canonicalJsonStringify(values),
           statement: partial
             ? labels.length === 0
-              ? '확인된 삼주 안에서는 현재 지원하는 합·충·형·파·해·삼합의 원시 관계가 탐지되지 않았습니다. 시주가 추가되면 결과가 달라질 수 있습니다.'
-              : `확인된 삼주 안에서 ${labels.join(', ')}이 탐지됐습니다. 시주가 추가되면 관계가 더 생길 수 있으며 성립 강도나 길흉은 판단하지 않습니다.`
+              ? '현재 지원하는 합·충·형·파·해·삼합 표와 확인된 삼주를 대조했으나 기둥 사이의 관계를 찾지 못했습니다. 시주가 추가되면 결과가 달라질 수 있습니다.'
+              : `현재 지원하는 합·충·형·파·해·삼합 표와 확인된 삼주를 대조한 결과는 ${labels.join(', ')}입니다. 시주가 추가되면 관계가 더 생길 수 있습니다. 성립 강도와 길흉은 판단하지 않습니다.`
             : labels.length === 0
-              ? '현재 지원하는 합·충·형·파·해·삼합 표에서 원시 관계 쌍이 탐지되지 않았습니다.'
-              : `원시 관계 표에서 ${labels.join(', ')}이 탐지됐습니다. 성립 강도나 길흉은 판단하지 않습니다.`,
+              ? '현재 지원하는 합·충·형·파·해·삼합 표와 대조했으나 기둥 사이의 관계를 찾지 못했습니다.'
+              : `합·충·형·파·해·삼합 표와 대조한 결과는 ${labels.join(', ')}입니다. 성립 강도와 길흉은 판단하지 않습니다.`,
           topic: 'relationships',
           values,
           evidence: structuralEvidence(candidate, 'facts.structure.relationships'),
@@ -1002,8 +1003,8 @@ function evaluateCandidateRule(
         {
           key: canonicalJsonStringify(values),
           statement: partial
-            ? `일간 ${dayStem} 기준 십이운성 원시 단계는 ${stageSummary}입니다. 시주는 포함하지 않았습니다. 길흉이나 강약을 판정하지 않습니다.`
-            : `일간 ${dayStem} 기준 십이운성 원시 단계는 ${stageSummary}입니다. 길흉이나 강약을 판정하지 않습니다.`,
+            ? `일간 ${dayStem} 기준 십이운성의 기본 단계는 ${stageSummary}입니다. 시주는 포함하지 않았습니다. 길흉이나 강약을 판정하지 않습니다.`
+            : `일간 ${dayStem} 기준 십이운성의 기본 단계는 ${stageSummary}입니다. 길흉이나 강약을 판정하지 않습니다.`,
           topic: 'growth-stages',
           values,
           evidence: evidence(

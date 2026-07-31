@@ -225,7 +225,7 @@ describe('AI request and error validation v3', () => {
     expect(SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.maxItems).toBe(4);
     expect(
       SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.maxItems,
-    ).toBe(2);
+    ).toBe(3);
     expect(SAJU_NARRATIVE_JSON_SCHEMA.$defs.paragraph.properties.text.maxLength).toBe(900);
   });
 });

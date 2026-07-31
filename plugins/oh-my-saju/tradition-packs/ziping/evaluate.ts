@@ -89,8 +89,8 @@ export function evaluateZipingPackRule(
     return {
       key: canonicalJsonStringify(values),
       statement:
-        `월지 ${monthBranch}의 지장간 후보는 ${monthHiddenStems.join('·')}이고 본기는 ${mainHiddenStem}입니다. ` +
-        '사령 일수와 격국 성패는 확정하지 않습니다.',
+        `월지 ${monthBranch}의 지장간은 ${monthHiddenStems.join('·')}이며 본기는 ${mainHiddenStem}입니다. ` +
+        '사령 일수와 격국 성패는 아직 정하지 않습니다.',
       topic: 'pattern',
       values,
       evidencePaths: ['pillars.day.stem', 'pillars.month.branch'],
@@ -161,10 +161,11 @@ export function evaluateZipingPackRule(
       const transparency =
         exposedStemRefs.length === 0
           ? context.pillars.hour === null
-            ? '삼주 투간 없음·시주 미상'
+            ? '삼주에서 투간을 찾지 못함·시주 미상'
             : '투간 없음'
           : `투간 ${exposedStemRefs.map(({ position }) => PILLAR_POSITION_LABEL[position]).join('·')}`;
-      return `${pattern}(${sourceStem}, ${transparency}, ${status})`;
+      const statusLabel = status === 'candidate' ? '후보' : '미정';
+      return `${pattern}(${sourceStem}, ${transparency}, ${statusLabel})`;
     })
     .join('; ');
   const values = {
@@ -183,8 +184,8 @@ export function evaluateZipingPackRule(
   return {
     key: canonicalJsonStringify(values),
     statement:
-      `자평 월령 규칙의 순위 없는 격 후보는 ${basePatternSummary}${candidateSummary}입니다. ` +
-      '각 후보의 투간 여부는 기록하지만 사령·회지·성패·구응이 미완성이므로 최종 격국은 확정하지 않습니다.',
+      `자평 월령 규칙에서 나온 격국 후보는 ${basePatternSummary}${candidateSummary}이며 순위는 매기지 않았습니다. ` +
+      '각 후보가 천간에 드러났는지는 기록했습니다. 다만 사령·회지·성패·구응 규칙을 모두 적용하지 않아 최종 격국은 정하지 않습니다.',
     topic: 'pattern',
     values,
     evidencePaths: ['pillars'],

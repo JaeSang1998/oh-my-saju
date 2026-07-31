@@ -1,7 +1,7 @@
 {
   "name": "oh-my-saju",
-  "version": "0.4.4",
-  "description": "Auditable Korean Saju, traditional-system calculations, election ranking, and grounded readings.",
+  "version": "0.4.5",
+  "description": "한국 사주와 두 사람 궁합을 계산하고, 택일·토정비결·주역·자미두수·육임까지 근거와 함께 풀이합니다.",
   "author": {
     "name": "Jaesang Lee",
     "url": "https://github.com/JaeSang1998"
@@ -9,22 +9,23 @@
   "homepage": "https://github.com/JaeSang1998/oh-my-saju",
   "repository": "https://github.com/JaeSang1998/oh-my-saju",
   "license": "Apache-2.0",
-  "keywords": ["saju", "four-pillars", "korean", "agent-skill"],
+  "keywords": ["saju", "four-pillars", "compatibility", "korean", "agent-skill"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Oh My Saju",
-    "shortDescription": "Auditable Saju and traditional-system calculations.",
-    "longDescription": "Calculate Korean Four Pillars with explicit time and calendar assumptions, compare versioned Tradition Packs, rank election dates with transparent policy scores, and run source-profiled Tojeong, I Ching, Zi Wei, and Liu Ren mechanics.",
+    "displayName": "오 마이 사주",
+    "shortDescription": "사주와 두 사람의 궁합을 근거와 함께 풀이합니다.",
+    "longDescription": "한국식 만세력으로 원국을 계산하고 개인 사주와 두 사람 궁합을 풀이합니다. 절기·시간대·생시 불확실성을 계산에 반영하며, 택일 후보 비교와 토정비결·주역·자미두수·육임 계산도 지원합니다.",
     "developerName": "Jaesang Lee",
     "category": "Productivity",
     "capabilities": ["Analysis", "Calendar"],
     "websiteURL": "https://github.com/JaeSang1998/oh-my-saju",
     "defaultPrompt": [
-      "내 사주를 계산 근거와 학파별 차이까지 보여줘.",
-      "태어난 시간이 불확실한데 공통점과 달라지는 부분을 분석해줘.",
-      "이 사주 풀이가 계산 근거를 벗어나 단정했는지 감사해줘.",
-      "결혼이나 이사 후보일을 점수 근거와 함께 비교해줘.",
-      "주역·토정비결·자미두수·육임 계산 과정을 보여줘."
+      "내 사주를 계산 근거와 함께 풀어줘.",
+      "태어난 시간을 몰라. 그래도 달라지지 않는 부분과 시간에 따라 달라지는 부분을 나눠줘.",
+      "두 사람의 사주를 비교해서 잘 맞는 점과 자주 부딪힐 만한 지점을 풀어줘.",
+      "이 사주 풀이에 계산 근거를 벗어나 단정한 부분이 있는지 검토해줘.",
+      "결혼이나 이사 날짜 후보를 비교하고 왜 그런 순위인지 알려줘.",
+      "주역·토정비결·자미두수·육임의 계산 과정을 보여줘."
     ],
     "brandColor": "#765A3D"
   }

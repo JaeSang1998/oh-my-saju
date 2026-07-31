@@ -36,7 +36,7 @@ export const SANMING_SYMBOLIC_CURATED_PROFILE_V1: SanmingSymbolicCuratedProfile 
   schemaVersion: '1',
   id: 'sanming-symbolic-curated',
   version: '1.1.0',
-  displayName: '삼명통회 엄선 신살 원시 관측',
+  displayName: '삼명통회 엄선 신살표 대조',
   school: 'sanming-tonghui-base-text',
   textualLayer: 'base-text',
   status: 'stable',

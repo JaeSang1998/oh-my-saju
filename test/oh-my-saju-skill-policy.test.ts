@@ -39,8 +39,8 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       expect(policy).toContain('relationships and communication');
       expect(policy).toMatch(/three concrete, recognizable\s+manifestations/u);
       expect(policy).toContain('Default broad-reading display contract');
-      expect(policy).toMatch(/`?핵심 구조`?/u);
-      expect(policy).toMatch(/`?어떤 사람인가`?/u);
+      expect(policy).toMatch(/`?성격과 행동 방식`?/u);
+      expect(policy).toMatch(/`?강점과 주의점`?/u);
       expect(policy).toMatch(/`?오행 분포\(지장간 포함\)`?/u);
       expect(policy).toMatch(/one to three connected sentences/u);
     }
@@ -80,9 +80,9 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       expect(policy).toContain('`defaultDisplay: false`');
     }
     expect(interfaceMetadata).not.toContain('explicit limits');
-    expect(interfaceMetadata).toContain('natural Korean interpretation');
-    expect(interfaceMetadata).toContain('short, sectioned, and layperson-first');
-    expect(interfaceMetadata).toContain('omit advanced doctrine unless the user asks for it');
+    expect(interfaceMetadata).toContain('자연스럽게 풀이합니다');
+    expect(interfaceMetadata).toContain('근거는 짧게 밝히고');
+    expect(interfaceMetadata).toContain('평범한 한국어로 풀어 주세요');
   });
 
   test('requires the validated deterministic presentation for a broad reading', () => {
@@ -108,6 +108,29 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     expect(inputReference).toMatch(/show\s+that Markdown as-is/u);
   });
 
+  test('routes two-person compatibility through one validated pair protocol', () => {
+    const skill = readSkillFile('SKILL.md');
+    const inputReference = readSkillFile('references/input-and-runtime.md');
+
+    for (const policy of [skill, inputReference]) {
+      expect(policy).toContain('Two-person compatibility');
+      expect(policy).toContain('A→B');
+      expect(policy).toContain('B→A');
+      expect(policy).toContain('`result.presentation.markdown` exactly');
+    }
+    expect(skill).toContain('`prepare-compatibility`');
+    expect(skill).toContain('`validate-compatibility`');
+    expect(inputReference).toContain('"command": "prepare-compatibility"');
+    expect(inputReference).toContain('"command": "validate-compatibility"');
+    expect(skill).toMatch(
+      /never place the second\s+person's birth data only inside the first person's `question`/u,
+    );
+    expect(inputReference).toContain(
+      'Do not run two unrelated `prepare-reading` commands and manually',
+    );
+    expect(inputReference).toContain('join their conclusions');
+  });
+
   test('ships the conversation-policy improvement as a new plugin patch version', () => {
     const portable = JSON.parse(readProjectFile('plugins/oh-my-saju/plugin.json')) as {
       version: string;
@@ -123,7 +146,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       skills: { 'oh-my-saju': string };
     };
 
-    expect(portable.version).toBe('0.4.4');
+    expect(portable.version).toBe('0.4.5');
     expect(codex.version).toBe(portable.version);
     expect(claude.version).toBe(portable.version);
     expect(versions.plugin).toBe(portable.version);

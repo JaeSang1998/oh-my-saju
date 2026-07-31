@@ -33,7 +33,7 @@ export const COMMON_STRUCTURAL_PROFILE_V1: TraditionRuleProfile = deepFreeze({
   schemaVersion: '1',
   id: 'common-structural',
   version: '1.1.0',
-  displayName: '공통 구조 사실',
+  displayName: '원국 공통 계산',
   school: 'cross-school-common',
   textualLayer: 'cross-school-common',
   status: 'stable',

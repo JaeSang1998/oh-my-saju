@@ -127,10 +127,10 @@ describe('Oh My Saju deterministic presentation', () => {
     expect(markdown).toContain('## 지장간');
     expect(markdown).toContain('| 기둥 | 지장간(가중치/십신) |');
     expect(markdown).toContain('## 오행 분포');
-    expect(markdown).toContain('합성 가중치 표시이며 신강·신약 판정이 아닙니다.');
+    expect(markdown).toContain('표의 값은 합성 가중치를 나타냅니다.');
     expect(markdown).toContain('## 십이운성');
     expect(markdown).toContain(`- 프로필: \`${String(growthStage.values.profileId)}\``);
-    expect(markdown).toContain('## Tradition Pack 판정');
+    expect(markdown).toContain('## 전통 규칙 팩 판정');
     expect(markdown).toContain('## 학파 비교');
     expect(markdown).toContain(`- UTC 순간: \`${exact.chronology.instantUtc}\``);
     expect(markdown).toContain(`- 중복 시각 해소: \`${exact.chronology.disambiguation}\``);
@@ -141,7 +141,7 @@ describe('Oh My Saju deterministic presentation', () => {
     expect(markdown).toContain(
       `| ${firstLuck.age} | ${firstLuck.pillar.korean}(${firstLuck.pillar.hanja}) | ${firstLuck.tenGods.stem}/${firstLuck.tenGods.branch} | 약 ${firstLuck.approximateStartDate.date} |`,
     );
-    expect(markdown).toContain('해석·길흉을 추가하지 않은 결정론적 계산 표시');
+    expect(markdown).toContain('같은 입력에는 늘 같은 계산 결과를 반환');
 
     for (const findingId of findingIds) {
       expect(compact).toContain(findingId);
@@ -170,7 +170,7 @@ describe('Oh My Saju deterministic presentation', () => {
     }
   });
 
-  test('생시 미상은 정오를 만들지 않고 시주 제외와 부분 coverage를 명시한다', () => {
+  test('생시 미상은 정오를 만들지 않고 시주 제외와 부분 적용 범위를 명시한다', () => {
     const prepared = prepareOhMySajuReading({
       command: 'prepare-reading',
       request: {

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.5 — 2026-07-31
+
+- Add the dedicated `prepare-compatibility` / `validate-compatibility` path with separate natal
+  charts, directional A→B/B→A day-master ten gods, cross-chart stem/branch relations, and
+  Cartesian aggregation of uncertain-time candidates.
+- Render a grounded qualitative report with overall, connection, interaction, friction, and
+  durability sections; reject numeric compatibility scores, event verdicts, missing-feature
+  disclaimers, and generic relationship checklists.
+- Replace the chart-specific broad-reading example with structural placeholders and reject
+  recycled abstract conclusions or internal audit jargon in ordinary default profiles.
+- Split the default profile into reader-facing personality, pressure, work, money, and close-
+  relationship sections; require a distinct money reading when multiple wealth placements are
+  visible, and reject one abstract processing/output story reused across three life areas.
+- Rewrite Korean-facing prompts, readings, compatibility reports, and runtime notices in natural
+  Korean; reject recurring translated-consulting phrases at the presentation boundary.
+
 ## 0.4.4 — 2026-07-31
 
 - Replace the validator-shaped nine-sentence broad template with a chart-first default profile:

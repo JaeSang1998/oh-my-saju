@@ -461,7 +461,7 @@ function relationshipContributions(
       ruleId: 'election.transit-natal-branch-combination',
       policyRuleId: 'participant-year-branch-combination',
       amount: weights.combination,
-      reason: '후보 일지와 핵심 참가자 연지의 합 원시 관계; 검증된 v1 숫자 없음',
+      reason: '후보 일지와 핵심 참가자 연지의 합 관계. v1에서 검증된 숫자 가중치 없음',
     },
     {
       ruleId: 'election.transit-natal-branch-clash',
@@ -620,7 +620,7 @@ function candidateForDate(
           : 0,
       reason:
         facts.yellowBlackPath.classification === 'yellow-path'
-          ? '황도일 제품 가중치'
+          ? '황도일 정렬 가중치'
           : '흑도 분류에는 v1 황도 가산을 적용하지 않음',
       classicalMatchIds: [yellowBlackMatch.id],
     },

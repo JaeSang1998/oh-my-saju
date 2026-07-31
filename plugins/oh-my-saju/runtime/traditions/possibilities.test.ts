@@ -50,6 +50,11 @@ describe('evaluateSajuInterpretation — uncertain birth time', () => {
         omittedPillars: ['hour'],
       });
     }
+    expect(
+      assessment.findings.find((finding) => finding.ruleId === 'core.element-balance')?.statement,
+    ).toMatch(
+      /^확인된 연주·월주·일주에서 지장간 가중치를 반영한 오행 소계는 .+입니다\. 시주는 포함하지 않았습니다\.$/u,
+    );
 
     const dayMaster = assessment.findings.find((finding) => finding.ruleId === 'core.day-master');
     expect(dayMaster).toMatchObject({

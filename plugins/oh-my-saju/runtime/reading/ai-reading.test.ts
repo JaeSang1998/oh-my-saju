@@ -83,7 +83,7 @@ describe('createAiSajuReading', () => {
           format: 'chart-and-short-sections',
           maxParagraphSentences: 3,
           maxSections: 4,
-          maxParagraphsPerSection: 2,
+          maxParagraphsPerSection: 3,
           maxNarrativeCharacters: 3_200,
           maxParagraphCharacters: 900,
           advancedDoctrine: 'only-when-explicitly-requested',
@@ -109,7 +109,7 @@ describe('createAiSajuReading', () => {
       },
       template: {
         id: 'saju-grounded-narration',
-        version: '4.0.0',
+        version: '4.3.0',
       },
     });
     expect(reading).toMatchObject({
@@ -129,7 +129,7 @@ describe('createAiSajuReading', () => {
         defaultDisplay: false,
       },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '4.0.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '4.3.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,
@@ -282,7 +282,7 @@ describe('createAiSajuReading', () => {
     });
 
     expect(reading.narrative.summary).toEqual({
-      text: '확인된 기둥 범위의 부분 결과입니다. 확인된 원국 구조를 질문에 맞게 해석합니다.',
+      text: '확인된 기둥만 반영한 내용입니다. 확인된 원국 구조를 질문에 맞게 해석합니다.',
       findingIds: [partial.id],
       certainty: 'conditional',
     });

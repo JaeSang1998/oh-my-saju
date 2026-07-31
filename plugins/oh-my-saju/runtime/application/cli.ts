@@ -15,7 +15,7 @@ Usage:
 
 The runtime reads one JSON command from --input or stdin and writes one JSON
 response to stdout. Supported commands are prepare-reading, validate-reading,
-and run-traditional-system.
+prepare-compatibility, validate-compatibility, and run-traditional-system.
 `;
 
 interface CliOptions {

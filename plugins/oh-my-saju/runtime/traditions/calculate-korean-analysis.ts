@@ -48,7 +48,6 @@ export const KOREAN_SAJU_ANALYSIS_PRESET_V1: KoreanSajuAnalysisPreset = deepFree
     'final-useful-god',
     'luck-cycles',
     'personality',
-    'compatibility',
     'event-prediction',
   ],
   predictiveValidity: 'not-established',

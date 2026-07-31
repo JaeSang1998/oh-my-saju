@@ -10,7 +10,7 @@ export const ELECTION_MODULE_V1 = deepFreeze({
 export const NAM_BYEONG_GIL_ELECTIONAL_PROFILE_V1: TraditionalSystemProfile = deepFreeze({
   id: 'nam-byeong-gil-electional',
   version: '1.0.0',
-  displayName: '남병길 선택기요 검증 범위 택일 사실',
+  displayName: '남병길 《선택기요》 택일 사실(검증 범위)',
   outputBoundary: 'classical-rule-matches',
   sources: [
     {
@@ -96,7 +96,7 @@ export const OH_MY_SAJU_ELECTION_RANKING_POLICY_V1 = deepFreeze({
     },
   },
   scoreMeaning:
-    '오마이사주 v1 후보 정렬용 가산 지표이며 성공률, 길운 확률, 신뢰도 또는 사건 예측이 아님',
+    '오마이사주 v1 후보 정렬에 쓰는 가산 지표. 성공률, 길운 확률, 신뢰도, 사건 예측값이 아님',
   tieBreak: [
     'schedule-constraint-satisfied-desc',
     'negative-classical-match-count-asc',
@@ -109,22 +109,22 @@ export const ELECTION_LIMITATIONS_V1 = deepFreeze([
   {
     id: 'election-ranking-not-probability',
     message:
-      '제품 점수는 후보 정렬 정책이며 성공률·길운 확률·경험적 예측 또는 고전의 숫자가 아닙니다.',
+      '정렬 점수는 후보의 순서를 정하려고 만든 값입니다. 성공률·길운 확률·경험적 예측값이나 고전에 나오는 숫자가 아닙니다.',
   },
   {
     id: 'election-local-noon-representative',
     message:
-      '날짜별 사실은 요청에 명시된 참가자 시간대의 민간 정오를 대표 순간으로 사용하며 하루 전체 불변을 주장하지 않습니다.',
+      '요청에 명시한 참가자 시간대의 현지 시각 정오를 각 날짜의 대표 순간으로 삼습니다. 하루 내내 같은 결과가 나온다는 뜻은 아닙니다.',
   },
   {
     id: 'election-shared-participant-zone-v1',
     message:
-      'v1은 공개 일진 transit 사실의 시간대 의미를 보존하기 위해 모든 참가자의 요청 시간대가 후보 시간대와 같아야 합니다.',
+      'v1에서는 일진 계산의 시간대 기준을 맞추기 위해 모든 참가자의 요청 시간대와 후보 시간대를 같게 받습니다.',
   },
   {
     id: 'election-move-in-direction-excluded-v1',
     message:
-      'v1의 moving은 입주·이삿짐 반입이며, 건축·수리·토목의 산향·방위 규칙을 현대 주소 이동 방향으로 바꾸어 적용하지 않습니다.',
+      'v1의 이사(`moving`)는 입주·이삿짐 반입을 뜻합니다. 건축·수리·토목의 산향·방위 규칙을 현대 주소의 이동 방향에 대입하지 않습니다.',
   },
   {
     id: 'election-unverified-virtue-tables-excluded-v1',
@@ -133,6 +133,6 @@ export const ELECTION_LIMITATIONS_V1 = deepFreeze([
   {
     id: 'election-combination-unweighted-v1',
     message:
-      '참가자 연지와 후보 일지의 합은 원시 관계로 표시하지만 v1 조사에서 검증된 숫자 가중치가 없어 0점 기여로 보존합니다.',
+      '참가자 연지와 후보 일지의 합은 기둥 관계로 표시합니다. 다만 v1 조사에서 검증된 숫자 가중치가 없어 점수에는 0점으로 반영합니다.',
   },
 ]);

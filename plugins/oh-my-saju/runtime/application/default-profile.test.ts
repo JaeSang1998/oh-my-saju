@@ -57,8 +57,8 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
         const chartFindings = task.request.evidence.findings.filter(
           ({ topic }) => topic === 'chart-overview',
         );
-        const month = chartFindings.find(({ statement }) => statement.includes('month 기둥'));
-        const day = chartFindings.find(({ statement }) => statement.includes('day 기둥'));
+        const month = chartFindings.find(({ ruleId }) => ruleId === 'core.pillar-month');
+        const day = chartFindings.find(({ ruleId }) => ruleId === 'core.pillar-day');
         const tenGods = finding(task, 'ten-gods');
         if (month === undefined || day === undefined) {
           throw new Error('baseline requires month and day pillar findings');
@@ -67,7 +67,7 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
           packRef: task.packRef,
           output: {
             summary: {
-              text: '자월의 임수 일간에 월주와 일주의 임자가 겹쳐 자기 기운이 두텁고, 그 힘을 어디로 내보내느냐가 삶의 중심이 되는 명식입니다.',
+              text: '자월의 임수 일간에 월주와 일주가 임자로 겹치고, 연주의 정축과 시주의 을사가 양 끝에 놓입니다. 이 명식은 생각과 감정을 오래 품었다가 말이나 작업으로 한꺼번에 꺼내는 성향이 두드러집니다.',
               findingIds: [dayMaster.id, month.id, day.id],
             },
             sections: [
@@ -75,11 +75,11 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
                 topic: 'chart-overview',
                 paragraphs: [
                   {
-                    text: '월주와 일주가 모두 임자로 중첩됩니다. 같은 기둥이 사회 자리와 자기 자리에 반복되어 자기 기준이 명식의 중심축이 됩니다.',
+                    text: '월주와 일주가 모두 임자로 중첩되고 연주의 정축, 시주의 을사가 양 끝에 놓입니다. 한 번 붙든 문제를 오래 생각하고, 마무리할 때는 생각을 말이나 작업으로 분명히 내놓습니다.',
                     findingIds: [month.id, day.id],
                   },
                   {
-                    text: '연주의 정축과 시주의 을사가 양쪽에 놓이고 가운데 임자가 두 번 이어집니다. 모인 수 기운을 표현과 현실 결과 쪽으로 흘려보내는지가 구조의 관건입니다.',
+                    text: '연주의 정축과 시주의 을사가 양쪽에 놓이고 가운데 임자가 두 번 이어집니다. 모인 수 기운을 말이나 실제 작업으로 어떻게 꺼내느냐가 중요합니다.',
                     findingIds: chartFindings.map(({ id }) => id),
                   },
                 ],
@@ -88,11 +88,15 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
                 topic: 'ten-gods',
                 paragraphs: [
                   {
-                    text: '시주의 상관·편재는 생각을 표현과 현실 결과로 이어내는 통로입니다. 자율적으로 문제를 정리하고 결과물을 만들어야 하는 역할에서 이 축이 잘 살아납니다.',
+                    text: '시주의 을목 상관과 사화 편재는 머릿속 판단을 밖으로 표현하고 기회를 붙드는 자리입니다. 정해진 답을 반복하는 업무보다 문제를 다시 정의하고 끝까지 완성하는 프로젝트에서 실력이 잘 드러납니다.',
                     findingIds: [tenGods.id],
                   },
                   {
-                    text: '월주와 일주의 비견·겁재는 가까운 관계에서도 자기 판단권을 쉽게 넘기지 않는 쪽으로 작용합니다. 서로의 독립 영역이 분명할 때 편하지만, 조언이 통제로 느껴지면 힘겨루기가 생길 수 있습니다.',
+                    text: '월주 비견·겁재와 일지 겁재가 나란히 있어 가까운 사람의 의견도 곧바로 내 결론으로 받아들이지 않는 배치입니다. 상대가 이유 없이 결론부터 밀면 말을 줄이거나 버팁니다. 충분히 설명을 나눈 뒤에는 서로 맡을 몫이 분명한 관계를 편하게 느낍니다.',
+                    findingIds: [tenGods.id],
+                  },
+                  {
+                    text: '연간의 정재와 시지의 편재가 함께 드러나고 시주의 상관이 편재와 맞닿습니다. 고정된 보상에만 머물기보다 아이디어나 기회로 돈을 벌려는 편입니다. 가능성이 보이면 여러 곳에 돈을 써 지출 기준이 흐려질 수 있습니다.',
                     findingIds: [tenGods.id],
                   },
                 ],
@@ -110,7 +114,7 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
           packRef: task.packRef,
           output: {
             summary: {
-              text: '임수는 자월에서 계절적으로 왕하고 지장간에도 비겁 근거가 반복됩니다. 힘이 모자라 멈추는 명식보다 강한 자기 동력을 어디로 흘릴지가 중요한 명식입니다.',
+              text: '임수는 자월의 계절 힘을 받고 월지·일지 자수에 두 번 뿌리를 둡니다. 처음 반짝하기보다 시간이 지나도 한 주제를 오래 붙드는 힘이 큽니다.',
               findingIds: strengthFindings.map(({ id }) => id),
             },
             sections: [
@@ -118,11 +122,11 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
                 topic: 'strength',
                 paragraphs: [
                   {
-                    text: '자월의 임수가 계절 힘을 받고 비겁 근거가 거듭됩니다. 자기 기준이 선 뒤에는 쉽게 흔들리지 않고 긴 호흡으로 밀고 가는 힘이 있습니다.',
+                    text: '자월의 계절 힘과 월지·일지의 자수 뿌리가 겹칩니다. 혼자 맡은 장기 과제에서 주변의 열기가 식어도 핵심 문제를 끝까지 붙들고 마칩니다.',
                     findingIds: strengthFindings.map(({ id }) => id),
                   },
                   {
-                    text: '자월의 임수와 비겁 근거가 겹치는 힘이 과해지면, 외부의 제동을 참고 자료보다 간섭으로 받아들여 방향 수정이 늦어질 수 있습니다.',
+                    text: '같은 자월의 힘과 두 자수 뿌리가 과해지면, 이미 깊이 들어간 문제에서 빠져나오는 속도가 늦어집니다. 다른 방향으로 고쳐 달라는 말을 들으면 내용보다 하던 일이 끊긴다는 불편함이 먼저 들어 수정할 때를 놓칠 수 있습니다.',
                     findingIds: [seasonal.id, ...strengthFindings.slice(1).map(({ id }) => id)],
                   },
                 ],
@@ -228,7 +232,7 @@ function defaultProfileDraft(tasks: readonly Task[]): OhMySajuDefaultProfileDraf
   const section = (
     id: string,
     topic: 'chart-overview' | 'ten-gods' | 'strength',
-    paragraphIndex: 0 | 1,
+    paragraphIndex: 0 | 1 | 2,
   ): OhMySajuParagraphRef => ({
     packRef: task(id).packRef,
     source: { kind: 'section', topic, paragraphIndex },
@@ -248,52 +252,62 @@ function defaultProfileDraft(tasks: readonly Task[]): OhMySajuDefaultProfileDraf
     thesis: {
       paragraph: summary('calculation-baseline'),
       structure: {
-        basis: '자월의 임수 일간에 월주와 일주의 임자가 겹쳐',
-        portrait: '자기 기운이 두텁고, 그 힘을 어디로 내보내느냐가 삶의 중심이 되는 명식입니다',
+        basis:
+          '자월의 임수 일간에 월주와 일주가 임자로 겹치고, 연주의 정축과 시주의 을사가 양 끝에 놓입니다',
+        portrait:
+          '이 명식은 생각과 감정을 오래 품었다가 말이나 작업으로 한꺼번에 꺼내는 성향이 두드러집니다',
       },
     },
     core: [
       profile(
         summary('ditianshui'),
         'core',
-        '임수는 자월에서 계절적으로 왕하고 지장간에도 비겁 근거가 반복됩니다',
-        '힘이 모자라 멈추는 명식보다 강한 자기 동력을 어디로 흘릴지가 중요한 명식입니다',
+        '임수는 자월의 계절 힘을 받고 월지·일지 자수에 두 번 뿌리를 둡니다',
+        '처음 반짝하기보다 시간이 지나도 한 주제를 오래 붙드는 힘이 큽니다',
       ),
       profile(
         section('calculation-baseline', 'chart-overview', 0),
         'core',
-        '월주와 일주가 모두 임자로 중첩됩니다',
-        '같은 기둥이 사회 자리와 자기 자리에 반복되어 자기 기준이 명식의 중심축이 됩니다',
+        '월주와 일주가 모두 임자로 중첩되고 연주의 정축, 시주의 을사가 양 끝에 놓입니다',
+        '한 번 붙든 문제를 오래 생각하고, 마무리할 때는 생각을 말이나 작업으로 분명히 내놓습니다',
       ),
     ],
     temperament: {
       strength: profile(
         section('ditianshui', 'strength', 0),
         'strength',
-        '자월의 임수가 계절 힘을 받고 비겁 근거가 거듭됩니다',
-        '자기 기준이 선 뒤에는 쉽게 흔들리지 않고 긴 호흡으로 밀고 가는 힘이 있습니다',
+        '자월의 계절 힘과 월지·일지의 자수 뿌리가 겹칩니다',
+        '혼자 맡은 장기 과제에서 주변의 열기가 식어도 핵심 문제를 끝까지 붙들고 마칩니다',
       ),
       blindSpot: profile(
         section('ditianshui', 'strength', 1),
         'blind-spot',
-        '자월의 임수와 비겁 근거가 겹치는 힘이 과해지면',
-        '외부의 제동을 참고 자료보다 간섭으로 받아들여 방향 수정이 늦어질 수 있습니다',
+        '같은 자월의 힘과 두 자수 뿌리가 과해지면',
+        '이미 깊이 들어간 문제에서 빠져나오는 속도가 늦어집니다. 다른 방향으로 고쳐 달라는 말을 들으면 내용보다 하던 일이 끊긴다는 불편함이 먼저 들어 수정할 때를 놓칠 수 있습니다',
       ),
     },
     work: [
       profile(
         section('calculation-baseline', 'ten-gods', 0),
         'work',
-        '시주의 상관·편재는 생각을 표현과 현실 결과로 이어내는 통로입니다',
-        '자율적으로 문제를 정리하고 결과물을 만들어야 하는 역할에서 이 축이 잘 살아납니다',
+        '시주의 을목 상관과 사화 편재는 머릿속 판단을 밖으로 표현하고 기회를 붙드는 자리입니다',
+        '정해진 답을 반복하는 업무보다 문제를 다시 정의하고 끝까지 완성하는 프로젝트에서 실력이 잘 드러납니다',
+      ),
+    ],
+    money: [
+      profile(
+        section('calculation-baseline', 'ten-gods', 2),
+        'money',
+        '연간의 정재와 시지의 편재가 함께 드러나고 시주의 상관이 편재와 맞닿습니다',
+        '고정된 보상에만 머물기보다 아이디어나 기회로 돈을 벌려는 편입니다. 가능성이 보이면 여러 곳에 돈을 써 지출 기준이 흐려질 수 있습니다',
       ),
     ],
     relationships: [
       profile(
         section('calculation-baseline', 'ten-gods', 1),
         'relationships',
-        '월주와 일주의 비견·겁재는 가까운 관계에서도 자기 판단권을 쉽게 넘기지 않는 쪽으로 작용합니다',
-        '서로의 독립 영역이 분명할 때 편하지만, 조언이 통제로 느껴지면 힘겨루기가 생길 수 있습니다',
+        '월주 비견·겁재와 일지 겁재가 나란히 있어 가까운 사람의 의견도 곧바로 내 결론으로 받아들이지 않는 배치입니다',
+        '상대가 이유 없이 결론부터 밀면 말을 줄이거나 버팁니다. 충분히 설명을 나눈 뒤에는 서로 맡을 몫이 분명한 관계를 편하게 느낍니다',
       ),
     ],
   };
@@ -346,14 +360,29 @@ describe('default-profile v2', () => {
     expect(markdown).toContain('| 간지 | 정축(丁丑) | 임자(壬子) | 임자(壬子) | 을사(乙巳) |');
     expect(markdown).toContain('| 십신 | 정재·정관 | 비견·겁재 | 일간·겁재 | 상관·편재 |');
     expect(markdown).toContain('**오행 분포(지장간 포함)**');
-    expect(markdown).toContain('## 핵심 구조');
-    expect(markdown).toContain('## 어떤 사람인가');
+    expect(markdown).toContain('## 성격과 행동 방식');
+    expect(markdown).toContain('## 강점과 주의점');
     expect(markdown).toContain('## 일·재능');
+    expect(markdown).toContain('## 돈과 현실 감각');
     expect(markdown).toContain('## 관계');
+    expect(markdown).toContain('_(근거:');
     expect(markdown).not.toContain('## 한눈에 보면');
     expect(markdown).not.toContain('한 줄 정리');
     expect(markdown).not.toContain('과학적 타당성');
     expect(markdown).not.toContain('최종 판정');
+
+    const withoutMoney = await validate(
+      prepared,
+      { ...defaultProfileDraft(prepared.narrationTasks), money: undefined },
+      defaultProfileDrafts(prepared.narrationTasks),
+    );
+    expect(withoutMoney).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'default-profile-money-required' },
+      },
+    });
   });
 
   test('계절을 현실의 환경으로 오역한 profile 문장을 거부한다', async () => {
@@ -468,6 +497,210 @@ describe('default-profile v2', () => {
     });
   });
 
+  test.each([
+    '계획이 틀어져도 다른 길을 찾는 복원력으로 쓰일 수 있습니다',
+    '생각을 표현과 현실적 결과로 흘려보내면 추진력이 커집니다',
+    '돈과 자원을 빠르게 배치하는 이중 리듬이 있습니다',
+    '한도를 미리 정하면 판단이 선명해집니다',
+    '감정을 먼저 확인하면 거리가 빨리 회복됩니다',
+  ])('번역체 해석 문장 %s을 거부한다', async (interpretation) => {
+    const prepared = await prepare();
+    const draft = defaultProfileDraft(prepared.narrationTasks);
+    const basis = '자월의 계절 힘과 월지·일지의 자수 뿌리가 겹칩니다';
+    const drafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'ditianshui',
+      'strength',
+      0,
+      `${basis}. ${interpretation}.`,
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        temperament: {
+          ...draft.temperament,
+          strength: {
+            ...draft.temperament.strength,
+            structure: {
+              ...draft.temperament.strength.structure,
+              basis,
+              interpretation,
+            },
+          },
+        },
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'chart-to-interpretation-bridge', path: 'temperament.strength' },
+      },
+    });
+  });
+
+  test('자기 기준이라는 한 결론을 핵심·성격·관계에 반복하는 프로필을 거부한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileDraft(prepared.narrationTasks);
+    let drafts = defaultProfileDrafts(prepared.narrationTasks);
+    drafts = replaceDraftSummary(
+      drafts,
+      'calculation-baseline',
+      '자월의 임수 일간에 월주와 일주가 임자로 겹칩니다. 자기 기준을 실제 행동으로 옮기는 모습이 이 명식의 핵심 성향입니다.',
+    );
+    drafts = replaceDraftSummary(
+      drafts,
+      'ditianshui',
+      '임수는 자월의 계절 힘을 받고 월지와 일지의 자수에 뿌리를 둡니다. 강한 자기 동력을 오래 유지하는 구조입니다.',
+    );
+    drafts = replaceDraftSectionParagraph(
+      drafts,
+      'calculation-baseline',
+      'chart-overview',
+      0,
+      '월주와 일주가 모두 임자로 반복됩니다. 자기 판단을 일과 생활에 똑같이 밀어 넣는 흐름입니다.',
+    );
+    drafts = replaceDraftSectionParagraph(
+      drafts,
+      'ditianshui',
+      'strength',
+      0,
+      '자월의 계절 힘과 두 자수 뿌리가 겹칩니다. 자기 방식으로 한 일을 끝까지 붙드는 힘이 있습니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        thesis: {
+          ...draft.thesis,
+          structure: {
+            basis: '자월의 임수 일간에 월주와 일주가 임자로 겹칩니다',
+            portrait: '자기 기준을 실제 행동으로 옮기는 모습이 이 명식의 핵심 성향입니다',
+          },
+        },
+        core: [
+          {
+            ...draft.core[0],
+            structure: {
+              ...draft.core[0].structure,
+              basis: '임수는 자월의 계절 힘을 받고 월지와 일지의 자수에 뿌리를 둡니다',
+              interpretation: '강한 자기 동력을 오래 유지하는 구조입니다',
+            },
+          },
+          {
+            ...draft.core[1],
+            structure: {
+              ...draft.core[1].structure,
+              basis: '월주와 일주가 모두 임자로 반복됩니다',
+              interpretation: '자기 판단을 일과 생활에 똑같이 밀어 넣는 흐름입니다',
+            },
+          },
+        ],
+        temperament: {
+          ...draft.temperament,
+          strength: {
+            ...draft.temperament.strength,
+            structure: {
+              ...draft.temperament.strength.structure,
+              basis: '자월의 계절 힘과 두 자수 뿌리가 겹칩니다',
+              interpretation: '자기 방식으로 한 일을 끝까지 붙드는 힘이 있습니다',
+            },
+          },
+        },
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'recycled-profile-conclusion', concept: 'self-direction' },
+      },
+    });
+  });
+
+  test('정보와 선택지를 넓게 본다는 한 결론을 모든 영역에 재활용하지 못한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileDraft(prepared.narrationTasks);
+    let drafts = defaultProfileDrafts(prepared.narrationTasks);
+    drafts = replaceDraftSummary(
+      drafts,
+      'calculation-baseline',
+      '자월의 임수 일간에 월주와 일주가 임자로 겹칩니다. 여러 선택지를 넓게 읽고 방향을 찾는 모습이 이 명식의 핵심 성향입니다.',
+    );
+    drafts = replaceDraftSummary(
+      drafts,
+      'ditianshui',
+      '임수는 자월의 계절 힘을 받고 월지와 일지의 자수에 뿌리를 둡니다. 많은 정보를 한꺼번에 다루는 힘이 강약 구조의 핵심입니다.',
+    );
+    drafts = replaceDraftSectionParagraph(
+      drafts,
+      'calculation-baseline',
+      'chart-overview',
+      0,
+      '월주와 일주가 모두 임자로 반복됩니다. 판단 범위를 넓혀 여러 가능성을 비교하는 흐름입니다.',
+    );
+    drafts = replaceDraftSectionParagraph(
+      drafts,
+      'ditianshui',
+      'strength',
+      0,
+      '자월의 계절 힘과 두 자수 뿌리가 겹칩니다. 정보를 빠르게 흡수하고 오래 검토하는 힘이 있습니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        thesis: {
+          ...draft.thesis,
+          structure: {
+            basis: '자월의 임수 일간에 월주와 일주가 임자로 겹칩니다',
+            portrait: '여러 선택지를 넓게 읽고 방향을 찾는 모습이 이 명식의 핵심 성향입니다',
+          },
+        },
+        core: [
+          {
+            ...draft.core[0],
+            structure: {
+              ...draft.core[0].structure,
+              basis: '임수는 자월의 계절 힘을 받고 월지와 일지의 자수에 뿌리를 둡니다',
+              interpretation: '많은 정보를 한꺼번에 다루는 힘이 강약 구조의 핵심입니다',
+            },
+          },
+          {
+            ...draft.core[1],
+            structure: {
+              ...draft.core[1].structure,
+              basis: '월주와 일주가 모두 임자로 반복됩니다',
+              interpretation: '판단 범위를 넓혀 여러 가능성을 비교하는 흐름입니다',
+            },
+          },
+        ],
+        temperament: {
+          ...draft.temperament,
+          strength: {
+            ...draft.temperament.strength,
+            structure: {
+              ...draft.temperament.strength.structure,
+              basis: '자월의 계절 힘과 두 자수 뿌리가 겹칩니다',
+              interpretation: '정보를 빠르게 흡수하고 오래 검토하는 힘이 있습니다',
+            },
+          },
+        },
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'recycled-profile-conclusion', concept: 'expansive-processing' },
+      },
+    });
+  });
+
   test('관계 문장과 일 문장의 role만 바꿔 붙이는 것을 거부한다', async () => {
     const prepared = await prepare();
     const draft = defaultProfileDraft(prepared.narrationTasks);
@@ -499,6 +732,41 @@ describe('default-profile v2', () => {
         details: { policy: 'default-profile-role', path: 'work[0]', role: 'work' },
       },
     });
+
+    const projectRelationshipText =
+      '월주 비견·겁재와 일지 겁재가 나란히 있습니다. 공동 목표를 정하고 역할·기한·속도를 명확히 하면 프로젝트 협업이 안정됩니다.';
+    const projectDrafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'calculation-baseline',
+      'ten-gods',
+      1,
+      projectRelationshipText,
+    );
+    const projectRelationship = await validate(
+      prepared,
+      {
+        ...draft,
+        relationships: [
+          {
+            ...draft.relationships[0],
+            structure: {
+              ...draft.relationships[0].structure,
+              basis: '월주 비견·겁재와 일지 겁재가 나란히 있습니다',
+              interpretation:
+                '공동 목표를 정하고 역할·기한·속도를 명확히 하면 프로젝트 협업이 안정됩니다',
+            },
+          },
+        ],
+      },
+      projectDrafts,
+    );
+    expect(projectRelationship).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'default-profile-role', path: 'relationships[0]' },
+      },
+    });
   });
 
   test('서로 다른 두 핵심 구조를 같은 finding 묶음의 말바꾸기로 채우지 못한다', async () => {
@@ -510,7 +778,7 @@ describe('default-profile v2', () => {
       'calculation-baseline',
       'chart-overview',
       0,
-      '월주와 일주가 모두 임자로 중첩됩니다. 자기 기준이 선 뒤에는 쉽게 흔들리지 않고 긴 호흡으로 밀고 가는 힘이 있습니다.',
+      '월주와 일주가 모두 임자로 중첩됩니다. 혼자 맡은 장기 과제에서는 주변 관심이 줄어도 핵심 문제를 끝까지 붙들고 마칩니다.',
     );
     drafts = replaceDraftSectionParagraph(
       drafts,
@@ -529,9 +797,9 @@ describe('default-profile v2', () => {
             paragraph: draft.temperament.strength.paragraph,
             structure: {
               role: 'core',
-              basis: '자월의 임수가 계절 힘을 받고 비겁 근거가 거듭됩니다',
+              basis: '자월의 계절 힘과 월지·일지의 자수 뿌리가 겹칩니다',
               interpretation:
-                '자기 기준이 선 뒤에는 쉽게 흔들리지 않고 긴 호흡으로 밀고 가는 힘이 있습니다',
+                '혼자 맡은 장기 과제에서 주변의 열기가 식어도 핵심 문제를 끝까지 붙들고 마칩니다',
             },
           },
         ],
@@ -542,7 +810,7 @@ describe('default-profile v2', () => {
               role: 'strength',
               basis: '월주와 일주가 모두 임자로 중첩됩니다',
               interpretation:
-                '자기 기준이 선 뒤에는 쉽게 흔들리지 않고 긴 호흡으로 밀고 가는 힘이 있습니다',
+                '혼자 맡은 장기 과제에서는 주변 관심이 줄어도 핵심 문제를 끝까지 붙들고 마칩니다',
             },
           },
           blindSpot: {

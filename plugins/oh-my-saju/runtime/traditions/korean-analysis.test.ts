@@ -56,7 +56,6 @@ describe('calculateKoreanSajuAnalysis', () => {
           'final-useful-god',
           'luck-cycles',
           'personality',
-          'compatibility',
           'event-prediction',
         ],
         predictiveValidity: 'not-established',

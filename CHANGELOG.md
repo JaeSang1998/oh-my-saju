@@ -1,5 +1,21 @@
 # Changelog
 
+## Oh My Saju plugin 0.4.5 — 2026-07-31
+
+- Added the `ziping-structural-compatibility@1.0.0` two-person workflow with separate natal
+  charts, directional A→B/B→A ten-god findings, cross-chart stem/branch relations, and
+  uncertain-time candidate-pair aggregation.
+- Added validated qualitative compatibility Markdown covering the overall pairing, connection,
+  interaction, friction, and durability while rejecting total scores, event predictions,
+  missing-feature disclaimers, and generic relationship checklists.
+- Removed chart-specific example anchoring from the broad-reading guide and tightened default
+  profile validation against recycled abstract conclusions and internal audit jargon.
+- Made the default profile explicitly cover personality, pressure, work, money, and close
+  relationships when supported, including a distinct money section for repeated visible wealth
+  placements and stricter anti-repetition validation.
+- Rewrote Korean-facing prompts, readings, compatibility reports, and runtime notices in natural
+  Korean, and added validation that rejects recurring translated-consulting phrases.
+
 ## Oh My Saju plugin 0.4.4 — 2026-07-31
 
 - Rebuilt the default Saju profile around visible chart evidence: pillars, ten gods, element

@@ -634,11 +634,11 @@ function validateAndLabelParagraph(
   const conditional = candidateDependent || containsPartialFinding;
   const uncertaintyLabel =
     candidateDependent && containsPartialFinding
-      ? '생시 후보에 따라 달라질 수 있는, 확인된 기둥 범위의 부분 결과입니다.'
+      ? '생시 후보에 따라 달라지는 내용입니다. 확인된 기둥만 반영했습니다.'
       : candidateDependent
         ? '생시 후보에 따라 달라질 수 있습니다.'
         : containsPartialFinding
-          ? '확인된 기둥 범위의 부분 결과입니다.'
+          ? '확인된 기둥만 반영한 내용입니다.'
           : null;
   const labeledText = uncertaintyLabel === null ? text : `${uncertaintyLabel} ${text}`;
   if (
@@ -909,25 +909,25 @@ function buildReadingLimitations(
   } else if (assessment.subject.kind === 'possibilities') {
     limitations.push({
       code: 'CONSTRAINED_BIRTH_TIME',
-      message: '입력한 생시 범위와 계산 정책에서 가능한 원국 집합을 평가했습니다.',
+      message: '입력한 생시 범위와 계산 기준에 맞는 원국 후보를 모두 계산했습니다.',
     });
   }
   if (assessment.subject.candidateCount > 1) {
     limitations.push({
       code: 'MULTIPLE_CANDIDATES',
-      message: `서로 다른 원국 후보 ${assessment.subject.candidateCount}개를 확률로 환산하지 않고 함께 보존했습니다.`,
+      message: `원국 후보는 ${assessment.subject.candidateCount}개입니다. 후보마다 성립하는 시간 구간을 표시했지만 확률로 환산하지는 않았습니다.`,
     });
   }
   if (assessment.findings.some(({ coverage }) => coverage === 'partial')) {
     limitations.push({
       code: 'PARTIAL_FINDINGS',
-      message: '일부 결과는 확인된 기둥만 사용한 부분 소계이며 빠진 기둥을 별도로 표시합니다.',
+      message: '일부 결과는 확인된 기둥만으로 계산했습니다. 빠진 기둥은 따로 표시합니다.',
     });
   }
   if (variantPolicy === 'stable-only' && excludedCandidateDependentCount > 0) {
     limitations.push({
       code: 'CANDIDATE_DEPENDENT_EXCLUDED',
-      message: `기본 안정 결과 모드에서 생시 후보에 따라 달라지는 결과 ${excludedCandidateDependentCount}개를 AI 입력에서 제외했습니다.`,
+      message: `기본값에서는 생시 후보에 따라 달라지는 결과 ${excludedCandidateDependentCount}개를 AI 입력에서 뺐습니다.`,
     });
   }
   if (assessment.unavailableRules.length > 0) {
@@ -940,13 +940,14 @@ function buildReadingLimitations(
   if (assessment.findings.some(({ ruleId }) => ruleId === 'core.element-balance')) {
     limitations.push({
       code: 'SYNTHETIC_ELEMENT_BALANCE',
-      message: '오행 비율은 시각화용 합성 소계이며 신강·신약이나 용신 판정이 아닙니다.',
+      message:
+        '오행 비율은 여러 값을 합산한 참고 지표입니다. 이 숫자만으로 신강·신약이나 용신을 정하지 않습니다.',
     });
   }
   if (assessment.findings.every(({ category }) => category === 'structural-observation')) {
     limitations.push({
       code: 'STRUCTURAL_PROFILE_ONLY',
-      message: '이 프로필의 내장 finding은 원국 구조 계산으로 구성됩니다.',
+      message: '이 프로필은 원국 구조를 계산한 결과만 담습니다.',
     });
   }
   for (const profileLimitationId of assessment.profile.knownLimitations) {
@@ -980,7 +981,7 @@ export async function createAiSajuReading(
     narrative = {
       title: SAJU_NARRATIVE_TITLE,
       summary: {
-        text: '현재 입력과 프로필로 확정해 설명할 수 있는 결과가 없습니다.',
+        text: '현재 입력과 프로필만으로 설명할 만한 결과가 없습니다.',
         findingIds: [],
         certainty: 'grounded',
       },
@@ -1023,8 +1024,8 @@ export async function createAiSajuReading(
       displayPolicy: 'audit-only',
       defaultDisplay: false,
       message: generatedByAI
-        ? '생성형 AI가 엔진의 계산·학파 finding을 인용해 작성한 전통 명리 해석입니다. 해당 규칙의 현실 예측 타당성은 확립되지 않았으며, 인용 근거와 프로필 한계는 함께 보존됩니다.'
-        : '현재 입력과 프로필에 인용 가능한 finding이 없어 계산된 제한사항만 반환했습니다.',
+        ? '엔진이 계산한 명식과 학파별 근거로 생성형 AI가 쓴 전통 명리 해석입니다. 전통 규칙의 현실 예측력은 실증되지 않았습니다. 사용한 근거와 프로필 한계는 검증 정보에 기록합니다.'
+        : '현재 입력과 프로필에서 해석에 인용할 근거를 찾지 못해 계산상의 한계만 담았습니다.',
       empiricalValidation: 'not-established',
       limitations: buildReadingLimitations(
         input.assessment,

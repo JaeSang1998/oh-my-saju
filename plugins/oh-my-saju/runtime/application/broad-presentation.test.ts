@@ -66,11 +66,12 @@ async function prepareBroadReading(): Promise<PreparedOhMySajuReading> {
 }
 
 const SUMMARY_TEXTS = {
-  ziping: '마감과 기준이 선명하면 판단을 밀고 나가고, 결정 속도가 빨라져 실행이 분명해집니다.',
-  ditianshui: '배울 범위와 마감이 정해진 과제에서는 자료를 구조화해 완성도를 높입니다.',
+  ziping: '마감과 판단 기준이 분명하면 망설임 없이 결정해 실행이 빨라집니다.',
+  ditianshui:
+    '배울 범위와 마감이 정해진 과제에서는 자료의 순서와 관계를 정리해 빠진 부분을 줄입니다.',
   qiongtong: '가까운 사이에서도 생각의 과정과 결론을 나누어 말하면 오해가 줄어듭니다.',
   'sanming-symbolic-curated':
-    '넓게 보는 힘을 기준과 마감에 연결할 때 가장 안정적으로 강점이 살아납니다.',
+    '여러 가능성을 살피되 기준과 마감을 정해 두면 일의 마무리가 빨라집니다.',
 } as const;
 
 function broadDraftsFor(tasks: readonly BroadTaskFixture[]): readonly OhMySajuNarrationDraft[] {
@@ -104,7 +105,7 @@ function broadDraftsFor(tasks: readonly BroadTaskFixture[]): readonly OhMySajuNa
         packRef: task.packRef,
         output: {
           summary: {
-            text: '상황을 넓게 살핀 뒤 자기 기준으로 방향을 잡는 사람입니다.',
+            text: '낯선 일을 맡으면 먼저 전체를 살피고 자기 기준으로 우선순위를 정하는 사람입니다.',
             findingIds: [firstFinding.id],
           },
           sections: [
@@ -112,7 +113,7 @@ function broadDraftsFor(tasks: readonly BroadTaskFixture[]): readonly OhMySajuNa
               topic: 'chart-overview',
               paragraphs: [
                 {
-                  text: '정보가 많을수록 연결점을 찾아 문제를 정리하는 힘이 살아납니다.',
+                  text: '정보가 많을수록 서로 이어지는 부분을 찾아 문제를 정리해 빠뜨림을 줄입니다.',
                   findingIds: [chartFinding.id],
                 },
                 {
@@ -125,11 +126,11 @@ function broadDraftsFor(tasks: readonly BroadTaskFixture[]): readonly OhMySajuNa
               topic: 'relationships',
               paragraphs: [
                 {
-                  text: '낯선 문제가 생기면 맥락부터 훑어 핵심 변수를 찾고, 빠뜨림을 줄입니다.',
+                  text: '낯선 문제가 생기면 먼저 앞뒤 사정을 살펴 핵심 변수를 찾고 빠뜨림을 줄입니다.',
                   findingIds: [relationshipFinding.id],
                 },
                 {
-                  text: '의견이 다를 때 논리를 먼저 정리해 설명하고, 결론을 분명히 합니다.',
+                  text: '의견이 다르면 왜 그렇게 생각하는지 차근차근 설명하고 결론도 분명히 말합니다.',
                   findingIds: [relationshipFinding.id],
                 },
               ],
@@ -211,7 +212,7 @@ function presentationDraft(tasks: readonly BroadTaskFixture[]): OhMySajuBroadPre
     portrait: {
       paragraph: summary('calculation-baseline'),
       structure: {
-        process: '상황을 넓게 살핀 뒤 자기 기준으로 방향을 잡는',
+        process: '낯선 일을 맡으면 먼저 전체를 살피고 자기 기준으로 우선순위를 정하는',
         identity: '사람입니다',
       },
     },
@@ -221,24 +222,24 @@ function presentationDraft(tasks: readonly BroadTaskFixture[]): OhMySajuBroadPre
         'disposition',
         'descriptive',
         '낯선 문제가 생기면',
-        '맥락부터 훑어 핵심 변수를 찾고',
+        '먼저 앞뒤 사정을 살펴 핵심 변수를 찾고',
         '빠뜨림을 줄입니다',
       ),
       execution: lived(
         summary('ziping'),
         'execution',
         'descriptive',
-        '마감과 기준이 선명하면',
-        '판단을 밀고 나가고',
-        '결정 속도가 빨라져 실행이 분명해집니다',
+        '마감과 판단 기준이 분명하면',
+        '망설임 없이 결정해',
+        '실행이 빨라집니다',
       ),
       relationships: lived(
         section('relationships', 1),
         'relationships',
         'descriptive',
-        '의견이 다를 때',
-        '논리를 먼저 정리해 설명하고',
-        '결론을 분명히 합니다',
+        '의견이 다르면',
+        '왜 그렇게 생각하는지 차근차근 설명하고',
+        '결론도 분명히 말합니다',
       ),
     },
     doubleEdge: {
@@ -247,8 +248,8 @@ function presentationDraft(tasks: readonly BroadTaskFixture[]): OhMySajuBroadPre
         'disposition',
         'benefit',
         '정보가 많을수록',
-        '연결점을 찾아 문제를 정리하는',
-        '힘이 살아납니다',
+        '서로 이어지는 부분을 찾아 문제를 정리해',
+        '빠뜨림을 줄입니다',
       ),
       friction: lived(
         section('chart-overview', 1),
@@ -265,8 +266,8 @@ function presentationDraft(tasks: readonly BroadTaskFixture[]): OhMySajuBroadPre
         'work-study',
         'descriptive',
         '배울 범위와 마감이 정해진 과제에서는',
-        '자료를 구조화해',
-        '완성도를 높입니다',
+        '자료의 순서와 관계를 정리해',
+        '빠진 부분을 줄입니다',
       ),
     ],
     relationships: [
@@ -282,8 +283,8 @@ function presentationDraft(tasks: readonly BroadTaskFixture[]): OhMySajuBroadPre
     conclusion: {
       paragraph: summary('sanming-symbolic-curated'),
       structure: {
-        condition: '기준과 마감에 연결할 때',
-        payoff: '안정적으로 강점이 살아납니다',
+        condition: '기준과 마감을 정해 두면',
+        payoff: '일의 마무리가 빨라집니다',
       },
     },
   };
@@ -392,29 +393,29 @@ describe('broad-reading presentation contract', () => {
         '| --- | --- | --- | --- |',
         '| 정축 | 임자 | 임자 | 을사 |',
         '',
-        '상황을 넓게 살핀 뒤 자기 기준으로 방향을 잡는 사람입니다.',
+        '낯선 일을 맡으면 먼저 전체를 살피고 자기 기준으로 우선순위를 정하는 사람입니다.',
         '',
         '## 한눈에 보면',
         '',
-        '- **중심 성향:** 낯선 문제가 생기면 맥락부터 훑어 핵심 변수를 찾고, 빠뜨림을 줄입니다.',
-        '- **결정과 실행:** 마감과 기준이 선명하면 판단을 밀고 나가고, 결정 속도가 빨라져 실행이 분명해집니다.',
-        '- **사람을 대할 때:** 의견이 다를 때 논리를 먼저 정리해 설명하고, 결론을 분명히 합니다.',
+        '- **중심 성향:** 낯선 문제가 생기면 먼저 앞뒤 사정을 살펴 핵심 변수를 찾고 빠뜨림을 줄입니다.',
+        '- **결정과 실행:** 마감과 판단 기준이 분명하면 망설임 없이 결정해 실행이 빨라집니다.',
+        '- **사람을 대할 때:** 의견이 다르면 왜 그렇게 생각하는지 차근차근 설명하고 결론도 분명히 말합니다.',
         '',
-        '## 강점이 살아날 때 / 꼬일 때',
+        '## 강점이 살아날 때와 꼬일 때',
         '',
         '| 잘 풀릴 때 | 꼬일 때 |',
         '| --- | --- |',
-        '| 정보가 많을수록 연결점을 찾아 문제를 정리하는 힘이 살아납니다. | 정답 기준이 없으면 비교를 계속해 결정과 마무리가 늦어질 수 있습니다. |',
+        '| 정보가 많을수록 서로 이어지는 부분을 찾아 문제를 정리해 빠뜨림을 줄입니다. | 정답 기준이 없으면 비교를 계속해 결정과 마무리가 늦어질 수 있습니다. |',
         '',
         '## 일·공부',
         '',
-        '- 배울 범위와 마감이 정해진 과제에서는 자료를 구조화해 완성도를 높입니다.',
+        '- 배울 범위와 마감이 정해진 과제에서는 자료의 순서와 관계를 정리해 빠진 부분을 줄입니다.',
         '',
         '## 관계',
         '',
         '- 가까운 사이에서도 생각의 과정과 결론을 나누어 말하면 오해가 줄어듭니다.',
         '',
-        '**한 줄 정리:** 넓게 보는 힘을 기준과 마감에 연결할 때 가장 안정적으로 강점이 살아납니다.',
+        '**한 줄 정리:** 여러 가능성을 살피되 기준과 마감을 정해 두면 일의 마무리가 빨라집니다.',
       ].join('\n'),
     );
     expect(result.result.presentation?.markdown).not.toContain('과학적 타당성');
@@ -598,8 +599,8 @@ describe('broad-reading presentation contract', () => {
           structure: {
             ...invalid.atAGlance.execution.structure,
             situation: '배울 범위와 마감이 정해진 과제에서는',
-            behavior: '자료를 구조화해',
-            result: '완성도를 높입니다',
+            behavior: '자료의 순서와 관계를 정리해',
+            result: '빠진 부분을 줄입니다',
           },
         },
       },
@@ -1022,10 +1023,10 @@ describe('broad-reading presentation contract', () => {
     if (!result.ok || result.command !== 'validate-reading') return;
     const markdown = result.result.presentation?.markdown ?? '';
     expect(markdown.match(/조건 표시:/gu)).toHaveLength(1);
-    expect(markdown).toContain('◇ 확인된 기둥 범위만 반영한 부분');
+    expect(markdown).toContain('◇ 확인된 기둥만 반영한 결과');
     expect(markdown).not.toContain('조건 표시: ·');
     expect(markdown).toContain('◇ ');
-    expect(markdown).not.toContain('확인된 기둥 범위의 부분 결과입니다.');
+    expect(markdown).not.toContain('확인된 기둥만 반영한 내용입니다.');
   });
 
   test('focused 요청은 broad presentation 없이 기존 검증 흐름을 유지한다', async () => {

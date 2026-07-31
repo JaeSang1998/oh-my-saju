@@ -60,7 +60,7 @@ export function evaluateQiongtongPackRule(context: DoctrineRuleContext): Doctrin
       cellSource?.sourceRuleId ?? `qiongtong.experimental-table.${dayStem}.${monthBranch}.v1`,
     sourceReferenceId: 'qiongtong-day-stem-month-climate-v1',
     sourceLocator:
-      cellSource?.sourceLocator ?? `${dayStem} 일간 절의 ${monthBranch}월 항목; 판면 대조 대기`,
+      cellSource?.sourceLocator ?? `${dayStem} 일간 ${monthBranch}월 항목(판면 대조 대기)`,
     fixtureId: cellSource?.fixtureId ?? null,
     verification: cellSource?.verification ?? ('experimental-transcription-only' as const),
     functionAndConditionTranscription:
@@ -84,8 +84,8 @@ export function evaluateQiongtongPackRule(context: DoctrineRuleContext): Doctrin
     .map(({ stem, visibleLocations, hiddenLocations }) => {
       const visibleLabel =
         visibleLocations.length === 0
-          ? '표면 없음'
-          : `표면 ${visibleLocations
+          ? '천간 없음'
+          : `천간 ${visibleLocations
               .map(({ position }) => PILLAR_POSITION_LABEL[position])
               .join('·')}`;
       const hiddenLabel =
@@ -112,12 +112,12 @@ export function evaluateQiongtongPackRule(context: DoctrineRuleContext): Doctrin
   return {
     key: canonicalJsonStringify(values),
     statement:
-      `${dayStem} 일간·${monthBranch}월의 궁통보감 조후 후보와 원국 출현은 ${presenceSummary}입니다. ` +
+      `${dayStem} 일간·${monthBranch}월의 궁통보감 조후 후보가 원국에 나타난 위치는 ${presenceSummary}입니다. ` +
       `${
         cellSource === null
-          ? '이 셀은 아직 기준 판면 대조 전인 실험 전사입니다.'
-          : '이 셀은 원문 후보 순서·기능의 명시 여부·조건을 대조했고 조건 판정은 미완료입니다.'
-      } 후보의 실제 출현 위치는 별도 기록하며 최종 용신으로 확정하지 않습니다.`,
+          ? '아직 기준 판면과 대조하지 않은 실험용 전사입니다.'
+          : '원문에서 후보의 순서와 기능 표기, 조건을 대조했습니다. 조건 판정은 아직 끝나지 않았습니다.'
+      } 후보가 실제로 어디에 있는지는 따로 기록합니다. 이 자료만으로 최종 용신을 정하지 않습니다.`,
     topic: 'useful-god',
     values,
     evidencePaths: ['pillars', 'facts.structure.hiddenStems'],

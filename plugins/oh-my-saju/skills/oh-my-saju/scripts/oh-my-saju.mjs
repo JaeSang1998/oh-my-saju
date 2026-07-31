@@ -5435,7 +5435,7 @@ import process from "process";
 import { stdin, stdout } from "process";
 
 // plugins/oh-my-saju/runtime/application/execute.ts
-import { createHash } from "crypto";
+import { createHash as createHash2 } from "crypto";
 
 // src/domain/cycle-facts.ts
 var STEM_CATALOG = [
@@ -5771,7 +5771,7 @@ function brandCalculationReport(value) {
 
 // src/manifest.ts
 var import_moment_timezone = __toESM(require_moment_timezone2(), 1);
-var SOURCE_REVISION = true ? "core-content-sha256:8bc34f0c74a77b196dea299d48ab7854e1ca7f11b5520a123a4c708f11edbcc0" : "source-tree-unbuilt";
+var SOURCE_REVISION = true ? "core-content-sha256:b7030eac91ecf634079d7aca7f28df6a6dbe9bb42981046172933a8105bfd7bf" : "source-tree-unbuilt";
 var SUPPORTED_RANGES = Object.freeze({
   sajuBirthYears: Object.freeze({ min: 1801, max: 2100 }),
   solarTermYears: Object.freeze({ min: 1800, max: 2300 }),
@@ -10595,14 +10595,14 @@ function isArrayOf(value, predicate) {
 // plugins/oh-my-saju/runtime/reading/prompt-contract.ts
 var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
   id: "saju-grounded-narration",
-  version: "4.0.0"
+  version: "4.3.0"
 });
 var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
   mode: "chart-first-profile",
   format: "chart-and-short-sections",
   maxParagraphSentences: 3,
   maxSections: 4,
-  maxParagraphsPerSection: 2,
+  maxParagraphsPerSection: 3,
   maxNarrativeCharacters: 3200,
   maxParagraphCharacters: 900,
   advancedDoctrine: "only-when-explicitly-requested",
@@ -10622,7 +10622,7 @@ var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.4.4",
+    version: "0.4.5",
     schemaVersion: "1"
   },
   compatibility: {
@@ -10875,14 +10875,14 @@ function getVoidBranches2(dayStem, dayBranch) {
 
 // plugins/oh-my-saju/runtime/traditions/profile-limitations.ts
 var PROFILE_LIMITATIONS_V1 = deepFreeze2({
-  "synthetic-element-balance-not-strength": "\uC624\uD589 \uBE44\uC728\uC740 \uC2DC\uAC01\uD654\uB97C \uC704\uD55C \uD604\uB300 \uD569\uC131 \uC9C0\uD45C\uC774\uBA70 \uC2E0\uAC15\xB7\uC2E0\uC57D \uD310\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4.",
-  "raw-relationships-no-fortune": "\uAD00\uACC4\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569\uC758 \uC6D0\uC2DC \uC704\uCE58 \uC77C\uCE58\uB9CC \uC81C\uACF5\uD558\uBA70 \uC131\uB9BD \uAC15\uB3C4\uB098 \uAE38\uD749\uC744 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
-  "structural-profile-no-doctrine": "\uC774 \uD504\uB85C\uD544\uC758 \uB0B4\uC7A5 finding\uC740 \uC6D0\uAD6D\xB7\uC624\uD589\xB7\uC74C\uC591\xB7\uC2ED\uC2E0\xB7\uAD00\uACC4\xB7\uC2ED\uC774\uC6B4\uC131 \uC6D0\uC2DC \uB2E8\uACC4\xB7\uACF5\uB9DD\uC758 \uAD6C\uC870 \uACC4\uC0B0\uC73C\uB85C \uAD6C\uC131\uB429\uB2C8\uB2E4.",
-  "doctrine-not-scientifically-validated": "\uC774 \uD574\uC11D \uADDC\uCE59\uC740 \uC804\uD1B5 \uBB38\uD5CC\uC744 \uC7AC\uD604\uD55C \uAC83\uC73C\uB85C \uD604\uC2E4 \uC608\uCE21\uC758 \uACFC\uD559\uC801 \uD0C0\uB2F9\uC131\uC774 \uD655\uB9BD\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
+  "synthetic-element-balance-not-strength": "\uC624\uD589 \uBE44\uC728\uC740 \uC2DC\uAC01\uD654\uC5D0 \uC4F0\uB294 \uD604\uB300 \uD569\uC131 \uC9C0\uD45C\uB85C, \uC2E0\uAC15\xB7\uC2E0\uC57D\uC744 \uD310\uC815\uD55C \uAC12\uC774 \uC544\uB2D9\uB2C8\uB2E4.",
+  "raw-relationships-no-fortune": "\uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uAC00\uC6B4\uB370 \uAE30\uB465 \uC704\uCE58\uAC00 \uC77C\uCE58\uD558\uB294 \uAD00\uACC4\uB9CC \uBCF4\uC5EC \uC90D\uB2C8\uB2E4. \uC131\uB9BD \uAC15\uB3C4\uC640 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "structural-profile-no-doctrine": "\uC774 \uD504\uB85C\uD544\uC5D0 \uB2F4\uAE34 \uADFC\uAC70\uB294 \uC6D0\uAD6D\xB7\uC624\uD589\xB7\uC74C\uC591\xB7\uC2ED\uC2E0\xB7\uAE30\uB465 \uAD00\uACC4\xB7\uC2ED\uC774\uC6B4\uC131\uC758 \uAE30\uBCF8 \uB2E8\uACC4\xB7\uACF5\uB9DD\uC744 \uACC4\uC0B0\uD55C \uACB0\uACFC\uC785\uB2C8\uB2E4.",
+  "doctrine-not-scientifically-validated": "\uC804\uD1B5 \uBB38\uD5CC\uC744 \uC62E\uAE34 \uD574\uC11D \uADDC\uCE59\uC785\uB2C8\uB2E4. \uC2E4\uC81C \uC0AC\uAC74\uC744 \uB9DE\uD78C\uB2E4\uACE0 \uACFC\uD559\uC801\uC73C\uB85C \uAC80\uC99D\uB41C \uADDC\uCE59\uC740 \uC544\uB2D9\uB2C8\uB2E4.",
   "ziping-candidate-not-complete-pattern": "\uC6D4\uB839\uACFC \uD22C\uAC04\uC73C\uB85C \uACA9\uAD6D \uD6C4\uBCF4\uB9CC \uB9CC\uB4E4\uBA70 \uC0AC\uB839\xB7\uC131\uD328\xB7\uAD6C\uC751\uC744 \uBAA8\uB450 \uD310\uC815\uD55C \uCD5C\uC885 \uACA9\uAD6D\uC774 \uC544\uB2D9\uB2C8\uB2E4.",
-  "ditianshui-evidence-no-strength-verdict": "\uACC4\uC808\xB7\uD1B5\uADFC\xB7\uC0DD\uC870\xB7\uC124\uADF9\uBAA8 \uC99D\uAC70\uB97C \uB098\uB220 \uBCF4\uC5EC \uC904 \uBFD0 \uC2E0\uAC15\xB7\uC2E0\uC57D\uC744 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
-  "qiongtong-candidates-no-final-useful-god": "\uACF5\uAC1C \uC804\uC0AC\uB97C \uC62E\uAE34 \uC77C\uAC04\xB7\uC6D4\uB839 \uC870\uD6C4 \uD6C4\uBCF4\uD45C\uC785\uB2C8\uB2E4. \uB300\uD45C 5\uAC1C fixture(7\uAC1C \uC6D4 \uC140) \uC678\uC5D0\uB294 \uAE30\uC900 \uD310\uBA74 \uB300\uC870\uAC00 \uB0A8\uC544 \uC788\uC73C\uBA70, \uACA9\uAD6D\xB7\uC5B5\uBD80 \uC6A9\uC2E0\uACFC \uBCD1\uD569\uD55C \uCD5C\uC885 \uC6A9\uC2E0 \uD310\uC815\uC740 \uC544\uC9C1 \uAD6C\uD604\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
-  "sanming-symbolic-raw-observation-only": "\uCD9C\uC804\uC774 \uD655\uC778\uB41C \uC5F0\uC9C0\xB7\uC77C\uAC04 \uAE30\uC900 \uC2E0\uC0B4\uD45C\uC758 \uC6D0\uC2DC \uC9C0\uC9C0 \uC77C\uCE58\uB9CC \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uC0DD\uC2DC \uBBF8\uC0C1\uC740 \uC804\uCCB4 \uBD80\uC7AC\uB85C \uD655\uC815\uD558\uC9C0 \uC54A\uACE0, \uD568\uC9C0\uC758 \uCC9C\uAC04\xB7\uB0A9\uC74C \uC790\uACA9\uACFC \uC591\uC778 \uB450 \uC815\uC758\uC758 \uCDA9\uB3CC\uC744 \uC784\uC758\uB85C \uD574\uACB0\uD558\uC9C0 \uC54A\uC73C\uBA70, \uAE38\uD749\xB7\uC131\uACA9\xB7\uC0AC\uAC74\uC744 \uD574\uC11D\uD558\uAC70\uB098 \uC608\uCE21\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+  "ditianshui-evidence-no-strength-verdict": "\uACC4\uC808\xB7\uD1B5\uADFC\xB7\uC0DD\uC870\xB7\uC124\uADF9\uBAA8\uC758 \uADFC\uAC70\uB97C \uB098\uB220 \uBCF4\uC5EC \uC904 \uBFD0, \uC2E0\uAC15\xB7\uC2E0\uC57D\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "qiongtong-candidates-no-final-useful-god": "\uACF5\uAC1C \uC804\uC0AC\uB97C \uC62E\uAE34 \uC77C\uAC04\xB7\uC6D4\uB839\uBCC4 \uC870\uD6C4 \uD6C4\uBCF4\uD45C\uC785\uB2C8\uB2E4. \uB300\uD45C \uB300\uC870 \uC0AC\uB840 5\uAC1C(\uC6D4\uBCC4 \uD56D\uBAA9 7\uAC1C)\uB9CC \uAE30\uC900 \uD310\uBA74\uACFC \uD655\uC778\uC744 \uB9C8\uCCE4\uC2B5\uB2C8\uB2E4. \uACA9\uAD6D\xB7\uC5B5\uBD80 \uC6A9\uC2E0\uC744 \uD569\uCE5C \uCD5C\uC885 \uC6A9\uC2E0 \uD310\uC815\uB3C4 \uC544\uC9C1 \uAD6C\uD604\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
+  "sanming-symbolic-raw-observation-only": "\uCD9C\uC804\uC774 \uD655\uC778\uB41C \uC5F0\uC9C0\xB7\uC77C\uAC04 \uAE30\uC900 \uC2E0\uC0B4\uD45C\uC5D0\uC11C \uC9C0\uC9C0\uAC00 \uC77C\uCE58\uD558\uB294 \uACBD\uC6B0\uB9CC \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uC0DD\uC2DC\uB97C \uBAA8\uB97C \uB54C\uB294 \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uD558\uB098\uB3C4 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD568\uC9C0\uC758 \uCC9C\uAC04\xB7\uB0A9\uC74C \uC790\uACA9\uACFC \uC591\uC778 \uB450 \uC815\uC758\uC758 \uCDA9\uB3CC\uC744 \uC784\uC758\uB85C \uD574\uACB0\uD558\uC9C0 \uC54A\uC73C\uBA70, \uAE38\uD749\xB7\uC131\uACA9\xB7\uC0AC\uAC74\uB3C4 \uD574\uC11D\uD558\uAC70\uB098 \uC608\uCE21\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
 });
 var PROFILE_LIMITATION_ID_SET = new Set(
   Object.keys(PROFILE_LIMITATIONS_V1)
@@ -11107,7 +11107,7 @@ var COMMON_STRUCTURAL_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "common-structural",
   version: "1.1.0",
-  displayName: "\uACF5\uD1B5 \uAD6C\uC870 \uC0AC\uC2E4",
+  displayName: "\uC6D0\uAD6D \uACF5\uD1B5 \uACC4\uC0B0",
   school: "cross-school-common",
   textualLayer: "cross-school-common",
   status: "stable",
@@ -11199,9 +11199,9 @@ function artifactDigests(value) {
 // plugins/oh-my-saju/tradition-packs/calculation-baseline/artifacts.json
 var artifacts_default = {
   schemaVersion: "1",
-  knowledgeSnapshot: "6c0ebde3b81aac964a7a6124bb4cb2cc62f6a7d70fae595b3ac1ae0cf081e796",
-  rules: "389133d6c3887275722e848daa2d3ea65b77471eebab73e92a752a8167448f02",
-  fixtures: "c85cd4ff6577150d2c16964a73a2fe4253efd38a5fa284a19607ec9eb4b5819c"
+  knowledgeSnapshot: "eaeb6ff8dc329163df8a2a45bcb26abcb3f185a565e28680fa796fe374dcb93e",
+  rules: "c076e99c2eb9b49fe852be6399cb157630d0eb5bc96bdc35873880641f47af38",
+  fixtures: "2d4b37ab19cbfc45a46cef04b9774b272ace7468f839fa1a01094b9755acefc4"
 };
 
 // plugins/oh-my-saju/tradition-packs/calculation-baseline/fixtures.json
@@ -11464,7 +11464,7 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "ditianshui-strength-evidence",
   version: "1.0.0",
-  displayName: "\uC0BC\uBA85\uD1B5\uD68C \uACC4\uC808\uD45C\xB7\uC801\uCC9C\uC218 \uC655\uC1E0 \uC99D\uAC70 \uC7A5\uBD80",
+  displayName: "\uC0BC\uBA85\uD1B5\uD68C \uACC4\uC808\uD45C\xB7\uC801\uCC9C\uC218 \uC655\uC1E0 \uADFC\uAC70",
   school: "ditianshui-strength-flow-reconstruction",
   textualLayer: "reconstruction",
   status: "stable",
@@ -11486,8 +11486,8 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ditianshui/artifacts.json
 var artifacts_default2 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "b09030e80fbf397129f9cc9717eca2688b88427cb112d5972d9dd7e8a3dd1a13",
-  rules: "477f02fdd8b56ff4cd889ed974c89ebafe4158a1c9876033b079e6981ae3afee",
+  knowledgeSnapshot: "b58764e77101ba1453ce6e09d2fe7b14cc3758411300866ca6947e8e516cb5d3",
+  rules: "01f776874028e0a8b5c5fc80d153db21ee248be10df9d0a6729f8d1547c3b618",
   fixtures: "3c5be0ad7ed6adb9cc5e36631454066adf3b7562375d24f4ea2cbddceed12aa1"
 };
 
@@ -11663,8 +11663,8 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/qiongtong/artifacts.json
 var artifacts_default3 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "ab9bc189fe82e36e8a112668f4799967a400a6ee0a899fd85ebea327d87c5227",
-  rules: "28f4f5d54466fc000ec30d459822181a343e24f0a0606b32761720a4e2fa9e97",
+  knowledgeSnapshot: "e6cd91ce398df1fbe795466adb0ef5602ed6359133a1fdfc5ba58bd76e9f1c4a",
+  rules: "23c64bee8ad291ff4ded7aa435c9768b1ecc70f205c70b7969aad9026bb208d7",
   fixtures: "fa1e1cbea176782d98785aefd292e61186bb37253c8983fbbe309e49e3100039"
 };
 
@@ -12128,7 +12128,7 @@ function evaluateSanmingSymbolicCuratedRule(ruleId, context) {
   const matchSummary = matches.map(
     ({ observedPosition, targetBranch }) => `${BRANCH_POSITION_LABEL[observedPosition]} ${targetBranch}`
   ).join("\xB7");
-  const statement = notApplicable ? `\uC77C\uAC04 ${dayStem}\uC740 \uC591\uAC04\uC804\uC6A9 \uD45C\uC758 \uC801\uC6A9 \uB300\uC0C1\uC774 \uC544\uB2D9\uB2C8\uB2E4.` : partial ? matches.length === 0 ? `\uC54C\uB824\uC9C4 \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uC5D0\uC11C\uB294 ${anchorSummary} \uD45C\uC758 \uC77C\uCE58\uAC00 \uAD00\uCC30\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC2DC\uC9C0\uB294 \uBBF8\uC0C1\uC774\uB77C \uC804\uCCB4 \uBD80\uC7AC\uB85C \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC758 \uC54C\uB824\uC9C4 \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0 \uBC94\uC704 \uC77C\uCE58\uB294 ${matchSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC9C0\uB294 \uBBF8\uC0C1\uC774\uB77C \uCD94\uAC00 \uC77C\uCE58 \uAC00\uB2A5\uC131\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : matches.length === 0 ? `${anchorSummary} \uD45C\uC5D0\uC11C \uC77C\uCE58\uD558\uB294 \uC9C0\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC758 \uC77C\uCE58 \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4.`;
+  const statement = notApplicable ? `\uC77C\uAC04 ${dayStem}\uC740 \uC591\uAC04\uC5D0\uB9CC \uC4F0\uB294 \uC774 \uD45C\uC758 \uC801\uC6A9 \uB300\uC0C1\uC774 \uC544\uB2D9\uB2C8\uB2E4.` : partial ? matches.length === 0 ? `\uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C ${anchorSummary} \uD45C\uC640 \uB300\uC870\uD588\uC9C0\uB9CC \uC77C\uCE58\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C \uB300\uC870\uD588\uC2B5\uB2C8\uB2E4. \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uB354 \uC788\uB294\uC9C0\uB294 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : matches.length === 0 ? `${anchorSummary} \uD45C\uC5D0\uC11C \uC77C\uCE58\uD558\uB294 \uC9C0\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uB300\uC870\uD55C \uACB0\uACFC, \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4.`;
   const evidencePaths = [
     isStemRule ? "pillars.day.stem" : "pillars.year.branch",
     ...observedPillars.map(({ position: position2 }) => `pillars.${position2}.branch`)
@@ -12253,7 +12253,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "sanming-symbolic-curated",
   version: "1.1.0",
-  displayName: "\uC0BC\uBA85\uD1B5\uD68C \uC5C4\uC120 \uC2E0\uC0B4 \uC6D0\uC2DC \uAD00\uCE21",
+  displayName: "\uC0BC\uBA85\uD1B5\uD68C \uC5C4\uC120 \uC2E0\uC0B4\uD45C \uB300\uC870",
   school: "sanming-tonghui-base-text",
   textualLayer: "base-text",
   status: "stable",
@@ -12267,9 +12267,9 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/artifacts.json
 var artifacts_default4 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "892b4223fe0d17c7042072e37fbdacd398a8e776b6f34cc691438aec6f3a5353",
-  rules: "a7b71498fd7badf69599752f3c09f18d92dc111f8d2dfb82c663450d6efd34cd",
-  fixtures: "83140f3303f946ef0ac70ef20d8ffae884fa0e489de8593a44a92539a6cff7b7"
+  knowledgeSnapshot: "4963ea8baeba086384c071103b57c3d79465980dd6618d6272b45d2a6feda960",
+  rules: "a335265a5d506f12b70599d5d385a6cabda6a967a97d3e1f5c4114674e604cb5",
+  fixtures: "d78160e90a9ec55378b2e6d56804e581ef3594f0df32d948ec871f2779223122"
 };
 
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/fixtures.json
@@ -12592,8 +12592,8 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ziping/artifacts.json
 var artifacts_default5 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "92c19f40a2cf080bfe5035c66ccc8c7741743521e077384b4f0b1b74c7af8ed9",
-  rules: "27593159e8e909f1c36aac5ffc8479fc353a8f45b031246090c0f8d2924f7d60",
+  knowledgeSnapshot: "1ccded897bc40e6798af13da5d6b2cf361b9efd7c1cdc25108e3c7df1b5a9171",
+  rules: "432605f713ba4a761db694798a6c59e1447775bba0497a33cbc63b61eaaa2c23",
   fixtures: "89a61e9f2e371e876f89ee18d632bef7ceb5bb64474e58085fcc1106daa64ac7"
 };
 
@@ -13357,7 +13357,7 @@ function evaluateDitianshuiPackRule(ruleId, context) {
     };
     return {
       key: canonicalJsonStringify(values2),
-      statement: `${monthBranch}\uC6D4\uC744 ${rulerElement} \uC0AC\uB839\uC73C\uB85C \uBCF4\uB294 \uBA85\uC2DC\uC801 \uD504\uB85C\uD544\uC5D0\uC11C ${dayStem}${dayElement}\uC758 \uACC4\uC808 \uC0C1\uD0DC\uB294 ${state}\uC785\uB2C8\uB2E4. \uC774\uB294 \uC2E0\uAC15\xB7\uC2E0\uC57D\uC758 \uCD5C\uC885 \uD310\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4.`,
+      statement: `\uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 ${monthBranch}\uC6D4\uC744 ${rulerElement} \uC0AC\uB839\uC73C\uB85C \uBD05\uB2C8\uB2E4. ${dayStem}${dayElement}\uC758 \uACC4\uC808 \uC0C1\uD0DC\uB294 ${state}\uC785\uB2C8\uB2E4. \uC774 \uAC12\uB9CC\uC73C\uB85C \uC2E0\uAC15\xB7\uC2E0\uC57D\uC744 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
       topic: "strength",
       values: values2,
       evidencePaths: ["pillars.day.stem", "pillars.month.branch"],
@@ -13418,7 +13418,7 @@ function evaluateDitianshuiPackRule(ruleId, context) {
   };
   return {
     key: canonicalJsonStringify(values),
-    statement: `\uACC4\uC808 \uC0C1\uD0DC\uB294 ${state}\uC774\uACE0, \uD45C\uBA74 \uC7A5\uBD80\uB294 ${ledgerCounts(visibleEvidence)}, \uC9C0\uC7A5\uAC04 \uC7A5\uBD80\uB294 ${ledgerCounts(hiddenEvidence)}\uC785\uB2C8\uB2E4. \uAC00\uC911\uCE58\uB098 \uCD5C\uC885 \uC2E0\uAC15\xB7\uC2E0\uC57D \uB77C\uBCA8\uC740 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    statement: `\uACC4\uC808 \uC0C1\uD0DC\uB294 ${state}\uC785\uB2C8\uB2E4. \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB09C \uADFC\uAC70\uB294 ${ledgerCounts(visibleEvidence)}, \uC9C0\uC7A5\uAC04\uC5D0 \uB4E0 \uADFC\uAC70\uB294 ${ledgerCounts(hiddenEvidence)}\uC785\uB2C8\uB2E4. \uAC00\uC911\uCE58\uB97C \uB9E4\uAE30\uAC70\uB098 \uCD5C\uC885 \uC2E0\uAC15\xB7\uC2E0\uC57D \uC774\uB984\uC744 \uBD99\uC774\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
     topic: "strength",
     values,
     evidencePaths: ["pillars", "facts.structure.hiddenStems"],
@@ -13805,7 +13805,7 @@ function evaluateQiongtongPackRule(context) {
   const source = {
     sourceRuleId: cellSource?.sourceRuleId ?? `qiongtong.experimental-table.${dayStem}.${monthBranch}.v1`,
     sourceReferenceId: "qiongtong-day-stem-month-climate-v1",
-    sourceLocator: cellSource?.sourceLocator ?? `${dayStem} \uC77C\uAC04 \uC808\uC758 ${monthBranch}\uC6D4 \uD56D\uBAA9; \uD310\uBA74 \uB300\uC870 \uB300\uAE30`,
+    sourceLocator: cellSource?.sourceLocator ?? `${dayStem} \uC77C\uAC04 ${monthBranch}\uC6D4 \uD56D\uBAA9(\uD310\uBA74 \uB300\uC870 \uB300\uAE30)`,
     fixtureId: cellSource?.fixtureId ?? null,
     verification: cellSource?.verification ?? "experimental-transcription-only",
     functionAndConditionTranscription: cellSource === null ? "not-source-reviewed" : "source-explicit-functions-and-unresolved-conditions",
@@ -13821,7 +13821,7 @@ function evaluateQiongtongPackRule(context) {
   };
   const omitted = omittedPillars(context.pillars);
   const presenceSummary = candidateEvidence.map(({ stem, visibleLocations, hiddenLocations }) => {
-    const visibleLabel = visibleLocations.length === 0 ? "\uD45C\uBA74 \uC5C6\uC74C" : `\uD45C\uBA74 ${visibleLocations.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
+    const visibleLabel = visibleLocations.length === 0 ? "\uCC9C\uAC04 \uC5C6\uC74C" : `\uCC9C\uAC04 ${visibleLocations.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
     const hiddenLabel = hiddenLocations.length === 0 ? "\uC9C0\uC7A5\uAC04 \uC5C6\uC74C" : `\uC9C0\uC7A5\uAC04 ${hiddenLocations.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
     return `${stem}(${visibleLabel}, ${hiddenLabel})`;
   }).join("; ");
@@ -13836,7 +13836,7 @@ function evaluateQiongtongPackRule(context) {
   };
   return {
     key: canonicalJsonStringify(values),
-    statement: `${dayStem} \uC77C\uAC04\xB7${monthBranch}\uC6D4\uC758 \uAD81\uD1B5\uBCF4\uAC10 \uC870\uD6C4 \uD6C4\uBCF4\uC640 \uC6D0\uAD6D \uCD9C\uD604\uC740 ${presenceSummary}\uC785\uB2C8\uB2E4. ${cellSource === null ? "\uC774 \uC140\uC740 \uC544\uC9C1 \uAE30\uC900 \uD310\uBA74 \uB300\uC870 \uC804\uC778 \uC2E4\uD5D8 \uC804\uC0AC\uC785\uB2C8\uB2E4." : "\uC774 \uC140\uC740 \uC6D0\uBB38 \uD6C4\uBCF4 \uC21C\uC11C\xB7\uAE30\uB2A5\uC758 \uBA85\uC2DC \uC5EC\uBD80\xB7\uC870\uAC74\uC744 \uB300\uC870\uD588\uACE0 \uC870\uAC74 \uD310\uC815\uC740 \uBBF8\uC644\uB8CC\uC785\uB2C8\uB2E4."} \uD6C4\uBCF4\uC758 \uC2E4\uC81C \uCD9C\uD604 \uC704\uCE58\uB294 \uBCC4\uB3C4 \uAE30\uB85D\uD558\uBA70 \uCD5C\uC885 \uC6A9\uC2E0\uC73C\uB85C \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    statement: `${dayStem} \uC77C\uAC04\xB7${monthBranch}\uC6D4\uC758 \uAD81\uD1B5\uBCF4\uAC10 \uC870\uD6C4 \uD6C4\uBCF4\uAC00 \uC6D0\uAD6D\uC5D0 \uB098\uD0C0\uB09C \uC704\uCE58\uB294 ${presenceSummary}\uC785\uB2C8\uB2E4. ${cellSource === null ? "\uC544\uC9C1 \uAE30\uC900 \uD310\uBA74\uACFC \uB300\uC870\uD558\uC9C0 \uC54A\uC740 \uC2E4\uD5D8\uC6A9 \uC804\uC0AC\uC785\uB2C8\uB2E4." : "\uC6D0\uBB38\uC5D0\uC11C \uD6C4\uBCF4\uC758 \uC21C\uC11C\uC640 \uAE30\uB2A5 \uD45C\uAE30, \uC870\uAC74\uC744 \uB300\uC870\uD588\uC2B5\uB2C8\uB2E4. \uC870\uAC74 \uD310\uC815\uC740 \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4."} \uD6C4\uBCF4\uAC00 \uC2E4\uC81C\uB85C \uC5B4\uB514\uC5D0 \uC788\uB294\uC9C0\uB294 \uB530\uB85C \uAE30\uB85D\uD569\uB2C8\uB2E4. \uC774 \uC790\uB8CC\uB9CC\uC73C\uB85C \uCD5C\uC885 \uC6A9\uC2E0\uC744 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
     topic: "useful-god",
     values,
     evidencePaths: ["pillars", "facts.structure.hiddenStems"],
@@ -13914,7 +13914,7 @@ function evaluateZipingPackRule(ruleId, context) {
     };
     return {
       key: canonicalJsonStringify(values2),
-      statement: `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC9C0\uC7A5\uAC04 \uD6C4\uBCF4\uB294 ${monthHiddenStems.join("\xB7")}\uC774\uACE0 \uBCF8\uAE30\uB294 ${mainHiddenStem}\uC785\uB2C8\uB2E4. \uC0AC\uB839 \uC77C\uC218\uC640 \uACA9\uAD6D \uC131\uD328\uB294 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+      statement: `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC9C0\uC7A5\uAC04\uC740 ${monthHiddenStems.join("\xB7")}\uC774\uBA70 \uBCF8\uAE30\uB294 ${mainHiddenStem}\uC785\uB2C8\uB2E4. \uC0AC\uB839 \uC77C\uC218\uC640 \uACA9\uAD6D \uC131\uD328\uB294 \uC544\uC9C1 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
       topic: "pattern",
       values: values2,
       evidencePaths: ["pillars.day.stem", "pillars.month.branch"],
@@ -13969,8 +13969,9 @@ function evaluateZipingPackRule(ruleId, context) {
   ];
   const basePatternSummary = basePatternCandidate === null ? "" : `${basePatternCandidate.pattern}(\uC6D4\uC9C0\xB7\uC77C\uAC04 \uAD00\uACC4\uC758 \uAE30\uCD08 \uD6C4\uBCF4); `;
   const candidateSummary = patternCandidates.map(({ pattern, sourceStem, exposedStemRefs, status }) => {
-    const transparency = exposedStemRefs.length === 0 ? context.pillars.hour === null ? "\uC0BC\uC8FC \uD22C\uAC04 \uC5C6\uC74C\xB7\uC2DC\uC8FC \uBBF8\uC0C1" : "\uD22C\uAC04 \uC5C6\uC74C" : `\uD22C\uAC04 ${exposedStemRefs.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
-    return `${pattern}(${sourceStem}, ${transparency}, ${status})`;
+    const transparency = exposedStemRefs.length === 0 ? context.pillars.hour === null ? "\uC0BC\uC8FC\uC5D0\uC11C \uD22C\uAC04\uC744 \uCC3E\uC9C0 \uBABB\uD568\xB7\uC2DC\uC8FC \uBBF8\uC0C1" : "\uD22C\uAC04 \uC5C6\uC74C" : `\uD22C\uAC04 ${exposedStemRefs.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
+    const statusLabel = status === "candidate" ? "\uD6C4\uBCF4" : "\uBBF8\uC815";
+    return `${pattern}(${sourceStem}, ${transparency}, ${statusLabel})`;
   }).join("; ");
   const values = {
     dayMaster: dayStem,
@@ -13987,7 +13988,7 @@ function evaluateZipingPackRule(ruleId, context) {
   };
   return {
     key: canonicalJsonStringify(values),
-    statement: `\uC790\uD3C9 \uC6D4\uB839 \uADDC\uCE59\uC758 \uC21C\uC704 \uC5C6\uB294 \uACA9 \uD6C4\uBCF4\uB294 ${basePatternSummary}${candidateSummary}\uC785\uB2C8\uB2E4. \uAC01 \uD6C4\uBCF4\uC758 \uD22C\uAC04 \uC5EC\uBD80\uB294 \uAE30\uB85D\uD558\uC9C0\uB9CC \uC0AC\uB839\xB7\uD68C\uC9C0\xB7\uC131\uD328\xB7\uAD6C\uC751\uC774 \uBBF8\uC644\uC131\uC774\uBBC0\uB85C \uCD5C\uC885 \uACA9\uAD6D\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    statement: `\uC790\uD3C9 \uC6D4\uB839 \uADDC\uCE59\uC5D0\uC11C \uB098\uC628 \uACA9\uAD6D \uD6C4\uBCF4\uB294 ${basePatternSummary}${candidateSummary}\uC774\uBA70 \uC21C\uC704\uB294 \uB9E4\uAE30\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uAC01 \uD6C4\uBCF4\uAC00 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB294 \uAE30\uB85D\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uB9CC \uC0AC\uB839\xB7\uD68C\uC9C0\xB7\uC131\uD328\xB7\uAD6C\uC751 \uADDC\uCE59\uC744 \uBAA8\uB450 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC544 \uCD5C\uC885 \uACA9\uAD6D\uC740 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
     topic: "pattern",
     values,
     evidencePaths: ["pillars"],
@@ -14566,7 +14567,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: stem.korean,
-          statement: `\uC77C\uAC04\uC740 ${stem.korean}(${stem.hanja}), ${stem.yinYang}\uC758 ${stem.element}\uC785\uB2C8\uB2E4.`,
+          statement: `\uC77C\uAC04\uC740 ${stem.korean}(${stem.hanja})\uC774\uBA70 ${stem.yinYang}\uC758 ${stem.element}\uC785\uB2C8\uB2E4.`,
           topic: "day-master",
           values: {
             stem: stem.korean,
@@ -14591,7 +14592,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: `${position2}:${pillar.cycleIndex}`,
-          statement: `${position2} \uAE30\uB465\uC740 ${pillar.korean}(${pillar.hanja})\uC785\uB2C8\uB2E4.`,
+          statement: `${PILLAR_POSITION_LABEL[position2]}\uB294 ${pillar.korean}(${pillar.hanja})\uC785\uB2C8\uB2E4.`,
           topic: "chart-overview",
           values: {
             position: position2,
@@ -14629,7 +14630,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: partial ? `\uD655\uC778\uB41C \uC5F0\uC8FC\xB7\uC6D4\uC8FC\xB7\uC77C\uC8FC\uC758 \uC9C0\uC7A5\uAC04 \uAC00\uC911 \uC624\uD589 \uC18C\uACC4\uB294 ${compact}\uC774\uBA70 \uC2DC\uC8FC\uB294 \uD3EC\uD568\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.` : `\uC9C0\uC7A5\uAC04 \uAC00\uC911\uCE58\uB97C \uD3EC\uD568\uD55C \uC624\uD589 \uBD84\uD3EC\uB294 ${compact}\uC785\uB2C8\uB2E4.`,
+          statement: partial ? `\uD655\uC778\uB41C \uC5F0\uC8FC\xB7\uC6D4\uC8FC\xB7\uC77C\uC8FC\uC5D0\uC11C \uC9C0\uC7A5\uAC04 \uAC00\uC911\uCE58\uB97C \uBC18\uC601\uD55C \uC624\uD589 \uC18C\uACC4\uB294 ${compact}\uC785\uB2C8\uB2E4. \uC2DC\uC8FC\uB294 \uD3EC\uD568\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.` : `\uC9C0\uC7A5\uAC04 \uAC00\uC911\uCE58\uB97C \uBC18\uC601\uD55C \uC624\uD589 \uBD84\uD3EC\uB294 ${compact}\uC785\uB2C8\uB2E4.`,
           topic: "five-elements",
           values,
           evidence: structuralEvidence(candidate, "facts.structure.elementBalance"),
@@ -14736,7 +14737,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: partial ? labels.length === 0 ? "\uD655\uC778\uB41C \uC0BC\uC8FC \uC548\uC5D0\uC11C\uB294 \uD604\uC7AC \uC9C0\uC6D0\uD558\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569\uC758 \uC6D0\uC2DC \uAD00\uACC4\uAC00 \uD0D0\uC9C0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC2DC\uC8FC\uAC00 \uCD94\uAC00\uB418\uBA74 \uACB0\uACFC\uAC00 \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4." : `\uD655\uC778\uB41C \uC0BC\uC8FC \uC548\uC5D0\uC11C ${labels.join(", ")}\uC774 \uD0D0\uC9C0\uB410\uC2B5\uB2C8\uB2E4. \uC2DC\uC8FC\uAC00 \uCD94\uAC00\uB418\uBA74 \uAD00\uACC4\uAC00 \uB354 \uC0DD\uAE38 \uC218 \uC788\uC73C\uBA70 \uC131\uB9BD \uAC15\uB3C4\uB098 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : labels.length === 0 ? "\uD604\uC7AC \uC9C0\uC6D0\uD558\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uD45C\uC5D0\uC11C \uC6D0\uC2DC \uAD00\uACC4 \uC30D\uC774 \uD0D0\uC9C0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4." : `\uC6D0\uC2DC \uAD00\uACC4 \uD45C\uC5D0\uC11C ${labels.join(", ")}\uC774 \uD0D0\uC9C0\uB410\uC2B5\uB2C8\uB2E4. \uC131\uB9BD \uAC15\uB3C4\uB098 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+          statement: partial ? labels.length === 0 ? "\uD604\uC7AC \uC9C0\uC6D0\uD558\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uD45C\uC640 \uD655\uC778\uB41C \uC0BC\uC8FC\uB97C \uB300\uC870\uD588\uC73C\uB098 \uAE30\uB465 \uC0AC\uC774\uC758 \uAD00\uACC4\uB97C \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC2DC\uC8FC\uAC00 \uCD94\uAC00\uB418\uBA74 \uACB0\uACFC\uAC00 \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4." : `\uD604\uC7AC \uC9C0\uC6D0\uD558\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uD45C\uC640 \uD655\uC778\uB41C \uC0BC\uC8FC\uB97C \uB300\uC870\uD55C \uACB0\uACFC\uB294 ${labels.join(", ")}\uC785\uB2C8\uB2E4. \uC2DC\uC8FC\uAC00 \uCD94\uAC00\uB418\uBA74 \uAD00\uACC4\uAC00 \uB354 \uC0DD\uAE38 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC131\uB9BD \uAC15\uB3C4\uC640 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : labels.length === 0 ? "\uD604\uC7AC \uC9C0\uC6D0\uD558\uB294 \uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uD45C\uC640 \uB300\uC870\uD588\uC73C\uB098 \uAE30\uB465 \uC0AC\uC774\uC758 \uAD00\uACC4\uB97C \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4." : `\uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uD45C\uC640 \uB300\uC870\uD55C \uACB0\uACFC\uB294 ${labels.join(", ")}\uC785\uB2C8\uB2E4. \uC131\uB9BD \uAC15\uB3C4\uC640 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
           topic: "relationships",
           values,
           evidence: structuralEvidence(candidate, "facts.structure.relationships"),
@@ -14781,7 +14782,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: partial ? `\uC77C\uAC04 ${dayStem} \uAE30\uC900 \uC2ED\uC774\uC6B4\uC131 \uC6D0\uC2DC \uB2E8\uACC4\uB294 ${stageSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC8FC\uB294 \uD3EC\uD568\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uAC15\uC57D\uC744 \uD310\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `\uC77C\uAC04 ${dayStem} \uAE30\uC900 \uC2ED\uC774\uC6B4\uC131 \uC6D0\uC2DC \uB2E8\uACC4\uB294 ${stageSummary}\uC785\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uAC15\uC57D\uC744 \uD310\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+          statement: partial ? `\uC77C\uAC04 ${dayStem} \uAE30\uC900 \uC2ED\uC774\uC6B4\uC131\uC758 \uAE30\uBCF8 \uB2E8\uACC4\uB294 ${stageSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC8FC\uB294 \uD3EC\uD568\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uAC15\uC57D\uC744 \uD310\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `\uC77C\uAC04 ${dayStem} \uAE30\uC900 \uC2ED\uC774\uC6B4\uC131\uC758 \uAE30\uBCF8 \uB2E8\uACC4\uB294 ${stageSummary}\uC785\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uAC15\uC57D\uC744 \uD310\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
           topic: "growth-stages",
           values,
           evidence: evidence(
@@ -14867,15 +14868,15 @@ function evaluateRules(candidates, profile) {
       const matched = [...group.candidateIds].sort();
       const matchedSet = new Set(matched);
       const baseId = `${profile.id}@${profile.version}:${ruleId}:${hashKey(key)}`;
-      let findingId = baseId;
+      let findingId2 = baseId;
       let collisionIndex = 2;
-      while (usedFindingIds.has(findingId)) {
-        findingId = `${baseId}-${collisionIndex}`;
+      while (usedFindingIds.has(findingId2)) {
+        findingId2 = `${baseId}-${collisionIndex}`;
         collisionIndex += 1;
       }
-      usedFindingIds.add(findingId);
+      usedFindingIds.add(findingId2);
       findings.push({
-        id: findingId,
+        id: findingId2,
         ruleId,
         profileId: profile.id,
         profileVersion: profile.version,
@@ -15171,7 +15172,6 @@ var KOREAN_SAJU_ANALYSIS_PRESET_V1 = deepFreeze2({
     "final-useful-god",
     "luck-cycles",
     "personality",
-    "compatibility",
     "event-prediction"
   ],
   predictiveValidity: "not-established"
@@ -15272,7 +15272,7 @@ var SAJU_TOPIC_TITLES = deepFreeze2({
   "five-elements": "\uC624\uD589 \uBD84\uD3EC",
   "yin-yang": "\uC74C\uC591 \uBD84\uD3EC",
   "ten-gods": "\uC2ED\uC2E0",
-  relationships: "\uC6D0\uC2DC \uAD00\uACC4",
+  relationships: "\uD569\xB7\uCDA9 \uB4F1 \uAE30\uB465 \uAD00\uACC4",
   "void-branches": "\uACF5\uB9DD",
   strength: "\uC2E0\uAC15\xB7\uC2E0\uC57D",
   pattern: "\uACA9\uAD6D",
@@ -15731,7 +15731,7 @@ function assertOnlyKeys(value, allowed, path, code = "INVALID_NARRATOR_OUTPUT") 
 }
 function copyFindingIds(value, path) {
   if (!Array.isArray(value) || value.length === 0 || value.length > 16 || !value.every(
-    (findingId) => typeof findingId === "string" && /^[A-Za-z0-9_.@:-]{1,240}$/.test(findingId)
+    (findingId2) => typeof findingId2 === "string" && /^[A-Za-z0-9_.@:-]{1,240}$/.test(findingId2)
   )) {
     throw new AiReadingError(
       "INVALID_NARRATOR_OUTPUT",
@@ -15900,7 +15900,7 @@ function assertNoUnsupportedCalendarGanzhiClaims(text, path) {
   );
 }
 function validateAndLabelParagraph(text, findingIds, findingsById, path, policy) {
-  const unknownIds = findingIds.filter((findingId) => !findingsById.has(findingId));
+  const unknownIds = findingIds.filter((findingId2) => !findingsById.has(findingId2));
   if (unknownIds.length > 0) {
     throw new AiReadingError(
       "UNGROUNDED_OUTPUT",
@@ -15911,7 +15911,7 @@ function validateAndLabelParagraph(text, findingIds, findingsById, path, policy)
   assertCompactParagraphShape(text, path);
   assertNoUnrequestedAdvancedDoctrine(text, policy, path);
   assertNoUnsupportedCalendarGanzhiClaims(text, path);
-  const findings = findingIds.map((findingId) => findingsById.get(findingId));
+  const findings = findingIds.map((findingId2) => findingsById.get(findingId2));
   const conditionalFindings = findings.filter(
     ({ stability }) => stability === "candidate-dependent"
   );
@@ -15935,7 +15935,7 @@ function validateAndLabelParagraph(text, findingIds, findingsById, path, policy)
   }
   const candidateDependent = conditionalFindings.length > 0;
   const conditional = candidateDependent || containsPartialFinding;
-  const uncertaintyLabel = candidateDependent && containsPartialFinding ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uB294, \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4." : candidateDependent ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4." : containsPartialFinding ? "\uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4." : null;
+  const uncertaintyLabel = candidateDependent && containsPartialFinding ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uB0B4\uC6A9\uC785\uB2C8\uB2E4. \uD655\uC778\uB41C \uAE30\uB465\uB9CC \uBC18\uC601\uD588\uC2B5\uB2C8\uB2E4." : candidateDependent ? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4." : containsPartialFinding ? "\uD655\uC778\uB41C \uAE30\uB465\uB9CC \uBC18\uC601\uD55C \uB0B4\uC6A9\uC785\uB2C8\uB2E4." : null;
   const labeledText = uncertaintyLabel === null ? text : `${uncertaintyLabel} ${text}`;
   if (labeledText.length > SAJU_NARRATION_PRESENTATION_POLICY.maxParagraphCharacters + (uncertaintyLabel?.length ?? 0) + (uncertaintyLabel === null ? 0 : 1)) {
     throw new AiReadingError(
@@ -15988,7 +15988,7 @@ function parseSectionPlan(value, index, findingsById, policy) {
     (paragraph, paragraphIndex) => parseParagraphPlan(paragraph, `${path}.paragraphs[${paragraphIndex}]`, findingsById, policy)
   );
   for (const [paragraphIndex, paragraph] of paragraphs.entries()) {
-    if (paragraph.findingIds.some((findingId) => findingsById.get(findingId)?.topic !== topic)) {
+    if (paragraph.findingIds.some((findingId2) => findingsById.get(findingId2)?.topic !== topic)) {
       throw new AiReadingError(
         "UNGROUNDED_OUTPUT",
         "Every section may contain findings from its declared topic only.",
@@ -16154,25 +16154,25 @@ function buildReadingLimitations(assessment, variantPolicy, excludedCandidateDep
   } else if (assessment.subject.kind === "possibilities") {
     limitations.push({
       code: "CONSTRAINED_BIRTH_TIME",
-      message: "\uC785\uB825\uD55C \uC0DD\uC2DC \uBC94\uC704\uC640 \uACC4\uC0B0 \uC815\uCC45\uC5D0\uC11C \uAC00\uB2A5\uD55C \uC6D0\uAD6D \uC9D1\uD569\uC744 \uD3C9\uAC00\uD588\uC2B5\uB2C8\uB2E4."
+      message: "\uC785\uB825\uD55C \uC0DD\uC2DC \uBC94\uC704\uC640 \uACC4\uC0B0 \uAE30\uC900\uC5D0 \uB9DE\uB294 \uC6D0\uAD6D \uD6C4\uBCF4\uB97C \uBAA8\uB450 \uACC4\uC0B0\uD588\uC2B5\uB2C8\uB2E4."
     });
   }
   if (assessment.subject.candidateCount > 1) {
     limitations.push({
       code: "MULTIPLE_CANDIDATES",
-      message: `\uC11C\uB85C \uB2E4\uB978 \uC6D0\uAD6D \uD6C4\uBCF4 ${assessment.subject.candidateCount}\uAC1C\uB97C \uD655\uB960\uB85C \uD658\uC0B0\uD558\uC9C0 \uC54A\uACE0 \uD568\uAED8 \uBCF4\uC874\uD588\uC2B5\uB2C8\uB2E4.`
+      message: `\uC6D0\uAD6D \uD6C4\uBCF4\uB294 ${assessment.subject.candidateCount}\uAC1C\uC785\uB2C8\uB2E4. \uD6C4\uBCF4\uB9C8\uB2E4 \uC131\uB9BD\uD558\uB294 \uC2DC\uAC04 \uAD6C\uAC04\uC744 \uD45C\uC2DC\uD588\uC9C0\uB9CC \uD655\uB960\uB85C \uD658\uC0B0\uD558\uC9C0\uB294 \uC54A\uC558\uC2B5\uB2C8\uB2E4.`
     });
   }
   if (assessment.findings.some(({ coverage }) => coverage === "partial")) {
     limitations.push({
       code: "PARTIAL_FINDINGS",
-      message: "\uC77C\uBD80 \uACB0\uACFC\uB294 \uD655\uC778\uB41C \uAE30\uB465\uB9CC \uC0AC\uC6A9\uD55C \uBD80\uBD84 \uC18C\uACC4\uC774\uBA70 \uBE60\uC9C4 \uAE30\uB465\uC744 \uBCC4\uB3C4\uB85C \uD45C\uC2DC\uD569\uB2C8\uB2E4."
+      message: "\uC77C\uBD80 \uACB0\uACFC\uB294 \uD655\uC778\uB41C \uAE30\uB465\uB9CC\uC73C\uB85C \uACC4\uC0B0\uD588\uC2B5\uB2C8\uB2E4. \uBE60\uC9C4 \uAE30\uB465\uC740 \uB530\uB85C \uD45C\uC2DC\uD569\uB2C8\uB2E4."
     });
   }
   if (variantPolicy === "stable-only" && excludedCandidateDependentCount > 0) {
     limitations.push({
       code: "CANDIDATE_DEPENDENT_EXCLUDED",
-      message: `\uAE30\uBCF8 \uC548\uC815 \uACB0\uACFC \uBAA8\uB4DC\uC5D0\uC11C \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uACB0\uACFC ${excludedCandidateDependentCount}\uAC1C\uB97C AI \uC785\uB825\uC5D0\uC11C \uC81C\uC678\uD588\uC2B5\uB2C8\uB2E4.`
+      message: `\uAE30\uBCF8\uAC12\uC5D0\uC11C\uB294 \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uACB0\uACFC ${excludedCandidateDependentCount}\uAC1C\uB97C AI \uC785\uB825\uC5D0\uC11C \uBE90\uC2B5\uB2C8\uB2E4.`
     });
   }
   if (assessment.unavailableRules.length > 0) {
@@ -16185,13 +16185,13 @@ function buildReadingLimitations(assessment, variantPolicy, excludedCandidateDep
   if (assessment.findings.some(({ ruleId }) => ruleId === "core.element-balance")) {
     limitations.push({
       code: "SYNTHETIC_ELEMENT_BALANCE",
-      message: "\uC624\uD589 \uBE44\uC728\uC740 \uC2DC\uAC01\uD654\uC6A9 \uD569\uC131 \uC18C\uACC4\uC774\uBA70 \uC2E0\uAC15\xB7\uC2E0\uC57D\uC774\uB098 \uC6A9\uC2E0 \uD310\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4."
+      message: "\uC624\uD589 \uBE44\uC728\uC740 \uC5EC\uB7EC \uAC12\uC744 \uD569\uC0B0\uD55C \uCC38\uACE0 \uC9C0\uD45C\uC785\uB2C8\uB2E4. \uC774 \uC22B\uC790\uB9CC\uC73C\uB85C \uC2E0\uAC15\xB7\uC2E0\uC57D\uC774\uB098 \uC6A9\uC2E0\uC744 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
     });
   }
   if (assessment.findings.every(({ category }) => category === "structural-observation")) {
     limitations.push({
       code: "STRUCTURAL_PROFILE_ONLY",
-      message: "\uC774 \uD504\uB85C\uD544\uC758 \uB0B4\uC7A5 finding\uC740 \uC6D0\uAD6D \uAD6C\uC870 \uACC4\uC0B0\uC73C\uB85C \uAD6C\uC131\uB429\uB2C8\uB2E4."
+      message: "\uC774 \uD504\uB85C\uD544\uC740 \uC6D0\uAD6D \uAD6C\uC870\uB97C \uACC4\uC0B0\uD55C \uACB0\uACFC\uB9CC \uB2F4\uC2B5\uB2C8\uB2E4."
     });
   }
   for (const profileLimitationId of assessment.profile.knownLimitations) {
@@ -16218,7 +16218,7 @@ async function createAiSajuReading(input) {
     narrative = {
       title: SAJU_NARRATIVE_TITLE,
       summary: {
-        text: "\uD604\uC7AC \uC785\uB825\uACFC \uD504\uB85C\uD544\uB85C \uD655\uC815\uD574 \uC124\uBA85\uD560 \uC218 \uC788\uB294 \uACB0\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
+        text: "\uD604\uC7AC \uC785\uB825\uACFC \uD504\uB85C\uD544\uB9CC\uC73C\uB85C \uC124\uBA85\uD560 \uB9CC\uD55C \uACB0\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
         findingIds: [],
         certainty: "grounded"
       },
@@ -16257,7 +16257,7 @@ async function createAiSajuReading(input) {
       code: "TRADITIONAL_INTERPRETATION",
       displayPolicy: "audit-only",
       defaultDisplay: false,
-      message: generatedByAI ? "\uC0DD\uC131\uD615 AI\uAC00 \uC5D4\uC9C4\uC758 \uACC4\uC0B0\xB7\uD559\uD30C finding\uC744 \uC778\uC6A9\uD574 \uC791\uC131\uD55C \uC804\uD1B5 \uBA85\uB9AC \uD574\uC11D\uC785\uB2C8\uB2E4. \uD574\uB2F9 \uADDC\uCE59\uC758 \uD604\uC2E4 \uC608\uCE21 \uD0C0\uB2F9\uC131\uC740 \uD655\uB9BD\uB418\uC9C0 \uC54A\uC558\uC73C\uBA70, \uC778\uC6A9 \uADFC\uAC70\uC640 \uD504\uB85C\uD544 \uD55C\uACC4\uB294 \uD568\uAED8 \uBCF4\uC874\uB429\uB2C8\uB2E4." : "\uD604\uC7AC \uC785\uB825\uACFC \uD504\uB85C\uD544\uC5D0 \uC778\uC6A9 \uAC00\uB2A5\uD55C finding\uC774 \uC5C6\uC5B4 \uACC4\uC0B0\uB41C \uC81C\uD55C\uC0AC\uD56D\uB9CC \uBC18\uD658\uD588\uC2B5\uB2C8\uB2E4.",
+      message: generatedByAI ? "\uC5D4\uC9C4\uC774 \uACC4\uC0B0\uD55C \uBA85\uC2DD\uACFC \uD559\uD30C\uBCC4 \uADFC\uAC70\uB85C \uC0DD\uC131\uD615 AI\uAC00 \uC4F4 \uC804\uD1B5 \uBA85\uB9AC \uD574\uC11D\uC785\uB2C8\uB2E4. \uC804\uD1B5 \uADDC\uCE59\uC758 \uD604\uC2E4 \uC608\uCE21\uB825\uC740 \uC2E4\uC99D\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC0AC\uC6A9\uD55C \uADFC\uAC70\uC640 \uD504\uB85C\uD544 \uD55C\uACC4\uB294 \uAC80\uC99D \uC815\uBCF4\uC5D0 \uAE30\uB85D\uD569\uB2C8\uB2E4." : "\uD604\uC7AC \uC785\uB825\uACFC \uD504\uB85C\uD544\uC5D0\uC11C \uD574\uC11D\uC5D0 \uC778\uC6A9\uD560 \uADFC\uAC70\uB97C \uCC3E\uC9C0 \uBABB\uD574 \uACC4\uC0B0\uC0C1\uC758 \uD55C\uACC4\uB9CC \uB2F4\uC558\uC2B5\uB2C8\uB2E4.",
       empiricalValidation: "not-established",
       limitations: buildReadingLimitations(
         input.assessment,
@@ -17247,7 +17247,7 @@ var ELECTION_MODULE_V1 = deepFreeze2({
 var NAM_BYEONG_GIL_ELECTIONAL_PROFILE_V1 = deepFreeze2({
   id: "nam-byeong-gil-electional",
   version: "1.0.0",
-  displayName: "\uB0A8\uBCD1\uAE38 \uC120\uD0DD\uAE30\uC694 \uAC80\uC99D \uBC94\uC704 \uD0DD\uC77C \uC0AC\uC2E4",
+  displayName: "\uB0A8\uBCD1\uAE38 \u300A\uC120\uD0DD\uAE30\uC694\u300B \uD0DD\uC77C \uC0AC\uC2E4(\uAC80\uC99D \uBC94\uC704)",
   outputBoundary: "classical-rule-matches",
   sources: [
     {
@@ -17331,7 +17331,7 @@ var OH_MY_SAJU_ELECTION_RANKING_POLICY_V1 = deepFreeze2({
       }
     }
   },
-  scoreMeaning: "\uC624\uB9C8\uC774\uC0AC\uC8FC v1 \uD6C4\uBCF4 \uC815\uB82C\uC6A9 \uAC00\uC0B0 \uC9C0\uD45C\uC774\uBA70 \uC131\uACF5\uB960, \uAE38\uC6B4 \uD655\uB960, \uC2E0\uB8B0\uB3C4 \uB610\uB294 \uC0AC\uAC74 \uC608\uCE21\uC774 \uC544\uB2D8",
+  scoreMeaning: "\uC624\uB9C8\uC774\uC0AC\uC8FC v1 \uD6C4\uBCF4 \uC815\uB82C\uC5D0 \uC4F0\uB294 \uAC00\uC0B0 \uC9C0\uD45C. \uC131\uACF5\uB960, \uAE38\uC6B4 \uD655\uB960, \uC2E0\uB8B0\uB3C4, \uC0AC\uAC74 \uC608\uCE21\uAC12\uC774 \uC544\uB2D8",
   tieBreak: [
     "schedule-constraint-satisfied-desc",
     "negative-classical-match-count-asc",
@@ -17342,19 +17342,19 @@ var OH_MY_SAJU_ELECTION_RANKING_POLICY_V1 = deepFreeze2({
 var ELECTION_LIMITATIONS_V1 = deepFreeze2([
   {
     id: "election-ranking-not-probability",
-    message: "\uC81C\uD488 \uC810\uC218\uB294 \uD6C4\uBCF4 \uC815\uB82C \uC815\uCC45\uC774\uBA70 \uC131\uACF5\uB960\xB7\uAE38\uC6B4 \uD655\uB960\xB7\uACBD\uD5D8\uC801 \uC608\uCE21 \uB610\uB294 \uACE0\uC804\uC758 \uC22B\uC790\uAC00 \uC544\uB2D9\uB2C8\uB2E4."
+    message: "\uC815\uB82C \uC810\uC218\uB294 \uD6C4\uBCF4\uC758 \uC21C\uC11C\uB97C \uC815\uD558\uB824\uACE0 \uB9CC\uB4E0 \uAC12\uC785\uB2C8\uB2E4. \uC131\uACF5\uB960\xB7\uAE38\uC6B4 \uD655\uB960\xB7\uACBD\uD5D8\uC801 \uC608\uCE21\uAC12\uC774\uB098 \uACE0\uC804\uC5D0 \uB098\uC624\uB294 \uC22B\uC790\uAC00 \uC544\uB2D9\uB2C8\uB2E4."
   },
   {
     id: "election-local-noon-representative",
-    message: "\uB0A0\uC9DC\uBCC4 \uC0AC\uC2E4\uC740 \uC694\uCCAD\uC5D0 \uBA85\uC2DC\uB41C \uCC38\uAC00\uC790 \uC2DC\uAC04\uB300\uC758 \uBBFC\uAC04 \uC815\uC624\uB97C \uB300\uD45C \uC21C\uAC04\uC73C\uB85C \uC0AC\uC6A9\uD558\uBA70 \uD558\uB8E8 \uC804\uCCB4 \uBD88\uBCC0\uC744 \uC8FC\uC7A5\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    message: "\uC694\uCCAD\uC5D0 \uBA85\uC2DC\uD55C \uCC38\uAC00\uC790 \uC2DC\uAC04\uB300\uC758 \uD604\uC9C0 \uC2DC\uAC01 \uC815\uC624\uB97C \uAC01 \uB0A0\uC9DC\uC758 \uB300\uD45C \uC21C\uAC04\uC73C\uB85C \uC0BC\uC2B5\uB2C8\uB2E4. \uD558\uB8E8 \uB0B4\uB0B4 \uAC19\uC740 \uACB0\uACFC\uAC00 \uB098\uC628\uB2E4\uB294 \uB73B\uC740 \uC544\uB2D9\uB2C8\uB2E4."
   },
   {
     id: "election-shared-participant-zone-v1",
-    message: "v1\uC740 \uACF5\uAC1C \uC77C\uC9C4 transit \uC0AC\uC2E4\uC758 \uC2DC\uAC04\uB300 \uC758\uBBF8\uB97C \uBCF4\uC874\uD558\uAE30 \uC704\uD574 \uBAA8\uB4E0 \uCC38\uAC00\uC790\uC758 \uC694\uCCAD \uC2DC\uAC04\uB300\uAC00 \uD6C4\uBCF4 \uC2DC\uAC04\uB300\uC640 \uAC19\uC544\uC57C \uD569\uB2C8\uB2E4."
+    message: "v1\uC5D0\uC11C\uB294 \uC77C\uC9C4 \uACC4\uC0B0\uC758 \uC2DC\uAC04\uB300 \uAE30\uC900\uC744 \uB9DE\uCD94\uAE30 \uC704\uD574 \uBAA8\uB4E0 \uCC38\uAC00\uC790\uC758 \uC694\uCCAD \uC2DC\uAC04\uB300\uC640 \uD6C4\uBCF4 \uC2DC\uAC04\uB300\uB97C \uAC19\uAC8C \uBC1B\uC2B5\uB2C8\uB2E4."
   },
   {
     id: "election-move-in-direction-excluded-v1",
-    message: "v1\uC758 moving\uC740 \uC785\uC8FC\xB7\uC774\uC0BF\uC9D0 \uBC18\uC785\uC774\uBA70, \uAC74\uCD95\xB7\uC218\uB9AC\xB7\uD1A0\uBAA9\uC758 \uC0B0\uD5A5\xB7\uBC29\uC704 \uADDC\uCE59\uC744 \uD604\uB300 \uC8FC\uC18C \uC774\uB3D9 \uBC29\uD5A5\uC73C\uB85C \uBC14\uAFB8\uC5B4 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    message: "v1\uC758 \uC774\uC0AC(`moving`)\uB294 \uC785\uC8FC\xB7\uC774\uC0BF\uC9D0 \uBC18\uC785\uC744 \uB73B\uD569\uB2C8\uB2E4. \uAC74\uCD95\xB7\uC218\uB9AC\xB7\uD1A0\uBAA9\uC758 \uC0B0\uD5A5\xB7\uBC29\uC704 \uADDC\uCE59\uC744 \uD604\uB300 \uC8FC\uC18C\uC758 \uC774\uB3D9 \uBC29\uD5A5\uC5D0 \uB300\uC785\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
   },
   {
     id: "election-unverified-virtue-tables-excluded-v1",
@@ -17362,7 +17362,7 @@ var ELECTION_LIMITATIONS_V1 = deepFreeze2([
   },
   {
     id: "election-combination-unweighted-v1",
-    message: "\uCC38\uAC00\uC790 \uC5F0\uC9C0\uC640 \uD6C4\uBCF4 \uC77C\uC9C0\uC758 \uD569\uC740 \uC6D0\uC2DC \uAD00\uACC4\uB85C \uD45C\uC2DC\uD558\uC9C0\uB9CC v1 \uC870\uC0AC\uC5D0\uC11C \uAC80\uC99D\uB41C \uC22B\uC790 \uAC00\uC911\uCE58\uAC00 \uC5C6\uC5B4 0\uC810 \uAE30\uC5EC\uB85C \uBCF4\uC874\uD569\uB2C8\uB2E4."
+    message: "\uCC38\uAC00\uC790 \uC5F0\uC9C0\uC640 \uD6C4\uBCF4 \uC77C\uC9C0\uC758 \uD569\uC740 \uAE30\uB465 \uAD00\uACC4\uB85C \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uB2E4\uB9CC v1 \uC870\uC0AC\uC5D0\uC11C \uAC80\uC99D\uB41C \uC22B\uC790 \uAC00\uC911\uCE58\uAC00 \uC5C6\uC5B4 \uC810\uC218\uC5D0\uB294 0\uC810\uC73C\uB85C \uBC18\uC601\uD569\uB2C8\uB2E4."
   }
 ]);
 
@@ -17814,7 +17814,7 @@ function relationshipContributions(matches, participantId, coreParticipant) {
       ruleId: "election.transit-natal-branch-combination",
       policyRuleId: "participant-year-branch-combination",
       amount: weights.combination,
-      reason: "\uD6C4\uBCF4 \uC77C\uC9C0\uC640 \uD575\uC2EC \uCC38\uAC00\uC790 \uC5F0\uC9C0\uC758 \uD569 \uC6D0\uC2DC \uAD00\uACC4; \uAC80\uC99D\uB41C v1 \uC22B\uC790 \uC5C6\uC74C"
+      reason: "\uD6C4\uBCF4 \uC77C\uC9C0\uC640 \uD575\uC2EC \uCC38\uAC00\uC790 \uC5F0\uC9C0\uC758 \uD569 \uAD00\uACC4. v1\uC5D0\uC11C \uAC80\uC99D\uB41C \uC22B\uC790 \uAC00\uC911\uCE58 \uC5C6\uC74C"
     },
     {
       ruleId: "election.transit-natal-branch-clash",
@@ -17952,7 +17952,7 @@ function candidateForDate(request, date, unavailableDateKeys) {
       id: `${key}:ranking:yellow-path`,
       policyRuleId: "yellow-path",
       amount: facts.yellowBlackPath.classification === "yellow-path" ? OH_MY_SAJU_ELECTION_RANKING_POLICY_V1.weights.yellowPath : 0,
-      reason: facts.yellowBlackPath.classification === "yellow-path" ? "\uD669\uB3C4\uC77C \uC81C\uD488 \uAC00\uC911\uCE58" : "\uD751\uB3C4 \uBD84\uB958\uC5D0\uB294 v1 \uD669\uB3C4 \uAC00\uC0B0\uC744 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC74C",
+      reason: facts.yellowBlackPath.classification === "yellow-path" ? "\uD669\uB3C4\uC77C \uC815\uB82C \uAC00\uC911\uCE58" : "\uD751\uB3C4 \uBD84\uB958\uC5D0\uB294 v1 \uD669\uB3C4 \uAC00\uC0B0\uC744 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC74C",
       classicalMatchIds: [yellowBlackMatch.id]
     },
     ...monthBreak === null ? [] : [
@@ -18708,7 +18708,7 @@ function castIChing(request) {
 var LIUREN_QUANSHU_NINE_GATES_PROFILE = Object.freeze({
   id: "liuren-quanshu-nine-gates",
   version: "1.0.0",
-  displayName: "\u300A\u516D\u58EC\u6307\u5357\u300B\xB7\u300A\u516D\u58EC\u5927\u5168\u300B \uC6D4\uC7A5\xB7\uC0AC\uACFC\xB7\uAD6C\uC885\uBC95 \uCF54\uC5B4",
+  displayName: "\u300A\u516D\u58EC\u6307\u5357\u300B\xB7\u300A\u516D\u58EC\u5927\u5168\u300B \uC6D4\uC7A5\xB7\uC0AC\uACFC\xB7\uAD6C\uC885\uBC95 \uAE30\uBCF8 \uACC4\uC0B0",
   outputBoundary: "divination-chart-mechanics",
   sources: Object.freeze([
     Object.freeze({
@@ -19749,7 +19749,7 @@ function calculateTojeong144(request) {
 var ZIWEI_QUANSHU_CORE_PROFILE = Object.freeze({
   id: "ziwei-quanshu-core",
   version: "1.0.0",
-  displayName: "\u300A\u7D2B\u5FAE\u6597\u6578\u5168\u66F8\u300B 12\uAD81\xB714\uC8FC\uC131 \uCF54\uC5B4",
+  displayName: "\u300A\u7D2B\u5FAE\u6597\u6578\u5168\u66F8\u300B 12\uAD81\xB714\uC8FC\uC131 \uAE30\uBCF8 \uACC4\uC0B0",
   outputBoundary: "natal-chart-mechanics",
   sources: Object.freeze([
     Object.freeze({
@@ -20144,7 +20144,7 @@ var SITUATION_END_PATTERN = /(?:할 때|일 때|될 때|때는|때에|때|하면
 var GENERIC_SITUATION_PATTERN = /^(?:(?:새로운|낯선|어려운|힘든|좋은|나쁜|중요한|여러|다양한|어떤)\s*)?(?:상황|경우|삶|일상|평소)(?:에서는|에서도|라면|이면|일 때)?$/u;
 var BEHAVIOR_PATTERN = /(?:고|며|면서|해서|하여|해|하고|하려|하는|는|찾아|하면|습니다)$/u;
 var RESULT_PATTERN = /(?:니다|됩니다|집니다|납니다|수 있습니다)$/u;
-var SPECIFIC_BEHAVIOR_PATTERN = /(?:살피|훑|비교|정리|설명|검토|찾|잡|나누|구조화|밀고|미루|조율|확인|분리|질문|기록|완성|집중|추진|맞추|바꾸|연결|말하|대응|점검|압축|구분|조정|우선순위|계획|기다리|재확인|분석|합의|시작|마무리)/u;
+var SPECIFIC_BEHAVIOR_PATTERN = /(?:살피|훑|비교|정리|설명|검토|찾|잡|나누|구조화|밀고|미루|조율|확인|분리|질문|기록|완성|집중|추진|맞추|바꾸|연결|말하|대응|점검|압축|구분|조정|우선순위|계획|기다리|재확인|분석|합의|결정|시작|마무리)/u;
 var SPECIFIC_RESULT_PATTERN = /(?:늦|빨라|길어|짧아|줄|늘|높|낮|살아|흐려|분명|놓치|오해|마무리|완성도|성과|부담|갈등|안정|집중|정확|효율|지연|막히|소진|과해|압박)/u;
 var BENEFIT_RESULT_PATTERN = /(?:(?:속도|완성도|성과|안정|집중|정확도?|효율|힘|강점|실행|결론|방향|기준)[^.?!\n]{0,16}(?:빨라|높|살아|분명|좋아|향상|안정|잡|찾|정리|진행)|(?:오해|갈등|부담|누락|빠뜨림|지연|실수|소진|압박|비용|시간|기간|대기)[^.?!\n]{0,12}(?:줄|낮|덜|짧|막|피하))/u;
 var COST_RESULT_PATTERN = /(?:(?:결정|마무리|실행|시작|진행|기준|방향)[^.?!\n]{0,18}(?:늦|길어|흐려|막히|놓치|미루|못)|(?:속도|완성도|성과|집중|정확도?|효율)[^.?!\n]{0,14}(?:낮|떨어|줄어)|(?:오해|갈등|부담|지연|실수|소진|압박|비용)[^.?!\n]{0,12}(?:늘|커|높|생기|쌓|과해)|(?:늦어|지연되|놓치|막히|소진되|과해지|압박이\s*커))/u;
@@ -20175,7 +20175,28 @@ var PROFILE_ROLE_PATTERNS = {
 };
 var PROFILE_STRENGTH_PATTERN = /(?:강점|힘|유지|밀고|끝내|완주|집중|주도|독립|버티|붙들|파고들|흔들리지|선명|빠르|높|살아)/u;
 var PROFILE_BLIND_SPOT_PATTERN = /(?:과해|늦|굳|간섭|갈등|힘겨루기|막히|고집|소진|압박|놓치|미루|부담|좁아|독단)/u;
-var PROFILE_GENERIC_COACHING_PATTERN = /(?:여러\s*조건을\s*빠르게\s*읽|맥락과\s*논리를\s*함께\s*정리|판단\s*기준이\s*다를\s*때|이유를\s*먼저\s*공유|현재\s*환경의\s*규칙|실제\s*행동\s*기준|마무리\s*속도가\s*빨라|관계의\s*오해가\s*줄)/u;
+var PROFILE_GENERIC_COACHING_PATTERN = /(?:여러\s*조건을\s*빠르게\s*읽|맥락과\s*논리를\s*함께\s*정리|판단\s*기준이\s*다를\s*때|이유를\s*먼저\s*공유|현재\s*환경의\s*규칙|실제\s*행동\s*기준|마무리\s*속도가\s*빨라|관계의\s*오해가\s*줄|결론을\s*잠시\s*보류|기준을\s*다시\s*비교|습관이\s*균형|서로의\s*(?:방식|결정\s*영역)[^.?!\n]{0,24}분명)/u;
+var PROFILE_INTERNAL_JARGON_PATTERN = /(?:비겁\s*근거|(?:겉|속)장부|지장간\s*장부|표면에는[^.?!\n]{0,80}지장간에는|원시\s*일치|후보로\s*표시|명식\s*중심에\s*놓)/u;
+var PROFILE_TRANSLATIONESE_PATTERN = /(?:현실적?\s*(?:결과|성과)[^.?!\n]{0,20}(?:흘려|이어|연결)|복원력으로\s*(?:쓰|작동)|자원을?\s*(?:빠르게\s*)?배치|이중\s*리듬|(?:판단|기준|강점|추진력)(?:이|가)\s*선명|거리(?:가|를)\s*(?:빨리\s*)?회복|(?:구조|흐름|통로|중심축)(?:이|가|은|는)?\s*(?:작동|완성|열리))/u;
+var PROFILE_RELATIONSHIP_REACTION_PATTERN = /(?:가까워|친밀|신뢰|서운|감정|마음|오해|갈등|말을\s*줄|버티|밀어붙|거리(?:를|가)|회피|다투|화해|풀어|연애|가족|친구)/u;
+var PROFILE_RECYCLED_CONCEPTS = [
+  {
+    id: "self-direction",
+    pattern: /(?:자기\s*(?:기준|판단|판단권|방식|동력)|스스로\s*납득|남의\s*속도|판단권을\s*(?:지키|넘기))/u
+  },
+  {
+    id: "abstract-output",
+    pattern: /(?:실제\s*(?:산출물|결과물)|현실\s*(?:결과|성과)|결과물로\s*(?:옮기|흘리))/u
+  },
+  {
+    id: "expansive-processing",
+    pattern: /(?:여러\s*(?:선택지|가능성)|가능한\s*경로|(?:선택지|경로)[^.?!\n]{0,20}(?:넓|많|늘)|(?:많은|여러)\s*(?:정보|자료|변수)|(?:정보|자료)[^.?!\n]{0,24}(?:넓|많|모으|흡수|재구성|분류|정리)|(?:판단|검토|관심)[^.?!\n]{0,16}(?:범위|넓|퍼지))/u
+  },
+  {
+    id: "deliverable-output",
+    pattern: /(?:산출물|결과물|프로토타입|첫\s*안|초안|표현과\s*성과|밖으로\s*(?:꺼내|흘려|내놓)|말[·,\s]*기획)/u
+  }
+];
 var DEFAULT_PROFILE_TOPICS = /* @__PURE__ */ new Set([
   "chart-overview",
   "day-master",
@@ -20213,7 +20234,7 @@ function copySource(value, path) {
   }
   if (value.kind !== "section") fail(`${path}.kind is not supported.`, { path });
   assertOnlyKeys2(value, ["kind", "topic", "paragraphIndex"], path);
-  if (typeof value.topic !== "string" || !(value.topic in SAJU_TOPIC_TITLES) || value.paragraphIndex !== 0 && value.paragraphIndex !== 1) {
+  if (typeof value.topic !== "string" || !(value.topic in SAJU_TOPIC_TITLES) || value.paragraphIndex !== 0 && value.paragraphIndex !== 1 && value.paragraphIndex !== 2) {
     fail(`${path} must select a supported section paragraph.`, { path });
   }
   return {
@@ -20473,11 +20494,11 @@ function presentationText(paragraph) {
   }
   const labels = [
     {
-      prefix: "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uB294, \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4. ",
+      prefix: "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uB0B4\uC6A9\uC785\uB2C8\uB2E4. \uD655\uC778\uB41C \uAE30\uB465\uB9CC \uBC18\uC601\uD588\uC2B5\uB2C8\uB2E4. ",
       marker: "\u25B3\u25C7"
     },
     { prefix: "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4. ", marker: "\u25B3" },
-    { prefix: "\uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uC758 \uBD80\uBD84 \uACB0\uACFC\uC785\uB2C8\uB2E4. ", marker: "\u25C7" }
+    { prefix: "\uD655\uC778\uB41C \uAE30\uB465\uB9CC \uBC18\uC601\uD55C \uB0B4\uC6A9\uC785\uB2C8\uB2E4. ", marker: "\u25C7" }
   ];
   const label = labels.find(({ prefix }) => paragraph.text.startsWith(prefix));
   if (label === void 0) {
@@ -20523,7 +20544,7 @@ function resolveParagraphRef(reading, ref, forbiddenTokens) {
   );
   const topics = [
     ...new Set(
-      paragraph.findingIds.map((findingId) => findingTopics.get(findingId)).filter((topic) => topic !== void 0)
+      paragraph.findingIds.map((findingId2) => findingTopics.get(findingId2)).filter((topic) => topic !== void 0)
     )
   ];
   return {
@@ -20670,7 +20691,7 @@ function resolveBroadPresentation(reading, draft) {
     });
   }
   const { strength, friction } = resolved.doubleEdge;
-  if (strength.ref.packRef.id !== friction.ref.packRef.id || strength.ref.packRef.version !== friction.ref.packRef.version || strength.structure.domain !== friction.structure.domain || !strength.findingIds.some((findingId) => friction.findingIds.includes(findingId))) {
+  if (strength.ref.packRef.id !== friction.ref.packRef.id || strength.ref.packRef.version !== friction.ref.packRef.version || strength.structure.domain !== friction.structure.domain || !strength.findingIds.some((findingId2) => friction.findingIds.includes(findingId2))) {
     fail(
       "The strength and friction cells must use two sides of the same finding-backed mechanism.",
       {
@@ -20700,7 +20721,7 @@ function assertProfileBridge(resolved, structure, path) {
       path
     });
   }
-  if (!PROFILE_BASIS_PATTERN.test(structure.basis) || structure.interpretation.length < 12 || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text)) {
+  if (!PROFILE_BASIS_PATTERN.test(structure.basis) || structure.interpretation.length < 12 || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(resolved.text)) {
     fail("A default-profile paragraph must expose a specific Saju basis and its plain meaning.", {
       policy: "chart-to-interpretation-bridge",
       path
@@ -20712,7 +20733,7 @@ function assertProfileBridge(resolved, structure, path) {
       path
     });
   }
-  if (structure.role === "work" && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation) || structure.role === "money" && (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) || !resolved.topics.includes("ten-gods")) || structure.role === "relationships" && !PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation) || structure.role === "strength" && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation) || structure.role === "blind-spot" && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation)) {
+  if (structure.role === "work" && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation) || structure.role === "money" && (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) || !resolved.topics.includes("ten-gods")) || structure.role === "relationships" && (!PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation) || !PROFILE_RELATIONSHIP_REACTION_PATTERN.test(structure.interpretation)) || structure.role === "strength" && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation) || structure.role === "blind-spot" && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation)) {
     fail("A default-profile paragraph must match the semantic role of its section.", {
       policy: "default-profile-role",
       path,
@@ -20729,7 +20750,7 @@ function assertProfileBridge(resolved, structure, path) {
   return { ...resolved, structure };
 }
 function assertProfileThesis(resolved, structure) {
-  if (orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null || !PROFILE_BASIS_PATTERN.test(structure.basis) || structure.portrait.length < 12 || PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text)) {
+  if (orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null || !PROFILE_BASIS_PATTERN.test(structure.basis) || structure.portrait.length < 12 || PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(resolved.text)) {
     fail("The default-profile thesis must connect specific chart evidence to a clear portrait.", {
       policy: "chart-to-interpretation-bridge",
       path: "thesis"
@@ -20748,8 +20769,12 @@ function resolveDefaultProfile(reading, draft) {
   const resolve = (ref) => resolveParagraphRef(reading, ref, forbiddenTokens);
   const resolveProfile = (value, path) => assertProfileBridge(resolve(value.paragraph), value.structure, path);
   const resolveProfileList = (values, path) => values.filter((value) => value !== void 0).map((value, index) => resolveProfile(value, `${path}[${index}]`));
-  const thesis = resolve(draft.thesis.paragraph);
-  assertProfileThesis(thesis, draft.thesis.structure);
+  const thesisParagraph = resolve(draft.thesis.paragraph);
+  assertProfileThesis(thesisParagraph, draft.thesis.structure);
+  const thesis = {
+    ...thesisParagraph,
+    structure: draft.thesis.structure
+  };
   const core = [
     resolveProfile(draft.core[0], "core[0]"),
     resolveProfile(draft.core[1], "core[1]")
@@ -20757,6 +20782,14 @@ function resolveDefaultProfile(reading, draft) {
   const work = resolveProfileList(draft.work, "work");
   const relationships = resolveProfileList(draft.relationships, "relationships");
   const money = draft.money === void 0 ? void 0 : resolveProfileList(draft.money, "money");
+  const tenGodRow = profileTenGodTexts(reading);
+  const visibleWealthCount = tenGodRow?.reduce((count, text) => count + (text.match(/(?:정재|편재)/gu)?.length ?? 0), 0) ?? 0;
+  if (visibleWealthCount >= 2 && money === void 0) {
+    fail("A chart with repeated visible wealth placements requires a distinct money reading.", {
+      policy: "default-profile-money-required",
+      visibleWealthCount
+    });
+  }
   const resolved = {
     thesis,
     core,
@@ -20795,6 +20828,25 @@ function resolveDefaultProfile(reading, draft) {
       policy: "distinct-presentation-prose"
     });
   }
+  const interpretationTexts = [
+    draft.thesis.structure.portrait,
+    ...resolved.core.map(({ structure }) => structure.interpretation),
+    resolved.temperament.strength.structure.interpretation,
+    resolved.temperament.blindSpot.structure.interpretation,
+    ...resolved.work.map(({ structure }) => structure.interpretation),
+    ...(resolved.money ?? []).map(({ structure }) => structure.interpretation),
+    ...resolved.relationships.map(({ structure }) => structure.interpretation)
+  ];
+  for (const concept of PROFILE_RECYCLED_CONCEPTS) {
+    const reusedAcross = interpretationTexts.filter((text) => concept.pattern.test(text)).length;
+    if (reusedAcross >= 3) {
+      fail("A default profile cannot recycle one abstract conclusion across life areas.", {
+        policy: "recycled-profile-conclusion",
+        concept: concept.id,
+        reusedAcross
+      });
+    }
+  }
   const centralTopics = new Set(
     [resolved.thesis, ...resolved.core].flatMap(({ topics }) => topics)
   );
@@ -20811,13 +20863,13 @@ function resolveDefaultProfile(reading, draft) {
   }
   const firstCoreFindingIds = new Set(resolved.core[0].findingIds);
   const secondCoreFindingIds = new Set(resolved.core[1].findingIds);
-  if (!resolved.core[0].findingIds.some((findingId) => !secondCoreFindingIds.has(findingId)) || !resolved.core[1].findingIds.some((findingId) => !firstCoreFindingIds.has(findingId))) {
+  if (!resolved.core[0].findingIds.some((findingId2) => !secondCoreFindingIds.has(findingId2)) || !resolved.core[1].findingIds.some((findingId2) => !firstCoreFindingIds.has(findingId2))) {
     fail("The two central mechanisms must be supported by meaningfully distinct findings.", {
       policy: "distinct-central-mechanisms"
     });
   }
   const { strength, blindSpot } = resolved.temperament;
-  if (strength.ref.packRef.id !== blindSpot.ref.packRef.id || strength.ref.packRef.version !== blindSpot.ref.packRef.version || !strength.findingIds.some((findingId) => blindSpot.findingIds.includes(findingId))) {
+  if (strength.ref.packRef.id !== blindSpot.ref.packRef.id || strength.ref.packRef.version !== blindSpot.ref.packRef.version || !strength.findingIds.some((findingId2) => blindSpot.findingIds.includes(findingId2))) {
     fail("Strength and blind spot must explain two sides of one finding-backed mechanism.", {
       policy: "shared-double-edge-mechanism"
     });
@@ -20936,6 +20988,13 @@ function markedMarkdownText(value) {
   const marker = value.uncertaintyMarker;
   return `${marker === null ? "" : `${marker} `}${escapeBroadPresentationMarkdownText(value.text)}`;
 }
+function markedProfileFacet(value, text) {
+  const marker = value.uncertaintyMarker;
+  return `${marker === null ? "" : `${marker} `}${escapeBroadPresentationMarkdownText(text)}`;
+}
+function renderedProfileBridge(value) {
+  return `${markedProfileFacet(value, value.structure.interpretation)} _(\uADFC\uAC70: ${escapeBroadPresentationMarkdownText(value.structure.basis)})_`;
+}
 function presentationItems(resolved) {
   return [
     resolved.portrait,
@@ -20956,7 +21015,7 @@ function uncertaintyLegendForItems(items) {
   const includesPartial = markers.some((marker) => marker.includes("\u25C7"));
   const definitions = [
     ...includesCandidate ? ["\u25B3 \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uBD80\uBD84"] : [],
-    ...includesPartial ? ["\u25C7 \uD655\uC778\uB41C \uAE30\uB465 \uBC94\uC704\uB9CC \uBC18\uC601\uD55C \uBD80\uBD84"] : []
+    ...includesPartial ? ["\u25C7 \uD655\uC778\uB41C \uAE30\uB465\uB9CC \uBC18\uC601\uD55C \uACB0\uACFC"] : []
   ];
   return `\uC870\uAC74 \uD45C\uC2DC: ${definitions.join(" \xB7 ")}`;
 }
@@ -20979,7 +21038,7 @@ function renderMarkdown(reading, resolved) {
     `- **\uACB0\uC815\uACFC \uC2E4\uD589:** ${markedMarkdownText(resolved.atAGlance.execution)}`,
     `- **\uC0AC\uB78C\uC744 \uB300\uD560 \uB54C:** ${markedMarkdownText(resolved.atAGlance.relationships)}`,
     "",
-    "## \uAC15\uC810\uC774 \uC0B4\uC544\uB0A0 \uB54C / \uAF2C\uC77C \uB54C",
+    "## \uAC15\uC810\uC774 \uC0B4\uC544\uB0A0 \uB54C\uC640 \uAF2C\uC77C \uB54C",
     "",
     "| \uC798 \uD480\uB9B4 \uB54C | \uAF2C\uC77C \uB54C |",
     "| --- | --- |",
@@ -21018,7 +21077,7 @@ function renderDefaultProfileMarkdown(reading, resolved) {
     "",
     "## \uB3C8\uACFC \uD604\uC2E4 \uAC10\uAC01",
     "",
-    ...resolved.money.map((item) => `- ${markedMarkdownText(item)}`)
+    ...resolved.money.map((item) => `- ${renderedProfileBridge(item)}`)
   ];
   const lines = [
     reading.calculationKind === "exact" ? exactBasis(reading) : possibilityBasis(reading),
@@ -21030,25 +21089,27 @@ function renderDefaultProfileMarkdown(reading, resolved) {
     ...tenGods === null ? [] : [`| \uC2ED\uC2E0 | ${tenGods.join(" | ")} |`],
     ...profileElementTable(reading).length === 0 ? [] : ["", ...profileElementTable(reading)],
     "",
-    `**\uD575\uC2EC \uC694\uC57D:** ${markedMarkdownText(resolved.thesis)}`,
+    `**\uD575\uC2EC \uC694\uC57D:** ${markedProfileFacet(resolved.thesis, resolved.thesis.structure.portrait)}`,
     "",
-    "## \uD575\uC2EC \uAD6C\uC870",
+    `_(\uADFC\uAC70: ${escapeBroadPresentationMarkdownText(resolved.thesis.structure.basis)})_`,
     "",
-    ...resolved.core.map((item) => `- ${markedMarkdownText(item)}`),
+    "## \uC131\uACA9\uACFC \uD589\uB3D9 \uBC29\uC2DD",
     "",
-    "## \uC5B4\uB5A4 \uC0AC\uB78C\uC778\uAC00",
+    ...resolved.core.map((item) => `- ${renderedProfileBridge(item)}`),
     "",
-    `- **\uAC15\uC810:** ${markedMarkdownText(resolved.temperament.strength)}`,
-    `- **\uAC15\uC810\uC774 \uACFC\uD574\uC9C8 \uB54C:** ${markedMarkdownText(resolved.temperament.blindSpot)}`,
+    "## \uAC15\uC810\uACFC \uC8FC\uC758\uC810",
+    "",
+    `- **\uC798 \uD480\uB9B4 \uB54C:** ${renderedProfileBridge(resolved.temperament.strength)}`,
+    `- **\uC555\uBC15\uC744 \uBC1B\uC744 \uB54C:** ${renderedProfileBridge(resolved.temperament.blindSpot)}`,
     "",
     "## \uC77C\xB7\uC7AC\uB2A5",
     "",
-    ...resolved.work.map((item) => `- ${markedMarkdownText(item)}`),
+    ...resolved.work.map((item) => `- ${renderedProfileBridge(item)}`),
     ...moneyLines,
     "",
     "## \uAD00\uACC4",
     "",
-    ...resolved.relationships.map((item) => `- ${markedMarkdownText(item)}`)
+    ...resolved.relationships.map((item) => `- ${renderedProfileBridge(item)}`)
   ];
   return lines.join("\n");
 }
@@ -21073,9 +21134,1247 @@ function validateAndRenderOhMySajuBroadPresentation(value, reading) {
   });
 }
 
+// plugins/oh-my-saju/runtime/application/compatibility.ts
+import { createHash } from "crypto";
+var PROFILE = deepFreeze2({
+  id: "ziping-structural-compatibility",
+  version: "1.0.0"
+});
+var POSITIONS2 = ["year", "month", "day", "hour"];
+var ELEMENTS = ["\uBAA9", "\uD654", "\uD1A0", "\uAE08", "\uC218"];
+var POSITION_LABELS = {
+  year: "\uB144\uC8FC",
+  month: "\uC6D4\uC8FC",
+  day: "\uC77C\uC8FC",
+  hour: "\uC2DC\uC8FC"
+};
+var OUTPUT_SCHEMA = deepFreeze2({
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "schemaVersion",
+    "kind",
+    "summary",
+    "connection",
+    "interaction",
+    "friction",
+    "durability"
+  ],
+  properties: {
+    schemaVersion: { const: "1" },
+    kind: { const: "compatibility" },
+    summary: { $ref: "#/$defs/paragraph" },
+    connection: { $ref: "#/$defs/paragraph" },
+    interaction: { $ref: "#/$defs/paragraph" },
+    friction: { $ref: "#/$defs/paragraph" },
+    durability: { $ref: "#/$defs/paragraph" }
+  },
+  $defs: {
+    paragraph: {
+      type: "object",
+      additionalProperties: false,
+      required: ["text", "findingIds", "structure"],
+      properties: {
+        text: { type: "string", minLength: 40, maxLength: 900 },
+        findingIds: {
+          type: "array",
+          minItems: 1,
+          maxItems: 8,
+          uniqueItems: true,
+          items: { type: "string" }
+        },
+        structure: {
+          type: "object",
+          additionalProperties: false,
+          required: ["basis", "interpretation"],
+          properties: {
+            basis: { type: "string", minLength: 2, maxLength: 360 },
+            interpretation: { type: "string", minLength: 10, maxLength: 600 }
+          }
+        }
+      }
+    }
+  }
+});
+function containsUnsafeControl(value, allowPlainWhitespace = false) {
+  for (const character of value) {
+    const codePoint = character.codePointAt(0);
+    if (codePoint === 127 || codePoint >= 128 && codePoint <= 159 || codePoint <= 31 && (!allowPlainWhitespace || codePoint !== 9 && codePoint !== 10 && codePoint !== 13)) {
+      return true;
+    }
+    if (codePoint >= 8203 && codePoint <= 8207 || codePoint >= 8234 && codePoint <= 8238 || codePoint === 8288 || codePoint >= 8294 && codePoint <= 8297 || codePoint === 65279) {
+      return true;
+    }
+  }
+  return false;
+}
+function assertOnlyKeys3(value, allowed, field, code = "INVALID_COMMAND") {
+  const allowedSet = new Set(allowed);
+  const unexpected = Object.keys(value).filter((key) => !allowedSet.has(key));
+  if (unexpected.length > 0) {
+    throw new OhMySajuApplicationError(code, `${field} contains unsupported keys.`, {
+      details: { unexpected }
+    });
+  }
+}
+function assertVersion(value) {
+  if (value !== void 0 && value !== "1") {
+    throw new OhMySajuApplicationError("INVALID_COMMAND", 'schemaVersion must be "1".');
+  }
+}
+function copyLabel(value, field) {
+  if (typeof value !== "string" || value.length < 1 || value.length > 40 || containsUnsafeControl(value) || /[<>|`*_[\]{}#\\]/u.test(value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      `${field} must be a plain label with 1-40 characters.`
+    );
+  }
+  return value;
+}
+function copyQuestion(value) {
+  if (value === null) return null;
+  if (typeof value !== "string" || value.length > 4e3 || containsUnsafeControl(value, true)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "request.question must be null or safe text with at most 4,000 characters."
+    );
+  }
+  return value;
+}
+function copyCalculation(value, field) {
+  if (!isRecord2(value) || value.kind !== "exact" && value.kind !== "possibilities" || !("request" in value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      `${field} must contain an exact or possibilities calculation.`
+    );
+  }
+  assertOnlyKeys3(value, ["kind", "request"], field);
+  return value;
+}
+function copyParticipant(value, index) {
+  const field = `request.participants[${index}]`;
+  if (!isRecord2(value)) {
+    throw new OhMySajuApplicationError("INVALID_COMMAND", `${field} must be an object.`);
+  }
+  assertOnlyKeys3(value, ["id", "label", "calculation"], field);
+  return {
+    id: assertSafeIdentifier(value.id, `${field}.id`, 64),
+    label: copyLabel(value.label, `${field}.label`),
+    calculation: copyCalculation(value.calculation, `${field}.calculation`)
+  };
+}
+function copyCompatibilityRequest(value) {
+  if (!isRecord2(value)) {
+    throw new OhMySajuApplicationError("INVALID_COMMAND", "request must be an object.");
+  }
+  assertOnlyKeys3(value, ["participants", "question", "locale", "variantPolicy"], "request");
+  if (!Array.isArray(value.participants) || value.participants.length !== 2) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "request.participants must contain exactly two people."
+    );
+  }
+  const first = copyParticipant(value.participants[0], 0);
+  const second = copyParticipant(value.participants[1], 1);
+  if (first.id === second.id) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "Compatibility participant IDs must be distinct."
+    );
+  }
+  if (first.label.normalize("NFKC") === second.label.normalize("NFKC")) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "Compatibility participant labels must be distinct; use labels such as A and B."
+    );
+  }
+  if (value.locale !== "ko-KR") {
+    throw new OhMySajuApplicationError("INVALID_COMMAND", "request.locale must be ko-KR.");
+  }
+  if (value.variantPolicy !== "stable-only" && value.variantPolicy !== "include-candidate-dependent") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "request.variantPolicy is not supported."
+    );
+  }
+  return {
+    participants: [first, second],
+    question: copyQuestion(value.question),
+    locale: "ko-KR",
+    variantPolicy: value.variantPolicy
+  };
+}
+function toPillar(value) {
+  return {
+    heavenlyStem: value.stem.korean,
+    earthlyBranch: value.branch.korean
+  };
+}
+function normalizedCandidates(analysis) {
+  if (analysis.calculationKind === "exact") {
+    const pillars = analysis.calculation.pillars;
+    return [
+      {
+        id: "exact",
+        pillars: {
+          year: toPillar(pillars.year),
+          month: toPillar(pillars.month),
+          day: toPillar(pillars.day),
+          hour: toPillar(pillars.hour)
+        }
+      }
+    ];
+  }
+  return analysis.calculation.candidates.map((candidate) => ({
+    id: candidate.id,
+    pillars: {
+      year: toPillar(candidate.pillars.year),
+      month: toPillar(candidate.pillars.month),
+      day: toPillar(candidate.pillars.day),
+      ...candidate.pillars.hour === null ? {} : { hour: toPillar(candidate.pillars.hour) }
+    }
+  }));
+}
+function unique(values) {
+  return [...new Set(values)].sort((left, right) => left.localeCompare(right, "ko"));
+}
+function pillarText(pillar) {
+  return `${pillar.heavenlyStem}${pillar.earthlyBranch}`;
+}
+function aggregatedValues(candidates, position2, select) {
+  const present = candidates.flatMap((candidate) => {
+    const pillar = candidate.pillars[position2];
+    return pillar === void 0 ? [] : [select(candidate, pillar)];
+  });
+  const values = unique(present);
+  return {
+    stable: values.length === 1 && present.length === candidates.length,
+    values
+  };
+}
+function tenGodText(candidate, position2, pillar) {
+  const dayMaster = candidate.pillars.day.heavenlyStem;
+  const stem = position2 === "day" ? "\uC77C\uAC04" : getTenGod2(dayMaster, pillar.heavenlyStem);
+  return `${stem}\xB7${getBranchTenGod2(dayMaster, pillar.earthlyBranch)}`;
+}
+function participantView(request, analysis, candidates) {
+  const elementValues = candidates.map(
+    ({ pillars }) => analyzeKnownPillarStructure(pillars).elementBalance.percentages
+  );
+  const elementPercentages = Object.fromEntries(
+    ELEMENTS.map((element) => {
+      const values = elementValues.map((entry) => entry[element]);
+      return [
+        element,
+        {
+          minimum: Math.min(...values),
+          maximum: Math.max(...values)
+        }
+      ];
+    })
+  );
+  return {
+    id: request.id,
+    label: request.label,
+    calculationKind: analysis.calculationKind,
+    candidateCount: candidates.length,
+    pillars: Object.fromEntries(
+      POSITIONS2.map((position2) => [
+        position2,
+        aggregatedValues(candidates, position2, (_candidate, pillar) => pillarText(pillar))
+      ])
+    ),
+    tenGods: Object.fromEntries(
+      POSITIONS2.map((position2) => [
+        position2,
+        aggregatedValues(
+          candidates,
+          position2,
+          (candidate, pillar) => tenGodText(candidate, position2, pillar)
+        )
+      ])
+    ),
+    dayMasters: unique(
+      candidates.map(({ pillars }) => {
+        const stem = pillars.day.heavenlyStem;
+        return `${stem}${getHeavenlyStemElement2(stem)}`;
+      })
+    ),
+    monthBranches: unique(candidates.map(({ pillars }) => pillars.month.earthlyBranch)),
+    elementPercentages
+  };
+}
+function observationKey(kind, direction, participantIds, positions, punishment, members, tenGod) {
+  return JSON.stringify({
+    kind,
+    direction,
+    participantIds,
+    positions,
+    punishment,
+    members,
+    tenGod
+  });
+}
+function observe(observations, value) {
+  observations.push({
+    ...value,
+    key: observationKey(
+      value.kind,
+      value.direction,
+      value.participantIds,
+      value.positions,
+      value.punishment,
+      value.members,
+      value.tenGod
+    )
+  });
+}
+function relationStatement(kind, firstLabel, secondLabel, firstPosition, secondPosition, members, punishment) {
+  const relation = {
+    "stem-combination": "\uCC9C\uAC04\uD569",
+    "branch-combination": "\uC9C0\uC9C0\uD569",
+    "branch-clash": "\uC9C0\uC9C0\uCDA9",
+    "branch-punishment": "\uC9C0\uC9C0\uD615",
+    "branch-break": "\uC9C0\uC9C0\uD30C",
+    "branch-harm": "\uC9C0\uC9C0\uD574"
+  }[kind];
+  const detail = punishment?.kind === "directed-cycle" ? punishment.direction === "left-to-right" ? `${members[0]}\u2192${members[1]}` : `${members[1]}\u2192${members[0]}` : members.join("\xB7");
+  return `${firstLabel} ${POSITION_LABELS[firstPosition]}\uC640 ${secondLabel} ${POSITION_LABELS[secondPosition]} \uC0AC\uC774\uC5D0\uB294 ${relation}(${detail})\uC774 \uC788\uC2B5\uB2C8\uB2E4.`;
+}
+function collectPairObservations(pair, firstRequest, secondRequest, observations) {
+  const firstDay = pair.first.pillars.day;
+  const secondDay = pair.second.pillars.day;
+  const firstToSecond = getTenGod2(firstDay.heavenlyStem, secondDay.heavenlyStem);
+  const secondToFirst = getTenGod2(secondDay.heavenlyStem, firstDay.heavenlyStem);
+  observe(observations, {
+    pairId: pair.id,
+    kind: "day-master-ten-god",
+    tone: "directional",
+    direction: "first-to-second",
+    participantIds: [firstRequest.id, secondRequest.id],
+    members: [firstDay.heavenlyStem, secondDay.heavenlyStem],
+    tenGod: firstToSecond,
+    statement: `${firstRequest.label}\uC758 ${firstDay.heavenlyStem}${getHeavenlyStemElement2(firstDay.heavenlyStem)} \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF4\uBA74 ${secondRequest.label}\uC758 ${secondDay.heavenlyStem}${getHeavenlyStemElement2(secondDay.heavenlyStem)} \uC77C\uAC04\uC740 ${firstToSecond}\uC5D0 \uD574\uB2F9\uD569\uB2C8\uB2E4.`
+  });
+  observe(observations, {
+    pairId: pair.id,
+    kind: "day-master-ten-god",
+    tone: "directional",
+    direction: "second-to-first",
+    participantIds: [secondRequest.id, firstRequest.id],
+    members: [secondDay.heavenlyStem, firstDay.heavenlyStem],
+    tenGod: secondToFirst,
+    statement: `${secondRequest.label}\uC758 ${secondDay.heavenlyStem}${getHeavenlyStemElement2(secondDay.heavenlyStem)} \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF4\uBA74 ${firstRequest.label}\uC758 ${firstDay.heavenlyStem}${getHeavenlyStemElement2(firstDay.heavenlyStem)} \uC77C\uAC04\uC740 ${secondToFirst}\uC5D0 \uD574\uB2F9\uD569\uB2C8\uB2E4.`
+  });
+  for (const firstPosition of POSITIONS2) {
+    const firstPillar = pair.first.pillars[firstPosition];
+    if (firstPillar === void 0) continue;
+    for (const secondPosition of POSITIONS2) {
+      const secondPillar = pair.second.pillars[secondPosition];
+      if (secondPillar === void 0) continue;
+      const positions = [firstPosition, secondPosition];
+      if (firstPillar.heavenlyStem === secondPillar.heavenlyStem) {
+        observe(observations, {
+          pairId: pair.id,
+          kind: "shared-stem",
+          tone: "descriptive",
+          direction: "symmetric",
+          participantIds: [firstRequest.id, secondRequest.id],
+          positions,
+          members: [firstPillar.heavenlyStem],
+          statement: `${firstRequest.label} ${POSITION_LABELS[firstPosition]}\uC640 ${secondRequest.label} ${POSITION_LABELS[secondPosition]}\uC758 \uCC9C\uAC04\uC740 \uB458 \uB2E4 ${firstPillar.heavenlyStem}\uC785\uB2C8\uB2E4.`
+        });
+      }
+      if (firstPillar.earthlyBranch === secondPillar.earthlyBranch) {
+        observe(observations, {
+          pairId: pair.id,
+          kind: "shared-branch",
+          tone: "descriptive",
+          direction: "symmetric",
+          participantIds: [firstRequest.id, secondRequest.id],
+          positions,
+          members: [firstPillar.earthlyBranch],
+          statement: `${firstRequest.label} ${POSITION_LABELS[firstPosition]}\uC640 ${secondRequest.label} ${POSITION_LABELS[secondPosition]}\uC758 \uC9C0\uC9C0\uB294 \uB458 \uB2E4 ${firstPillar.earthlyBranch}\uC785\uB2C8\uB2E4.`
+        });
+      }
+      const relationships = analyzePillarPairRelationships(firstPillar, secondPillar);
+      const relationSpecs = [
+        ["stem-combination", relationships.stemCombination, "connection", "heavenlyStem"],
+        ["branch-combination", relationships.branchCombination, "connection", "earthlyBranch"],
+        ["branch-clash", relationships.branchClash, "tension", "earthlyBranch"],
+        ["branch-break", relationships.branchBreak, "tension", "earthlyBranch"],
+        ["branch-harm", relationships.branchHarm, "tension", "earthlyBranch"]
+      ];
+      for (const [kind, present, tone, memberField] of relationSpecs) {
+        if (!present) continue;
+        const members = memberField === "heavenlyStem" ? [firstPillar.heavenlyStem, secondPillar.heavenlyStem] : [firstPillar.earthlyBranch, secondPillar.earthlyBranch];
+        observe(observations, {
+          pairId: pair.id,
+          kind,
+          tone,
+          direction: "symmetric",
+          participantIds: [firstRequest.id, secondRequest.id],
+          positions,
+          members,
+          statement: relationStatement(
+            kind,
+            firstRequest.label,
+            secondRequest.label,
+            firstPosition,
+            secondPosition,
+            members
+          )
+        });
+      }
+      if (relationships.branchPunishment !== null) {
+        const members = [firstPillar.earthlyBranch, secondPillar.earthlyBranch];
+        const direction = relationships.branchPunishment.direction === "left-to-right" ? "first-to-second" : relationships.branchPunishment.direction === "right-to-left" ? "second-to-first" : "symmetric";
+        observe(observations, {
+          pairId: pair.id,
+          kind: "branch-punishment",
+          tone: "tension",
+          direction,
+          participantIds: [firstRequest.id, secondRequest.id],
+          positions,
+          punishment: relationships.branchPunishment,
+          members,
+          statement: relationStatement(
+            "branch-punishment",
+            firstRequest.label,
+            secondRequest.label,
+            firstPosition,
+            secondPosition,
+            members,
+            relationships.branchPunishment
+          )
+        });
+      }
+    }
+  }
+}
+function percentageStatement(participant) {
+  const values = ELEMENTS.map((element) => {
+    const range = participant.elementPercentages[element];
+    return range.minimum === range.maximum ? `${element} ${range.minimum}%` : `${element} ${range.minimum}~${range.maximum}%`;
+  });
+  return `${participant.label}\uC758 \uC624\uD589 \uBD84\uD3EC\uB294 ${values.join(", ")}\uC785\uB2C8\uB2E4.`;
+}
+function addParticipantObservations(pairs, participantIndex, request, observations) {
+  for (const pair of pairs) {
+    const candidate = participantIndex === 0 ? pair.first : pair.second;
+    const dayMaster = candidate.pillars.day.heavenlyStem;
+    const monthBranch = candidate.pillars.month.earthlyBranch;
+    observe(observations, {
+      pairId: pair.id,
+      kind: "participant-day-master",
+      tone: "descriptive",
+      direction: "participant",
+      participantIds: [request.id],
+      members: [dayMaster, getHeavenlyStemElement2(dayMaster)],
+      statement: `${request.label}\uC758 \uC77C\uAC04\uC740 ${dayMaster}${getHeavenlyStemElement2(dayMaster)}\uC785\uB2C8\uB2E4.`
+    });
+    observe(observations, {
+      pairId: pair.id,
+      kind: "participant-month-branch",
+      tone: "descriptive",
+      direction: "participant",
+      participantIds: [request.id],
+      members: [monthBranch],
+      statement: `${request.label}\uC758 \uC6D4\uC9C0\uB294 ${monthBranch}\uC785\uB2C8\uB2E4.`
+    });
+  }
+}
+function findingId(key) {
+  return `compatibility:${createHash("sha256").update(key).digest("hex").slice(0, 16)}`;
+}
+function aggregateFindings(observations, pairCount, variantPolicy) {
+  const grouped = /* @__PURE__ */ new Map();
+  for (const observation2 of observations) {
+    const current = grouped.get(observation2.key) ?? [];
+    current.push(observation2);
+    grouped.set(observation2.key, current);
+  }
+  return [...grouped.entries()].map(([key, values]) => {
+    const first = values[0];
+    const candidatePairIds = unique(values.map(({ pairId }) => pairId));
+    const stability = candidatePairIds.length === pairCount ? "stable" : "candidate-dependent";
+    return {
+      id: findingId(key),
+      kind: first.kind,
+      tone: first.tone,
+      stability,
+      direction: first.direction,
+      participantIds: first.participantIds,
+      ...first.positions === void 0 ? {} : { positions: first.positions },
+      ...first.punishment === void 0 ? {} : { punishment: first.punishment },
+      members: first.members,
+      ...first.tenGod === void 0 ? {} : { tenGod: first.tenGod },
+      statement: first.statement,
+      candidatePairIds
+    };
+  }).filter(
+    ({ stability }) => variantPolicy === "include-candidate-dependent" || stability === "stable"
+  ).sort((left, right) => left.id.localeCompare(right.id));
+}
+function directionalRangeFindings(observations, pairIds, firstRequest, secondRequest) {
+  return [
+    ["first-to-second", firstRequest, secondRequest],
+    ["second-to-first", secondRequest, firstRequest]
+  ].flatMap(([direction, from, to]) => {
+    const directional = observations.filter(
+      (observation2) => observation2.kind === "day-master-ten-god" && observation2.direction === direction
+    );
+    const distinctKeys = unique(directional.map(({ key: key2 }) => key2));
+    if (distinctKeys.length <= 1) return [];
+    const tenGods = [...new Set(directional.map(({ tenGod }) => tenGod))].sort(
+      (left, right) => left.localeCompare(right, "ko")
+    );
+    const members = unique(directional.flatMap((finding) => finding.members));
+    const statement = tenGods.length === 1 ? `\uBAA8\uB4E0 \uD6C4\uBCF4\uC5D0\uC11C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${tenGods[0]}\uC73C\uB85C \uAC19\uC2B5\uB2C8\uB2E4.` : `\uC785\uB825 \uBC94\uC704\uC5D0 \uB530\uB77C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${tenGods.join("\xB7")} \uAC00\uC6B4\uB370 \uD558\uB098\uB85C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.`;
+    const key = JSON.stringify({
+      kind: "day-master-ten-god-range",
+      direction,
+      participantIds: [from.id, to.id],
+      members,
+      tenGods
+    });
+    return [
+      {
+        id: findingId(key),
+        kind: "day-master-ten-god-range",
+        tone: "directional",
+        stability: "stable",
+        direction,
+        participantIds: [from.id, to.id],
+        members,
+        tenGods,
+        statement,
+        candidatePairIds: pairIds
+      }
+    ];
+  });
+}
+function elementBalanceFinding(participant, pairIds) {
+  const stable = ELEMENTS.every((element) => {
+    const range = participant.elementPercentages[element];
+    return range.minimum === range.maximum;
+  });
+  const key = JSON.stringify({
+    kind: "participant-element-balance",
+    participant: participant.id,
+    elementPercentages: participant.elementPercentages
+  });
+  return {
+    id: findingId(key),
+    kind: "participant-element-balance",
+    tone: "descriptive",
+    stability: stable ? "stable" : "candidate-dependent",
+    direction: "participant",
+    participantIds: [participant.id],
+    members: ELEMENTS,
+    statement: percentageStatement(participant),
+    candidatePairIds: pairIds
+  };
+}
+function compatibilityTask(request, participants, findings) {
+  return deepFreeze2({
+    schemaVersion: "1",
+    mode: "grounded-compatibility",
+    question: request.question,
+    instructions: [
+      "Answer the two-person compatibility question directly in the summary.",
+      "Use A\u2192B and B\u2192A directional ten-god findings together; compatibility is not two individual readings pasted together.",
+      "Explain in ordinary Korean what draws them together, what starts a conflict, and how one person's response changes the other's next response.",
+      "For durability, name what they should do after a specific disagreement instead of giving a generic relationship checklist.",
+      "Use people as subjects and concrete verbs. Do not invent type labels such as \uBE44\uB300\uCE6D \uBCF4\uC644\uD615 or translated phrases such as \uD68C\uBCF5 \uB9AC\uB4EC and \uC5F0\uACB0\uC810\uC73C\uB85C \uC791\uB3D9\uD569\uB2C8\uB2E4.",
+      "Use only supplied finding IDs and keep candidate-dependent findings conditional.",
+      "When a day-master-ten-god-range finding is present, name every listed ten-god candidate instead of selecting one.",
+      "Do not produce a numeric score, marriage prediction, moral judgment, or implementation-limitation disclaimer."
+    ],
+    evidence: {
+      profile: PROFILE,
+      participants,
+      findings
+    },
+    outputSchema: OUTPUT_SCHEMA
+  });
+}
+function prepare(request) {
+  const [firstRequest, secondRequest] = request.participants;
+  const firstAnalysis = calculateKoreanSajuAnalysis(firstRequest.calculation);
+  const secondAnalysis = calculateKoreanSajuAnalysis(secondRequest.calculation);
+  const firstCandidates = normalizedCandidates(firstAnalysis);
+  const secondCandidates = normalizedCandidates(secondAnalysis);
+  const pairs = firstCandidates.flatMap(
+    (first) => secondCandidates.map((second) => ({
+      id: `${first.id}::${second.id}`,
+      first,
+      second
+    }))
+  );
+  if (pairs.length === 0) {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "Compatibility calculation produced no candidate pairs."
+    );
+  }
+  const participants = [
+    participantView(firstRequest, firstAnalysis, firstCandidates),
+    participantView(secondRequest, secondAnalysis, secondCandidates)
+  ];
+  const observations = [];
+  addParticipantObservations(pairs, 0, firstRequest, observations);
+  addParticipantObservations(pairs, 1, secondRequest, observations);
+  for (const pair of pairs) {
+    collectPairObservations(pair, firstRequest, secondRequest, observations);
+  }
+  const pairIds = pairs.map(({ id }) => id);
+  const structuralFindings = aggregateFindings(observations, pairs.length, request.variantPolicy);
+  const directionalRanges = directionalRangeFindings(
+    observations,
+    pairIds,
+    firstRequest,
+    secondRequest
+  );
+  const elementFindings = participants.map((participant) => elementBalanceFinding(participant, pairIds)).filter(
+    ({ stability }) => request.variantPolicy === "include-candidate-dependent" || stability === "stable"
+  );
+  const findings = deepFreeze2(
+    [...structuralFindings, ...directionalRanges, ...elementFindings].sort(
+      (left, right) => left.id.localeCompare(right.id)
+    )
+  );
+  const narrationTask = compatibilityTask(request, participants, findings);
+  const bindingInput = {
+    canonicalization: "oh-my-saju-compatibility-preparation-v1",
+    runtime: OH_MY_SAJU_RUNTIME_MANIFEST.runtime,
+    profile: PROFILE,
+    request,
+    participants,
+    candidatePairCount: pairs.length,
+    findings,
+    narrationTask
+  };
+  const digest = createHash("sha256").update(canonicalJsonStringify(bindingInput)).digest("hex");
+  return deepFreeze2({
+    schemaVersion: "1",
+    participants,
+    candidatePairCount: pairs.length,
+    findings,
+    narrationTask,
+    binding: {
+      algorithm: "sha256",
+      canonicalization: "oh-my-saju-compatibility-preparation-v1",
+      digest,
+      runtimeVersion: OH_MY_SAJU_RUNTIME_MANIFEST.runtime.version,
+      profile: PROFILE
+    }
+  });
+}
+function prepareOhMySajuCompatibilityFromUnknown(command) {
+  if (!isRecord2(command) || command.command !== "prepare-compatibility") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "command must be a prepare-compatibility object."
+    );
+  }
+  assertOnlyKeys3(command, ["schemaVersion", "command", "request"], "command");
+  assertVersion(command.schemaVersion);
+  return prepare(copyCompatibilityRequest(command.request));
+}
+var REFUSAL_OR_AUDIT_PATTERN = /(?:현재\s*사용한\s*규칙|검증된?\s*궁합\s*규칙|제공하지\s*않|지원하지\s*않|판정할\s*수\s*없|계산상\s*확인|그럴듯한\s*길흉|사주보다(?:도)?\s*실제|구현되지\s*않|기능\s*부재|원시\s*일치)/u;
+var SCORE_OR_EVENT_PATTERN = /(?:궁합\s*(?:점수|확률)|(?:궁합|애정|결혼)\s*(?:은|이|도|점수)?\s*\d{1,3}\s*(?:점|%)|이혼\s*(?:확률|운)|외도\s*(?:확률|운)|임신\s*(?:여부|확률|운)|수명|천생연분|악연|반드시\s*(?:결혼|이별)|무조건\s*(?:좋|나쁘|헤어|결혼))/u;
+var GENERIC_ADVICE_PATTERN = /(?:서로\s*배려하면|대화가\s*중요|존중해야\s*합니다|이해해야\s*합니다|노력하면\s*좋|갈등이\s*생기면\s*대화)/u;
+var TRANSLATED_RELATIONSHIP_PROSE_PATTERN = /(?:비대칭\s*보완형|동질형|조건부\s*보완\s*관계|회복\s*리듬|이중\s*리듬|연결점으로\s*작동|거리(?:가|를)\s*(?:빨리\s*)?회복|자원을?\s*(?:빠르게\s*)?배치|현실적?\s*(?:결과|성과)|판단이\s*선명)/u;
+var PLAIN_TEXT_VIOLATION = /(?:https?:\/\/|<[^>]+>|\[[^\]]+\]\([^)]+\)|[\r\n\t|>`#*_~\\])/u;
+var PLAIN_LIST_PREFIX = /^\s*(?:[-+]\s|\d+[.)]\s)/u;
+var PLAIN_CODE_BLOCK_PREFIX = /^ {4}/u;
+var STEM_CHARACTERS = /* @__PURE__ */ new Set([
+  "\uAC11",
+  "\uC744",
+  "\uBCD1",
+  "\uC815",
+  "\uBB34",
+  "\uAE30",
+  "\uACBD",
+  "\uC2E0",
+  "\uC784",
+  "\uACC4"
+]);
+var TEN_GOD_CLAIM_PATTERN = /(비견|겁재|식신|상관(?!\s*(?:없|관계))|편재|정재|편관|정관|편인|정인)/gu;
+var DIRECTIONAL_TEN_GOD_CLAIM_PATTERN = /(비견|겁재|식신|상관|편재|정재|편관|정관|편인|정인)/gu;
+var RELATION_CLAIM_PATTERN = /([갑을병정무기경신임계자축인묘진사오미신유술해])(?:\s*(?:와|과|·|↔|→|-)?\s*)(?:(?:[\p{L}\p{N}]{1,16}(?:\s+[\p{L}\p{N}]{1,16}){0,2})의\s*)?([갑을병정무기경신임계자축인묘진사오미신유술해])\s*(?:(?:사이(?:에는|에|의|는)|은|는|의)\s*)?(천간합|지지합|지지충|지지형|지지파|지지해|합|충|형|파|해)(?=$|[이가과와은는도을를의,.;:·)\s])/gu;
+function assertPlainCompatibilityText(value, field, minimum = 2, maximum = 900) {
+  if (typeof value !== "string" || value.length < minimum || value.length > maximum || containsUnsafeControl(value) || PLAIN_TEXT_VIOLATION.test(value) || PLAIN_LIST_PREFIX.test(value) || PLAIN_CODE_BLOCK_PREFIX.test(value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} must be safe plain text within the allowed length.`
+    );
+  }
+  if (REFUSAL_OR_AUDIT_PATTERN.test(value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} exposes an implementation limitation instead of interpreting the pair.`
+    );
+  }
+  if (SCORE_OR_EVENT_PATTERN.test(value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} contains a compatibility score or unsupported event claim.`
+    );
+  }
+  if (TRANSLATED_RELATIONSHIP_PROSE_PATTERN.test(value)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} uses translated or abstract relationship prose instead of ordinary Korean.`
+    );
+  }
+  return value;
+}
+function basisNamesFinding(basis, finding) {
+  if (finding.tenGod !== void 0 && basis.includes(finding.tenGod)) return true;
+  if (finding.tenGods !== void 0 && finding.tenGods.every((tenGod) => basis.includes(tenGod))) {
+    return true;
+  }
+  if (finding.kind === "participant-element-balance") {
+    return finding.members.some((member) => basis.includes(member));
+  }
+  if ([
+    "stem-combination",
+    "branch-combination",
+    "branch-clash",
+    "branch-punishment",
+    "branch-break",
+    "branch-harm"
+  ].includes(finding.kind)) {
+    return finding.members.every((member) => basis.includes(member));
+  }
+  return finding.members.some((member) => basis.includes(member));
+}
+function relationClaimKind(first, second, relation) {
+  if (relation === "\uCC9C\uAC04\uD569" || relation === "\uD569" && STEM_CHARACTERS.has(first) && STEM_CHARACTERS.has(second)) {
+    return "stem-combination";
+  }
+  const branchKinds = {
+    \uC9C0\uC9C0\uD569: "branch-combination",
+    \uD569: "branch-combination",
+    \uC9C0\uC9C0\uCDA9: "branch-clash",
+    \uCDA9: "branch-clash",
+    \uC9C0\uC9C0\uD615: "branch-punishment",
+    \uD615: "branch-punishment",
+    \uC9C0\uC9C0\uD30C: "branch-break",
+    \uD30C: "branch-break",
+    \uC9C0\uC9C0\uD574: "branch-harm",
+    \uD574: "branch-harm"
+  };
+  return branchKinds[relation] ?? null;
+}
+function sameMembers(finding, first, second) {
+  if (finding.kind === "branch-punishment" && finding.punishment?.kind === "directed-cycle") {
+    const [left, right] = finding.members;
+    return finding.punishment.direction === "left-to-right" ? left === first && right === second : right === first && left === second;
+  }
+  return finding.members.length === 2 && (finding.members[0] === first && finding.members[1] === second || finding.members[0] === second && finding.members[1] === first);
+}
+function assertRelationClaimsGrounded(basis, findings, field) {
+  const claims = [...basis.matchAll(RELATION_CLAIM_PATTERN)].flatMap((match) => {
+    const [, first, second, relation] = match;
+    if (first === void 0 || second === void 0 || relation === void 0) return [];
+    const kind = relationClaimKind(first, second, relation);
+    return kind === null ? [] : [
+      {
+        first,
+        second,
+        relation,
+        kind,
+        start: match.index,
+        end: match.index + match[0].length
+      }
+    ];
+  });
+  for (const claim of claims) {
+    if (!findings.some(
+      (finding) => finding.kind === claim.kind && sameMembers(finding, claim.first, claim.second)
+    )) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        `${field} names an uncited or unsupported ${claim.relation} relationship.`,
+        { details: claim }
+      );
+    }
+  }
+  for (const claim of claims) {
+    const nearby = basis.slice(
+      Math.max(0, claim.start - 18),
+      Math.min(basis.length, claim.end + 24)
+    );
+    if (/(?:(?:두|2|여러)\s*(?:자리|곳|번|차례)|반복|거듭|중첩|겹쳐)/u.test(nearby)) {
+      const count = findings.filter(
+        (finding) => finding.kind === claim.kind && sameMembers(finding, claim.first, claim.second)
+      ).length;
+      if (count < 2) {
+        throw new OhMySajuApplicationError(
+          "INVALID_DRAFT_SET",
+          `${field} claims a repeated relationship without citing both findings.`,
+          { details: { ...claim, citedCount: count } }
+        );
+      }
+    }
+  }
+}
+function directionalTenGodClaimSegments(text, participantLabels) {
+  const escapePattern = (value) => value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+  const directionSpecs = [
+    {
+      direction: "first-to-second",
+      from: participantLabels[0],
+      to: participantLabels[1]
+    },
+    {
+      direction: "second-to-first",
+      from: participantLabels[1],
+      to: participantLabels[0]
+    }
+  ];
+  const markers = directionSpecs.flatMap(({ direction, from, to }) => {
+    const pattern = new RegExp(`${escapePattern(from)}\\s*\u2192\\s*${escapePattern(to)}`, "gu");
+    return [...text.matchAll(pattern)].map((match) => ({
+      direction,
+      start: match.index,
+      end: match.index + match[0].length
+    }));
+  }).sort((left, right) => left.start - right.start);
+  return markers.map((marker, index) => {
+    const nextMarkerStart = markers[index + 1]?.start ?? text.length;
+    const unboundedSegment = text.slice(marker.end, nextMarkerStart);
+    const sentenceEnd = unboundedSegment.search(/[.!?。！？;]/u);
+    const segment = sentenceEnd < 0 ? unboundedSegment : unboundedSegment.slice(0, sentenceEnd);
+    return {
+      direction: marker.direction,
+      claims: [...segment.matchAll(DIRECTIONAL_TEN_GOD_CLAIM_PATTERN)].map((match) => match[1]).filter((tenGod) => tenGod !== void 0)
+    };
+  });
+}
+function assertTenGodClaimsGrounded(text, findings, participantLabels, field) {
+  const citedTenGods = new Set(
+    findings.flatMap((finding) => [
+      ...finding.tenGod === void 0 ? [] : [finding.tenGod],
+      ...finding.tenGods ?? []
+    ])
+  );
+  for (const match of text.matchAll(TEN_GOD_CLAIM_PATTERN)) {
+    const tenGod = match[1];
+    if (tenGod !== void 0 && !citedTenGods.has(tenGod)) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        `${field} names an uncited day-master relationship.`,
+        { details: { tenGod } }
+      );
+    }
+  }
+  for (const segment of directionalTenGodClaimSegments(text, participantLabels)) {
+    const allowed = new Set(
+      findings.filter(
+        (finding) => finding.direction === segment.direction && (finding.kind === "day-master-ten-god" || finding.kind === "day-master-ten-god-range")
+      ).flatMap((finding) => [
+        ...finding.tenGod === void 0 ? [] : [finding.tenGod],
+        ...finding.tenGods ?? []
+      ])
+    );
+    const misplaced = segment.claims.filter((tenGod) => !allowed.has(tenGod));
+    if (misplaced.length > 0) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        `${field} assigns a day-master relationship to the wrong direction.`,
+        { details: { direction: segment.direction, misplaced } }
+      );
+    }
+  }
+  if (findings.some(({ kind }) => kind === "day-master-ten-god-range") && !/(?:후보|범위|경우|따라|달라|가능|중\s*하나)/u.test(text)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} must describe a day-master range as candidate-dependent.`
+    );
+  }
+}
+function assertDirectionalInteractionCoverage(paragraph, findings, participantLabels) {
+  const segments = directionalTenGodClaimSegments(paragraph.structure.basis, participantLabels);
+  for (const direction of ["first-to-second", "second-to-first"]) {
+    const expected = new Set(
+      findings.filter(
+        (finding) => finding.direction === direction && (finding.kind === "day-master-ten-god" || finding.kind === "day-master-ten-god-range")
+      ).flatMap((finding) => [
+        ...finding.tenGod === void 0 ? [] : [finding.tenGod],
+        ...finding.tenGods ?? []
+      ])
+    );
+    const claimed = new Set(
+      segments.filter((segment) => segment.direction === direction).flatMap(({ claims }) => claims)
+    );
+    if (expected.size === 0 || [...expected].some((tenGod) => !claimed.has(tenGod))) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        "interaction must state each cited day-master relationship after its canonical direction marker.",
+        { details: { direction, expected: [...expected], claimed: [...claimed] } }
+      );
+    }
+  }
+}
+function evidenceTokens(findings) {
+  return unique(
+    findings.flatMap((finding) => [
+      ...finding.members,
+      ...finding.tenGod === void 0 ? [] : [finding.tenGod],
+      ...finding.tenGods ?? [],
+      ...finding.positions === void 0 ? [] : finding.positions.map((position2) => POSITION_LABELS[position2])
+    ])
+  ).filter((token) => token.length > 0);
+}
+function copyParagraph(value, field, findingsById, participantLabels) {
+  if (!isRecord2(value)) {
+    throw new OhMySajuApplicationError("INVALID_DRAFT_SET", `${field} must be an object.`);
+  }
+  assertOnlyKeys3(value, ["text", "findingIds", "structure"], field, "INVALID_DRAFT_SET");
+  const text = assertPlainCompatibilityText(value.text, `${field}.text`, 40, 900);
+  if (!Array.isArray(value.findingIds) || value.findingIds.length < 1 || value.findingIds.length > 8 || value.findingIds.some((id) => typeof id !== "string") || new Set(value.findingIds).size !== value.findingIds.length) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field}.findingIds must contain 1-8 distinct finding IDs.`
+    );
+  }
+  const findingIds = value.findingIds;
+  const findings = findingIds.map((id) => {
+    const finding = findingsById.get(id);
+    if (finding === void 0) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        `${field} cites an unknown compatibility finding.`,
+        { details: { findingId: id } }
+      );
+    }
+    return finding;
+  });
+  for (const finding of findings) {
+    if (finding.kind !== "day-master-ten-god") continue;
+    const range = [...findingsById.values()].find(
+      (candidate) => candidate.kind === "day-master-ten-god-range" && candidate.direction === finding.direction
+    );
+    if (range !== void 0 && !findingIds.includes(range.id)) {
+      throw new OhMySajuApplicationError(
+        "INVALID_DRAFT_SET",
+        `${field} selects one day-master candidate even though a directional range finding is available.`,
+        { details: { direction: finding.direction, requiredFindingId: range.id } }
+      );
+    }
+  }
+  if (!isRecord2(value.structure)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field}.structure must be an object.`
+    );
+  }
+  assertOnlyKeys3(
+    value.structure,
+    ["basis", "interpretation"],
+    `${field}.structure`,
+    "INVALID_DRAFT_SET"
+  );
+  const basis = assertPlainCompatibilityText(
+    value.structure.basis,
+    `${field}.structure.basis`,
+    2,
+    360
+  );
+  const interpretation = assertPlainCompatibilityText(
+    value.structure.interpretation,
+    `${field}.structure.interpretation`,
+    10,
+    600
+  );
+  const basisIndex = text.indexOf(basis);
+  const interpretationIndex = text.indexOf(interpretation);
+  if (basisIndex < 0 || interpretationIndex < 0 || interpretationIndex < basisIndex + basis.length) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} must contain the exact basis before the exact interpretation.`
+    );
+  }
+  const tokens = evidenceTokens(findings);
+  if (!tokens.some((token) => basis.includes(token))) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field}.structure.basis must name a token from its cited pair evidence.`
+    );
+  }
+  if (!findings.every((finding) => basisNamesFinding(basis, finding))) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field}.structure.basis must substantively name every cited compatibility finding.`
+    );
+  }
+  assertRelationClaimsGrounded(text, findings, `${field}.text`);
+  assertTenGodClaimsGrounded(text, findings, participantLabels, `${field}.text`);
+  if (GENERIC_ADVICE_PATTERN.test(interpretation) && interpretation.length < 70) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field}.structure.interpretation is generic relationship advice.`
+    );
+  }
+  return {
+    text,
+    findingIds,
+    structure: { basis, interpretation }
+  };
+}
+function assertSectionLanguage(paragraph, field) {
+  const patterns = {
+    summary: /(?:궁합|관계|조합).*(?:잘\s*맞|조건|보완|긴장|엇갈|끌림|힘겨루|형)/u,
+    connection: /(?:끌|연결|편안|익숙|보완|호흡|주고받|당기|친밀)/u,
+    interaction: /(?:반응|표현|받아들|요구|지원|말|대화|행동|주고받)/u,
+    friction: /(?:갈등|부딪|긴장|힘겨루|엇갈|답답|충돌|압박)/u,
+    durability: /(?:오래|장기|유지|생활|회복|조율|리듬|오해|다툰|풀어|습관|관계가\s*굴러)/u
+  };
+  const pattern = patterns[field];
+  if (pattern !== void 0 && !pattern.test(paragraph.text)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      `${field} does not answer its compatibility section.`
+    );
+  }
+}
+function findingSet(paragraph, findingsById) {
+  return paragraph.findingIds.map((id) => findingsById.get(id));
+}
+function hasPairFinding(findings) {
+  return findings.some(({ participantIds }) => participantIds.length === 2);
+}
+function isDirectionalFinding(finding) {
+  return finding.kind === "day-master-ten-god" || finding.kind === "day-master-ten-god-range";
+}
+function copyDraft(value, prepared) {
+  if (!isRecord2(value)) {
+    throw new OhMySajuApplicationError("INVALID_DRAFT_SET", "draft must be an object.");
+  }
+  assertOnlyKeys3(
+    value,
+    ["schemaVersion", "kind", "summary", "connection", "interaction", "friction", "durability"],
+    "draft",
+    "INVALID_DRAFT_SET"
+  );
+  if (value.schemaVersion !== "1" || value.kind !== "compatibility") {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "draft must use compatibility schemaVersion 1."
+    );
+  }
+  const findingsById = new Map(prepared.findings.map((finding) => [finding.id, finding]));
+  const participantLabels = [
+    prepared.participants[0].label,
+    prepared.participants[1].label
+  ];
+  const draft = {
+    schemaVersion: "1",
+    kind: "compatibility",
+    summary: copyParagraph(value.summary, "summary", findingsById, participantLabels),
+    connection: copyParagraph(value.connection, "connection", findingsById, participantLabels),
+    interaction: copyParagraph(value.interaction, "interaction", findingsById, participantLabels),
+    friction: copyParagraph(value.friction, "friction", findingsById, participantLabels),
+    durability: copyParagraph(value.durability, "durability", findingsById, participantLabels)
+  };
+  for (const field of ["summary", "connection", "interaction", "friction", "durability"]) {
+    assertSectionLanguage(draft[field], field);
+  }
+  const texts = [
+    draft.summary.text,
+    draft.connection.text,
+    draft.interaction.text,
+    draft.friction.text,
+    draft.durability.text
+  ];
+  if (new Set(texts).size !== texts.length) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "Every compatibility section must use distinct prose."
+    );
+  }
+  const summaryFindings = findingSet(draft.summary, findingsById);
+  const connectionFindings = findingSet(draft.connection, findingsById);
+  const interactionFindings = findingSet(draft.interaction, findingsById);
+  const frictionFindings = findingSet(draft.friction, findingsById);
+  const durabilityFindings = findingSet(draft.durability, findingsById);
+  if (summaryFindings.length < 2 || !hasPairFinding(summaryFindings)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "summary must combine at least two findings including pair evidence."
+    );
+  }
+  if (!connectionFindings.some(
+    ({ tone }) => ["connection", "directional", "descriptive"].includes(tone)
+  ) || !hasPairFinding(connectionFindings)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "connection must cite a connecting or directional pair finding."
+    );
+  }
+  const directional = interactionFindings.filter(isDirectionalFinding);
+  if (!directional.some(({ direction }) => direction === "first-to-second") || !directional.some(({ direction }) => direction === "second-to-first")) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "interaction must compare both day-master directions."
+    );
+  }
+  assertDirectionalInteractionCoverage(draft.interaction, directional, participantLabels);
+  const availableTension = prepared.findings.some(({ tone }) => tone === "tension");
+  if (availableTension && !frictionFindings.some(({ tone }) => tone === "tension") || !availableTension && (!frictionFindings.some(
+    (finding) => isDirectionalFinding(finding) && finding.direction === "first-to-second"
+  ) || !frictionFindings.some(
+    (finding) => isDirectionalFinding(finding) && finding.direction === "second-to-first"
+  )) || !hasPairFinding(frictionFindings)) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "friction must cite the available cross-chart tension evidence."
+    );
+  }
+  if (!hasPairFinding(durabilityFindings) || !durabilityFindings.some(({ tone }) => tone === "directional" || tone === "connection") || availableTension && !durabilityFindings.some(({ tone }) => tone === "tension")) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "durability must connect the pair dynamic to both connection and friction evidence."
+    );
+  }
+  const supportKeys = [connectionFindings, interactionFindings, frictionFindings].map(
+    (findings) => findings.map(({ id }) => id).sort().join("|")
+  );
+  if (new Set(supportKeys).size !== supportKeys.length) {
+    throw new OhMySajuApplicationError(
+      "INVALID_DRAFT_SET",
+      "Connection, interaction, and friction must not recycle the same evidence set."
+    );
+  }
+  return draft;
+}
+function copyNarrator(value) {
+  if (!isRecord2(value)) {
+    throw new OhMySajuApplicationError("INVALID_COMMAND", "narrator must be an object.");
+  }
+  assertOnlyKeys3(value, ["id", "requestedModel"], "narrator");
+  return {
+    id: assertSafeIdentifier(value.id, "narrator.id"),
+    requestedModel: assertSafeIdentifier(value.requestedModel, "narrator.requestedModel")
+  };
+}
+function renderedCell(values) {
+  if (values.length === 0) return "\uBBF8\uC0C1";
+  if (values.length <= 3) return values.join(" / ");
+  return `${values.slice(0, 3).join(" / ")} \uC678 ${values.length - 3}\uAC1C`;
+}
+function paragraphUsesConditionalFinding(paragraph, findingsById) {
+  return paragraph.findingIds.some((id) => {
+    const finding = findingsById.get(id);
+    return finding?.stability === "candidate-dependent" || finding?.kind === "day-master-ten-god-range" && (finding.tenGods?.length ?? 0) > 1;
+  });
+}
+function renderParagraph(paragraph, findingsById) {
+  return `${paragraphUsesConditionalFinding(paragraph, findingsById) ? "\u25B3 " : ""}${paragraph.text}`;
+}
+function renderCompatibility(prepared, draft) {
+  const [first, second] = prepared.participants;
+  const findingsById = new Map(prepared.findings.map((finding) => [finding.id, finding]));
+  const hasConditional = prepared.findings.some(
+    (finding) => finding.stability === "candidate-dependent" || finding.kind === "day-master-ten-god-range" && (finding.tenGods?.length ?? 0) > 1
+  );
+  const directional = prepared.findings.filter(isDirectionalFinding);
+  const directionalFor = (direction) => {
+    const options = directional.filter((finding) => finding.direction === direction);
+    return options.find(({ kind }) => kind === "day-master-ten-god-range") ?? options.find(({ stability }) => stability === "stable") ?? (options.length === 1 ? options[0] : void 0);
+  };
+  const firstToSecond = directionalFor("first-to-second");
+  const secondToFirst = directionalFor("second-to-first");
+  const lines = [
+    `\uAE30\uC900: ${first.label}\xB7${second.label} \uBA85\uC2DD\uC744 \uAD50\uCC28\uD574 \uBD84\uC11D`,
+    ...hasConditional ? ["", "\uC870\uAC74 \uC548\uB0B4: \u25B3 \uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uB294 \uBD80\uBD84"] : [],
+    "",
+    `| \uAD6C\uBD84 | ${first.label} | ${second.label} |`,
+    "| --- | --- | --- |",
+    ...POSITIONS2.map(
+      (position2) => `| ${POSITION_LABELS[position2]} | ${renderedCell(first.pillars[position2].values)} | ${renderedCell(second.pillars[position2].values)} |`
+    ),
+    `| \uC77C\uAC04 | ${renderedCell(first.dayMasters)} | ${renderedCell(second.dayMasters)} |`,
+    "",
+    "**\uC77C\uAC04\uC73C\uB85C \uBCF8 \uC11C\uB85C\uC758 \uC2ED\uC2E0 \uAD00\uACC4**",
+    "",
+    "| \uBC29\uD5A5 | \uAD00\uACC4 |",
+    "| --- | --- |",
+    `| ${first.label} \u2192 ${second.label} | ${firstToSecond?.statement ?? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D0"} |`,
+    `| ${second.label} \u2192 ${first.label} | ${secondToFirst?.statement ?? "\uC0DD\uC2DC \uD6C4\uBCF4\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D0"} |`,
+    "",
+    `**\uAD81\uD569 \uCD1D\uD3C9:** ${renderParagraph(draft.summary, findingsById)}`,
+    "",
+    "## \uC11C\uB85C \uB04C\uB9AC\uACE0 \uB9DE\uB294 \uC9C0\uC810",
+    "",
+    renderParagraph(draft.connection, findingsById),
+    "",
+    "## \uAD00\uACC4\uAC00 \uAD74\uB7EC\uAC00\uB294 \uBC29\uC2DD",
+    "",
+    renderParagraph(draft.interaction, findingsById),
+    "",
+    "## \uBD80\uB52A\uD788\uAE30 \uC26C\uC6B4 \uC9C0\uC810",
+    "",
+    renderParagraph(draft.friction, findingsById),
+    "",
+    "## \uC624\uB798 \uAC00\uB294 \uC870\uAC74",
+    "",
+    renderParagraph(draft.durability, findingsById)
+  ];
+  return lines.join("\n");
+}
+function validateOhMySajuCompatibilityFromUnknown(command) {
+  if (!isRecord2(command) || command.command !== "validate-compatibility") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "command must be a validate-compatibility object."
+    );
+  }
+  assertOnlyKeys3(
+    command,
+    ["schemaVersion", "command", "request", "preparedDigest", "narrator", "draft"],
+    "command"
+  );
+  assertVersion(command.schemaVersion);
+  const request = copyCompatibilityRequest(command.request);
+  const prepared = prepare(request);
+  if (typeof command.preparedDigest !== "string" || !/^[a-f0-9]{64}$/u.test(command.preparedDigest) || command.preparedDigest !== prepared.binding.digest) {
+    throw new OhMySajuApplicationError(
+      "PREPARATION_MISMATCH",
+      "preparedDigest does not match this two-person compatibility request.",
+      {
+        details: {
+          expectedDigest: prepared.binding.digest,
+          receivedDigest: typeof command.preparedDigest === "string" ? command.preparedDigest : null
+        }
+      }
+    );
+  }
+  const narrator = copyNarrator(command.narrator);
+  const draft = copyDraft(command.draft, prepared);
+  return deepFreeze2({
+    schemaVersion: "1",
+    binding: prepared.binding,
+    participants: prepared.participants,
+    candidatePairCount: prepared.candidatePairCount,
+    findings: prepared.findings,
+    narrator,
+    sourceDraft: draft,
+    presentation: {
+      schemaVersion: "1",
+      kind: "compatibility",
+      markdown: renderCompatibility(prepared, draft)
+    }
+  });
+}
+
 // plugins/oh-my-saju/runtime/application/execute.ts
 var MAXIMUM_DRAFT_COUNT = 16;
-function assertOnlyKeys3(value, allowed, field, code = "INVALID_COMMAND") {
+function assertOnlyKeys4(value, allowed, field, code = "INVALID_COMMAND") {
   const allowedSet = new Set(allowed);
   const unexpected = Object.keys(value).filter((key) => !allowedSet.has(key));
   if (unexpected.length > 0) {
@@ -21151,12 +22450,12 @@ function assertServiceRequest2(value) {
       "request must contain an exact or possibilities calculation."
     );
   }
-  assertOnlyKeys3(
+  assertOnlyKeys4(
     value,
     ["calculation", "question", "locale", "purpose", "audience", "variantPolicy", "readingMode"],
     "request"
   );
-  assertOnlyKeys3(value.calculation, ["kind", "request"], "request.calculation");
+  assertOnlyKeys4(value.calculation, ["kind", "request"], "request.calculation");
 }
 function assertCommandVersion(value) {
   if (value !== void 0 && value !== "1") {
@@ -21167,7 +22466,7 @@ function copyPackRef3(value, field) {
   if (!isRecord2(value)) {
     throw new OhMySajuApplicationError("INVALID_DRAFT_SET", `${field} must be an object.`);
   }
-  assertOnlyKeys3(value, ["id", "version"], field, "INVALID_DRAFT_SET");
+  assertOnlyKeys4(value, ["id", "version"], field, "INVALID_DRAFT_SET");
   return {
     id: assertDraftIdentifier(value.id, `${field}.id`),
     version: assertDraftIdentifier(value.version, `${field}.version`)
@@ -21198,7 +22497,7 @@ function copyDrafts(value) {
         `drafts[${index}] must contain packRef and output.`
       );
     }
-    assertOnlyKeys3(
+    assertOnlyKeys4(
       entry,
       ["packRef", "output", "metadata"],
       `drafts[${index}]`,
@@ -21221,7 +22520,7 @@ function copyDrafts(value) {
     }
     const metadata = entry.metadata;
     if (metadata !== void 0) {
-      assertOnlyKeys3(
+      assertOnlyKeys4(
         metadata,
         ["actualModel", "providerRequestId", "finishReason"],
         `drafts[${index}].metadata`,
@@ -21297,7 +22596,7 @@ function preparationBinding(analysis, timing, tasks) {
       contractSchemaVersion: contract2.schemaVersion,
       rulesArtifactDigest: contract2.reproducibility.rulesArtifact.digest,
       fixturesArtifactDigest: contract2.reproducibility.fixturesArtifact.digest,
-      contractDigest: createHash("sha256").update(canonicalJsonStringify(contract2), "utf8").digest("hex"),
+      contractDigest: createHash2("sha256").update(canonicalJsonStringify(contract2), "utf8").digest("hex"),
       knowledgeSnapshot: contract2.reproducibility.knowledgeSnapshot
     })),
     reading: OH_MY_SAJU_RUNTIME_MANIFEST.reading
@@ -21312,7 +22611,7 @@ function preparationBinding(analysis, timing, tasks) {
   return deepFreeze2({
     algorithm: "sha256",
     canonicalization: "oh-my-saju-preparation-v2",
-    digest: createHash("sha256").update(canonical, "utf8").digest("hex"),
+    digest: createHash2("sha256").update(canonical, "utf8").digest("hex"),
     engineSourceRevision: engine.sourceRevision,
     ...provenance
   });
@@ -21325,7 +22624,7 @@ function calculateRequestedTiming(request, value) {
       "timing must be an object when supplied."
     );
   }
-  assertOnlyKeys3(value, ["fromYear", "throughYear", "gender", "luckPillarCount"], "timing");
+  assertOnlyKeys4(value, ["fromYear", "throughYear", "gender", "luckPillarCount"], "timing");
   if (request.calculation.kind !== "exact") {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -21368,7 +22667,7 @@ function prepareOhMySajuReadingFromUnknown(command) {
       "command must be a prepare-reading object."
     );
   }
-  assertOnlyKeys3(command, ["schemaVersion", "command", "request", "timing"], "command");
+  assertOnlyKeys4(command, ["schemaVersion", "command", "request", "timing"], "command");
   assertCommandVersion(command.schemaVersion);
   assertServiceRequest2(command.request);
   const analysis = calculateKoreanSajuAnalysis(command.request.calculation);
@@ -21392,7 +22691,7 @@ async function validateOhMySajuReadingFromUnknown(command) {
       "command must be a validate-reading object."
     );
   }
-  assertOnlyKeys3(
+  assertOnlyKeys4(
     command,
     [
       "schemaVersion",
@@ -21411,7 +22710,7 @@ async function validateOhMySajuReadingFromUnknown(command) {
   if (!isRecord2(command.narrator)) {
     throw new OhMySajuApplicationError("INVALID_COMMAND", "narrator must be an object.");
   }
-  assertOnlyKeys3(command.narrator, ["id", "requestedModel"], "narrator");
+  assertOnlyKeys4(command.narrator, ["id", "requestedModel"], "narrator");
   const narrator = {
     id: assertSafeIdentifier(command.narrator.id, "narrator.id"),
     requestedModel: assertSafeIdentifier(
@@ -21515,13 +22814,15 @@ function executeTraditionalSystemCommandFromUnknown(command) {
       "command must be a run-traditional-system object."
     );
   }
-  assertOnlyKeys3(command, ["schemaVersion", "command", "request"], "command");
+  assertOnlyKeys4(command, ["schemaVersion", "command", "request"], "command");
   assertCommandVersion(command.schemaVersion);
   return runTraditionalSystem(command.request);
 }
 var COMMAND_NAMES = Object.freeze([
   "prepare-reading",
   "validate-reading",
+  "prepare-compatibility",
+  "validate-compatibility",
   "run-traditional-system"
 ]);
 function isCommandName(value) {
@@ -21572,6 +22873,22 @@ async function executeOhMySaju(command) {
         result: await validateOhMySajuReadingFromUnknown(command)
       });
     }
+    if (command.command === "prepare-compatibility") {
+      return deepFreeze2({
+        schemaVersion: "1",
+        ok: true,
+        command: "prepare-compatibility",
+        result: prepareOhMySajuCompatibilityFromUnknown(command)
+      });
+    }
+    if (command.command === "validate-compatibility") {
+      return deepFreeze2({
+        schemaVersion: "1",
+        ok: true,
+        command: "validate-compatibility",
+        result: validateOhMySajuCompatibilityFromUnknown(command)
+      });
+    }
     if (command.command === "run-traditional-system") {
       return deepFreeze2({
         schemaVersion: "1",
@@ -21598,7 +22915,7 @@ Usage:
 
 The runtime reads one JSON command from --input or stdin and writes one JSON
 response to stdout. Supported commands are prepare-reading, validate-reading,
-and run-traditional-system.
+prepare-compatibility, validate-compatibility, and run-traditional-system.
 `;
 function parseOptions(argv) {
   let inputPath;

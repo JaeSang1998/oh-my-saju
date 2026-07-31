@@ -27,18 +27,18 @@ and expert review rather than hurried synthesis.
 
 ## Route
 
-| Phase | Deliverable                                                                                            | Dependencies                                             | Exit gate                                                     | State                                           |
-| ----- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
-| P0    | IANA/Korean lunar/solar-term/pillar core and uncertain-time candidates                                 | Independent calendar fixtures                            | Boundary and package tests pass                               | Complete                                        |
-| P1    | Raw features: full hidden-stem membership, 형·파·원진, growth stages, exact transit/luck policy APIs   | Verified tables and convention IDs                       | Lookup tables exhaustively tested                             | Next                                            |
-| P2    | Profile manifest, finding provenance, candidate aggregation, conflict model                            | P0                                                       | Every result traces to rule/source/candidate                  | First vertical slice complete                   |
-| P3a   | Verified month-command/pattern profile from a defined 《子平真詮》 textual layer                       | Scan verification, source/minimal-pair/disputed fixtures | Independent expert reproduction                               | Research-backed backlog                         |
-| P3b   | Verified strength/flow profile from a defined 《滴天髓闡微》 textual layer                             | Strength evidence vector, commentary separation          | No synthetic element score reuse                              | Research-backed backlog                         |
-| P3c   | Verified climate profile from a defined 《窮通寶鑑》 textual layer                                     | Seasonal facts and stem conditions                       | Climate result stays separate from other useful-god methods   | Research-backed backlog                         |
-| P4    | Source-curated symbolic-star overlay and structural compatibility                                      | Profile compatibility and source registry                | Raw matches retain anchor, position, source, and uncertainty  | 15-rule overlay complete; compatibility pending |
-| P5    | Provider-authored grounded AI, finding citations, provider provenance, integrated service API          | P2                                                       | Actual prose returned; fake IDs and candidate mixing rejected | Complete in v0.6.0                              |
-| P6    | Production application: auth, consent, no-save/save modes, deletion, provider contracts, observability | Legal/privacy review, storage design                     | P0 launch checklist and red-team gates pass                   | Application backlog                             |
-| P7    | Election, Tojeong, I Ching, Zi Wei, and Liu Ren vertical systems                                       | Primary-source profiles, P0 calendar facts               | Every result exposes source, convention, trace, and limits    | Initial verticals complete                      |
+| Phase | Deliverable                                                                                            | Dependencies                                             | Exit gate                                                     | State                                                               |
+| ----- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- |
+| P0    | IANA/Korean lunar/solar-term/pillar core and uncertain-time candidates                                 | Independent calendar fixtures                            | Boundary and package tests pass                               | Complete                                                            |
+| P1    | Raw features: full hidden-stem membership, 형·파·원진, growth stages, exact transit/luck policy APIs   | Verified tables and convention IDs                       | Lookup tables exhaustively tested                             | Next                                                                |
+| P2    | Profile manifest, finding provenance, candidate aggregation, conflict model                            | P0                                                       | Every result traces to rule/source/candidate                  | First vertical slice complete                                       |
+| P3a   | Verified month-command/pattern profile from a defined 《子平真詮》 textual layer                       | Scan verification, source/minimal-pair/disputed fixtures | Independent expert reproduction                               | Research-backed backlog                                             |
+| P3b   | Verified strength/flow profile from a defined 《滴天髓闡微》 textual layer                             | Strength evidence vector, commentary separation          | No synthetic element score reuse                              | Research-backed backlog                                             |
+| P3c   | Verified climate profile from a defined 《窮通寶鑑》 textual layer                                     | Seasonal facts and stem conditions                       | Climate result stays separate from other useful-god methods   | Research-backed backlog                                             |
+| P4    | Source-curated symbolic-star overlay and structural compatibility                                      | Profile compatibility and source registry                | Raw matches retain anchor, position, source, and uncertainty  | 15-rule overlay and first structural compatibility profile complete |
+| P5    | Provider-authored grounded AI, finding citations, provider provenance, integrated service API          | P2                                                       | Actual prose returned; fake IDs and candidate mixing rejected | Complete in v0.6.0                                                  |
+| P6    | Production application: auth, consent, no-save/save modes, deletion, provider contracts, observability | Legal/privacy review, storage design                     | P0 launch checklist and red-team gates pass                   | Application backlog                                                 |
+| P7    | Election, Tojeong, I Ching, Zi Wei, and Liu Ren vertical systems                                       | Primary-source profiles, P0 calendar facts               | Every result exposes source, convention, trace, and limits    | Initial verticals complete                                          |
 
 ## Work packages
 
@@ -78,9 +78,10 @@ Implement one profile at a time. Each requires:
 
 - Expand the source-verified symbolic-star pack with triad stars, seasonal solitude patterns,
   day-stem stars, and explicit disputed variants.
-- Implement structural compatibility as directional A→B/B→A findings plus symmetric
-  relation findings.
-- Evaluate the Cartesian product of both users’ time candidates.
+- The first structural compatibility profile now returns directional A→B/B→A day-master ten-god
+  findings plus symmetric cross-chart relation findings.
+- The compatibility application evaluates the Cartesian product of both users’ time candidates
+  and separates stable from candidate-dependent results.
 - Do not expose divorce, fidelity, pregnancy, lifespan, or total compatibility scores. Election
   ranking is a separate product policy and never a Saju compatibility score.
 
@@ -138,7 +139,18 @@ quality work can proceed in parallel.
 
 ## Current handoff
 
-Plugin 0.4 adds:
+Plugin 0.4.5 adds:
+
+- `ziping-structural-compatibility@1.0.0`, with separate natal charts, directional A→B/B→A
+  day-master ten gods, symmetric cross-chart stem/branch findings, and Cartesian evaluation of
+  uncertain-time candidate pairs;
+- a dedicated prepare/draft/validate contract that requires a qualitative overall reading plus
+  connection, interaction, friction, and durability sections while rejecting total scores and
+  event verdicts;
+- stricter broad-profile quality checks against recycled abstract conclusions, internal audit
+  jargon, and chart-specific example leakage.
+
+Plugin 0.4 also includes:
 
 - a 15-rule, source-profiled symbolic-star overlay with explicit anchor, matched position,
   partial coverage, and disputed blade variants;
@@ -151,8 +163,8 @@ Plugin 0.4 adds:
   `predictiveValidity: "not-established"` on every new system.
 
 The Tojeong interpretation corpus, I Ching judgment/line-text layer, Zi Wei auxiliary stars and
-periods, Liu Ren heavenly generals and judgment layer, and domain-specific election corpora remain
-future source/editorial work. Directional A→B/B→A compatibility, symmetric relation findings, and
-the Cartesian product of both users' uncertain-time candidates also remain in P4. P3 doctrine
-profiles remain intentionally incomplete; none of these gaps should be filled with undocumented
-“common saju” heuristics.
+periods, Liu Ren heavenly generals and judgment layer, domain-specific election corpora, and
+historically distinct compatibility methods such as year-pillar, Nayin, or nine-palace profiles
+remain future source/editorial work. The structural profile does not produce a numeric or
+event-predictive compatibility verdict. P3 doctrine profiles remain intentionally incomplete; none
+of these gaps should be filled with undocumented “common saju” heuristics.

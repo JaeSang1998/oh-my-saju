@@ -79,17 +79,14 @@ try {
   const thirdPartyNotices = readFileSync(join(pluginRoot, 'THIRD_PARTY_NOTICES.md'), 'utf8');
   assert.match(skill, /^---\nname: oh-my-saju\n/m);
   assert.match(skill, /^license: Apache-2\.0$/mu);
-  assert.match(skillInterface, /display_name: ['"]Oh My Saju['"]/u);
-  assert.match(
-    skillInterface,
-    /default_prompt: ['"]Use \$oh-my-saju .*natural Korean interpretation/u,
-  );
+  assert.match(skillInterface, /display_name: ['"]오 마이 사주['"]/u);
+  assert.match(skillInterface, /default_prompt: ['"]\$oh-my-saju로 .*평범한 한국어로 풀어 주세요/u);
   assert.equal(
     versions.skills['oh-my-saju'],
     portable.version,
     'Skill and plugin release versions drifted',
   );
-  assert.ok(skill.split('\n').length < 500, 'SKILL.md should stay below 500 lines');
+  assert.ok(skill.trimEnd().split('\n').length < 500, 'SKILL.md should stay below 500 lines');
   assert.match(license, /^Apache License\nVersion 2\.0, January 2004$/mu);
   assert.match(notice, /Copyright 2026 Jaesang Lee/u);
   assert.match(notice, /THIRD_PARTY_NOTICES\.md/u);

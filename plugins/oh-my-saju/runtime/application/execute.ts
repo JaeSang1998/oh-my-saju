@@ -33,6 +33,10 @@ import { calculateSajuTiming } from 'saju-engine/timing';
 import type { SajuTimingReport } from 'saju-engine/timing';
 import { OhMySajuApplicationError, isOhMySajuApplicationError } from './errors';
 import { validateAndRenderOhMySajuBroadPresentation } from './broad-presentation';
+import {
+  prepareOhMySajuCompatibilityFromUnknown,
+  validateOhMySajuCompatibilityFromUnknown,
+} from './compatibility';
 import type {
   OhMySajuCommand,
   OhMySajuFailure,
@@ -595,6 +599,8 @@ export function executeTraditionalSystemCommand(
 const COMMAND_NAMES = Object.freeze([
   'prepare-reading',
   'validate-reading',
+  'prepare-compatibility',
+  'validate-compatibility',
   'run-traditional-system',
 ] as const satisfies readonly OhMySajuCommand['command'][]);
 
@@ -663,6 +669,22 @@ export async function executeOhMySaju(command: unknown): Promise<OhMySajuRespons
         ok: true,
         command: 'validate-reading',
         result: await validateOhMySajuReadingFromUnknown(command),
+      });
+    }
+    if (command.command === 'prepare-compatibility') {
+      return deepFreeze({
+        schemaVersion: '1',
+        ok: true,
+        command: 'prepare-compatibility',
+        result: prepareOhMySajuCompatibilityFromUnknown(command),
+      });
+    }
+    if (command.command === 'validate-compatibility') {
+      return deepFreeze({
+        schemaVersion: '1',
+        ok: true,
+        command: 'validate-compatibility',
+        result: validateOhMySajuCompatibilityFromUnknown(command),
       });
     }
     if (command.command === 'run-traditional-system') {

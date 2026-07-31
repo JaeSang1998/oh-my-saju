@@ -3,7 +3,7 @@ import type { TraditionalSystemProfile } from '../shared';
 export const ZIWEI_QUANSHU_CORE_PROFILE: TraditionalSystemProfile = Object.freeze({
   id: 'ziwei-quanshu-core',
   version: '1.0.0',
-  displayName: '《紫微斗數全書》 12궁·14주성 코어',
+  displayName: '《紫微斗數全書》 12궁·14주성 기본 계산',
   outputBoundary: 'natal-chart-mechanics',
   sources: Object.freeze([
     Object.freeze({
