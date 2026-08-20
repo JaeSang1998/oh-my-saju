@@ -8,6 +8,18 @@
     {
       "id": "ziping.pattern-candidate",
       "formalization": "reconstruction"
+    },
+    {
+      "id": "ziping.governing-day",
+      "formalization": "literal-table"
+    },
+    {
+      "id": "ziping.pattern-integrity",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "ziping.pattern-relief-god",
+      "formalization": "reconstruction"
     }
   ]
 }

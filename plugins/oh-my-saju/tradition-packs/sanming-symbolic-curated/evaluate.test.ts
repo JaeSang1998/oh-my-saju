@@ -6,7 +6,11 @@ import type {
 } from 'saju-engine';
 import { describe, expect, test } from 'vitest';
 import type { DoctrineRuleContext } from '../../runtime/traditions/rule-evaluator-types';
-import { evaluateSanmingSymbolicCuratedRule } from './evaluate';
+import {
+  evaluateSanmingSymbolicCuratedRule,
+  SANMING_GHOST_GATE_PAIRS_V1,
+  SANMING_RESENTMENT_PAIRS_V1,
+} from './evaluate';
 
 const TRAVEL_HORSE_LITERAL_ORACLE: Readonly<Record<EarthlyBranch, EarthlyBranch>> = {
   자: '인',
@@ -484,5 +488,71 @@ describe('sanming-symbolic-curated 계절 모서리와 일간 표', () => {
     expect(JSON.stringify(result)).not.toMatch(
       /성격|연애|결혼|사건|예측|점수|확률|probability|score/u,
     );
+  });
+});
+
+describe('sanming-symbolic-curated 원진·귀문 쌍 표 대조', () => {
+  test('원진과 귀문은 서로 다른 표이며 네 쌍만 겹친다', () => {
+    const resentment = SANMING_RESENTMENT_PAIRS_V1.map((pair) => pair.join(''));
+    const ghostGate = SANMING_GHOST_GATE_PAIRS_V1.map((pair) => pair.join(''));
+
+    expect(resentment).toEqual(['자미', '축오', '인유', '묘신', '진해', '사술']);
+    expect(ghostGate).toEqual(['자유', '축오', '인미', '묘신', '진해', '사술']);
+    expect(resentment.filter((pair) => ghostGate.includes(pair))).toEqual([
+      '축오',
+      '묘신',
+      '진해',
+      '사술',
+    ]);
+  });
+
+  test('자미는 원진에만, 자유는 귀문에만 일치한다', () => {
+    const resentmentOnly = evaluateSanmingSymbolicCuratedRule(
+      'sanming.resentment-pair',
+      context({ year: '자', month: '미', day: '인', hour: '진' }),
+    );
+    const ghostGateOnly = evaluateSanmingSymbolicCuratedRule(
+      'sanming.ghost-gate-pair',
+      context({ year: '자', month: '미', day: '인', hour: '진' }),
+    );
+
+    expect(resentmentOnly.values.matches).toEqual([
+      { tableRow: ['자', '미'], positions: ['year', 'month'], branches: ['자', '미'] },
+    ]);
+    expect(ghostGateOnly.values.matches).toEqual([
+      { tableRow: ['인', '미'], positions: ['month', 'day'], branches: ['미', '인'] },
+    ]);
+    expect(resentmentOnly.values.status).toBe('raw-matches');
+  });
+
+  test('표 일치 사실만 진술하고 사건·성격 의미를 붙이지 않는다', () => {
+    const result = evaluateSanmingSymbolicCuratedRule(
+      'sanming.resentment-pair',
+      context({ year: '축', month: '오', day: '인', hour: '진' }),
+    );
+
+    expect(result.statement).toBe(
+      '연지 축과 월지 오는 원진 표에 일치합니다. 이 팩은 표 일치만 기록하며 사건 의미를 붙이지 않습니다.',
+    );
+    expect(result.topic).toBe('symbolic-stars');
+    expect(JSON.stringify(result)).not.toMatch(
+      /성격|연애|결혼|사건 의미가|불화|예측|점수|확률|probability|score/u,
+    );
+  });
+
+  test('일치가 없으면 없다고만 적고 생시 미상은 단정하지 않는다', () => {
+    const absent = evaluateSanmingSymbolicCuratedRule(
+      'sanming.ghost-gate-pair',
+      context({ year: '자', month: '자', day: '자', hour: '자' }),
+    );
+    const partial = evaluateSanmingSymbolicCuratedRule(
+      'sanming.ghost-gate-pair',
+      context({ year: '자', month: '자', day: '자', hour: null }),
+    );
+
+    expect(absent.values.status).toBe('raw-absence');
+    expect(absent.coverage).toBe('complete');
+    expect(partial.values.status).toBe('indeterminate-omitted-pillar');
+    expect(partial.statement).toContain('단정하지 않습니다');
   });
 });

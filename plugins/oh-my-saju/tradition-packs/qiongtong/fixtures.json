@@ -7,6 +7,10 @@
         "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts",
         "plugins/oh-my-saju/tradition-packs/qiongtong/qiongtong-table-v1.test.ts"
       ]
+    },
+    {
+      "id": "qiongtong-v1.2:candidate-condition-and-pack-climate-priority",
+      "paths": ["plugins/oh-my-saju/tradition-packs/qiongtong/evaluate.test.ts"]
     }
   ]
 }

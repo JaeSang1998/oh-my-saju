@@ -92,6 +92,44 @@ actually means. Vary sentence length and endings; do not repeat `…할 수 있�
 As a final test, remove the Saju terms from a sentence. If what remains sounds like a strategy
 report, an English personality test, or generic AI coaching, rewrite it in plain spoken Korean.
 
+## Judgment endings and Korean rhythm
+
+Use `~로 봅니다` as the standard ending for a judgment. It is the ending Korean myeongni writing
+actually uses: firmer than `~일 수 있습니다`, more modest than `~입니다`. Never write
+`~하는 경향이 있습니다`; it is a literal rendering of *tend to* and commits to nothing. For a
+tendency write `~한 편입니다`, and keep cause and conclusion in one sentence with `~해서 ~합니다`.
+
+Each of the following has a shorter Korean replacement. Treat the left column as banned:
+
+| Avoid                                            | Write instead                             |
+| ------------------------------------------------ | ----------------------------------------- |
+| `~하는 경향이 있습니다`                          | `~한 편입니다`                            |
+| repeated `~할 수 있습니다`                        | `~합니다`, `~로 봅니다`                   |
+| `~에 있어서`                                      | `~에서`, `~는`                            |
+| `~를 가지고 있습니다`                             | `~가 있습니다`, `~를 지녔습니다`          |
+| `당신은 ~한 사람입니다`                           | drop the subject: `~한 편입니다`          |
+| `이는 ~를 의미합니다`                             | `그래서 ~합니다`, `~라는 뜻입니다`        |
+| `중요한 것은 ~입니다`                             | `~가 관건입니다`, `~를 먼저 봐야 합니다`  |
+| `긍정적인 영향`, `부정적인 영향`                  | `도움이 됩니다`, `발목을 잡습니다`        |
+| `균형을 맞추는 것이 좋습니다`                     | delete it, or name the concrete action    |
+| `전반적으로`, `종합적으로 볼 때`                  | delete it                                 |
+| `또한`, `그리고`, `하지만` opening every sentence | delete them; Korean reads without them    |
+
+Do not repeat the subject `당신은`. Korean counselling speech drops the subject almost everywhere;
+one explicit `당신은` in a whole reading is already the maximum.
+
+Make paragraph length deliberately uneven. Mix one short flat judgment with a two- or
+three-sentence explanation. When every bullet has the same length and the same clause count, the
+reading looks generated no matter how accurate it is.
+
+Keep every metaphor inside the chart's own five-element and seasonal imagery: 물, 불, 나무, 쇠,
+흙, and the heat, cold, dryness, and damp of a season. Sports, military, and business metaphors
+(`엔진`, `브레이크`, `포트폴리오`, `팀플레이`) slide the reading into coaching copy; do not use them.
+
+Include at least one hard sentence. A reading where every line is safe and pleasant has failed
+even when each line is individually supported. Name the cost, the repeated failure, or the thing
+the reader keeps doing, and state it in the same plain Korean as the rest.
+
 ## Strength and cost are one mechanism
 
 Do not write detached 장점/단점 lists. Explain the double edge:
@@ -138,11 +176,13 @@ from what follows from skill, money, eligibility, motivation, resources, or avai
 When the user simply asks for a Saju reading, answer the implied question first: “What kind of
 person does this chart describe?” A useful broad reading normally covers:
 
-1. personality and decision style;
-2. how the central strength changes under pressure;
-3. work, study, and execution;
-4. relationships and communication;
-5. money or resource handling only when supported.
+1. the season coordinate the chart was born into;
+2. personality and decision style;
+3. what the day master stands on and what it leans on;
+4. how the central strength changes under pressure;
+5. work, study, and execution;
+6. relationships and communication;
+7. money or resource handling only when supported.
 
 Use two or three chart mechanisms to connect these areas rather than assigning a different doctrine
 label to each heading. Across the answer, include at least three concrete, recognizable
@@ -162,7 +202,8 @@ central mechanism, then show how it changes across the supported life areas.
 
 ## Default broad-reading display contract
 
-For a first substantive broad reading, use this chart-first shape:
+For a first substantive broad reading, use this chart-first shape. Each profile bullet renders as
+`근거 — 해석` on a single line, so the basis is read aloud before its meaning.
 
 ```markdown
 기준: 양력 YYYY.MM.DD HH:mm, 한국 표준시
@@ -183,19 +224,30 @@ For a first substantive broad reading, use this chart-first shape:
 
 **핵심 요약:** [△/◇ if applicable] [명식 근거 → 가장 두드러지는 성향]
 
+_(근거: [핵심 요약이 딛고 선 명식 근거])_
+
+## 절기와 계절
+
+- [△/◇] [절입 경과일·다음 절기까지의 거리·사령·한난 근거를 읽히는 절로] — [그 계절
+  좌표 위에서 몸이 실제로 움직이는 리듬]
+
 ## 성격과 행동 방식
 
-- [△/◇ if applicable] [일간·계절·뿌리 또는 반복 → 전통적 기능 → 의미]
-- [△/◇ if applicable] [첫째와 다른 실제 배치 → 생활에서 드러나는 행동]
+- [△/◇] [일간·계절·뿌리 또는 반복 배치] — [전통적 기능이 행동으로 드러나는 모습]
+- [△/◇] [첫째와 다른 실제 배치] — [첫째와 겹치지 않는 또 다른 행동]
+
+## 타고난 힘과 쓰는 법
+
+- [△/◇] [통근·득령·득지·득세 근거] — [자기 힘으로 끌고 가는지, 무엇에 기대는지]
 
 ## 강점과 주의점
 
-- **잘 풀릴 때:** [△/◇ if applicable] [같은 성향이 도움이 되는 때]
-- **압박을 받을 때:** [△/◇ if applicable] [같은 성향 때문에 문제가 생기는 때]
+- **잘 풀릴 때:** [△/◇] [강점과 맹점이 공유하는 근거] — [같은 성향이 도움이 되는 때]
+- **압박을 받을 때:** [△/◇] [같은 근거] — [같은 성향 때문에 문제가 생기는 때]
 
 ## 일·재능
 
-- [△/◇ if applicable] [업무 방식과 근거를 연결한 해석]
+- [△/◇] [일·공부와 직접 연결되는 근거] — [맞는 과업 방식과 그 방식이 실패하는 조건]
 
 ## 돈과 현실 감각
 
@@ -204,7 +256,7 @@ For a first substantive broad reading, use this chart-first shape:
 
 ## 관계
 
-- [△/◇ if applicable] [관계 방식과 근거를 연결한 해석]
+- [△/◇] [관계와 직접 연결되는 근거] — [가까운 관계에서의 반응과 오해가 생기는 조건]
 ```
 
 Prefer bullets and small tables. A paragraph may contain one to three connected sentences. Keep
@@ -213,10 +265,27 @@ money when its evidence does not differ from the general personality reading, ex
 displayed ten-god row has at least two `정재`/`편재` placements. In that case draft and select a
 distinct money paragraph. Do not narrate raw support-ledger counts in the user-facing profile.
 
-In the v2 `presentationDraft`, the thesis quotes exact `basis` and `portrait` spans. Other
-selections declare `role` and quote exact `basis` and `interpretation` spans. The chart basis must
-precede its meaning in the selected paragraph. The strength and blind-spot selections share a
-finding-backed mechanism. These fields do not appear in the user-facing Korean.
+`절기와 계절` states where the birth instant sits between two Jie, which hidden stem is in
+command, and which way the chart's heat leans. Say it as season and body, never as a workplace or
+a real-world environment: `한겨울의 찬 기운이 가장 두꺼운 때에 태어나 몸이 먼저 데워져야
+움직이는 쪽입니다` is a season reading; `추운 환경에서 일할 때` is not. This is the one section
+where reading the season as climate is correct rather than misframed.
+
+`타고난 힘과 쓰는 법` states whether the day master has roots, whether it holds the month and the
+day ground, and what it leans on. Write the conclusion as pushing or leaning — `자기 힘으로
+끌고 가는 쪽`, `기대는 자리가 없어 그대로 눌리는 쪽` — and never as a strength score, a grade
+name, or a prescription.
+
+Write `basis` as a clause that can be read out loud, not as a noun phrase, because v3 renders it
+as the first half of one sentence. `월지 진의 정기 무가 일간 계수에게 정관이라 월령을 얻지
+못했고` works; `월지 진의 정기 무의 십신` does not. Drop the trailing period: the renderer joins
+the two halves with an em dash.
+
+In the v3 `presentationDraft`, the thesis quotes exact `basis` and `portrait` spans. Every other
+selection declares its `role` and quotes exact `basis` and `interpretation` spans. `climate` and
+`resource` are required slots and each needs a chart basis of its own. The chart basis must
+precede its meaning in the selected paragraph, and the strength and blind-spot selections share
+one finding-backed mechanism. These fields do not appear in the user-facing Korean.
 
 Show the ten-god row and exact-chart element table by default. The table is orientation, not a
 strength score; never derive a personality trait from proportions alone.

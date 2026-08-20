@@ -4,12 +4,12 @@
     {
       "id": "qiongtong-day-stem-month-climate-v1",
       "kind": "classical-text",
-      "title": "《窮通寶鑑》十干별 월령 조후 절",
-      "citation": "《窮通寶鑑》, 甲木부터 癸水까지 각 일간의 정월~십이월 조후 후보를 나열한 절; 대표 fixture는 1937 《窮通寶鑑評註》 판면과 교차 대조",
+      "title": "《窮通寶鑑》十干별 월령 조후 절 (120칸 중 7칸만 대조)",
+      "citation": "《窮通寶鑑》, 甲木부터 癸水까지 각 일간의 정월~십이월 조후 후보를 나열한 절. 대표 fixture 5건이 덮는 7칸만 1937 《窮通寶鑑評註》 판면과 교차 대조했고, 나머지 113칸은 판면 대조 없이 전사한 실험 데이터다. 갑:미·정:진·신:유·계:오 4칸은 저본 문구 대조로 전사 오류를 되돌렸으나 판면 대조는 아직 하지 않았다.",
       "url": "https://zh.wikisource.org/w/index.php?oldid=2294674&title=%E7%A9%B7%E9%80%9A%E5%AE%9D%E9%89%B4",
-      "locator": "fixed Wikisource oldid 2294674; curated rules at lines 230-252, 348-358, 1427-1441, 1544-1560",
+      "locator": "fixed Wikisource oldid 2294674; scan-collated cells 7/120 at lines 230-252, 348-358, 1427-1441, 1544-1560; base-text-corrected cells 4/120 (갑:미, 정:진, 신:유, 계:오); remaining 109/120 uncollated",
       "textualLayer": "base-text",
-      "verification": "transcription-reviewed"
+      "verification": "unverified"
     },
     {
       "id": "oh-my-saju-qiongtong-lookup-v1",

@@ -16,9 +16,10 @@
       "ruleId": "ziping.month-command",
       "sourceReferenceIds": [
         "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
         "oh-my-saju-ziping-reconstruction-v1"
       ],
-      "sourceLocators": ["論用神; 月令 and hidden-stem evidence"],
+      "sourceLocators": ["論用神; 月令 and hidden-stem evidence", "論月令分野 월률분야표"],
       "formalizationStatus": "formalized-prose",
       "transcriptionSha256": null,
       "reviewerIds": []
@@ -27,9 +28,47 @@
       "ruleId": "ziping.pattern-candidate",
       "sourceReferenceIds": [
         "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
         "oh-my-saju-ziping-reconstruction-v1"
       ],
-      "sourceLocators": ["論用神; 論用神成敗救應; Pack reconstruction v1"],
+      "sourceLocators": ["論用神; 論用神成敗救應; Pack reconstruction v1", "論月令分野 월률분야표"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ziping.governing-day",
+      "sourceReferenceIds": [
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      "sourceLocators": ["論月令分野; Pack-local month-command-days-v1 table"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ziping.pattern-integrity",
+      "sourceReferenceIds": [
+        "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      "sourceLocators": [
+        "論用神成敗救應; 論建祿月劫; Pack-local pattern-integrity-v1 상신·파격 표"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ziping.pattern-relief-god",
+      "sourceReferenceIds": [
+        "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      "sourceLocators": ["論用神成敗救應 상신 항목; Pack-local pattern-integrity-v1 상신표"],
       "formalizationStatus": "reconstruction",
       "transcriptionSha256": null,
       "reviewerIds": []

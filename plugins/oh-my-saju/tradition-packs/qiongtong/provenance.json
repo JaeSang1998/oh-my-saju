@@ -22,6 +22,43 @@
       "formalizationStatus": "reconstruction",
       "transcriptionSha256": null,
       "reviewerIds": []
+    },
+    {
+      "ruleId": "qiongtong.climate-tendency",
+      "sourceReferenceIds": [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      "sourceLocators": [
+        "month-branch 한난조습 framing; Pack-local climate-baseline-v1 modern reconstruction"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "qiongtong.candidate-condition",
+      "sourceReferenceIds": [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      "sourceLocators": [
+        "day-stem sections, 正月 through 十二月; Pack-local hidden-stems-v1 root table"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "qiongtong.pack-climate-priority",
+      "sourceReferenceIds": [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      "sourceLocators": ["day-stem sections 조후용신 순서; Pack-local candidate-condition ranking"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
     }
   ]
 }

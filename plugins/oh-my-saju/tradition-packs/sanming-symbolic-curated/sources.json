@@ -70,6 +70,16 @@
       "locator": "四庫全書本 全覽, 論陽刃 항목의 두 정의",
       "textualLayer": "base-text",
       "verification": "transcription-reviewed"
+    },
+    {
+      "id": "korean-circulated-resentment-ghost-gate-v1",
+      "kind": "modern-convention",
+      "title": "한국에서 통용되는 원진·귀문 대조표",
+      "citation": "원진(자미·축오·인유·묘신·진해·사술)과 귀문(자유·축오·인미·묘신·진해·사술)의 두 대조표. 여섯 쌍 가운데 네 쌍만 겹치고 자미·인유와 자유·인미가 갈린다. 이 Pack은 두 표를 합치지 않고 따로 두며 원전 대조는 하지 않았다.",
+      "url": "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      "locator": "plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.ts",
+      "textualLayer": "modern-analysis",
+      "verification": "unverified"
     }
   ]
 }

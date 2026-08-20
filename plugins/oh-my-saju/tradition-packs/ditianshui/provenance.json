@@ -27,6 +27,42 @@
       "formalizationStatus": "reconstruction",
       "transcriptionSha256": null,
       "reviewerIds": []
+    },
+    {
+      "ruleId": "ditianshui.rooting-ledger",
+      "sourceReferenceIds": ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      "sourceLocators": ["衰旺; Pack-local root-rank-v1 table and rank-position weighting"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ditianshui.command-position",
+      "sourceReferenceIds": ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      "sourceLocators": ["月令; 得時 flags reconstructed as 득령·득지·득세 candidate grades"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ditianshui.strength-verdict",
+      "sourceReferenceIds": ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      "sourceLocators": [
+        "衰旺; Pack-local ditianshui-position-weighted-v1 100-point score profile"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "ditianshui.follow-transform-patterns",
+      "sourceReferenceIds": ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      "sourceLocators": [
+        "從象·化象·一行得氣; Pack-local ditianshui-follow-transform-v1 conditions"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
     }
   ]
 }

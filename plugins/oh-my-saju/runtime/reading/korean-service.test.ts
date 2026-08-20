@@ -49,9 +49,10 @@ describe('createAiKoreanSajuService', () => {
       'ditianshui',
       'qiongtong',
       'sanming-symbolic-curated',
+      'xingchong-resolution',
     ]);
-    expect(result.packReadings).toHaveLength(5);
-    expect(narrate).toHaveBeenCalledTimes(5);
+    expect(result.packReadings).toHaveLength(6);
+    expect(narrate).toHaveBeenCalledTimes(6);
     expect(
       captured.every(({ evidence }) =>
         evidence.findings.every(({ id }) =>

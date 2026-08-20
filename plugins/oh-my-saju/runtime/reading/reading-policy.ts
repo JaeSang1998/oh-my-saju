@@ -122,6 +122,11 @@ const DOCTRINE_DISCLOSURE_RULES: readonly DoctrineDisclosureRule[] = [
  * audit topics. Broad readings may use them when each term is translated in
  * place; pattern, useful-god, void, growth-stage, luck-cycle, and symbolic-star
  * material still require explicit user opt-in.
+ *
+ * `season-climate` is deliberately absent from the disclosure rules above: a
+ * solar-term coordinate and a seasonal tendency are plain calendar
+ * observations, not a useful-god prescription, so they belong to the same
+ * default vocabulary rather than to an opt-in doctrine gate.
  */
 const BROAD_DEFAULT_DOCTRINE_IDS = new Set<SajuDoctrineDisclosureId>([
   'day-master',

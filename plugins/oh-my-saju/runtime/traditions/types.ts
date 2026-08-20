@@ -22,6 +22,7 @@ export type InterpretationTopic =
   | 'yin-yang'
   | 'ten-gods'
   | 'relationships'
+  | 'season-climate'
   | 'void-branches'
   | 'strength'
   | 'pattern'
@@ -44,11 +45,25 @@ export type InterpretationRuleId =
   | 'core.relationships'
   | 'core.growth-stages'
   | 'core.void-branches'
+  | 'core.solar-term-position'
   | 'ziping.month-command'
   | 'ziping.pattern-candidate'
+  | 'ziping.governing-day'
+  | 'ziping.pattern-integrity'
+  | 'ziping.pattern-relief-god'
   | 'ditianshui.seasonal-state'
   | 'ditianshui.support-ledger'
+  | 'ditianshui.rooting-ledger'
+  | 'ditianshui.command-position'
+  | 'ditianshui.strength-verdict'
+  | 'ditianshui.follow-transform-patterns'
+  | 'xingchong.branch-bureau'
+  | 'xingchong.stem-combination-state'
+  | 'xingchong.resolution-order'
   | 'qiongtong.climate-candidates'
+  | 'qiongtong.climate-tendency'
+  | 'qiongtong.candidate-condition'
+  | 'qiongtong.pack-climate-priority'
   | 'sanming.travel-horse'
   | 'sanming.general-star'
   | 'sanming.canopy'
@@ -63,7 +78,9 @@ export type InterpretationRuleId =
   | 'sanming.lu'
   | 'sanming.literary-star'
   | 'sanming.blade-after-lu-all-stems'
-  | 'sanming.blade-yang-stems-only';
+  | 'sanming.blade-yang-stems-only'
+  | 'sanming.resentment-pair'
+  | 'sanming.ghost-gate-pair';
 
 export type ProfileLimitationId =
   | 'synthetic-element-balance-not-strength'
@@ -72,6 +89,7 @@ export type ProfileLimitationId =
   | 'doctrine-not-scientifically-validated'
   | 'ziping-candidate-not-complete-pattern'
   | 'ditianshui-evidence-no-strength-verdict'
+  | 'xingchong-resolution-no-fortune'
   | 'qiongtong-candidates-no-final-useful-god'
   | 'sanming-symbolic-raw-observation-only';
 

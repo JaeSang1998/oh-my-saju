@@ -23,7 +23,39 @@ Packs are knowledge artifacts, not Agent Skills. Their `knowledge.providerContra
 where a later version can materialize the same identifiers and provenance from an ontology or
 knowledge graph. Pack findings are kept separate; the runtime never votes them into one verdict.
 
-Plugin 0.4.5 adds:
+Plugin 0.6.0 installs six Tradition Packs — `calculation-baseline@1.2.0`, `ziping@1.2.0`,
+`ditianshui@1.2.0`, `qiongtong@1.2.0`, `sanming-symbolic-curated@1.2.0`, and the new
+`xingchong-resolution@1.0.0` — and adds:
+
+- `xingchong-resolution@1.0.0`, a Pack for 형충회합: Pack-local 방합·삼합·육합·천간합 tables, the
+  four-condition transform test (합화 / 기반 / 쟁합), and a bounded two-pass 탐합망충·충해합
+  resolution order with distance coefficients;
+- `ziping` pattern decision and success-defeat judgement, plus the Pack's own relief god, with an
+  explicit fall back to strength balancing when no relief god stands;
+- `ditianshui` clash/punishment damage on the rooting ledger, a Pack-local 100-point
+  position-weighted strength verdict, and 종격·화격·일행득기격 screening;
+- `qiongtong` per-candidate transparency-and-root condition checks and this Pack's own
+  first-priority climate candidate;
+- `sanming-symbolic-curated` 원진 and 귀문 pair tables, kept apart because they agree on only four
+  of six pairs, still opt-in and still without event meaning.
+
+Every one of these verdicts is Pack-local. The preset still declares `final-pattern`,
+`final-strength`, and `final-useful-god` as unsupported deterministic outputs: the plugin does not
+vote Packs into one answer.
+
+Plugin 0.5.0 added:
+
+- a `season-climate` reading topic that places the birth instant between two solar terms, names
+  the commanding hidden stem of the month, and states which way the chart's heat leans;
+- `ditianshui` root and command-position evidence: where the day master has roots, whether it
+  holds the month and the day ground, and what it leans on — as a candidate grade, never a final
+  신강·신약 verdict;
+- broad-reading display contract v3 with `절기와 계절` and `타고난 힘과 쓰는 법` sections, ten
+  distinct validated paragraphs, and `근거 — 해석` bullets that read the chart basis first;
+- stricter default-profile validation against Barnum prose and element-to-virtue shortcuts, with
+  the season-as-environment rejection lifted only inside the climate slot.
+
+Plugin 0.4.5 also added:
 
 - a dedicated two-person compatibility path that compares A→B and B→A day-master ten gods,
   cross-chart stem/branch relations, and every uncertain-time candidate pair;
@@ -37,8 +69,8 @@ Plugin 0.4.5 adds:
 
 Plugin 0.4 also includes:
 
-- `sanming-symbolic-curated@1.1.0` with 15 cited raw symbolic-star rules, including triad,
-  season-corner, day-stem, and separately named blade variants;
+- `sanming-symbolic-curated` cited raw symbolic-star rules, including triad, season-corner,
+  day-stem, and separately named blade variants;
 - daily, wedding, and moving election-date ranking whose classical matches and modern product score
   are separate, fully traced fields;
 - Tojeong 144-number mechanics without an unverified interpretation corpus;

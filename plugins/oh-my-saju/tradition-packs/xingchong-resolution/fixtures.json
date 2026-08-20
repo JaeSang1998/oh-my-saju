@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "fixtureSets": [
+    {
+      "id": "xingchong-resolution-v1.0:bureau-transform-and-resolution-order",
+      "paths": ["plugins/oh-my-saju/tradition-packs/xingchong-resolution/evaluate.test.ts"]
+    }
+  ]
+}

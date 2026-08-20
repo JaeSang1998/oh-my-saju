@@ -4,6 +4,18 @@
     {
       "id": "qiongtong.climate-candidates",
       "formalization": "reconstruction"
+    },
+    {
+      "id": "qiongtong.climate-tendency",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "qiongtong.candidate-condition",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "qiongtong.pack-climate-priority",
+      "formalization": "reconstruction"
     }
   ]
 }

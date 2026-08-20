@@ -55,6 +55,7 @@ export type {
   OhMySajuCompatibilityValidatedSuccess,
   OhMySajuConclusionRef,
   OhMySajuDefaultProfileDraft,
+  OhMySajuDefaultProfileV3Draft,
   OhMySajuFailure,
   OhMySajuLegacyBroadPresentationDraft,
   OhMySajuNarrationDraft,

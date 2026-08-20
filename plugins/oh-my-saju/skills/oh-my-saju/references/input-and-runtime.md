@@ -603,10 +603,11 @@ records an explicit unknown rather than claiming a model you cannot verify.
 
 When the caller explicitly sets `request.readingMode` to `broad`, the same `validate-reading`
 command must also contain `presentationDraft`. (`auto` remains backward-compatible and does not
-add this protocol requirement.) New hosts submit schema 2 `default-profile`. It selects seven or
-more distinct validated paragraphs for the thesis, two central mechanisms, strength and blind
-spot, work, and relationships. When the displayed ten-god row has at least two `정재`/`편재`
-placements, a distinct money paragraph is required as an eighth selection. The thesis quotes exact ordered `basis` and
+add this protocol requirement.) New hosts submit schema 3 `default-profile`. It selects ten or
+more distinct validated paragraphs for the thesis, the `season-climate` climate slot, two central
+mechanisms, the `strength` resource slot, strength and blind spot, work, and relationships. When
+the displayed ten-god row has at least two `정재`/`편재` placements, a distinct money paragraph is
+also required. The thesis quotes exact ordered `basis` and
 `portrait` spans. Every other selection declares its `role` and quotes exact ordered `basis` and
 `interpretation` spans. The strength/blind-spot pair must share finding support within one Pack.
 The runtime resolves only prose that already passed the Pack claim gate and rejects specialist
@@ -618,7 +619,7 @@ Some broad preparations still expose a required isolated draft for a Pack whose 
 outside the default-profile topic allowlist. Do not invent a personality claim from those findings
 and do not repeat the hidden doctrine term. Submit one neutral finding-backed sentence such as
 `이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.` for that Pack, then leave
-the paragraph out of schema 2 `presentationDraft`. It is validation-only protocol filler and is
+the paragraph out of the `presentationDraft`. It is validation-only protocol filler and is
 not rendered.
 
 For broad presentation it replaces repeated uncertainty prose with a local `△` marker for
@@ -628,23 +629,36 @@ is returned at `result.presentation.markdown`. Ordinary hosts should show that M
 must not append `reading.notice` or another free-form synthesis.
 
 Preparation fails early with policy `insufficient-broad-presentation-capacity` when the selected
-evidence policy cannot provide seven distinct allowed paragraphs. For an open reading, use
+evidence policy cannot provide ten distinct allowed paragraphs. For an open reading, use
 `variantPolicy: "include-candidate-dependent"` and retain the renderer's local uncertainty markers;
 otherwise switch to a narrower `focused` request. Do not wait until validation to fabricate or
 reuse prose, and do not silently override a user-requested stable-only policy.
 
 ### Broad presentation draft
 
-Use this schema 2 shape for new broad readings:
+Use this schema 3 shape for new broad readings. `climate` and `resource` are required slots;
+schema 2 drafts without them are still accepted for backward compatibility but render the older
+`_(근거: …)_` layout.
 
 ```json
 {
   "presentationDraft": {
-    "schemaVersion": "2",
+    "schemaVersion": "3",
     "kind": "default-profile",
+    "climate": {
+      "paragraph": {
+        "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
+        "source": { "kind": "section", "topic": "season-climate", "paragraphIndex": 0 }
+      },
+      "structure": {
+        "role": "climate",
+        "basis": "[절입 경과일·다음 절기까지의 거리·사령·한난 근거를 읽히는 절로]",
+        "interpretation": "[그 계절 좌표 위에서 몸이 실제로 움직이는 리듬]"
+      }
+    },
     "thesis": {
       "paragraph": {
-        "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+        "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
         "source": { "kind": "summary" }
       },
       "structure": {
@@ -655,7 +669,7 @@ Use this schema 2 shape for new broad readings:
     "core": [
       {
         "paragraph": {
-          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "packRef": { "id": "ditianshui", "version": "1.1.0" },
           "source": { "kind": "summary" }
         },
         "structure": {
@@ -666,7 +680,7 @@ Use this schema 2 shape for new broad readings:
       },
       {
         "paragraph": {
-          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
           "source": { "kind": "section", "topic": "chart-overview", "paragraphIndex": 0 }
         },
         "structure": {
@@ -676,10 +690,21 @@ Use this schema 2 shape for new broad readings:
         }
       }
     ],
+    "resource": {
+      "paragraph": {
+        "packRef": { "id": "ditianshui", "version": "1.1.0" },
+        "source": { "kind": "section", "topic": "strength", "paragraphIndex": 2 }
+      },
+      "structure": {
+        "role": "resource",
+        "basis": "[통근·득령·득지·득세로 읽은 실제 근거]",
+        "interpretation": "[자기 힘으로 끌고 가는지, 무엇에 기대는지]"
+      }
+    },
     "temperament": {
       "strength": {
         "paragraph": {
-          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "packRef": { "id": "ditianshui", "version": "1.1.0" },
           "source": { "kind": "section", "topic": "strength", "paragraphIndex": 0 }
         },
         "structure": {
@@ -690,7 +715,7 @@ Use this schema 2 shape for new broad readings:
       },
       "blindSpot": {
         "paragraph": {
-          "packRef": { "id": "ditianshui", "version": "1.0.0" },
+          "packRef": { "id": "ditianshui", "version": "1.1.0" },
           "source": { "kind": "section", "topic": "strength", "paragraphIndex": 1 }
         },
         "structure": {
@@ -703,7 +728,7 @@ Use this schema 2 shape for new broad readings:
     "work": [
       {
         "paragraph": {
-          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
           "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 0 }
         },
         "structure": {
@@ -716,7 +741,7 @@ Use this schema 2 shape for new broad readings:
     "money": [
       {
         "paragraph": {
-          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
           "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 2 }
         },
         "structure": {
@@ -729,7 +754,7 @@ Use this schema 2 shape for new broad readings:
     "relationships": [
       {
         "paragraph": {
-          "packRef": { "id": "calculation-baseline", "version": "1.1.0" },
+          "packRef": { "id": "calculation-baseline", "version": "1.2.0" },
           "source": { "kind": "section", "topic": "ten-gods", "paragraphIndex": 1 }
         },
         "structure": {
@@ -744,11 +769,23 @@ Use this schema 2 shape for new broad readings:
 ```
 
 `money` has the same one-or-two-item array shape with `role: "money"`. It is required when the
-displayed ten-god row contains at least two `정재`/`편재` placements and otherwise optional. Default
-profile selections may use only `chart-overview`, `day-master`, `five-elements`, `ten-gods`,
-`relationships`, and `strength` findings. The two `core` selections, together with the thesis,
-must combine day-master or seasonal-strength evidence with another chart placement, relation, or
-ten-god axis. Every quoted span must appear exactly and in order in the selected paragraph.
+displayed ten-god row contains at least two `정재`/`편재` placements and otherwise optional.
+Default profile selections may use only `chart-overview`, `day-master`, `five-elements`,
+`ten-gods`, `relationships`, `strength`, and `season-climate` findings. The `climate` slot must
+resolve to a `season-climate` paragraph and the `resource` slot to a `strength` paragraph;
+otherwise validation fails with `climate-slot-topic` or `resource-slot-topic`. The two `core`
+selections, together with the thesis, must combine day-master or seasonal-strength evidence with
+another chart placement, relation, or ten-god axis. Every quoted span must appear exactly and in
+order in the selected paragraph.
+
+Each rendered profile bullet is `{basis} — {interpretation}` on one line, with any `△`/`◇` marker
+at the head of the line. Write `basis` as a clause that can be read out loud and drop its trailing
+period; the renderer supplies the em dash. `PROFILE_TRANSLATIONESE_PATTERN` applies to the
+`interpretation` span only, so a legitimate chart statement in `basis` is not rejected, while
+`interpretation` and the thesis `portrait` are additionally checked for Barnum prose
+(`generic-barnum-profile-text`) and for element-to-virtue shortcuts
+(`element-to-virtue-shortcut`). Season-as-environment wording is rejected everywhere except the
+`climate` slot, where reading the season as heat, cold, and damp is the correct doctrine.
 
 ### Legacy broad presentation draft (schema 1)
 
@@ -894,12 +931,13 @@ inside `presentationDraft`.
 Allowed section topics are:
 
 `chart-overview`, `day-master`, `five-elements`, `yin-yang`, `ten-gods`, `relationships`,
-`void-branches`, `strength`, `pattern`, `useful-god`, `growth-stages`, `luck-cycles`,
-`symbolic-stars`, `compatibility`, and `timing`.
+`season-climate`, `void-branches`, `strength`, `pattern`, `useful-god`, `growth-stages`,
+`luck-cycles`, `symbolic-stars`, `compatibility`, and `timing`.
 
-The installed `sanming-symbolic-curated@1.1.0` Pack reports 15 cited raw branch/stem matches:
+The installed `sanming-symbolic-curated@1.2.0` Pack reports 17 cited raw branch/stem matches:
 travel horse, general star, canopy, Xianchi, robbery, lost spirit, disaster, six misfortune,
-lonely/widow, heavenly noble, Lu, literary star, and two blade variants. It reports absence only
+lonely/widow, heavenly noble, Lu, literary star, two blade variants, and the separate
+resentment (원진) and ghost-gate (귀문) pair tables. It reports absence only
 when all four natal branches are known; missing birth time remains an explicitly partial
 observation. Xianchi qualification and blade-school differences remain visible metadata. None of
 these raw matches supplies automatic 길흉, movement, travel, or event predictions.

@@ -3,7 +3,7 @@
   "schemaVersion": "1",
   "kind": "oh-my-saju-tradition-pack",
   "id": "qiongtong",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "displayName": "궁통보감 조후",
   "compatibility": {
     "coreEngineSchemaVersions": ["5"],
@@ -19,12 +19,12 @@
       "immutability": "content-addressed",
       "algorithm": "sha256",
       "canonicalization": "ordered-file-bytes-with-path-v1",
-      "digest": "e6cd91ce398df1fbe795466adb0ef5602ed6359133a1fdfc5ba58bd76e9f1c4a",
+      "digest": "b2bb8ec00b67d6696266df128ee2b72ab3f4744c042129063a3352ff210b1b0b",
       "provenanceContract": "tradition-provenance-v1",
       "queryContract": "static-resource-query-v1"
     },
     "sources": ["sources.json"],
-    "tables": ["qiongtong-table-v1.ts"],
+    "tables": ["qiongtong-table-v1.ts", "climate-baseline-v1.json", "hidden-stems-v1.json"],
     "rules": ["rules.json", "profile.ts", "evaluate.ts"],
     "fixtures": ["fixtures.json"],
     "provenance": ["provenance.json"]

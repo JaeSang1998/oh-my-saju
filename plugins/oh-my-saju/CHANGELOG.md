@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.6.0 — 2026-08-20
+
+- Add the `xingchong-resolution@1.0.0` pack (profile `xingchong-resolution@1.0.0`) with
+  `branch-relation-tables-v1.json` and three rules: `xingchong.branch-bureau`,
+  `xingchong.stem-combination-state`, `xingchong.resolution-order`. Half-directional bureaus are
+  not recognized, 육합 never locks a clash, and the resolver runs a fixed two passes
+  (충해합 then 탐합망충) with no feedback between them.
+- Add `ziping.pattern-integrity` (topic `pattern`) and `ziping.pattern-relief-god` (topic
+  `useful-god`) backed by `pattern-integrity-v1.json`; clear the now-false
+  `governing-day-not-implemented` and `success-defeat-rescue-rules-not-implemented` reasons from
+  `ziping.pattern-candidate`.
+- Add `ditianshui.strength-verdict` and `ditianshui.follow-transform-patterns` (topic `strength`)
+  backed by `strength-score-v1.json` and `follow-transform-v1.json`; switch
+  `damageAdjustment` from `not-applied` to `clash-0.5-punishment-0.8` on the rooting ledger.
+- Add `qiongtong.candidate-condition` and `qiongtong.pack-climate-priority` (topic `useful-god`)
+  backed by a pack-local `hidden-stems-v1.json`; keep `qiongtong.113-cell-source-audit`
+  unresolved.
+- Add `sanming.resentment-pair` and `sanming.ghost-gate-pair` (topic `symbolic-stars`, opt-in) from
+  two separate tables, with `resentmentGhostGateDivergence: 'two-of-six-pairs-differ'`.
+- Keep `unsupportedDeterministicOutputs` (`final-pattern`, `final-strength`, `final-useful-god`)
+  unchanged; record `ziping.cross-school-final-useful-god`,
+  `ditianshui.cross-school-final-strength`, `qiongtong.cross-school-final-useful-god`, and
+  `xingchong.cross-school-resolution-order` as unresolved instead.
+- Bump `ziping`, `ditianshui`, `qiongtong`, and `sanming-symbolic-curated` to 1.2.0. Narration now
+  runs six pack tasks instead of five.
+
+## 0.5.0 — 2026-08-20
+
+- Add the `season-climate` topic and five rules: `core.solar-term-position`,
+  `ziping.governing-day`, `qiongtong.climate-tendency`, `ditianshui.rooting-ledger`, and
+  `ditianshui.command-position`. Each pack reads only its own local table.
+- Extend `DoctrineRuleContext` with a `solarTerm` context taken from the exact report; rules
+  degrade to `coverage: 'partial'` when the calculation is a possibility set.
+- Ship presentation contract v3: prompt template 5.0.0, six sections, ten distinct broad
+  paragraphs, required `climate` and `resource` slots, and `근거 — 해석` bullet rendering.
+- Reject Barnum prose and element-to-virtue shortcuts in `interpretation`/`portrait` spans, limit
+  the translationese gate to interpretation spans, and exempt the `climate` slot from the
+  season-as-environment gate.
+- Restate the `ditianshui` limitation as showing season, root, and command evidence with a
+  candidate grade while still not fixing a final 신강·신약 verdict.
+- Bump `calculation-baseline` to 1.2.0 and `ziping`, `ditianshui`, and `qiongtong` to 1.1.0.
+
 ## 0.4.5 — 2026-07-31
 
 - Add the dedicated `prepare-compatibility` / `validate-compatibility` path with separate natal

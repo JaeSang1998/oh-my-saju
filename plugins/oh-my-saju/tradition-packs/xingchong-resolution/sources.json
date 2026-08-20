@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1",
+  "sources": [
+    {
+      "id": "yuanhai-ziping-combination-clash-v1",
+      "kind": "classical-text",
+      "title": "《淵海子平》 합충론",
+      "citation": "徐大升 계열 《淵海子平》의 三合·方合·六合·天干合과 沖에 관한 장. 이 Pack은 표만 옮겼고 기준 판본 대조는 아직 하지 않았다.",
+      "url": "https://zh.wikisource.org/zh-hant/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      "locator": "論十干合·論支合·論三合·論沖 항목",
+      "textualLayer": "base-text",
+      "verification": "unverified"
+    },
+    {
+      "id": "sanming-tonghui-xingchong-v1",
+      "kind": "classical-text",
+      "title": "《三命通會》 論刑衝破害",
+      "citation": "萬民英, 《三命通會》의 刑·衝·破·害 항목. 삼형 조합과 자형 지지를 확인하는 데만 인용했으며 기준 판본 대조는 하지 않았다.",
+      "url": "https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83",
+      "locator": "論刑·論衝·論破害 항목",
+      "textualLayer": "base-text",
+      "verification": "unverified"
+    },
+    {
+      "id": "oh-my-saju-xingchong-resolution-v1",
+      "kind": "modern-convention",
+      "title": "Oh My Saju xingchong resolution reconstruction",
+      "citation": "국 성립·합화 4조건·탐합망충·충해합을 2-pass 로 계산하는 Pack 규칙. 합화 무근 조건은 화신으로 변해야 하는 천간에만 걸고, 천간합은 붙어 있는 짝만 인정하며, 충해합은 삼합국의 왕지에만 적용해 방합은 충으로 깨지 않는다(방합도 왕지 충이면 깨진다고 보는 계열과 갈린다). 거리 계수와 반합 3분류도 이 Pack의 프로파일이다.",
+      "url": "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      "locator": "plugins/oh-my-saju/tradition-packs/xingchong-resolution/evaluate.ts",
+      "textualLayer": "modern-analysis",
+      "verification": "engine-tested"
+    }
+  ]
+}

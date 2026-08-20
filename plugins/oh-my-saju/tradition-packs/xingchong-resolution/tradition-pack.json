@@ -1,0 +1,46 @@
+{
+  "$schema": "../tradition-pack.schema.json",
+  "schemaVersion": "1",
+  "kind": "oh-my-saju-tradition-pack",
+  "id": "xingchong-resolution",
+  "version": "1.0.0",
+  "displayName": "형충회합 해소",
+  "compatibility": {
+    "coreEngineSchemaVersions": ["5"],
+    "runtimeContract": "oh-my-saju-tradition-runtime-v1"
+  },
+  "knowledge": {
+    "providerContract": "tradition-knowledge-provider-v1",
+    "adapter": "static-files",
+    "supportedAdapters": ["static-files", "ontology-snapshot", "knowledge-graph-snapshot"],
+    "snapshot": {
+      "kind": "static-file-snapshot",
+      "version": "1.0.0",
+      "immutability": "content-addressed",
+      "algorithm": "sha256",
+      "canonicalization": "ordered-file-bytes-with-path-v1",
+      "digest": "e6e8ada99452d7b9391c5c405f07c3b8b194979d1c54f3924f61c67b99b39705",
+      "provenanceContract": "tradition-provenance-v1",
+      "queryContract": "static-resource-query-v1"
+    },
+    "sources": ["sources.json"],
+    "tables": ["branch-relation-tables-v1.json"],
+    "rules": ["rules.json", "profile.ts", "evaluate.ts"],
+    "fixtures": ["fixtures.json"],
+    "provenance": ["provenance.json"]
+  },
+  "runtime": {
+    "execution": "statically-registered-built-in",
+    "profileModule": "profile.ts",
+    "helperModules": ["evaluate.ts"]
+  },
+  "outputContract": {
+    "kind": "isolated-finding-set",
+    "profileIsolation": "no-cross-pack-voting"
+  },
+  "ontology": {
+    "namespace": "urn:oh-my-saju:tradition:xingchong-resolution:v1",
+    "materialization": "not-built",
+    "snapshot": null
+  }
+}

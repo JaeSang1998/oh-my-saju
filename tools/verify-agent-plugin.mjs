@@ -127,6 +127,7 @@ try {
     'ditianshui',
     'qiongtong',
     'sanming-symbolic-curated',
+    'xingchong-resolution',
   ];
   for (const packId of packIds) {
     const directory = join(packRoot, packId);
@@ -240,8 +241,8 @@ try {
   const result = JSON.parse(smoke.stdout);
   const expectedCoreSourceRevision = await deriveBundledCoreSourceRevision();
   assert.equal(result.ok, true);
-  assert.equal(result.result.analysis.doctrines.length, 4);
-  assert.equal(result.result.narrationTasks.length, 5);
+  assert.equal(result.result.analysis.doctrines.length, 5);
+  assert.equal(result.result.narrationTasks.length, 6);
   assert.equal(result.result.binding.canonicalization, 'oh-my-saju-preparation-v2');
   assert.equal(result.result.binding.core.name, 'saju-engine');
   assert.notEqual(
@@ -267,7 +268,14 @@ try {
   assert.equal(result.result.binding.runtime.name, 'oh-my-saju');
   assert.deepEqual(
     result.result.binding.packs.map(({ packRef }) => packRef.id),
-    ['calculation-baseline', 'ziping', 'ditianshui', 'qiongtong', 'sanming-symbolic-curated'],
+    [
+      'calculation-baseline',
+      'ziping',
+      'ditianshui',
+      'qiongtong',
+      'sanming-symbolic-curated',
+      'xingchong-resolution',
+    ],
   );
   assert.equal(
     result.result.binding.packs.every(({ rulesArtifactDigest }) =>
@@ -315,7 +323,7 @@ try {
   const validated = JSON.parse(validateSmoke.stdout);
   assert.equal(validated.ok, true);
   assert.equal(validated.result.binding.digest, result.result.binding.digest);
-  assert.equal(validated.result.reading.packReadings.length, 5);
+  assert.equal(validated.result.reading.packReadings.length, 6);
   assert.equal(
     validated.result.reading.packReadings.every(
       ({ reading }) => reading.audit.validation.findingReferencesValidated === true,

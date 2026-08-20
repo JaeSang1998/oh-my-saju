@@ -8,6 +8,22 @@
     {
       "id": "ditianshui.support-ledger",
       "formalization": "reconstruction"
+    },
+    {
+      "id": "ditianshui.rooting-ledger",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "ditianshui.command-position",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "ditianshui.strength-verdict",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "ditianshui.follow-transform-patterns",
+      "formalization": "reconstruction"
     }
   ]
 }

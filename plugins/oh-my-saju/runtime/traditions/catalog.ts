@@ -9,6 +9,8 @@ import { QIONGTONG_CLIMATE_PROFILE_V1 } from '../../tradition-packs/qiongtong/pr
 import { QIONGTONG_PROVENANCE } from '../../tradition-packs/qiongtong/provenance';
 import { SANMING_SYMBOLIC_CURATED_PROFILE_V1 } from '../../tradition-packs/sanming-symbolic-curated/profile';
 import { SANMING_SYMBOLIC_CURATED_PROVENANCE } from '../../tradition-packs/sanming-symbolic-curated/provenance';
+import { XINGCHONG_RESOLUTION_PROFILE_V1 } from '../../tradition-packs/xingchong-resolution/profile';
+import { XINGCHONG_RESOLUTION_PROVENANCE } from '../../tradition-packs/xingchong-resolution/provenance';
 import { ZIPING_MONTH_COMMAND_PROFILE_V1 } from '../../tradition-packs/ziping/profile';
 import { ZIPING_PROVENANCE } from '../../tradition-packs/ziping/provenance';
 import { interpretationRuleContract } from './rule-contracts';
@@ -74,14 +76,18 @@ function contract(
 
 const CALCULATION_BASELINE_PACK_REF = deepFreeze({
   id: 'calculation-baseline',
-  version: '1.1.0',
+  version: '1.2.0',
 } as const);
-const ZIPING_PACK_REF = deepFreeze({ id: 'ziping', version: '1.0.0' } as const);
-const DITIANSHUI_PACK_REF = deepFreeze({ id: 'ditianshui', version: '1.0.0' } as const);
-const QIONGTONG_PACK_REF = deepFreeze({ id: 'qiongtong', version: '1.0.0' } as const);
+const ZIPING_PACK_REF = deepFreeze({ id: 'ziping', version: '1.2.0' } as const);
+const DITIANSHUI_PACK_REF = deepFreeze({ id: 'ditianshui', version: '1.2.0' } as const);
+const QIONGTONG_PACK_REF = deepFreeze({ id: 'qiongtong', version: '1.2.0' } as const);
 const SANMING_SYMBOLIC_CURATED_PACK_REF = deepFreeze({
   id: 'sanming-symbolic-curated',
-  version: '1.1.0',
+  version: '1.2.0',
+} as const);
+const XINGCHONG_RESOLUTION_PACK_REF = deepFreeze({
+  id: 'xingchong-resolution',
+  version: '1.0.0',
 } as const);
 
 const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
@@ -108,8 +114,8 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
       outputBoundary: 'chart-observation',
       sourceCoverage: {
         status: 'complete',
-        verifiedUnits: 11,
-        totalUnits: 11,
+        verifiedUnits: 12,
+        totalUnits: 12,
         unit: 'rules',
       },
       implementedCapabilityIds: [...COMMON_STRUCTURAL_PROFILE_V1.enabledRuleIds],
@@ -157,7 +163,7 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
       sourceCoverage: {
         status: 'partial',
         verifiedUnits: 1,
-        totalUnits: 2,
+        totalUnits: 5,
         unit: 'rules',
       },
       implementedCapabilityIds: [
@@ -166,13 +172,12 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
         'ziping.surface-transparency',
         'ziping.unranked-pattern-candidates',
         'ziping.lu-yang-blade-base-candidate',
-      ],
-      unresolvedCapabilityIds: [
         'ziping.governing-days',
         'ziping.success-defeat-rescue',
         'ziping.final-pattern',
         'ziping.useful-god',
       ],
+      unresolvedCapabilityIds: ['ziping.cross-school-final-useful-god'],
     },
     contract: contract(ZIPING_MONTH_COMMAND_PROFILE_V1, ZIPING_PROVENANCE, true),
     assurance: {
@@ -215,17 +220,21 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
       sourceCoverage: {
         status: 'partial',
         verifiedUnits: 1,
-        totalUnits: 2,
+        totalUnits: 6,
         unit: 'rules',
       },
       implementedCapabilityIds: [
         'sanming.seasonal-state-table',
         'ditianshui.visible-hidden-evidence-ledger',
-      ],
-      unresolvedCapabilityIds: [
-        'ditianshui.evidence-weighting',
+        'ditianshui.rooting-ledger',
+        'ditianshui.rooting-damage-adjustment',
+        'ditianshui.command-position',
         'ditianshui.final-strength',
         'ditianshui.follow-transform-patterns',
+      ],
+      unresolvedCapabilityIds: [
+        'ditianshui.cross-school-final-strength',
+        'ditianshui.transformed-element-root-substitution',
       ],
     },
     contract: contract(DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1, DITIANSHUI_PROVENANCE, true),
@@ -275,11 +284,14 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
         'qiongtong.120-cell-candidate-table',
         'qiongtong.candidate-presence',
         'qiongtong.7-cell-source-audit',
+        'qiongtong.climate-tendency',
+        'qiongtong.candidate-transparency-and-root-check',
+        'qiongtong.final-climate-useful-god',
       ],
       unresolvedCapabilityIds: [
         'qiongtong.113-cell-source-audit',
-        'qiongtong.condition-evaluation',
-        'qiongtong.final-climate-useful-god',
+        'qiongtong.base-text-condition-clause-evaluation',
+        'qiongtong.cross-school-final-useful-god',
       ],
     },
     contract: contract(QIONGTONG_CLIMATE_PROFILE_V1, QIONGTONG_PROVENANCE, true),
@@ -321,9 +333,9 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
       doctrineCoverage: 'partial',
       outputBoundary: 'traditional-evidence',
       sourceCoverage: {
-        status: 'complete',
+        status: 'partial',
         verifiedUnits: 15,
-        totalUnits: 15,
+        totalUnits: 17,
         unit: 'rules',
       },
       implementedCapabilityIds: [
@@ -335,8 +347,11 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
         'sanming.blade-after-lu-all-stems.raw-branch-match',
         'sanming.blade-yang-stems-only.raw-branch-match',
         'sanming.unknown-hour-partial-observation',
+        'sanming.resentment-pair-table-match',
+        'sanming.ghost-gate-pair-table-match',
       ],
       unresolvedCapabilityIds: [
+        'sanming.resentment-ghost-gate-edition-audit',
         'sanming.xianchi-heavenly-stem-nayin-qualification',
         'sanming.blade-variant-selection',
         'sanming.symbolic-star-meaning',
@@ -362,6 +377,61 @@ const CATALOG: readonly TraditionPackCatalogEntry[] = deepFreeze([
       note: 'no-quantitative-market-survey',
     },
   },
+  {
+    packRef: XINGCHONG_RESOLUTION_PACK_REF,
+    profileRef: profileRef(XINGCHONG_RESOLUTION_PROFILE_V1),
+    displayName: XINGCHONG_RESOLUTION_PROFILE_V1.displayName,
+    kind: 'classical-doctrine',
+    productPriority: 50,
+    lineage: {
+      work: '淵海子平 합충론 + 三命通會 論刑衝破害',
+      textualLayer: 'reconstruction',
+    },
+    supportedTopics: XINGCHONG_RESOLUTION_PROFILE_V1.supportedTopics,
+    execution: {
+      deterministicGrounding: true,
+      aiSynthesis: 'optional',
+      crossPackRawFindingMixing: 'forbidden',
+    },
+    maturity: {
+      runtime: 'stable',
+      implementation: 'complete-for-declared-output',
+      doctrineCoverage: 'partial',
+      outputBoundary: 'traditional-evidence',
+      sourceCoverage: {
+        status: 'partial',
+        verifiedUnits: 0,
+        totalUnits: 3,
+        unit: 'rules',
+      },
+      implementedCapabilityIds: [
+        'xingchong.branch-bureau',
+        'xingchong.stem-combination-state',
+        'xingchong.resolution-order',
+      ],
+      unresolvedCapabilityIds: [
+        'xingchong.classical-edition-audit',
+        'xingchong.wumei-transform-selection',
+        'xingchong.transformed-element-substitution',
+        'xingchong.cross-school-resolution-order',
+      ],
+    },
+    contract: contract(XINGCHONG_RESOLUTION_PROFILE_V1, XINGCHONG_RESOLUTION_PROVENANCE, true),
+    assurance: {
+      release: 'stable',
+      sourceFidelity: 'unverified',
+      fixtureMaturity: 'basic',
+      expertReview: 'not-reviewed',
+      predictiveValidity: 'not-established',
+    },
+    adoption: {
+      status: 'documented',
+      market: 'ko-KR',
+      asOf: '2026-08-20',
+      sourceReferenceIds: ['yuanhai-ziping-combination-clash-v1'],
+      note: 'method-documented-no-market-share',
+    },
+  },
 ]);
 
 const PROFILES: readonly TraditionRuleProfile[] = deepFreeze([
@@ -370,6 +440,7 @@ const PROFILES: readonly TraditionRuleProfile[] = deepFreeze([
   DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1,
   QIONGTONG_CLIMATE_PROFILE_V1,
   SANMING_SYMBOLIC_CURATED_PROFILE_V1,
+  XINGCHONG_RESOLUTION_PROFILE_V1,
 ]);
 
 const PROFILE_BY_PACK_KEY = new Map(
@@ -384,6 +455,7 @@ export const DEFAULT_KOREAN_TRADITION_PACK_REFS_V1: readonly TraditionPackRef[] 
   DITIANSHUI_PACK_REF,
   QIONGTONG_PACK_REF,
   SANMING_SYMBOLIC_CURATED_PACK_REF,
+  XINGCHONG_RESOLUTION_PACK_REF,
 ]);
 
 export function listTraditionPacks(): readonly TraditionPackCatalogEntry[] {

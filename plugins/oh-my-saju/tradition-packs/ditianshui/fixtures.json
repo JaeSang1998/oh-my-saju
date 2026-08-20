@@ -7,6 +7,10 @@
         "plugins/oh-my-saju/runtime/traditions/doctrine-rules.test.ts",
         "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"
       ]
+    },
+    {
+      "id": "ditianshui-v1.2:damage-adjusted-rooting-strength-verdict-and-follow-transform",
+      "paths": ["plugins/oh-my-saju/tradition-packs/ditianshui/evaluate.test.ts"]
     }
   ]
 }

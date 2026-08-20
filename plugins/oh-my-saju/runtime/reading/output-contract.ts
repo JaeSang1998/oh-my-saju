@@ -11,6 +11,7 @@ export const SAJU_TOPIC_TITLES = deepFreeze({
   'yin-yang': '음양 분포',
   'ten-gods': '십신',
   relationships: '합·충 등 기둥 관계',
+  'season-climate': '절기와 계절',
   'void-branches': '공망',
   strength: '신강·신약',
   pattern: '격국',

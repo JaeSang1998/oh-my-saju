@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1",
+  "profileId": "yueling-fenye-yuanhai-v1",
+  "monthCommand": {
+    "자": [
+      { "stem": "임", "rank": "여기", "days": 10 },
+      { "stem": "계", "rank": "정기", "days": 20 }
+    ],
+    "축": [
+      { "stem": "계", "rank": "여기", "days": 9 },
+      { "stem": "신", "rank": "중기", "days": 3 },
+      { "stem": "기", "rank": "정기", "days": 18 }
+    ],
+    "인": [
+      { "stem": "무", "rank": "여기", "days": 7 },
+      { "stem": "병", "rank": "중기", "days": 7 },
+      { "stem": "갑", "rank": "정기", "days": 16 }
+    ],
+    "묘": [
+      { "stem": "갑", "rank": "여기", "days": 10 },
+      { "stem": "을", "rank": "정기", "days": 20 }
+    ],
+    "진": [
+      { "stem": "을", "rank": "여기", "days": 9 },
+      { "stem": "계", "rank": "중기", "days": 3 },
+      { "stem": "무", "rank": "정기", "days": 18 }
+    ],
+    "사": [
+      { "stem": "무", "rank": "여기", "days": 7 },
+      { "stem": "경", "rank": "중기", "days": 7 },
+      { "stem": "병", "rank": "정기", "days": 16 }
+    ],
+    "오": [
+      { "stem": "병", "rank": "여기", "days": 10 },
+      { "stem": "기", "rank": "중기", "days": 9 },
+      { "stem": "정", "rank": "정기", "days": 11 }
+    ],
+    "미": [
+      { "stem": "정", "rank": "여기", "days": 9 },
+      { "stem": "을", "rank": "중기", "days": 3 },
+      { "stem": "기", "rank": "정기", "days": 18 }
+    ],
+    "신": [
+      { "stem": "무", "rank": "여기", "days": 7 },
+      { "stem": "임", "rank": "중기", "days": 7 },
+      { "stem": "경", "rank": "정기", "days": 16 }
+    ],
+    "유": [
+      { "stem": "경", "rank": "여기", "days": 10 },
+      { "stem": "신", "rank": "정기", "days": 20 }
+    ],
+    "술": [
+      { "stem": "신", "rank": "여기", "days": 9 },
+      { "stem": "정", "rank": "중기", "days": 3 },
+      { "stem": "무", "rank": "정기", "days": 18 }
+    ],
+    "해": [
+      { "stem": "무", "rank": "여기", "days": 7 },
+      { "stem": "갑", "rank": "중기", "days": 7 },
+      { "stem": "임", "rank": "정기", "days": 16 }
+    ]
+  }
+}

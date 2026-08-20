@@ -1,7 +1,12 @@
 import type { EarthlyBranch, HeavenlyStem, SajuPillarName } from 'saju-engine';
 import { canonicalJsonStringify } from '../../runtime/internal/canonical-json';
 import { deepFreeze } from '../../runtime/internal/deep-freeze';
-import { comparison, PILLAR_POSITIONS } from '../../runtime/traditions/rule-helpers';
+import {
+  comparison,
+  PILLAR_POSITIONS,
+  withComitativeParticle,
+  withTopicParticle,
+} from '../../runtime/traditions/rule-helpers';
 import type {
   DoctrineRuleContext,
   DoctrineRuleMatch,
@@ -28,7 +33,12 @@ type SanmingDayStemRuleId =
 
 type SanmingYearBranchRuleId = SanmingTriadSymbolicRuleId | SanmingSeasonCornerRuleId;
 
-export type SanmingSymbolicCuratedRuleId = SanmingYearBranchRuleId | SanmingDayStemRuleId;
+type SanmingBranchPairRuleId = 'sanming.resentment-pair' | 'sanming.ghost-gate-pair';
+
+export type SanmingSymbolicCuratedRuleId =
+  | SanmingYearBranchRuleId
+  | SanmingDayStemRuleId
+  | SanmingBranchPairRuleId;
 
 export const SANMING_SYMBOLIC_CURATED_RULE_IDS_V1: readonly SanmingSymbolicCuratedRuleId[] =
   deepFreeze([
@@ -47,6 +57,8 @@ export const SANMING_SYMBOLIC_CURATED_RULE_IDS_V1: readonly SanmingSymbolicCurat
     'sanming.literary-star',
     'sanming.blade-after-lu-all-stems',
     'sanming.blade-yang-stems-only',
+    'sanming.resentment-pair',
+    'sanming.ghost-gate-pair',
   ]);
 
 const TRIAD_SOURCE_IDS = ['sanming-tonghui-triad-symbolic-stars-v1'] as const;
@@ -56,6 +68,7 @@ const HEAVENLY_NOBLE_SOURCE_IDS = ['sanming-tonghui-heavenly-noble-v1'] as const
 const LU_SOURCE_IDS = ['sanming-tonghui-lu-v1'] as const;
 const LITERARY_STAR_SOURCE_IDS = ['selection-1867-literary-star-v1'] as const;
 const BLADE_SOURCE_IDS = ['sanming-tonghui-blade-variants-v1'] as const;
+const BRANCH_PAIR_SOURCE_IDS = ['korean-circulated-resentment-ghost-gate-v1'] as const;
 
 export const SANMING_TRIAD_SYMBOLIC_STAR_BRANCH_V1: Readonly<
   Record<SanmingTriadSymbolicRuleId, Readonly<Record<EarthlyBranch, EarthlyBranch>>>
@@ -275,6 +288,54 @@ export const SANMING_DAY_STEM_TARGET_BRANCHES_V1: Readonly<
   },
 });
 
+/**
+ * 원진 pair table.  It is deliberately separate from the 귀문 table: the two
+ * tables agree on only four of six pairs, and merging them would erase the
+ * 자미·인유 versus 자유·인미 divergence.
+ */
+export const SANMING_RESENTMENT_PAIRS_V1: readonly (readonly [EarthlyBranch, EarthlyBranch])[] =
+  deepFreeze([
+    ['자', '미'],
+    ['축', '오'],
+    ['인', '유'],
+    ['묘', '신'],
+    ['진', '해'],
+    ['사', '술'],
+  ]);
+
+/** 귀문 pair table, kept apart from the 원진 table on purpose. */
+export const SANMING_GHOST_GATE_PAIRS_V1: readonly (readonly [EarthlyBranch, EarthlyBranch])[] =
+  deepFreeze([
+    ['자', '유'],
+    ['축', '오'],
+    ['인', '미'],
+    ['묘', '신'],
+    ['진', '해'],
+    ['사', '술'],
+  ]);
+
+const BRANCH_PAIR_TABLE_BY_RULE: Readonly<
+  Record<
+    SanmingBranchPairRuleId,
+    {
+      readonly tableId: string;
+      readonly label: string;
+      readonly pairs: readonly (readonly [EarthlyBranch, EarthlyBranch])[];
+    }
+  >
+> = deepFreeze({
+  'sanming.resentment-pair': {
+    tableId: 'sanming-resentment-pairs-v1',
+    label: '원진',
+    pairs: SANMING_RESENTMENT_PAIRS_V1,
+  },
+  'sanming.ghost-gate-pair': {
+    tableId: 'sanming-ghost-gate-pairs-v1',
+    label: '귀문',
+    pairs: SANMING_GHOST_GATE_PAIRS_V1,
+  },
+});
+
 const SYMBOLIC_STAR_BY_RULE: Readonly<Record<SanmingSymbolicCuratedRuleId, string>> = deepFreeze({
   'sanming.travel-horse': 'travel-horse',
   'sanming.general-star': 'general-star',
@@ -291,6 +352,8 @@ const SYMBOLIC_STAR_BY_RULE: Readonly<Record<SanmingSymbolicCuratedRuleId, strin
   'sanming.literary-star': 'literary-star',
   'sanming.blade-after-lu-all-stems': 'blade',
   'sanming.blade-yang-stems-only': 'blade',
+  'sanming.resentment-pair': 'resentment',
+  'sanming.ghost-gate-pair': 'ghost-gate',
 });
 
 const BRANCH_POSITION_LABEL: Readonly<Record<SajuPillarName, string>> = {
@@ -309,6 +372,7 @@ const SEASON_CORNER_RULE_IDS: ReadonlySet<string> = new Set(
 const DAY_STEM_RULE_IDS: ReadonlySet<string> = new Set(
   Object.keys(SANMING_DAY_STEM_TARGET_BRANCHES_V1),
 );
+const BRANCH_PAIR_RULE_IDS: ReadonlySet<string> = new Set(Object.keys(BRANCH_PAIR_TABLE_BY_RULE));
 
 function isTriadRule(ruleId: string): ruleId is SanmingTriadSymbolicRuleId {
   return TRIAD_RULE_IDS.has(ruleId);
@@ -322,7 +386,12 @@ function isDayStemRule(ruleId: string): ruleId is SanmingDayStemRuleId {
   return DAY_STEM_RULE_IDS.has(ruleId);
 }
 
+function isBranchPairRule(ruleId: string): ruleId is SanmingBranchPairRuleId {
+  return BRANCH_PAIR_RULE_IDS.has(ruleId);
+}
+
 function sourceReferenceIds(ruleId: SanmingSymbolicCuratedRuleId): readonly string[] {
+  if (isBranchPairRule(ruleId)) return BRANCH_PAIR_SOURCE_IDS;
   if (ruleId === 'sanming.travel-horse') return TRAVEL_HORSE_SOURCE_IDS;
   if (isTriadRule(ruleId)) return TRIAD_SOURCE_IDS;
   if (isSeasonCornerRule(ruleId)) return SEASON_CORNER_SOURCE_IDS;
@@ -332,10 +401,96 @@ function sourceReferenceIds(ruleId: SanmingSymbolicCuratedRuleId): readonly stri
   return BLADE_SOURCE_IDS;
 }
 
+/**
+ * Records that two branches match one row of a pair table.  The Pack states the
+ * table match only; it attaches no event, personality, or fortune meaning.
+ */
+function evaluateBranchPairRule(
+  ruleId: SanmingBranchPairRuleId,
+  context: DoctrineRuleContext,
+): DoctrineRuleMatch {
+  const { tableId, label, pairs } = BRANCH_PAIR_TABLE_BY_RULE[ruleId];
+  const observedPillars = PILLAR_POSITIONS.flatMap((position) => {
+    const pillar = context.pillars[position];
+    return pillar === null ? [] : [{ position, branch: pillar.branch.korean }];
+  });
+  const omitted = PILLAR_POSITIONS.filter((position) => context.pillars[position] === null);
+  const matches = pairs.flatMap(([left, right]) =>
+    observedPillars.flatMap((first, firstIndex) =>
+      observedPillars.slice(firstIndex + 1).flatMap((second) =>
+        (first.branch === left && second.branch === right) ||
+        (first.branch === right && second.branch === left)
+          ? [
+              {
+                tableRow: [left, right] as const,
+                positions: [first.position, second.position] as const,
+                branches: [first.branch, second.branch] as const,
+              },
+            ]
+          : [],
+      ),
+    ),
+  );
+  const partial = omitted.length > 0;
+  const status = partial
+    ? matches.length === 0
+      ? 'indeterminate-omitted-pillar'
+      : 'raw-matches-observed-partial'
+    : matches.length === 0
+      ? 'raw-absence'
+      : 'raw-matches';
+  const values = {
+    symbolicStar: SYMBOLIC_STAR_BY_RULE[ruleId],
+    anchorMethod: 'branch-pair-table-literal',
+    pairTable: tableId,
+    tableRows: pairs.map(([left, right]) => [left, right]),
+    observedPillars,
+    matches: matches.map(({ tableRow, positions, branches }) => ({
+      tableRow: [tableRow[0], tableRow[1]],
+      positions: [positions[0], positions[1]],
+      branches: [branches[0], branches[1]],
+    })),
+    status,
+    interpretation: 'none',
+  } as const;
+  const matchSummary = matches
+    .map(
+      ({ positions, branches }) =>
+        `${BRANCH_POSITION_LABEL[positions[0]]} ${withComitativeParticle(branches[0])} ${BRANCH_POSITION_LABEL[positions[1]]} ${branches[1]}`,
+    )
+    .join(', ');
+  const statement = partial
+    ? matches.length === 0
+      ? `확인된 연·월·일 지지를 ${label} 표와 대조했지만 일치하는 짝이 없습니다. 시지를 모르므로 없다고 단정하지 않습니다.`
+      : `${withTopicParticle(matchSummary)} ${label} 표에 일치합니다. 시지를 모르므로 더 있는지는 판단하지 않습니다. 이 팩은 표 일치만 기록하며 사건 의미를 붙이지 않습니다.`
+    : matches.length === 0
+      ? `네 지지를 ${label} 표와 대조했지만 일치하는 짝이 없습니다.`
+      : `${withTopicParticle(matchSummary)} ${label} 표에 일치합니다. 이 팩은 표 일치만 기록하며 사건 의미를 붙이지 않습니다.`;
+
+  return {
+    key: canonicalJsonStringify(values),
+    statement,
+    topic: 'symbolic-stars',
+    values,
+    evidencePaths: observedPillars.map(({ position }) => `pillars.${position}.branch`),
+    sourceReferenceIds: sourceReferenceIds(ruleId),
+    comparison: comparison(
+      `${ruleId}.branch-pair.raw.v1`,
+      'symbolic-star-branch-pair-match',
+      ruleId,
+      observedPillars.map(({ branch }) => branch).join(''),
+      canonicalJsonStringify({ matches: values.matches, status }),
+    ),
+    coverage: partial ? 'partial' : 'complete',
+    omittedPillars: partial ? omitted : [],
+  };
+}
+
 export function evaluateSanmingSymbolicCuratedRule(
   ruleId: SanmingSymbolicCuratedRuleId,
   context: DoctrineRuleContext,
 ): DoctrineRuleMatch {
+  if (isBranchPairRule(ruleId)) return evaluateBranchPairRule(ruleId, context);
   if (!isTriadRule(ruleId) && !isSeasonCornerRule(ruleId) && !isDayStemRule(ruleId)) {
     throw new RangeError(`지원하지 않는 삼명통회 엄선 신살 규칙입니다: ${String(ruleId)}`);
   }
@@ -429,7 +584,7 @@ export function evaluateSanmingSymbolicCuratedRule(
     )
     .join('·');
   const statement = notApplicable
-    ? `일간 ${dayStem}은 양간에만 쓰는 이 표의 적용 대상이 아닙니다.`
+    ? `일간 ${withTopicParticle(dayStem)} 양간에만 쓰는 이 표의 적용 대상이 아닙니다.`
     : partial
       ? matches.length === 0
         ? `확인된 연·월·일 지지를 ${anchorSummary} 표와 대조했지만 일치하지 않았습니다. 시지를 모르므로 해당 신살이 없다고 단정하지 않습니다.`

@@ -43,12 +43,13 @@ describe('calculateKoreanSajuAnalysis', () => {
       },
       preset: {
         id: 'ko-KR-default-v1',
-        baselinePackRef: { id: 'calculation-baseline', version: '1.1.0' },
+        baselinePackRef: { id: 'calculation-baseline', version: '1.2.0' },
         traditionPackRefs: [
-          { id: 'ziping', version: '1.0.0' },
-          { id: 'ditianshui', version: '1.0.0' },
-          { id: 'qiongtong', version: '1.0.0' },
-          { id: 'sanming-symbolic-curated', version: '1.1.0' },
+          { id: 'ziping', version: '1.2.0' },
+          { id: 'ditianshui', version: '1.2.0' },
+          { id: 'qiongtong', version: '1.2.0' },
+          { id: 'sanming-symbolic-curated', version: '1.2.0' },
+          { id: 'xingchong-resolution', version: '1.0.0' },
         ],
         unsupportedDeterministicOutputs: [
           'final-pattern',
@@ -61,7 +62,7 @@ describe('calculateKoreanSajuAnalysis', () => {
         predictiveValidity: 'not-established',
       },
       baseline: {
-        packRef: { id: 'calculation-baseline', version: '1.1.0' },
+        packRef: { id: 'calculation-baseline', version: '1.2.0' },
       },
     });
     expect(result.doctrines.map(({ packRef }) => packRef.id)).toEqual([
@@ -69,6 +70,7 @@ describe('calculateKoreanSajuAnalysis', () => {
       'ditianshui',
       'qiongtong',
       'sanming-symbolic-curated',
+      'xingchong-resolution',
     ]);
     expect(
       result.preset.packMaturities.every(({ maturity }) => maturity.runtime === 'stable'),
@@ -168,6 +170,8 @@ describe('calculateKoreanSajuAnalysis', () => {
       'sanming.literary-star',
       'sanming.blade-after-lu-all-stems',
       'sanming.blade-yang-stems-only',
+      'sanming.resentment-pair',
+      'sanming.ghost-gate-pair',
     ]);
     expect(result.preset.unsupportedDeterministicOutputs).not.toContain('symbolic-stars');
   });
@@ -205,6 +209,9 @@ describe('calculateKoreanSajuAnalysis', () => {
       'ditianshui.support-ledger',
       'qiongtong.climate-candidates',
       'sanming.travel-horse',
+      'xingchong.branch-bureau',
+      'xingchong.stem-combination-state',
+      'xingchong.resolution-order',
     ]);
     for (const { interpretation } of result.doctrines) {
       const variableFindings = interpretation.findings.filter(({ ruleId }) =>

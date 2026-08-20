@@ -222,7 +222,7 @@ describe('AI request and error validation v3', () => {
     expect(
       SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.minItems,
     ).toBe(1);
-    expect(SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.maxItems).toBe(4);
+    expect(SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.maxItems).toBe(6);
     expect(
       SAJU_NARRATIVE_JSON_SCHEMA.properties.sections.items.properties.paragraphs.maxItems,
     ).toBe(3);

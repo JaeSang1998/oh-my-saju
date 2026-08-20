@@ -21,6 +21,7 @@ export const COMMON_STRUCTURAL_PARAMETERS_V1: Readonly<Record<string, JsonValue>
   growthStageEarthStemMapping: GROWTH_STAGE_PROFILE_V1.earthStemMapping,
   growthStageInterpretation: GROWTH_STAGE_PROFILE_V1.interpretation,
   voidAnchor: 'day-pillar',
+  solarTermPositionProfile: 'jie-elapsed-days-v1',
 });
 
 /**
@@ -32,7 +33,7 @@ export const COMMON_STRUCTURAL_PARAMETERS_V1: Readonly<Record<string, JsonValue>
 export const COMMON_STRUCTURAL_PROFILE_V1: TraditionRuleProfile = deepFreeze({
   schemaVersion: '1',
   id: 'common-structural',
-  version: '1.1.0',
+  version: '1.2.0',
   displayName: '원국 공통 계산',
   school: 'cross-school-common',
   textualLayer: 'cross-school-common',
@@ -49,6 +50,7 @@ export const COMMON_STRUCTURAL_PROFILE_V1: TraditionRuleProfile = deepFreeze({
     'core.relationships',
     'core.growth-stages',
     'core.void-branches',
+    'core.solar-term-position',
   ],
   supportedTopics: [
     'chart-overview',
@@ -57,6 +59,7 @@ export const COMMON_STRUCTURAL_PROFILE_V1: TraditionRuleProfile = deepFreeze({
     'yin-yang',
     'ten-gods',
     'relationships',
+    'season-climate',
     'growth-stages',
     'void-branches',
   ],

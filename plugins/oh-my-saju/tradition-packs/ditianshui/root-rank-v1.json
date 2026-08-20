@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1",
+  "profileId": "ditianshui-root-rank-v1",
+  "divergence": "wangzhi-residual-stem-included",
+  "branchRank": {
+    "자": [
+      { "stem": "계", "rank": "정기" },
+      { "stem": "임", "rank": "여기" }
+    ],
+    "축": [
+      { "stem": "기", "rank": "정기" },
+      { "stem": "신", "rank": "중기" },
+      { "stem": "계", "rank": "여기" }
+    ],
+    "인": [
+      { "stem": "갑", "rank": "정기" },
+      { "stem": "병", "rank": "중기" },
+      { "stem": "무", "rank": "여기" }
+    ],
+    "묘": [
+      { "stem": "을", "rank": "정기" },
+      { "stem": "갑", "rank": "여기" }
+    ],
+    "진": [
+      { "stem": "무", "rank": "정기" },
+      { "stem": "계", "rank": "중기" },
+      { "stem": "을", "rank": "여기" }
+    ],
+    "사": [
+      { "stem": "병", "rank": "정기" },
+      { "stem": "경", "rank": "중기" },
+      { "stem": "무", "rank": "여기" }
+    ],
+    "오": [
+      { "stem": "정", "rank": "정기" },
+      { "stem": "기", "rank": "중기" },
+      { "stem": "병", "rank": "여기" }
+    ],
+    "미": [
+      { "stem": "기", "rank": "정기" },
+      { "stem": "을", "rank": "중기" },
+      { "stem": "정", "rank": "여기" }
+    ],
+    "신": [
+      { "stem": "경", "rank": "정기" },
+      { "stem": "임", "rank": "중기" },
+      { "stem": "무", "rank": "여기" }
+    ],
+    "유": [
+      { "stem": "신", "rank": "정기" },
+      { "stem": "경", "rank": "여기" }
+    ],
+    "술": [
+      { "stem": "무", "rank": "정기" },
+      { "stem": "정", "rank": "중기" },
+      { "stem": "신", "rank": "여기" }
+    ],
+    "해": [
+      { "stem": "임", "rank": "정기" },
+      { "stem": "갑", "rank": "중기" },
+      { "stem": "무", "rank": "여기" }
+    ]
+  }
+}

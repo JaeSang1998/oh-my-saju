@@ -11,6 +11,7 @@
     "core.ten-gods",
     "core.relationships",
     "core.growth-stages",
-    "core.void-branches"
+    "core.void-branches",
+    "core.solar-term-position"
   ]
 }

@@ -6,14 +6,75 @@ import {
   SANMING_SYMBOLIC_CURATED_RULE_IDS_V1,
   type SanmingSymbolicCuratedRuleId,
 } from '../../tradition-packs/sanming-symbolic-curated/evaluate';
+import {
+  evaluateXingchongResolutionRule,
+  XINGCHONG_RESOLUTION_RULE_IDS_V1,
+  type XingchongResolutionRuleId,
+} from '../../tradition-packs/xingchong-resolution/evaluate';
 import { evaluateZipingPackRule } from '../../tradition-packs/ziping/evaluate';
 import type { InterpretationRuleId } from './types';
 import type { DoctrineRuleContext, DoctrineRuleMatch } from './rule-evaluator-types';
 
 type TraditionPackRuleId = Exclude<InterpretationRuleId, `core.${string}`>;
 
+type ZipingRuleId = Extract<
+  InterpretationRuleId,
+  | 'ziping.month-command'
+  | 'ziping.pattern-candidate'
+  | 'ziping.governing-day'
+  | 'ziping.pattern-integrity'
+  | 'ziping.pattern-relief-god'
+>;
+
+type DitianshuiRuleId = Extract<
+  InterpretationRuleId,
+  | 'ditianshui.seasonal-state'
+  | 'ditianshui.support-ledger'
+  | 'ditianshui.rooting-ledger'
+  | 'ditianshui.command-position'
+  | 'ditianshui.strength-verdict'
+  | 'ditianshui.follow-transform-patterns'
+>;
+
+type QiongtongRuleId = Extract<
+  InterpretationRuleId,
+  | 'qiongtong.climate-candidates'
+  | 'qiongtong.climate-tendency'
+  | 'qiongtong.candidate-condition'
+  | 'qiongtong.pack-climate-priority'
+>;
+
+const ZIPING_RULE_IDS_V1: readonly ZipingRuleId[] = [
+  'ziping.month-command',
+  'ziping.pattern-candidate',
+  'ziping.governing-day',
+  'ziping.pattern-integrity',
+  'ziping.pattern-relief-god',
+];
+
+const DITIANSHUI_RULE_IDS_V1: readonly DitianshuiRuleId[] = [
+  'ditianshui.seasonal-state',
+  'ditianshui.support-ledger',
+  'ditianshui.rooting-ledger',
+  'ditianshui.command-position',
+  'ditianshui.strength-verdict',
+  'ditianshui.follow-transform-patterns',
+];
+
+const QIONGTONG_RULE_IDS_V1: readonly QiongtongRuleId[] = [
+  'qiongtong.climate-candidates',
+  'qiongtong.climate-tendency',
+  'qiongtong.candidate-condition',
+  'qiongtong.pack-climate-priority',
+];
+
 interface BuiltInTraditionPack {
-  readonly id: 'ziping' | 'ditianshui' | 'qiongtong' | 'sanming-symbolic-curated';
+  readonly id:
+    | 'ziping'
+    | 'ditianshui'
+    | 'xingchong-resolution'
+    | 'qiongtong'
+    | 'sanming-symbolic-curated';
   readonly ruleIds: readonly TraditionPackRuleId[];
   readonly evaluate: (
     ruleId: TraditionPackRuleId,
@@ -29,32 +90,44 @@ interface BuiltInTraditionPack {
 const BUILT_IN_TRADITION_PACKS: readonly BuiltInTraditionPack[] = [
   {
     id: 'ziping',
-    ruleIds: ['ziping.month-command', 'ziping.pattern-candidate'],
+    ruleIds: ZIPING_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== 'ziping.month-command' && ruleId !== 'ziping.pattern-candidate') {
+      if (!ZIPING_RULE_IDS_V1.includes(ruleId as ZipingRuleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Ziping Tradition Pack.`);
       }
-      return evaluateZipingPackRule(ruleId, context);
+      return evaluateZipingPackRule(ruleId as ZipingRuleId, context);
     },
   },
   {
     id: 'ditianshui',
-    ruleIds: ['ditianshui.seasonal-state', 'ditianshui.support-ledger'],
+    ruleIds: DITIANSHUI_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== 'ditianshui.seasonal-state' && ruleId !== 'ditianshui.support-ledger') {
+      if (!DITIANSHUI_RULE_IDS_V1.includes(ruleId as DitianshuiRuleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Ditianshui Tradition Pack.`);
       }
-      return evaluateDitianshuiPackRule(ruleId, context);
+      return evaluateDitianshuiPackRule(ruleId as DitianshuiRuleId, context);
+    },
+  },
+  {
+    id: 'xingchong-resolution',
+    ruleIds: XINGCHONG_RESOLUTION_RULE_IDS_V1,
+    evaluate: (ruleId, context) => {
+      if (!XINGCHONG_RESOLUTION_RULE_IDS_V1.includes(ruleId as XingchongResolutionRuleId)) {
+        throw new TypeError(
+          `Rule ${ruleId} is not owned by the Xingchong Resolution Tradition Pack.`,
+        );
+      }
+      return evaluateXingchongResolutionRule(ruleId as XingchongResolutionRuleId, context);
     },
   },
   {
     id: 'qiongtong',
-    ruleIds: ['qiongtong.climate-candidates'],
+    ruleIds: QIONGTONG_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== 'qiongtong.climate-candidates') {
+      if (!QIONGTONG_RULE_IDS_V1.includes(ruleId as QiongtongRuleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Qiongtong Tradition Pack.`);
       }
-      return evaluateQiongtongPackRule(context);
+      return evaluateQiongtongPackRule(ruleId as QiongtongRuleId, context);
     },
   },
   {

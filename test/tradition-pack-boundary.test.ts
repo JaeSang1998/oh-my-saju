@@ -9,6 +9,7 @@ const PACK_IDS = [
   'ditianshui',
   'qiongtong',
   'sanming-symbolic-curated',
+  'xingchong-resolution',
 ] as const;
 
 interface TraditionPackManifest {

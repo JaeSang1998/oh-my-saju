@@ -1,6 +1,6 @@
 ---
 name: oh-my-saju
-description: Calculate and interpret Korean Saju (Four Pillars), two-person compatibility, 15 cited raw symbolic-star rules, transparent election-date rankings, Tojeong 144 numbers, I Ching casts, Zi Wei core charts, and Liu Ren transmissions with deterministic, source-profiled reports. Use for 사주·만세력·궁합·오행·십신·십이운성·신살·택일·토정비결·주역·자미두수·육임, unknown or approximate birth time, tradition comparison, decision or timing questions, or auditing an existing reading. Do not use for Western astrology, tarot, generic Korean editing, or choices the user does not want viewed through these systems.
+description: Calculate and interpret Korean Saju (Four Pillars), two-person compatibility, 17 cited raw symbolic-star rules, transparent election-date rankings, Tojeong 144 numbers, I Ching casts, Zi Wei core charts, and Liu Ren transmissions with deterministic, source-profiled reports. Use for 사주·만세력·궁합·오행·십신·십이운성·신살·택일·토정비결·주역·자미두수·육임, unknown or approximate birth time, tradition comparison, decision or timing questions, or auditing an existing reading. Do not use for Western astrology, tarot, generic Korean editing, or choices the user does not want viewed through these systems.
 license: Apache-2.0
 ---
 
@@ -26,21 +26,13 @@ result stay the same.
 
 ### 1. Lock the user's actual question
 
-Classify the request as one or more of:
-
-- chart calculation or verification;
-- broad interpretation;
-- focused question about behavior, work, study, relationships, or another theme;
-- two-person compatibility using both natal charts;
-- comparison between choices;
-- comparison between traditions or Pack profiles;
-- timing;
-- daily, wedding, or moving election-date ranking;
-- Tojeong 144-number calculation;
-- I Ching casting from explicit manual lines, coin faces, or yarrow splits;
-- Zi Wei natal-chart mechanics;
-- Liu Ren plate, four-lesson, and transmission mechanics;
-- audit of an existing reading.
+Classify the request as one or more of: chart calculation or verification; broad interpretation;
+a focused question about behavior, work, study, relationships, or another theme; two-person
+compatibility using both natal charts; comparison between choices; comparison between traditions
+or Pack profiles; timing; daily, wedding, or moving election-date ranking; Tojeong 144-number
+calculation; I Ching casting from explicit manual lines, coin faces, or yarrow splits; Zi Wei
+natal-chart mechanics; Liu Ren plate, four-lesson, and transmission mechanics; audit of an
+existing reading.
 
 Do not silently replace a narrow question with a broad reading. Treat disclosed biography as
 context, not proof that the chart is correct.
@@ -65,7 +57,9 @@ Treat an open request such as `사주 봐줘`, `사주 해석해줘`, or `나는
 broad interpretation, not as a calculation-only request or a doctrine audit. The user is primarily
 asking what kind of person the chart describes. Build the answer around:
 
+- the season coordinate the chart was born into;
 - personality and decision style;
+- what the day master stands on and what it leans on;
 - the same pattern working well versus under pressure;
 - work, study, and execution;
 - relationships and communication;
@@ -83,9 +77,11 @@ For an open-ended reading, use this chart-first order:
 2. one horizontal four-pillar table with both `간지` and `십신` rows;
 3. one compact five-element table labeled `오행 분포(지장간 포함)` for an exact chart;
 4. a finding-backed `핵심 요약`;
-5. `성격과 행동 방식` with the two chart mechanisms that organize the reading;
-6. `강점과 주의점`, showing one mechanism when it works well and under pressure;
-7. `일·재능` and `관계`, plus `돈과 현실 감각` only when the findings support a distinct money
+5. `절기와 계절`, placing the birth instant between two solar terms and naming the seasonal lean;
+6. `성격과 행동 방식` with the two chart mechanisms that organize the reading;
+7. `타고난 힘과 쓰는 법`, saying whether the day master stands on its own roots and what it leans on;
+8. `강점과 주의점`, showing one mechanism when it works well and under pressure;
+9. `일·재능` and `관계`, plus `돈과 현실 감각` only when the findings support a distinct money
    reading.
 
 Use short sections and bullets, with one to three connected sentences when a causal bridge needs
@@ -95,7 +91,11 @@ ledger counts. Relationship prose must show a reaction in a close relationship, 
 management language. Prefer five strong ideas over nine weak variations of one coaching point.
 Write implications in ordinary Korean with a person as the subject and a concrete verb. Reject
 translated phrases such as `현실적 결과로 흘려보낸다`, `복원력으로 쓰인다`, `이중 리듬`,
-and `거리가 회복된다`; keep `작용` or `구조` in the chart basis. Apply the native-Korean copy check in `references/korean-interpretation-style.md`.
+and `거리가 회복된다`; keep `작용` or `구조` in the chart basis. Every profile bullet renders as
+`근거 — 해석` on one line, so write each basis as a readable clause rather than a noun phrase.
+`절기와 계절` is the only section where reading the season as heat, cold, and damp is correct;
+everywhere else the season stays a chart coordinate. Apply the native-Korean copy check in
+`references/korean-interpretation-style.md`.
 
 When birth-time uncertainty affects selected prose, keep the uncertainty local with `△` for a
 candidate-dependent result and `◇` for a partial result (`△◇` when both apply). Define only the
@@ -177,14 +177,11 @@ If the request is election, Tojeong, I Ching, Zi Wei, or Liu Ren, use the
 narration protocol below. Supply every policy field explicitly, run the same bundled script, and
 present only the returned calculation, classical classifications, product-policy fields, trace,
 and limitations. Do not invent missing casts, dates, birth times, interpretations, or empirical
-meaning. In particular:
-
-- never present an election score as a probability;
-- do not add a Tojeong interpretation corpus that the report does not contain;
-- never randomize an I Ching cast when the user has not supplied cast evidence;
-- keep Zi Wei and Liu Ren outputs at the scope named in `audit.limitations`;
-- stop this workflow after presenting that deterministic report; no Pack narration draft is
-  required for these vertical modules.
+meaning: never present an election score as a probability, never add a Tojeong interpretation
+corpus the report does not contain, never randomize an I Ching cast when the user has not supplied
+cast evidence, and keep Zi Wei and Liu Ren outputs at the scope named in `audit.limitations`. Stop
+this workflow after presenting that deterministic report; no Pack narration draft is required for
+these vertical modules.
 
 Resolve `scripts/oh-my-saju.mjs` relative to this `SKILL.md`, not relative to the repository or
 current working directory. Write a `prepare-reading` JSON command to a temporary file, then run:
@@ -260,18 +257,15 @@ The successful result contains:
 - `analysis.calculation`: audited chart or possibility set;
 - `analysis.baseline`: calculation-baseline Pack observations, including the explicit-profile
   12 growth-stage table without automatic strength or favorability meaning;
-- `analysis.doctrines`: versioned Tradition Pack results, including the 15 cited raw
+- `analysis.doctrines`: versioned Tradition Pack results, including the 17 cited raw
   symbolic-star rules without automatic event meaning;
 - `analysis.comparison`: unresolved agreements, differences, and unavailable coordinates;
 - `timing`: exact Lichun years, 12 Jie months per year, and optional approximate luck pillars;
-- `narrationTasks`: one isolated provider-neutral request per Pack.
+- `narrationTasks`: one isolated provider-neutral request per installed Pack — six under the
+  current preset, since `xingchong-resolution` added one. Draft every task the result lists.
 
-Keep these distinctions:
-
-1. calculation fact;
-2. Tradition Pack finding;
-3. host-generated narration;
-4. real-world advice.
+Keep calculation fact, Tradition Pack finding, host-generated narration, and real-world advice
+distinguishable at every step.
 
 Do not average Pack findings, vote on them, or manufacture one “final” useful god, strength,
 pattern, or prediction when the result leaves it unresolved. A Tradition Pack is a versioned
@@ -300,10 +294,11 @@ may use one to three sentences to keep the chart fact, traditional function, and
 together.
 
 Before writing broad-reading drafts, assign the final presentation slots across the available Pack
-tasks. The v2 profile needs seven distinct paragraphs: one thesis, two central mechanisms, a
-strength and blind spot from the same mechanism, work, and relationships. When the displayed
-pillar ten-god row contains at least two `정재`/`편재` placements, draft and select a distinct money
-item as an eighth paragraph; otherwise add money only with separate support. Both sides of the
+tasks. The v3 profile needs ten distinct paragraphs: one thesis, one `climate` paragraph from
+`season-climate`, two central mechanisms, one `resource` paragraph from `strength`, a strength and
+blind spot from the same mechanism, work, relationships, and — when the displayed pillar ten-god
+row contains at least two `정재`/`편재` placements — a distinct money item. Otherwise add money
+only with separate support. Both sides of the
 strength mechanism must share a Pack and finding ID. Do not reuse a source paragraph or copy prose into
 multiple slots. The two central mechanisms must each have finding support that the other does not.
 Work prose must actually name a work, study, role, or output pattern; relationship prose must name
@@ -311,8 +306,8 @@ a relationship dynamic; optional money prose must name a money or resource patte
 ten-god evidence. Preserve validator uncertainty metadata: the renderer adds a local `△`, `◇`, or
 `△◇` marker to each affected selection and one shared legend.
 
-Use `chart-overview`, `day-master`, `five-elements`, `ten-gods`, `relationships`, and `strength`
-for a default profile. Do not turn a `pattern`, `useful-god`, `void-branches`, `growth-stages`,
+Use `chart-overview`, `day-master`, `five-elements`, `ten-gods`, `relationships`, `strength`, and
+`season-climate` for a default profile. Do not turn a `pattern`, `useful-god`, `void-branches`, `growth-stages`,
 `luck-cycles`, or `symbolic-stars` finding into generic personality prose through a summary. If a
 Pack supplies no allowed default-profile topic, draft its required isolated response for
 validation but do not select it into `presentationDraft`. In that non-display draft, do not repeat
@@ -388,18 +383,20 @@ Copy `result.binding.digest` from the prepare response into `preparedDigest`. Th
 recalculates the contract and refuses drafts prepared for a different question, chart, timing
 range, Pack task, Pack rule digest, reading runtime, or engine build.
 
-For `readingMode: "broad"`, the v2 `presentationDraft` is required. Every reference points to an
+For `readingMode: "broad"`, the v3 `presentationDraft` is required. Every reference points to an
 already validated Pack paragraph: `source.kind: "summary"` selects the summary, while
 `source.kind: "section"` also supplies the exact `topic` and zero-based `paragraphIndex`. The
 thesis quotes exact ordered `basis` and `portrait` spans. Every other item declares its section
-`role` and quotes exact ordered `basis` and `interpretation` spans. The basis must name the actual
-placement, season, repetition, relationship, or ten-god mechanism; it is not a generic life
-situation. The runtime rejects missing roles, repeated sources or prose, specialist-topic
-laundering, season-as-environment wording, unknown references, internal audit language, and a
-strength/blind-spot pair without shared finding support. Omit `presentationDraft` for `focused`
-and `technical-audit`. Copy the complete v2 shape from
-[references/input-and-runtime.md](references/input-and-runtime.md), under `Broad presentation
-draft`.
+`role` and quotes exact ordered `basis` and `interpretation` spans. The required `climate` slot
+must point at a `season-climate` paragraph and the required `resource` slot at a `strength`
+paragraph. The basis must name the actual placement, season, repetition, relationship, or ten-god
+mechanism; it is not a generic life situation. The runtime rejects missing roles, repeated sources
+or prose, specialist-topic laundering, season-as-environment wording outside the `climate` slot,
+unknown references, internal audit language, Barnum prose, an element-to-virtue shortcut, and a
+strength/blind-spot pair without shared finding support. Schema 2 drafts stay accepted for
+backward compatibility. Omit `presentationDraft` for `focused` and `technical-audit`. Copy the
+complete v3 shape from [references/input-and-runtime.md](references/input-and-runtime.md), under
+`Broad presentation draft`.
 
 If `prepare-reading` returns `insufficient-broad-presentation-capacity`, do not proceed to an
 impossible validation. An open reading normally uses `include-candidate-dependent`, which keeps
@@ -486,7 +483,9 @@ Before answering, verify:
 - the thesis and core combine day-master or seasonal evidence with a second placement,
   relationship, or ten-god mechanism;
 - strength and blind spot explain two sides of one supported mechanism;
-- season was not rewritten as a real-world environment, and uncertainty uses local `△`/`◇`
+- the reading says where the birth instant sits between two solar terms and what the day master
+  leans on;
+- season stayed a chart coordinate outside `절기와 계절`, and uncertainty uses local `△`/`◇`
   markers with no more than one shared legend;
 - no advanced doctrine or internal non-display guardrail leaked into a broad reading;
 - no trait was inferred from an element percentage alone;

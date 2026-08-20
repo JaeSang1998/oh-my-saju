@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1",
+  "contract": "tradition-provenance-v1",
+  "editionLocks": [
+    {
+      "sourceReferenceId": "yuanhai-ziping-combination-clash-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      "scanUrl": null,
+      "publication": "Wikisource 《淵海子平》 public transcription; edition lock and scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    },
+    {
+      "sourceReferenceId": "sanming-tonghui-xingchong-v1",
+      "catalogUrl": "https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83",
+      "scanUrl": null,
+      "publication": "Wikisource 《三命通會》 public transcription; edition lock and scan checksum pending",
+      "contentSha256": null,
+      "status": "checksum-pending"
+    }
+  ],
+  "ruleTraces": [
+    {
+      "ruleId": "xingchong.branch-bureau",
+      "sourceReferenceIds": [
+        "yuanhai-ziping-combination-clash-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      "sourceLocators": [
+        "論三合·論支合; Pack-local branch-relation-tables-v1 with three half-bureau grades"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "xingchong.stem-combination-state",
+      "sourceReferenceIds": [
+        "yuanhai-ziping-combination-clash-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      "sourceLocators": ["論十干合; Pack-local four-condition transform test"],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "xingchong.resolution-order",
+      "sourceReferenceIds": [
+        "yuanhai-ziping-combination-clash-v1",
+        "sanming-tonghui-xingchong-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      "sourceLocators": [
+        "論沖·論刑; Pack-local two-pass resolution order with 탐합망충 and 충해합"
+      ],
+      "formalizationStatus": "reconstruction",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    }
+  ]
+}

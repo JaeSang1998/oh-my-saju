@@ -18,6 +18,8 @@ const KNOWLEDGE_RESOURCES = [
   'sources.json',
   'rules.json',
   'qiongtong-table-v1.ts',
+  'climate-baseline-v1.json',
+  'hidden-stems-v1.json',
   'profile.ts',
   'evaluate.ts',
   'fixtures.json',
@@ -28,7 +30,12 @@ const fixtures = fixtureInventory(fixtureData);
 const declaredProvenance = provenanceData(provenanceContractData);
 
 export const QIONGTONG_PROVENANCE: TraditionPackProvenance = deepFreeze({
-  ruleIds: ['qiongtong.climate-candidates'],
+  ruleIds: [
+    'qiongtong.climate-candidates',
+    'qiongtong.climate-tendency',
+    'qiongtong.candidate-condition',
+    'qiongtong.pack-climate-priority',
+  ],
   fixtureSetIds: fixtures.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
     PACK_DIRECTORY,

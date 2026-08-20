@@ -139,13 +139,13 @@ export const HIDDEN_STEMS: Readonly<Record<EarthlyBranch, readonly WeightedHidde
 
 export function assertHeavenlyStem(value: unknown, name = '천간'): asserts value is HeavenlyStem {
   if (typeof value !== 'string' || !(HEAVENLY_STEMS as readonly string[]).includes(value)) {
-    throw new RangeError(`${name}은 유효한 천간이어야 합니다: ${String(value)}`);
+    throw new RangeError(`유효한 천간이 아닙니다 — ${name}: ${String(value)}`);
   }
 }
 
 export function assertEarthlyBranch(value: unknown, name = '지지'): asserts value is EarthlyBranch {
   if (typeof value !== 'string' || !(EARTHLY_BRANCHES as readonly string[]).includes(value)) {
-    throw new RangeError(`${name}은 유효한 지지여야 합니다: ${String(value)}`);
+    throw new RangeError(`유효한 지지가 아닙니다 — ${name}: ${String(value)}`);
   }
 }
 

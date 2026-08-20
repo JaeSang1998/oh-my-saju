@@ -90,6 +90,21 @@ describe('궁통보감 조후 후보 10 × 12 전사표', () => {
     expect(getQiongtongClimateCellSource('갑', '오')).toBeNull();
   });
 
+  it('저본 문구와 어긋났던 4칸을 원문 나열대로 되돌린 상태를 유지한다', () => {
+    // 六月甲木 「先丁後庚，無癸亦可」 — 壬은 원문에 없다.
+    expect(getQiongtongClimateCandidates('갑', '미')).toEqual(['계', '정', '경']);
+    // 三月丁火 「先用甲木引丁制土，次看庚金」 — 戊土는 제거 대상이지 용신이 아니다.
+    expect(getQiongtongClimateCandidates('정', '진')).toEqual(['갑', '경']);
+    // 八月辛金 「專用壬水淘洗 … 見甲制土方妙」 — 丁은 원문에 없고 辛金의 칠살이다.
+    expect(getQiongtongClimateCandidates('신', '유')).toEqual(['임', '갑']);
+    // 五月癸水 「必須庚辛為生身之本 … 方得辛金之用」 — 辛이 빠져 있었다.
+    expect(getQiongtongClimateCandidates('계', '오')).toEqual(['경', '신', '임', '계']);
+
+    expect(
+      QIONGTONG_CLIMATE_TABLE_V1_METADATA.baseTextCorrectedCells.map(({ cell }) => cell),
+    ).toEqual(['갑:미', '정:진', '신:유', '계:오']);
+  });
+
   it('표, 행, 후보 배열과 메타데이터를 모두 재귀적으로 동결한다', () => {
     expect(Object.isFrozen(QIONGTONG_CLIMATE_CANDIDATES_V1)).toBe(true);
     expect(Object.isFrozen(QIONGTONG_CLIMATE_CANDIDATES_V1.갑)).toBe(true);

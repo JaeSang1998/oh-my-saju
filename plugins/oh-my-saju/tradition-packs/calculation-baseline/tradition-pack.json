@@ -3,7 +3,7 @@
   "schemaVersion": "1",
   "kind": "oh-my-saju-tradition-pack",
   "id": "calculation-baseline",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "displayName": "공통 계산 구조",
   "compatibility": {
     "coreEngineSchemaVersions": ["5"],
@@ -19,7 +19,7 @@
       "immutability": "content-addressed",
       "algorithm": "sha256",
       "canonicalization": "ordered-file-bytes-with-path-v1",
-      "digest": "eaeb6ff8dc329163df8a2a45bcb26abcb3f185a565e28680fa796fe374dcb93e",
+      "digest": "edd7c5ff256f3260b4d693acaaeba4a367d9e5a02650de46d3431f1f237752f4",
       "provenanceContract": "tradition-provenance-v1",
       "queryContract": "static-resource-query-v1"
     },

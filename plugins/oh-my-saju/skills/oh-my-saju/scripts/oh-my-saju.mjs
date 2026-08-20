@@ -10595,24 +10595,25 @@ function isArrayOf(value, predicate) {
 // plugins/oh-my-saju/runtime/reading/prompt-contract.ts
 var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
   id: "saju-grounded-narration",
-  version: "4.3.0"
+  version: "5.0.0"
 });
 var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
   mode: "chart-first-profile",
   format: "chart-and-short-sections",
   maxParagraphSentences: 3,
-  maxSections: 4,
+  maxSections: 6,
   maxParagraphsPerSection: 3,
-  maxNarrativeCharacters: 3200,
+  maxNarrativeCharacters: 4800,
   maxParagraphCharacters: 900,
   advancedDoctrine: "only-when-explicitly-requested",
   neverEndWithLimitations: true,
   broadReading: {
     finalSelectionRequired: true,
-    minimumDistinctParagraphs: 7,
+    minimumDistinctParagraphs: 10,
+    profileV2MinimumDistinctParagraphs: 7,
     legacyMinimumDistinctParagraphs: 9,
-    maxSelectedParagraphCharacters: 420,
-    maxPresentationCharacters: 2200,
+    maxSelectedParagraphCharacters: 460,
+    maxPresentationCharacters: 3800,
     structuredLivedPatternRequired: false,
     structuredEvidenceBridgeRequired: true
   }
@@ -10622,7 +10623,7 @@ var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.4.5",
+    version: "0.6.0",
     schemaVersion: "1"
   },
   compatibility: {
@@ -10811,12 +10812,12 @@ var HIDDEN_STEMS = {
 };
 function assertHeavenlyStem2(value, name = "\uCC9C\uAC04") {
   if (typeof value !== "string" || !HEAVENLY_STEMS2.includes(value)) {
-    throw new RangeError(`${name}\uC740 \uC720\uD6A8\uD55C \uCC9C\uAC04\uC774\uC5B4\uC57C \uD569\uB2C8\uB2E4: ${String(value)}`);
+    throw new RangeError(`\uC720\uD6A8\uD55C \uCC9C\uAC04\uC774 \uC544\uB2D9\uB2C8\uB2E4 \u2014 ${name}: ${String(value)}`);
   }
 }
 function assertEarthlyBranch2(value, name = "\uC9C0\uC9C0") {
   if (typeof value !== "string" || !EARTHLY_BRANCHES2.includes(value)) {
-    throw new RangeError(`${name}\uC740 \uC720\uD6A8\uD55C \uC9C0\uC9C0\uC5EC\uC57C \uD569\uB2C8\uB2E4: ${String(value)}`);
+    throw new RangeError(`\uC720\uD6A8\uD55C \uC9C0\uC9C0\uAC00 \uC544\uB2D9\uB2C8\uB2E4 \u2014 ${name}: ${String(value)}`);
   }
 }
 function getHeavenlyStemElement2(stem) {
@@ -10879,10 +10880,11 @@ var PROFILE_LIMITATIONS_V1 = deepFreeze2({
   "raw-relationships-no-fortune": "\uD569\xB7\uCDA9\xB7\uD615\xB7\uD30C\xB7\uD574\xB7\uC0BC\uD569 \uAC00\uC6B4\uB370 \uAE30\uB465 \uC704\uCE58\uAC00 \uC77C\uCE58\uD558\uB294 \uAD00\uACC4\uB9CC \uBCF4\uC5EC \uC90D\uB2C8\uB2E4. \uC131\uB9BD \uAC15\uB3C4\uC640 \uAE38\uD749\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
   "structural-profile-no-doctrine": "\uC774 \uD504\uB85C\uD544\uC5D0 \uB2F4\uAE34 \uADFC\uAC70\uB294 \uC6D0\uAD6D\xB7\uC624\uD589\xB7\uC74C\uC591\xB7\uC2ED\uC2E0\xB7\uAE30\uB465 \uAD00\uACC4\xB7\uC2ED\uC774\uC6B4\uC131\uC758 \uAE30\uBCF8 \uB2E8\uACC4\xB7\uACF5\uB9DD\uC744 \uACC4\uC0B0\uD55C \uACB0\uACFC\uC785\uB2C8\uB2E4.",
   "doctrine-not-scientifically-validated": "\uC804\uD1B5 \uBB38\uD5CC\uC744 \uC62E\uAE34 \uD574\uC11D \uADDC\uCE59\uC785\uB2C8\uB2E4. \uC2E4\uC81C \uC0AC\uAC74\uC744 \uB9DE\uD78C\uB2E4\uACE0 \uACFC\uD559\uC801\uC73C\uB85C \uAC80\uC99D\uB41C \uADDC\uCE59\uC740 \uC544\uB2D9\uB2C8\uB2E4.",
-  "ziping-candidate-not-complete-pattern": "\uC6D4\uB839\uACFC \uD22C\uAC04\uC73C\uB85C \uACA9\uAD6D \uD6C4\uBCF4\uB9CC \uB9CC\uB4E4\uBA70 \uC0AC\uB839\xB7\uC131\uD328\xB7\uAD6C\uC751\uC744 \uBAA8\uB450 \uD310\uC815\uD55C \uCD5C\uC885 \uACA9\uAD6D\uC774 \uC544\uB2D9\uB2C8\uB2E4.",
-  "ditianshui-evidence-no-strength-verdict": "\uACC4\uC808\xB7\uD1B5\uADFC\xB7\uC0DD\uC870\xB7\uC124\uADF9\uBAA8\uC758 \uADFC\uAC70\uB97C \uB098\uB220 \uBCF4\uC5EC \uC904 \uBFD0, \uC2E0\uAC15\xB7\uC2E0\uC57D\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
-  "qiongtong-candidates-no-final-useful-god": "\uACF5\uAC1C \uC804\uC0AC\uB97C \uC62E\uAE34 \uC77C\uAC04\xB7\uC6D4\uB839\uBCC4 \uC870\uD6C4 \uD6C4\uBCF4\uD45C\uC785\uB2C8\uB2E4. \uB300\uD45C \uB300\uC870 \uC0AC\uB840 5\uAC1C(\uC6D4\uBCC4 \uD56D\uBAA9 7\uAC1C)\uB9CC \uAE30\uC900 \uD310\uBA74\uACFC \uD655\uC778\uC744 \uB9C8\uCCE4\uC2B5\uB2C8\uB2E4. \uACA9\uAD6D\xB7\uC5B5\uBD80 \uC6A9\uC2E0\uC744 \uD569\uCE5C \uCD5C\uC885 \uC6A9\uC2E0 \uD310\uC815\uB3C4 \uC544\uC9C1 \uAD6C\uD604\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
-  "sanming-symbolic-raw-observation-only": "\uCD9C\uC804\uC774 \uD655\uC778\uB41C \uC5F0\uC9C0\xB7\uC77C\uAC04 \uAE30\uC900 \uC2E0\uC0B4\uD45C\uC5D0\uC11C \uC9C0\uC9C0\uAC00 \uC77C\uCE58\uD558\uB294 \uACBD\uC6B0\uB9CC \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uC0DD\uC2DC\uB97C \uBAA8\uB97C \uB54C\uB294 \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uD558\uB098\uB3C4 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD568\uC9C0\uC758 \uCC9C\uAC04\xB7\uB0A9\uC74C \uC790\uACA9\uACFC \uC591\uC778 \uB450 \uC815\uC758\uC758 \uCDA9\uB3CC\uC744 \uC784\uC758\uB85C \uD574\uACB0\uD558\uC9C0 \uC54A\uC73C\uBA70, \uAE38\uD749\xB7\uC131\uACA9\xB7\uC0AC\uAC74\uB3C4 \uD574\uC11D\uD558\uAC70\uB098 \uC608\uCE21\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+  "ziping-candidate-not-complete-pattern": "\uC6D4\uB839\uACFC \uD22C\uAC04\uC73C\uB85C \uACA9\uC744 \uC815\uD558\uACE0 \uC774 \uAD00\uBC95\uC758 \uC0C1\uC2E0\xB7\uD30C\uACA9 \uD45C\uB85C \uC131\uD328\uAE4C\uC9C0 \uD310\uC815\uD569\uB2C8\uB2E4. \uC0C1\uC2E0\uC740 \uC774 \uAD00\uBC95 \uC548\uC758 \uC6A9\uC2E0\uC774\uBA70, \uC720\uD30C \uAC04 \uCD5C\uC885 \uACA9\uAD6D\uACFC \uCD5C\uC885 \uC6A9\uC2E0\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "ditianshui-evidence-no-strength-verdict": "\uC774 \uAD00\uBC95\uC758 \uBC30\uC810 \uAE30\uC900\uC73C\uB85C \uAC15\uC57D\uC744 \uD310\uC815\uD558\uBA70, \uC720\uD30C \uAC04 \uCD5C\uC885 \uC2E0\uAC15\xB7\uC2E0\uC57D\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "xingchong-resolution-no-fortune": "\uBC29\uD569\xB7\uC0BC\uD569\xB7\uC721\uD569\xB7\uCC9C\uAC04\uD569\uACFC \uCDA9\xB7\uD615\uC758 \uC131\uB9BD \uC5EC\uBD80, \uD569\uD654 \uC870\uAC74, \uCDA9\uC774 \uB20C\uB9AC\uB294\uC9C0\uB97C \uC774 \uAD00\uBC95\uC758 \uD45C\uC640 \uC21C\uC11C\uB85C\uB9CC \uACC4\uC0B0\uD569\uB2C8\uB2E4. \uC720\uD30C\uB9C8\uB2E4 \uAE30\uC900\uC774 \uB2E4\uB974\uBA70 \uAE38\uD749\uC774\uB098 \uC0AC\uAC74\uC740 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "qiongtong-candidates-no-final-useful-god": "\uACF5\uAC1C \uC804\uC0AC\uB97C \uC62E\uAE34 \uC77C\uAC04\xB7\uC6D4\uB839\uBCC4 \uC870\uD6C4 \uD6C4\uBCF4\uD45C\uC785\uB2C8\uB2E4. \uB300\uD45C \uB300\uC870 \uC0AC\uB840 5\uAC1C(\uC6D4\uBCC4 \uD56D\uBAA9 7\uAC1C)\uB9CC \uAE30\uC900 \uD310\uBA74\uACFC \uD655\uC778\uC744 \uB9C8\uCCE4\uC2B5\uB2C8\uB2E4. \uD6C4\uBCF4\uC758 \uD22C\uAC04\xB7\uBFCC\uB9AC\uB97C \uB530\uC838 \uC774 \uD329 \uAE30\uC900 1\uC21C\uC704\uAE4C\uC9C0\uB294 \uC815\uD558\uC9C0\uB9CC, \uACA9\uAD6D\xB7\uC5B5\uBD80\uB97C \uD569\uCE5C \uC720\uD30C \uAC04 \uCD5C\uC885 \uC6A9\uC2E0\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+  "sanming-symbolic-raw-observation-only": "\uCD9C\uC804\uC774 \uD655\uC778\uB41C \uC5F0\uC9C0\xB7\uC77C\uAC04 \uAE30\uC900 \uC2E0\uC0B4\uD45C\uC5D0\uC11C \uC9C0\uC9C0\uAC00 \uC77C\uCE58\uD558\uB294 \uACBD\uC6B0\uB9CC \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uC0DD\uC2DC\uB97C \uBAA8\uB97C \uB54C\uB294 \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uD558\uB098\uB3C4 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD568\uC9C0\uC758 \uCC9C\uAC04\xB7\uB0A9\uC74C \uC790\uACA9\uACFC \uC591\uC778 \uB450 \uC815\uC758\uC758 \uCDA9\uB3CC\uC744 \uC784\uC758\uB85C \uD574\uACB0\uD558\uC9C0 \uC54A\uC73C\uBA70, \uAE38\uD749\xB7\uC131\uACA9\xB7\uC0AC\uAC74\uB3C4 \uD574\uC11D\uD558\uAC70\uB098 \uC608\uCE21\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC6D0\uC9C4\xB7\uADC0\uBB38\uC740 \uC6D0\uC804 \uB300\uC870\uB97C \uB9C8\uCE58\uC9C0 \uC54A\uC740 \uD1B5\uC6A9\uD45C\uC774\uBA70, \uC5EC\uC12F \uC30D \uAC00\uC6B4\uB370 \uB124 \uC30D\uB9CC \uACB9\uCE58\uBBC0\uB85C \uB450 \uD45C\uB97C \uD569\uCE58\uC9C0 \uC54A\uACE0 \uB530\uB85C \uB300\uC870\uD569\uB2C8\uB2E4."
 });
 var PROFILE_LIMITATION_ID_SET = new Set(
   Object.keys(PROFILE_LIMITATIONS_V1)
@@ -11101,12 +11103,13 @@ var COMMON_STRUCTURAL_PARAMETERS_V1 = deepFreeze2({
   growthStageYinStemDirection: GROWTH_STAGE_PROFILE_V1.yinStemDirection,
   growthStageEarthStemMapping: GROWTH_STAGE_PROFILE_V1.earthStemMapping,
   growthStageInterpretation: GROWTH_STAGE_PROFILE_V1.interpretation,
-  voidAnchor: "day-pillar"
+  voidAnchor: "day-pillar",
+  solarTermPositionProfile: "jie-elapsed-days-v1"
 });
 var COMMON_STRUCTURAL_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "common-structural",
-  version: "1.1.0",
+  version: "1.2.0",
   displayName: "\uC6D0\uAD6D \uACF5\uD1B5 \uACC4\uC0B0",
   school: "cross-school-common",
   textualLayer: "cross-school-common",
@@ -11122,7 +11125,8 @@ var COMMON_STRUCTURAL_PROFILE_V1 = deepFreeze2({
     "core.ten-gods",
     "core.relationships",
     "core.growth-stages",
-    "core.void-branches"
+    "core.void-branches",
+    "core.solar-term-position"
   ],
   supportedTopics: [
     "chart-overview",
@@ -11131,6 +11135,7 @@ var COMMON_STRUCTURAL_PROFILE_V1 = deepFreeze2({
     "yin-yang",
     "ten-gods",
     "relationships",
+    "season-climate",
     "growth-stages",
     "void-branches"
   ],
@@ -11199,9 +11204,9 @@ function artifactDigests(value) {
 // plugins/oh-my-saju/tradition-packs/calculation-baseline/artifacts.json
 var artifacts_default = {
   schemaVersion: "1",
-  knowledgeSnapshot: "eaeb6ff8dc329163df8a2a45bcb26abcb3f185a565e28680fa796fe374dcb93e",
-  rules: "c076e99c2eb9b49fe852be6399cb157630d0eb5bc96bdc35873880641f47af38",
-  fixtures: "2d4b37ab19cbfc45a46cef04b9774b272ace7468f839fa1a01094b9755acefc4"
+  knowledgeSnapshot: "edd7c5ff256f3260b4d693acaaeba4a367d9e5a02650de46d3431f1f237752f4",
+  rules: "5ad725515c769fac95c0e3e539ab23fe1811c3109eece4c7e1bf9323bb883812",
+  fixtures: "7a765b712b4e916248ea460df1f174e934f07f2dc9cd1b19703ad443d05047ae"
 };
 
 // plugins/oh-my-saju/tradition-packs/calculation-baseline/fixtures.json
@@ -11337,6 +11342,16 @@ var provenance_default = {
       formalizationStatus: "formalized-prose",
       transcriptionSha256: null,
       reviewerIds: []
+    },
+    {
+      ruleId: "core.solar-term-position",
+      sourceReferenceIds: ["saju-engine-calculation-contract-v1"],
+      sourceLocators: [
+        "plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.solar-term-position"
+      ],
+      formalizationStatus: "formalized-prose",
+      transcriptionSha256: null,
+      reviewerIds: []
     }
   ]
 };
@@ -11366,7 +11381,8 @@ var CALCULATION_BASELINE_PROVENANCE = deepFreeze2({
     "core.ten-gods",
     "core.relationships",
     "core.growth-stages",
-    "core.void-branches"
+    "core.void-branches",
+    "core.solar-term-position"
   ],
   fixtureSetIds: fixtures.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
@@ -11457,18 +11473,43 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PARAMETERS_V1 = deepFreeze2({
   earthTransitionPolicy: "four-season-endings",
   supportEvidence: ["same-element", "resource-element", "hidden-root"],
   oppositionEvidence: ["output-element", "wealth-element", "officer-element"],
-  numericVerdict: "none",
-  outputStatus: "evidence-ledger-no-strength-verdict"
+  numericVerdict: "pack-local-100-point-support-score",
+  rootRankTable: "ditianshui-root-rank-v1",
+  rootStrengthProfile: "rank-position-weighted-v1",
+  rootTableDivergence: "wangzhi-residual-stem-included",
+  commandPositionBasis: "main-hidden-stem",
+  strengthGrade: "three-flag-candidate",
+  damageAdjustment: "clash-0.5-punishment-0.8",
+  damageBasis: "engine-computed-branch-clashes-and-punishments",
+  transformedElementAdjustment: "not-applied",
+  strengthScoreProfile: "ditianshui-position-weighted-v1",
+  strengthScoreDivergence: "position-weights-and-thresholds-differ-by-school",
+  strengthScoreTable: "ditianshui-strength-score-v1",
+  strengthVerdictScope: "pack-local-not-cross-school-final",
+  followTransformProfile: "ditianshui-follow-transform-v1",
+  dominantElementOfficerBasis: "revealed-stems-only-hidden-stems-excluded",
+  followRootingDivergence: "\uC885\uAC15\uACA9-rooting-any-differs-by-school",
+  transformMonthBranchDivergence: "\uAC11\uAE30\uD569\uD654\uD1A0-includes-\uC0AC-\uC624-differs-by-school",
+  followTransformPrecedence: "dominant-element-then-transform-then-follow",
+  transformPartnerPositions: ["month", "hour"],
+  outputStatus: "pack-local-strength-verdict-no-fortune-meaning"
 });
 var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "ditianshui-strength-evidence",
-  version: "1.0.0",
+  version: "1.2.0",
   displayName: "\uC0BC\uBA85\uD1B5\uD68C \uACC4\uC808\uD45C\xB7\uC801\uCC9C\uC218 \uC655\uC1E0 \uADFC\uAC70",
   school: "ditianshui-strength-flow-reconstruction",
   textualLayer: "reconstruction",
   status: "stable",
-  enabledRuleIds: ["ditianshui.seasonal-state", "ditianshui.support-ledger"],
+  enabledRuleIds: [
+    "ditianshui.seasonal-state",
+    "ditianshui.support-ledger",
+    "ditianshui.rooting-ledger",
+    "ditianshui.command-position",
+    "ditianshui.strength-verdict",
+    "ditianshui.follow-transform-patterns"
+  ],
   supportedTopics: ["strength"],
   references: [
     DITIANSHUI_STRENGTH_REFERENCE_V1,
@@ -11486,9 +11527,9 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ditianshui/artifacts.json
 var artifacts_default2 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "b58764e77101ba1453ce6e09d2fe7b14cc3758411300866ca6947e8e516cb5d3",
-  rules: "01f776874028e0a8b5c5fc80d153db21ee248be10df9d0a6729f8d1547c3b618",
-  fixtures: "3c5be0ad7ed6adb9cc5e36631454066adf3b7562375d24f4ea2cbddceed12aa1"
+  knowledgeSnapshot: "467b12c377f3ab1cb66471ea80c0f0e8db1f0ab0db784d772ac8b76e4fdc7dba",
+  rules: "8f23e6730c11347be4a697b5770b1edd17d66a281ee56e71616dd8f6ca952c39",
+  fixtures: "7e8e58a3d08e79fe248f3778980137a2bd49ab351c022137e80719da631ca22b"
 };
 
 // plugins/oh-my-saju/tradition-packs/ditianshui/fixtures.json
@@ -11501,6 +11542,10 @@ var fixtures_default2 = {
         "plugins/oh-my-saju/runtime/traditions/doctrine-rules.test.ts",
         "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"
       ]
+    },
+    {
+      id: "ditianshui-v1.2:damage-adjusted-rooting-strength-verdict-and-follow-transform",
+      paths: ["plugins/oh-my-saju/tradition-packs/ditianshui/evaluate.test.ts"]
     }
   ]
 };
@@ -11535,6 +11580,42 @@ var provenance_default2 = {
       formalizationStatus: "reconstruction",
       transcriptionSha256: null,
       reviewerIds: []
+    },
+    {
+      ruleId: "ditianshui.rooting-ledger",
+      sourceReferenceIds: ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      sourceLocators: ["\u8870\u65FA; Pack-local root-rank-v1 table and rank-position weighting"],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ditianshui.command-position",
+      sourceReferenceIds: ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      sourceLocators: ["\u6708\u4EE4; \u5F97\u6642 flags reconstructed as \uB4DD\uB839\xB7\uB4DD\uC9C0\xB7\uB4DD\uC138 candidate grades"],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ditianshui.strength-verdict",
+      sourceReferenceIds: ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      sourceLocators: [
+        "\u8870\u65FA; Pack-local ditianshui-position-weighted-v1 100-point score profile"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ditianshui.follow-transform-patterns",
+      sourceReferenceIds: ["ditianshui-strength-flow-v1", "oh-my-saju-ditianshui-evidence-v1"],
+      sourceLocators: [
+        "\u5F9E\u8C61\xB7\u5316\u8C61\xB7\u4E00\u884C\u5F97\u6C23; Pack-local ditianshui-follow-transform-v1 conditions"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
     }
   ]
 };
@@ -11545,6 +11626,9 @@ var KNOWLEDGE_RESOURCES2 = [
   "sources.json",
   "rules.json",
   "seasonal-state-table.json",
+  "root-rank-v1.json",
+  "strength-score-v1.json",
+  "follow-transform-v1.json",
   "profile.ts",
   "evaluate.ts",
   "fixtures.json",
@@ -11554,7 +11638,14 @@ var artifacts2 = artifactDigests(artifacts_default2);
 var fixtures2 = fixtureInventory(fixtures_default2);
 var declaredProvenance2 = provenanceData(provenance_default2);
 var DITIANSHUI_PROVENANCE = deepFreeze2({
-  ruleIds: ["ditianshui.seasonal-state", "ditianshui.support-ledger"],
+  ruleIds: [
+    "ditianshui.seasonal-state",
+    "ditianshui.support-ledger",
+    "ditianshui.rooting-ledger",
+    "ditianshui.command-position",
+    "ditianshui.strength-verdict",
+    "ditianshui.follow-transform-patterns"
+  ],
   fixtureSetIds: fixtures2.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
     PACK_DIRECTORY2,
@@ -11590,12 +11681,12 @@ var sources_default3 = {
     {
       id: "qiongtong-day-stem-month-climate-v1",
       kind: "classical-text",
-      title: "\u300A\u7AAE\u901A\u5BF6\u9451\u300B\u5341\u5E72\uBCC4 \uC6D4\uB839 \uC870\uD6C4 \uC808",
-      citation: "\u300A\u7AAE\u901A\u5BF6\u9451\u300B, \u7532\u6728\uBD80\uD130 \u7678\u6C34\uAE4C\uC9C0 \uAC01 \uC77C\uAC04\uC758 \uC815\uC6D4~\uC2ED\uC774\uC6D4 \uC870\uD6C4 \uD6C4\uBCF4\uB97C \uB098\uC5F4\uD55C \uC808; \uB300\uD45C fixture\uB294 1937 \u300A\u7AAE\u901A\u5BF6\u9451\u8A55\u8A3B\u300B \uD310\uBA74\uACFC \uAD50\uCC28 \uB300\uC870",
+      title: "\u300A\u7AAE\u901A\u5BF6\u9451\u300B\u5341\u5E72\uBCC4 \uC6D4\uB839 \uC870\uD6C4 \uC808 (120\uCE78 \uC911 7\uCE78\uB9CC \uB300\uC870)",
+      citation: "\u300A\u7AAE\u901A\u5BF6\u9451\u300B, \u7532\u6728\uBD80\uD130 \u7678\u6C34\uAE4C\uC9C0 \uAC01 \uC77C\uAC04\uC758 \uC815\uC6D4~\uC2ED\uC774\uC6D4 \uC870\uD6C4 \uD6C4\uBCF4\uB97C \uB098\uC5F4\uD55C \uC808. \uB300\uD45C fixture 5\uAC74\uC774 \uB36E\uB294 7\uCE78\uB9CC 1937 \u300A\u7AAE\u901A\u5BF6\u9451\u8A55\u8A3B\u300B \uD310\uBA74\uACFC \uAD50\uCC28 \uB300\uC870\uD588\uACE0, \uB098\uBA38\uC9C0 113\uCE78\uC740 \uD310\uBA74 \uB300\uC870 \uC5C6\uC774 \uC804\uC0AC\uD55C \uC2E4\uD5D8 \uB370\uC774\uD130\uB2E4. \uAC11:\uBBF8\xB7\uC815:\uC9C4\xB7\uC2E0:\uC720\xB7\uACC4:\uC624 4\uCE78\uC740 \uC800\uBCF8 \uBB38\uAD6C \uB300\uC870\uB85C \uC804\uC0AC \uC624\uB958\uB97C \uB418\uB3CC\uB838\uC73C\uB098 \uD310\uBA74 \uB300\uC870\uB294 \uC544\uC9C1 \uD558\uC9C0 \uC54A\uC558\uB2E4.",
       url: "https://zh.wikisource.org/w/index.php?oldid=2294674&title=%E7%A9%B7%E9%80%9A%E5%AE%9D%E9%89%B4",
-      locator: "fixed Wikisource oldid 2294674; curated rules at lines 230-252, 348-358, 1427-1441, 1544-1560",
+      locator: "fixed Wikisource oldid 2294674; scan-collated cells 7/120 at lines 230-252, 348-358, 1427-1441, 1544-1560; base-text-corrected cells 4/120 (\uAC11:\uBBF8, \uC815:\uC9C4, \uC2E0:\uC720, \uACC4:\uC624); remaining 109/120 uncollated",
       textualLayer: "base-text",
-      verification: "transcription-reviewed"
+      verification: "unverified"
     },
     {
       id: "oh-my-saju-qiongtong-lookup-v1",
@@ -11634,20 +11725,37 @@ var QIONGTONG_CLIMATE_PARAMETERS_V1 = deepFreeze2({
   monthBasis: "solar-term-month-branch",
   outputScope: "candidate-stems-presence-and-source-status",
   sourceVerifiedScope: "five-curated-fixtures-covering-seven-cells",
+  sourceVerifiedCells: "7-of-120-scan-collated",
+  baseTextCorrectedCells: "4-of-120-jia-wei-ding-chen-xin-you-gui-wu",
+  cellVerificationDisclosure: "every-candidate-statement-declares-cell-verification",
   functionTags: "source-explicit-only-null-when-not-explicit",
   conditionalOutcomeRules: "transcribed-not-evaluated-for-curated-fixtures",
-  outputStatus: "source-status-candidates-not-final"
+  climateBaselineTable: "qiongtong-climate-baseline-v1",
+  climateIndexStatus: "modern-reconstruction-not-classical",
+  hiddenStemTable: "qiongtong-hidden-stems-v1",
+  conditionEvaluation: "transparency-and-branch-root-v1",
+  conditionRootBasis: "same-element-in-branch-hidden-stems",
+  climatePriorityTieBreak: "candidate-state-then-transcribed-order",
+  transcribedOrderMeaning: "pack-local-tie-break-only-not-a-source-ranking",
+  climateGradeAxis: "temperature-only-moisture-is-display-only",
+  climatePriorityScope: "pack-local-not-plugin-final-useful-god",
+  outputStatus: "pack-local-climate-priority-not-cross-school-final"
 });
 var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "qiongtong-climate",
-  version: "1.0.0",
+  version: "1.2.0",
   displayName: "\uAD81\uD1B5\uBCF4\uAC10 \uC870\uD6C4 \uD6C4\uBCF4",
   school: "qiongtong-baojian-climate-reconstruction",
   textualLayer: "reconstruction",
   status: "stable",
-  enabledRuleIds: ["qiongtong.climate-candidates"],
-  supportedTopics: ["useful-god"],
+  enabledRuleIds: [
+    "qiongtong.climate-candidates",
+    "qiongtong.climate-tendency",
+    "qiongtong.candidate-condition",
+    "qiongtong.pack-climate-priority"
+  ],
+  supportedTopics: ["useful-god", "season-climate"],
   references: [
     QIONGTONG_CLIMATE_REFERENCE_V1,
     QIONGTONG_ENGINE_RECONSTRUCTION_REFERENCE_V1,
@@ -11663,9 +11771,9 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/qiongtong/artifacts.json
 var artifacts_default3 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "e6cd91ce398df1fbe795466adb0ef5602ed6359133a1fdfc5ba58bd76e9f1c4a",
-  rules: "23c64bee8ad291ff4ded7aa435c9768b1ecc70f205c70b7969aad9026bb208d7",
-  fixtures: "fa1e1cbea176782d98785aefd292e61186bb37253c8983fbbe309e49e3100039"
+  knowledgeSnapshot: "b2bb8ec00b67d6696266df128ee2b72ab3f4744c042129063a3352ff210b1b0b",
+  rules: "6c412d881e2b1a62eb9accbc90221ba0ff9a483dfc2ac093683d4939147310ac",
+  fixtures: "d3693447faf1e3096bdaf927d6457a0810b145cc9af000b1a500a09007c085c4"
 };
 
 // plugins/oh-my-saju/tradition-packs/qiongtong/fixtures.json
@@ -11678,6 +11786,10 @@ var fixtures_default3 = {
         "plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts",
         "plugins/oh-my-saju/tradition-packs/qiongtong/qiongtong-table-v1.test.ts"
       ]
+    },
+    {
+      id: "qiongtong-v1.2:candidate-condition-and-pack-climate-priority",
+      paths: ["plugins/oh-my-saju/tradition-packs/qiongtong/evaluate.test.ts"]
     }
   ]
 };
@@ -11707,6 +11819,43 @@ var provenance_default3 = {
       formalizationStatus: "reconstruction",
       transcriptionSha256: null,
       reviewerIds: []
+    },
+    {
+      ruleId: "qiongtong.climate-tendency",
+      sourceReferenceIds: [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      sourceLocators: [
+        "month-branch \uD55C\uB09C\uC870\uC2B5 framing; Pack-local climate-baseline-v1 modern reconstruction"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "qiongtong.candidate-condition",
+      sourceReferenceIds: [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      sourceLocators: [
+        "day-stem sections, \u6B63\u6708 through \u5341\u4E8C\u6708; Pack-local hidden-stems-v1 root table"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "qiongtong.pack-climate-priority",
+      sourceReferenceIds: [
+        "qiongtong-day-stem-month-climate-v1",
+        "oh-my-saju-qiongtong-lookup-v1"
+      ],
+      sourceLocators: ["day-stem sections \uC870\uD6C4\uC6A9\uC2E0 \uC21C\uC11C; Pack-local candidate-condition ranking"],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
     }
   ]
 };
@@ -11717,6 +11866,8 @@ var KNOWLEDGE_RESOURCES3 = [
   "sources.json",
   "rules.json",
   "qiongtong-table-v1.ts",
+  "climate-baseline-v1.json",
+  "hidden-stems-v1.json",
   "profile.ts",
   "evaluate.ts",
   "fixtures.json",
@@ -11726,7 +11877,12 @@ var artifacts3 = artifactDigests(artifacts_default3);
 var fixtures3 = fixtureInventory(fixtures_default3);
 var declaredProvenance3 = provenanceData(provenance_default3);
 var QIONGTONG_PROVENANCE = deepFreeze2({
-  ruleIds: ["qiongtong.climate-candidates"],
+  ruleIds: [
+    "qiongtong.climate-candidates",
+    "qiongtong.climate-tendency",
+    "qiongtong.candidate-condition",
+    "qiongtong.pack-climate-priority"
+  ],
   fixtureSetIds: fixtures3.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
     PACK_DIRECTORY3,
@@ -11782,6 +11938,98 @@ function omittedPillars(pillars) {
 function comparison(definitionId, conceptId, methodId, subjectKey, outcomeKey) {
   return { definitionId, conceptId, methodId, subjectKey, outcomeKey };
 }
+var HANGUL_SYLLABLE_START = 44032;
+var HANGUL_SYLLABLE_END = 55203;
+var HANGUL_FINAL_COUNT = 28;
+var HANGUL_FINAL_RIEUL = 8;
+var BRACKET_CLOSERS = /* @__PURE__ */ new Set([")", "]", "}", "\uFF09", "\uFF3D", "\uFF5D", "\u3015", "\u3011", "\u300B", "\u3009"]);
+var BRACKET_OPENERS = /* @__PURE__ */ new Set(["(", "[", "{", "\uFF08", "\uFF3B", "\uFF5B", "\u3014", "\u3010", "\u300A", "\u3008"]);
+var SKIPPED_MARKS = /* @__PURE__ */ new Set([
+  " ",
+  "	",
+  "\n",
+  '"',
+  "'",
+  "`",
+  "\u2018",
+  "\u2019",
+  "\u201C",
+  "\u201D",
+  "\u300C",
+  "\u300D",
+  "\u300E",
+  "\u300F"
+]);
+var DIGIT_FINAL_CONSONANT = [
+  "other",
+  // 0 영 (ㅇ)
+  "rieul",
+  // 1 일 (ㄹ)
+  "none",
+  // 2 이
+  "other",
+  // 3 삼 (ㅁ)
+  "none",
+  // 4 사
+  "none",
+  // 5 오
+  "other",
+  // 6 육 (ㄱ)
+  "rieul",
+  // 7 칠 (ㄹ)
+  "rieul",
+  // 8 팔 (ㄹ)
+  "none"
+  // 9 구
+];
+function finalConsonantClass(word) {
+  let bracketDepth = 0;
+  for (let index = word.length - 1; index >= 0; index -= 1) {
+    const character = word[index];
+    if (BRACKET_CLOSERS.has(character)) {
+      bracketDepth += 1;
+      continue;
+    }
+    if (BRACKET_OPENERS.has(character)) {
+      if (bracketDepth > 0) bracketDepth -= 1;
+      continue;
+    }
+    if (bracketDepth > 0) continue;
+    if (SKIPPED_MARKS.has(character)) continue;
+    const code = word.charCodeAt(index);
+    if (code >= HANGUL_SYLLABLE_START && code <= HANGUL_SYLLABLE_END) {
+      const final = (code - HANGUL_SYLLABLE_START) % HANGUL_FINAL_COUNT;
+      if (final === 0) return "none";
+      return final === HANGUL_FINAL_RIEUL ? "rieul" : "other";
+    }
+    if (character >= "0" && character <= "9") {
+      return DIGIT_FINAL_CONSONANT[Number(character)];
+    }
+    return "none";
+  }
+  return "none";
+}
+function hasFinalConsonant(word) {
+  return finalConsonantClass(word) !== "none";
+}
+function withTopicParticle(word) {
+  return `${word}${hasFinalConsonant(word) ? "\uC740" : "\uB294"}`;
+}
+function withSubjectParticle(word) {
+  return `${word}${hasFinalConsonant(word) ? "\uC774" : "\uAC00"}`;
+}
+function withObjectParticle(word) {
+  return `${word}${hasFinalConsonant(word) ? "\uC744" : "\uB97C"}`;
+}
+function withComitativeParticle(word) {
+  return `${word}${hasFinalConsonant(word) ? "\uACFC" : "\uC640"}`;
+}
+function withAdverbialParticle(word) {
+  return `${word}${finalConsonantClass(word) === "other" ? "\uC73C\uB85C" : "\uB85C"}`;
+}
+function withCopulaClause(word) {
+  return `${word}${hasFinalConsonant(word) ? "\uC774\uB77C" : "\uB77C"}`;
+}
 
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.ts
 var SANMING_SYMBOLIC_CURATED_RULE_IDS_V1 = deepFreeze2([
@@ -11799,7 +12047,9 @@ var SANMING_SYMBOLIC_CURATED_RULE_IDS_V1 = deepFreeze2([
   "sanming.lu",
   "sanming.literary-star",
   "sanming.blade-after-lu-all-stems",
-  "sanming.blade-yang-stems-only"
+  "sanming.blade-yang-stems-only",
+  "sanming.resentment-pair",
+  "sanming.ghost-gate-pair"
 ]);
 var TRIAD_SOURCE_IDS = ["sanming-tonghui-triad-symbolic-stars-v1"];
 var TRAVEL_HORSE_SOURCE_IDS = ["sanming-tonghui-travel-horse-v1"];
@@ -11808,6 +12058,7 @@ var HEAVENLY_NOBLE_SOURCE_IDS = ["sanming-tonghui-heavenly-noble-v1"];
 var LU_SOURCE_IDS = ["sanming-tonghui-lu-v1"];
 var LITERARY_STAR_SOURCE_IDS = ["selection-1867-literary-star-v1"];
 var BLADE_SOURCE_IDS = ["sanming-tonghui-blade-variants-v1"];
+var BRANCH_PAIR_SOURCE_IDS = ["korean-circulated-resentment-ghost-gate-v1"];
 var SANMING_TRIAD_SYMBOLIC_STAR_BRANCH_V1 = deepFreeze2({
   "sanming.travel-horse": {
     \uC790: "\uC778",
@@ -12015,6 +12266,34 @@ var SANMING_DAY_STEM_TARGET_BRANCHES_V1 = deepFreeze2({
     \uACC4: []
   }
 });
+var SANMING_RESENTMENT_PAIRS_V1 = deepFreeze2([
+  ["\uC790", "\uBBF8"],
+  ["\uCD95", "\uC624"],
+  ["\uC778", "\uC720"],
+  ["\uBB18", "\uC2E0"],
+  ["\uC9C4", "\uD574"],
+  ["\uC0AC", "\uC220"]
+]);
+var SANMING_GHOST_GATE_PAIRS_V1 = deepFreeze2([
+  ["\uC790", "\uC720"],
+  ["\uCD95", "\uC624"],
+  ["\uC778", "\uBBF8"],
+  ["\uBB18", "\uC2E0"],
+  ["\uC9C4", "\uD574"],
+  ["\uC0AC", "\uC220"]
+]);
+var BRANCH_PAIR_TABLE_BY_RULE = deepFreeze2({
+  "sanming.resentment-pair": {
+    tableId: "sanming-resentment-pairs-v1",
+    label: "\uC6D0\uC9C4",
+    pairs: SANMING_RESENTMENT_PAIRS_V1
+  },
+  "sanming.ghost-gate-pair": {
+    tableId: "sanming-ghost-gate-pairs-v1",
+    label: "\uADC0\uBB38",
+    pairs: SANMING_GHOST_GATE_PAIRS_V1
+  }
+});
 var SYMBOLIC_STAR_BY_RULE = deepFreeze2({
   "sanming.travel-horse": "travel-horse",
   "sanming.general-star": "general-star",
@@ -12030,7 +12309,9 @@ var SYMBOLIC_STAR_BY_RULE = deepFreeze2({
   "sanming.lu": "lu",
   "sanming.literary-star": "literary-star",
   "sanming.blade-after-lu-all-stems": "blade",
-  "sanming.blade-yang-stems-only": "blade"
+  "sanming.blade-yang-stems-only": "blade",
+  "sanming.resentment-pair": "resentment",
+  "sanming.ghost-gate-pair": "ghost-gate"
 });
 var BRANCH_POSITION_LABEL = {
   year: "\uC5F0\uC9C0",
@@ -12047,6 +12328,7 @@ var SEASON_CORNER_RULE_IDS = new Set(
 var DAY_STEM_RULE_IDS = new Set(
   Object.keys(SANMING_DAY_STEM_TARGET_BRANCHES_V1)
 );
+var BRANCH_PAIR_RULE_IDS = new Set(Object.keys(BRANCH_PAIR_TABLE_BY_RULE));
 function isTriadRule(ruleId) {
   return TRIAD_RULE_IDS.has(ruleId);
 }
@@ -12056,7 +12338,11 @@ function isSeasonCornerRule(ruleId) {
 function isDayStemRule(ruleId) {
   return DAY_STEM_RULE_IDS.has(ruleId);
 }
+function isBranchPairRule(ruleId) {
+  return BRANCH_PAIR_RULE_IDS.has(ruleId);
+}
 function sourceReferenceIds(ruleId) {
+  if (isBranchPairRule(ruleId)) return BRANCH_PAIR_SOURCE_IDS;
   if (ruleId === "sanming.travel-horse") return TRAVEL_HORSE_SOURCE_IDS;
   if (isTriadRule(ruleId)) return TRIAD_SOURCE_IDS;
   if (isSeasonCornerRule(ruleId)) return SEASON_CORNER_SOURCE_IDS;
@@ -12065,7 +12351,66 @@ function sourceReferenceIds(ruleId) {
   if (ruleId === "sanming.literary-star") return LITERARY_STAR_SOURCE_IDS;
   return BLADE_SOURCE_IDS;
 }
+function evaluateBranchPairRule(ruleId, context) {
+  const { tableId, label, pairs } = BRANCH_PAIR_TABLE_BY_RULE[ruleId];
+  const observedPillars = PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    return pillar === null ? [] : [{ position: position2, branch: pillar.branch.korean }];
+  });
+  const omitted = PILLAR_POSITIONS.filter((position2) => context.pillars[position2] === null);
+  const matches = pairs.flatMap(
+    ([left, right]) => observedPillars.flatMap(
+      (first, firstIndex) => observedPillars.slice(firstIndex + 1).flatMap(
+        (second) => first.branch === left && second.branch === right || first.branch === right && second.branch === left ? [
+          {
+            tableRow: [left, right],
+            positions: [first.position, second.position],
+            branches: [first.branch, second.branch]
+          }
+        ] : []
+      )
+    )
+  );
+  const partial = omitted.length > 0;
+  const status = partial ? matches.length === 0 ? "indeterminate-omitted-pillar" : "raw-matches-observed-partial" : matches.length === 0 ? "raw-absence" : "raw-matches";
+  const values = {
+    symbolicStar: SYMBOLIC_STAR_BY_RULE[ruleId],
+    anchorMethod: "branch-pair-table-literal",
+    pairTable: tableId,
+    tableRows: pairs.map(([left, right]) => [left, right]),
+    observedPillars,
+    matches: matches.map(({ tableRow, positions, branches }) => ({
+      tableRow: [tableRow[0], tableRow[1]],
+      positions: [positions[0], positions[1]],
+      branches: [branches[0], branches[1]]
+    })),
+    status,
+    interpretation: "none"
+  };
+  const matchSummary = matches.map(
+    ({ positions, branches }) => `${BRANCH_POSITION_LABEL[positions[0]]} ${withComitativeParticle(branches[0])} ${BRANCH_POSITION_LABEL[positions[1]]} ${branches[1]}`
+  ).join(", ");
+  const statement = partial ? matches.length === 0 ? `\uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C ${label} \uD45C\uC640 \uB300\uC870\uD588\uC9C0\uB9CC \uC77C\uCE58\uD558\uB294 \uC9DD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${withTopicParticle(matchSummary)} ${label} \uD45C\uC5D0 \uC77C\uCE58\uD569\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uB354 \uC788\uB294\uC9C0\uB294 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC774 \uD329\uC740 \uD45C \uC77C\uCE58\uB9CC \uAE30\uB85D\uD558\uBA70 \uC0AC\uAC74 \uC758\uBBF8\uB97C \uBD99\uC774\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : matches.length === 0 ? `\uB124 \uC9C0\uC9C0\uB97C ${label} \uD45C\uC640 \uB300\uC870\uD588\uC9C0\uB9CC \uC77C\uCE58\uD558\uB294 \uC9DD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.` : `${withTopicParticle(matchSummary)} ${label} \uD45C\uC5D0 \uC77C\uCE58\uD569\uB2C8\uB2E4. \uC774 \uD329\uC740 \uD45C \uC77C\uCE58\uB9CC \uAE30\uB85D\uD558\uBA70 \uC0AC\uAC74 \uC758\uBBF8\uB97C \uBD99\uC774\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`;
+  return {
+    key: canonicalJsonStringify(values),
+    statement,
+    topic: "symbolic-stars",
+    values,
+    evidencePaths: observedPillars.map(({ position: position2 }) => `pillars.${position2}.branch`),
+    sourceReferenceIds: sourceReferenceIds(ruleId),
+    comparison: comparison(
+      `${ruleId}.branch-pair.raw.v1`,
+      "symbolic-star-branch-pair-match",
+      ruleId,
+      observedPillars.map(({ branch }) => branch).join(""),
+      canonicalJsonStringify({ matches: values.matches, status })
+    ),
+    coverage: partial ? "partial" : "complete",
+    omittedPillars: partial ? omitted : []
+  };
+}
 function evaluateSanmingSymbolicCuratedRule(ruleId, context) {
+  if (isBranchPairRule(ruleId)) return evaluateBranchPairRule(ruleId, context);
   if (!isTriadRule(ruleId) && !isSeasonCornerRule(ruleId) && !isDayStemRule(ruleId)) {
     throw new RangeError(`\uC9C0\uC6D0\uD558\uC9C0 \uC54A\uB294 \uC0BC\uBA85\uD1B5\uD68C \uC5C4\uC120 \uC2E0\uC0B4 \uADDC\uCE59\uC785\uB2C8\uB2E4: ${String(ruleId)}`);
   }
@@ -12128,7 +12473,7 @@ function evaluateSanmingSymbolicCuratedRule(ruleId, context) {
   const matchSummary = matches.map(
     ({ observedPosition, targetBranch }) => `${BRANCH_POSITION_LABEL[observedPosition]} ${targetBranch}`
   ).join("\xB7");
-  const statement = notApplicable ? `\uC77C\uAC04 ${dayStem}\uC740 \uC591\uAC04\uC5D0\uB9CC \uC4F0\uB294 \uC774 \uD45C\uC758 \uC801\uC6A9 \uB300\uC0C1\uC774 \uC544\uB2D9\uB2C8\uB2E4.` : partial ? matches.length === 0 ? `\uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C ${anchorSummary} \uD45C\uC640 \uB300\uC870\uD588\uC9C0\uB9CC \uC77C\uCE58\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C \uB300\uC870\uD588\uC2B5\uB2C8\uB2E4. \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uB354 \uC788\uB294\uC9C0\uB294 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : matches.length === 0 ? `${anchorSummary} \uD45C\uC5D0\uC11C \uC77C\uCE58\uD558\uB294 \uC9C0\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uB300\uC870\uD55C \uACB0\uACFC, \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4.`;
+  const statement = notApplicable ? `\uC77C\uAC04 ${withTopicParticle(dayStem)} \uC591\uAC04\uC5D0\uB9CC \uC4F0\uB294 \uC774 \uD45C\uC758 \uC801\uC6A9 \uB300\uC0C1\uC774 \uC544\uB2D9\uB2C8\uB2E4.` : partial ? matches.length === 0 ? `\uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C ${anchorSummary} \uD45C\uC640 \uB300\uC870\uD588\uC9C0\uB9CC \uC77C\uCE58\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uD574\uB2F9 \uC2E0\uC0B4\uC774 \uC5C6\uB2E4\uACE0 \uB2E8\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uD655\uC778\uB41C \uC5F0\xB7\uC6D4\xB7\uC77C \uC9C0\uC9C0\uB97C \uB300\uC870\uD588\uC2B5\uB2C8\uB2E4. \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4. \uC2DC\uC9C0\uB97C \uBAA8\uB974\uBBC0\uB85C \uB354 \uC788\uB294\uC9C0\uB294 \uD310\uB2E8\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : matches.length === 0 ? `${anchorSummary} \uD45C\uC5D0\uC11C \uC77C\uCE58\uD558\uB294 \uC9C0\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.` : `${anchorSummary} \uD45C\uC640 \uB300\uC870\uD55C \uACB0\uACFC, \uC77C\uCE58\uD55C \uC9C0\uC9C0\uB294 ${matchSummary}\uC785\uB2C8\uB2E4.`;
   const evidencePaths = [
     isStemRule ? "pillars.day.stem" : "pillars.year.branch",
     ...observedPillars.map(({ position: position2 }) => `pillars.${position2}.branch`)
@@ -12225,6 +12570,16 @@ var sources_default4 = {
       locator: "\u56DB\u5EAB\u5168\u66F8\u672C \u5168\u89BD, \u8AD6\u967D\u5203 \uD56D\uBAA9\uC758 \uB450 \uC815\uC758",
       textualLayer: "base-text",
       verification: "transcription-reviewed"
+    },
+    {
+      id: "korean-circulated-resentment-ghost-gate-v1",
+      kind: "modern-convention",
+      title: "\uD55C\uAD6D\uC5D0\uC11C \uD1B5\uC6A9\uB418\uB294 \uC6D0\uC9C4\xB7\uADC0\uBB38 \uB300\uC870\uD45C",
+      citation: "\uC6D0\uC9C4(\uC790\uBBF8\xB7\uCD95\uC624\xB7\uC778\uC720\xB7\uBB18\uC2E0\xB7\uC9C4\uD574\xB7\uC0AC\uC220)\uACFC \uADC0\uBB38(\uC790\uC720\xB7\uCD95\uC624\xB7\uC778\uBBF8\xB7\uBB18\uC2E0\xB7\uC9C4\uD574\xB7\uC0AC\uC220)\uC758 \uB450 \uB300\uC870\uD45C. \uC5EC\uC12F \uC30D \uAC00\uC6B4\uB370 \uB124 \uC30D\uB9CC \uACB9\uCE58\uACE0 \uC790\uBBF8\xB7\uC778\uC720\uC640 \uC790\uC720\xB7\uC778\uBBF8\uAC00 \uAC08\uB9B0\uB2E4. \uC774 Pack\uC740 \uB450 \uD45C\uB97C \uD569\uCE58\uC9C0 \uC54A\uACE0 \uB530\uB85C \uB450\uBA70 \uC6D0\uC804 \uB300\uC870\uB294 \uD558\uC9C0 \uC54A\uC558\uB2E4.",
+      url: "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      locator: "plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.ts",
+      textualLayer: "modern-analysis",
+      verification: "unverified"
     }
   ]
 };
@@ -12239,20 +12594,24 @@ var SANMING_SYMBOLIC_CURATED_PARAMETERS_V1 = deepFreeze2({
     "sanming-eight-triad-stars-v1",
     "sanming-season-corner-pair-v1",
     "sanming-day-stem-stars-v1",
-    "sanming-blade-variants-v1"
+    "sanming-blade-variants-v1",
+    "sanming-resentment-pairs-v1",
+    "sanming-ghost-gate-pairs-v1"
   ],
   anchorBranches: ["year"],
   anchorStems: ["day"],
   observedPillars: ["year", "month", "day", "hour"],
   outputScope: "raw-branch-matches-complete-absence-or-partial-observation",
   xianchiQualification: "unresolved-heavenly-stem-and-nayin-same-category",
+  resentmentGhostGateDivergence: "two-of-six-pairs-differ",
+  resentmentGhostGateSourceStatus: "circulated-tables-not-edition-verified",
   bladeVariants: ["after-lu-all-stems", "yang-stems-only"],
   interpretation: "none"
 });
 var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "sanming-symbolic-curated",
-  version: "1.1.0",
+  version: "1.2.0",
   displayName: "\uC0BC\uBA85\uD1B5\uD68C \uC5C4\uC120 \uC2E0\uC0B4\uD45C \uB300\uC870",
   school: "sanming-tonghui-base-text",
   textualLayer: "base-text",
@@ -12267,9 +12626,9 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/artifacts.json
 var artifacts_default4 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "4963ea8baeba086384c071103b57c3d79465980dd6618d6272b45d2a6feda960",
-  rules: "a335265a5d506f12b70599d5d385a6cabda6a967a97d3e1f5c4114674e604cb5",
-  fixtures: "d78160e90a9ec55378b2e6d56804e581ef3594f0df32d948ec871f2779223122"
+  knowledgeSnapshot: "b2ebb931f65e2ae14d6e8f7ab7e031eaff2225cf97e375db9c4ec0d3f00dffc9",
+  rules: "2e56931971503a9daa7e4fc1221daa7d331cf4b6986c9de8d7d843febbde09e9",
+  fixtures: "4c2c5f9483af0f6869f241d607ef6eefbdf020ce8d1833251ddb790929e78f23"
 };
 
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/fixtures.json
@@ -12277,7 +12636,7 @@ var fixtures_default4 = {
   schemaVersion: "1",
   fixtureSets: [
     {
-      id: "sanming-symbolic-curated-v1.1:four-triad-twelve-branch-ten-stem-partial",
+      id: "sanming-symbolic-curated-v1.2:four-triad-twelve-branch-ten-stem-pair-tables",
       paths: ["plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.test.ts"]
     }
   ]
@@ -12465,6 +12824,22 @@ var provenance_default4 = {
       formalizationStatus: "literal-table",
       transcriptionSha256: null,
       reviewerIds: []
+    },
+    {
+      ruleId: "sanming.resentment-pair",
+      sourceReferenceIds: ["korean-circulated-resentment-ghost-gate-v1"],
+      sourceLocators: ["\uC6D0\uC9C4 6\uC30D \uB300\uC870\uD45C; \uADC0\uBB38 \uD45C\uC640 \uBD84\uB9AC \uBCF4\uC874"],
+      formalizationStatus: "literal-table",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "sanming.ghost-gate-pair",
+      sourceReferenceIds: ["korean-circulated-resentment-ghost-gate-v1"],
+      sourceLocators: ["\uADC0\uBB38 6\uC30D \uB300\uC870\uD45C; \uC6D0\uC9C4 \uD45C\uC640 \uBD84\uB9AC \uBCF4\uC874"],
+      formalizationStatus: "literal-table",
+      transcriptionSha256: null,
+      reviewerIds: []
     }
   ]
 };
@@ -12512,8 +12887,863 @@ var SANMING_SYMBOLIC_CURATED_PROVENANCE = deepFreeze2({
   )
 });
 
-// plugins/oh-my-saju/tradition-packs/ziping/sources.json
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/branch-relation-tables-v1.json
+var branch_relation_tables_v1_default = {
+  schemaVersion: "1",
+  profileId: "xingchong-branch-relation-tables-v1",
+  wumeiTransform: "earth",
+  directionalBureaus: [
+    { id: "\uC778\uBB18\uC9C4", members: ["\uC778", "\uBB18", "\uC9C4"], element: "\uBAA9" },
+    { id: "\uC0AC\uC624\uBBF8", members: ["\uC0AC", "\uC624", "\uBBF8"], element: "\uD654" },
+    { id: "\uC2E0\uC720\uC220", members: ["\uC2E0", "\uC720", "\uC220"], element: "\uAE08" },
+    { id: "\uD574\uC790\uCD95", members: ["\uD574", "\uC790", "\uCD95"], element: "\uC218" }
+  ],
+  triadBureaus: [
+    { id: "\uC2E0\uC790\uC9C4", growth: "\uC2E0", peak: "\uC790", storage: "\uC9C4", element: "\uC218" },
+    { id: "\uD574\uBB18\uBBF8", growth: "\uD574", peak: "\uBB18", storage: "\uBBF8", element: "\uBAA9" },
+    { id: "\uC778\uC624\uC220", growth: "\uC778", peak: "\uC624", storage: "\uC220", element: "\uD654" },
+    { id: "\uC0AC\uC720\uCD95", growth: "\uC0AC", peak: "\uC720", storage: "\uCD95", element: "\uAE08" }
+  ],
+  sixCombinations: [
+    { members: ["\uC790", "\uCD95"], element: "\uD1A0" },
+    { members: ["\uC778", "\uD574"], element: "\uBAA9" },
+    { members: ["\uBB18", "\uC220"], element: "\uD654" },
+    { members: ["\uC9C4", "\uC720"], element: "\uAE08" },
+    { members: ["\uC0AC", "\uC2E0"], element: "\uC218" },
+    { members: ["\uC624", "\uBBF8"], element: "\uD1A0", divergence: "earth-or-fire-split" }
+  ],
+  stemCombinations: [
+    { members: ["\uAC11", "\uAE30"], element: "\uD1A0" },
+    { members: ["\uC744", "\uACBD"], element: "\uAE08" },
+    { members: ["\uBCD1", "\uC2E0"], element: "\uC218" },
+    { members: ["\uC815", "\uC784"], element: "\uBAA9" },
+    { members: ["\uBB34", "\uACC4"], element: "\uD654" }
+  ],
+  punishmentTriads: [
+    { id: "\uC778\uC0AC\uC2E0", members: ["\uC778", "\uC0AC", "\uC2E0"] },
+    { id: "\uCD95\uC220\uBBF8", members: ["\uCD95", "\uC220", "\uBBF8"] }
+  ],
+  branchMainQi: {
+    \uC790: "\uACC4",
+    \uCD95: "\uAE30",
+    \uC778: "\uAC11",
+    \uBB18: "\uC744",
+    \uC9C4: "\uBB34",
+    \uC0AC: "\uBCD1",
+    \uC624: "\uC815",
+    \uBBF8: "\uAE30",
+    \uC2E0: "\uACBD",
+    \uC720: "\uC2E0",
+    \uC220: "\uBB34",
+    \uD574: "\uC784"
+  }
+};
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/evaluate.ts
+var XINGCHONG_RESOLUTION_RULE_IDS_V1 = deepFreeze2([
+  "xingchong.branch-bureau",
+  "xingchong.stem-combination-state",
+  "xingchong.resolution-order"
+]);
+var XINGCHONG_BUREAU_SOURCE_IDS = [
+  "yuanhai-ziping-combination-clash-v1",
+  "oh-my-saju-xingchong-resolution-v1"
+];
+var XINGCHONG_STEM_COMBINATION_SOURCE_IDS = [
+  "yuanhai-ziping-combination-clash-v1",
+  "oh-my-saju-xingchong-resolution-v1"
+];
+var XINGCHONG_RESOLUTION_SOURCE_IDS = [
+  "yuanhai-ziping-combination-clash-v1",
+  "sanming-tonghui-xingchong-v1",
+  "oh-my-saju-xingchong-resolution-v1"
+];
+var XINGCHONG_RELATION_TABLE_ID_V1 = "xingchong-branch-relation-tables-v1";
+function requireBranch(value) {
+  if (typeof value !== "string" || !EARTHLY_BRANCHES2.includes(value)) {
+    throw new TypeError(`Invalid Xingchong relation table branch: ${String(value)}.`);
+  }
+  return value;
+}
+function requireStem(value) {
+  if (typeof value !== "string" || !HEAVENLY_STEMS2.includes(value)) {
+    throw new TypeError(`Invalid Xingchong relation table stem: ${String(value)}.`);
+  }
+  return value;
+}
+function requireElement(value) {
+  if (value === "\uBAA9" || value === "\uD654" || value === "\uD1A0" || value === "\uAE08" || value === "\uC218") {
+    return value;
+  }
+  throw new TypeError(`Invalid Xingchong relation table element: ${String(value)}.`);
+}
+function requireEntries(value, name) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new TypeError(`Invalid Xingchong relation table section: ${name}.`);
+  }
+  return value;
+}
+function requireId(value) {
+  if (typeof value !== "string" || value.length === 0) {
+    throw new TypeError("Invalid Xingchong relation table entry id.");
+  }
+  return value;
+}
+function parseRelationTables(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== XINGCHONG_RELATION_TABLE_ID_V1 || value.wumeiTransform !== "earth" || !isRecord2(value.branchMainQi)) {
+    throw new TypeError("Invalid Xingchong branch relation table.");
+  }
+  const mainQi = value.branchMainQi;
+  return {
+    wumeiTransform: "earth",
+    directionalBureaus: requireEntries(value.directionalBureaus, "directionalBureaus").map(
+      (entry) => {
+        if (!isRecord2(entry) || !Array.isArray(entry.members) || entry.members.length !== 3) {
+          throw new TypeError("Invalid Xingchong directional bureau entry.");
+        }
+        return {
+          id: requireId(entry.id),
+          members: entry.members.map(requireBranch),
+          element: requireElement(entry.element)
+        };
+      }
+    ),
+    triadBureaus: requireEntries(value.triadBureaus, "triadBureaus").map((entry) => {
+      if (!isRecord2(entry)) throw new TypeError("Invalid Xingchong triad bureau entry.");
+      return {
+        id: requireId(entry.id),
+        growth: requireBranch(entry.growth),
+        peak: requireBranch(entry.peak),
+        storage: requireBranch(entry.storage),
+        element: requireElement(entry.element)
+      };
+    }),
+    sixCombinations: requireEntries(value.sixCombinations, "sixCombinations").map((entry) => {
+      if (!isRecord2(entry) || !Array.isArray(entry.members) || entry.members.length !== 2) {
+        throw new TypeError("Invalid Xingchong six-combination entry.");
+      }
+      const members = entry.members;
+      return {
+        members: [requireBranch(members[0]), requireBranch(members[1])],
+        element: requireElement(entry.element),
+        divergence: typeof entry.divergence === "string" ? entry.divergence : null
+      };
+    }),
+    stemCombinations: requireEntries(value.stemCombinations, "stemCombinations").map((entry) => {
+      if (!isRecord2(entry) || !Array.isArray(entry.members) || entry.members.length !== 2) {
+        throw new TypeError("Invalid Xingchong stem-combination entry.");
+      }
+      const members = entry.members;
+      return {
+        members: [requireStem(members[0]), requireStem(members[1])],
+        element: requireElement(entry.element)
+      };
+    }),
+    punishmentTriads: requireEntries(value.punishmentTriads, "punishmentTriads").map((entry) => {
+      if (!isRecord2(entry) || !Array.isArray(entry.members) || entry.members.length !== 3) {
+        throw new TypeError("Invalid Xingchong punishment triad entry.");
+      }
+      return {
+        id: requireId(entry.id),
+        members: entry.members.map(requireBranch)
+      };
+    }),
+    branchMainQi: Object.fromEntries(
+      EARTHLY_BRANCHES2.map((branch) => [branch, requireStem(mainQi[branch])])
+    )
+  };
+}
+var XINGCHONG_RELATION_TABLES_V1 = deepFreeze2(
+  parseRelationTables(branch_relation_tables_v1_default)
+);
+var TRIAD_PEAK_BRANCHES = new Set(
+  XINGCHONG_RELATION_TABLES_V1.triadBureaus.map(({ peak }) => peak)
+);
+var POSITION_INDEX = {
+  year: 0,
+  month: 1,
+  day: 2,
+  hour: 3
+};
+var BRANCH_POSITION_LABEL2 = {
+  year: "\uC5F0\uC9C0",
+  month: "\uC6D4\uC9C0",
+  day: "\uC77C\uC9C0",
+  hour: "\uC2DC\uC9C0"
+};
+var STEM_POSITION_LABEL = {
+  year: "\uC5F0\uAC04",
+  month: "\uC6D4\uAC04",
+  day: "\uC77C\uAC04",
+  hour: "\uC2DC\uAC04"
+};
+function xingchongDistanceFactor(left, right) {
+  const gap = Math.abs(POSITION_INDEX[left] - POSITION_INDEX[right]);
+  if (gap <= 1) return 1;
+  if (gap === 2) return 0.5;
+  return 0.2;
+}
+function observedBranches(context) {
+  return PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    return pillar === null ? [] : [{ position: position2, branch: pillar.branch.korean }];
+  });
+}
+function positionsOf(branches, branch) {
+  return branches.filter((entry) => entry.branch === branch).map(({ position: position2 }) => position2);
+}
+function triadCompleteness(hasGrowth, hasPeak, hasStorage) {
+  if (hasGrowth && hasPeak && hasStorage) return "full";
+  if (hasGrowth && hasPeak) return "strong-half";
+  if (hasPeak && hasStorage) return "weak-half";
+  if (hasGrowth && hasStorage) return "not-formed";
+  return null;
+}
+function bureauMatches(context) {
+  const branches = observedBranches(context);
+  const visibleStems = visibleStemObservations(context.pillars, { includeDay: true });
+  const transparencyOf = (element) => {
+    const transparentStems = visibleStems.filter(({ stem }) => getHeavenlyStemElement2(stem) === element).map(({ position: position2, stem }) => ({ position: position2, stem }));
+    return { transparent: transparentStems.length > 0, transparentStems };
+  };
+  const stateOf = (completeness, transparent) => completeness === "not-formed" ? "not-formed" : transparent ? "manifest" : "latent";
+  const directional = XINGCHONG_RELATION_TABLES_V1.directionalBureaus.flatMap(
+    (bureau) => {
+      const present = bureau.members.filter(
+        (member) => branches.some(({ branch }) => branch === member)
+      );
+      if (present.length < 2) return [];
+      const completeness = present.length === 3 ? "full" : "not-formed";
+      const transparency = transparencyOf(bureau.element);
+      return [
+        {
+          kind: "directional",
+          id: bureau.id,
+          element: bureau.element,
+          completeness,
+          presentMembers: present,
+          positions: present.flatMap((member) => positionsOf(branches, member)),
+          peakBranch: null,
+          ...transparency,
+          state: stateOf(completeness, transparency.transparent)
+        }
+      ];
+    }
+  );
+  const triad = XINGCHONG_RELATION_TABLES_V1.triadBureaus.flatMap((bureau) => {
+    const hasGrowth = branches.some(({ branch }) => branch === bureau.growth);
+    const hasPeak = branches.some(({ branch }) => branch === bureau.peak);
+    const hasStorage = branches.some(({ branch }) => branch === bureau.storage);
+    const completeness = triadCompleteness(hasGrowth, hasPeak, hasStorage);
+    if (completeness === null) return [];
+    const present = [
+      ...hasGrowth ? [bureau.growth] : [],
+      ...hasPeak ? [bureau.peak] : [],
+      ...hasStorage ? [bureau.storage] : []
+    ];
+    const transparency = transparencyOf(bureau.element);
+    return [
+      {
+        kind: "triad",
+        id: bureau.id,
+        element: bureau.element,
+        completeness,
+        presentMembers: present,
+        positions: present.flatMap((member) => positionsOf(branches, member)),
+        peakBranch: bureau.peak,
+        ...transparency,
+        state: stateOf(completeness, transparency.transparent)
+      }
+    ];
+  });
+  return [...directional, ...triad];
+}
+function bureauValue(match) {
+  return {
+    kind: match.kind,
+    id: match.id,
+    element: match.element,
+    completeness: match.completeness,
+    presentMembers: [...match.presentMembers],
+    positions: [...match.positions],
+    peakBranch: match.peakBranch,
+    transparent: match.transparent,
+    transparentStems: match.transparentStems.map(({ position: position2, stem }) => ({ position: position2, stem })),
+    state: match.state
+  };
+}
+var SIX_HARMONY_DIVERGENCE_ALTERNATIVE = {
+  "earth-or-fire-split": "\uD654"
+};
+var COMPLETENESS_LABEL = {
+  full: "\uC0BC\uC790\uAC00 \uBAA8\uB450 \uBAA8\uC778 \uAD6D",
+  "strong-half": "\uC0DD\uC9C0\uC640 \uC655\uC9C0\uAC00 \uBAA8\uC778 \uBC18\uD569(\uC720\uB825)",
+  "weak-half": "\uC655\uC9C0\uC640 \uACE0\uC9C0\uAC00 \uBAA8\uC778 \uBC18\uD569",
+  "not-formed": "\uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 \uC131\uB9BD\uC73C\uB85C \uBCF4\uC9C0 \uC54A\uB294 \uC9DD"
+};
+function evaluateBranchBureau(context) {
+  const branches = observedBranches(context);
+  const matches = bureauMatches(context);
+  const sixHarmonyPairs = XINGCHONG_RELATION_TABLES_V1.sixCombinations.flatMap((entry) => {
+    const [left, right] = entry.members;
+    const leftPositions = positionsOf(branches, left);
+    const rightPositions = positionsOf(branches, right);
+    if (leftPositions.length === 0 || rightPositions.length === 0) return [];
+    return [
+      {
+        members: [left, right],
+        element: entry.element,
+        positions: [leftPositions[0], rightPositions[0]],
+        divergence: entry.divergence
+      }
+    ];
+  });
+  const sixHarmonies = sixHarmonyPairs.map(
+    ({ members, element, positions, divergence }) => ({
+      members: [members[0], members[1]],
+      element,
+      positions: [positions[0], positions[1]],
+      divergence
+    })
+  );
+  const formed = matches.filter(({ completeness }) => completeness !== "not-formed");
+  const values = {
+    table: XINGCHONG_RELATION_TABLE_ID_V1,
+    bureaus: matches.map(bureauValue),
+    sixHarmonies,
+    partialDirectionalBureau: "not-recognized",
+    wumeiTransform: XINGCHONG_RELATION_TABLES_V1.wumeiTransform,
+    sixHarmonyLockPolicy: "not-locked-for-clash-suppression",
+    status: "bureau-formation-not-fortune"
+  };
+  const bureauSummary = formed.map(
+    (match) => `${match.presentMembers.join("\xB7")} ${match.element} ${match.kind === "directional" ? "\uBC29\uD569" : "\uC0BC\uD569"}\uAD6D(${COMPLETENESS_LABEL[match.completeness]})`
+  ).join(", ");
+  const transparencySummary = formed.map(
+    (match) => match.transparent ? `${match.id} \uAD6D\uC758 \uC624\uD589 ${withTopicParticle(match.element)} ${match.transparentStems.map(
+      ({ position: position2, stem }) => `${STEM_POSITION_LABEL[position2]} ${stem}`
+    ).join("\xB7")}\uC5D0 \uD22C\uCD9C\uD588\uC2B5\uB2C8\uB2E4` : `${match.id} \uAD6D\uC758 \uC624\uD589 ${withTopicParticle(match.element)} \uCC9C\uAC04\uC5D0 \uD22C\uCD9C\uD558\uC9C0 \uC54A\uC544 \uC7A0\uBCF5\uD55C \uC790\uB9AC\uB85C \uBD05\uB2C8\uB2E4`
+  ).join(". ");
+  const divergentPairs = sixHarmonyPairs.filter(({ divergence }) => divergence !== null);
+  const divergenceSummary = divergentPairs.length === 0 ? "" : ` \uC774 \uAC00\uC6B4\uB370 ${divergentPairs.map(({ members, element, divergence }) => {
+    const alternative = SIX_HARMONY_DIVERGENCE_ALTERNATIVE[divergence ?? ""];
+    return alternative === void 0 ? `${members[0]}${members[1]}\uD569\uC740 \uD654\uC2E0\uC774 \uC720\uD30C\uC5D0 \uB530\uB77C \uAC08\uB9AC\uB294 \uC790\uB9AC\uC785\uB2C8\uB2E4(\uC774 \uAD00\uBC95 ${element})` : `${members[0]}${members[1]}\uD569\uC740 \uD654\uC2E0\uC774 \uC720\uD30C\uC5D0 \uB530\uB77C \uAC08\uB9AC\uB294 \uC790\uB9AC\uC785\uB2C8\uB2E4(\uC774 \uAD00\uBC95 ${element}, \uB2E4\uB978 \uACC4\uC5F4 ${alternative})`;
+  }).join(", ")}.`;
+  const sixHarmonySummary = sixHarmonyPairs.length === 0 ? "" : ` \uC721\uD569 \uD45C\uC5D0\uC11C\uB294 ${sixHarmonyPairs.map(({ members, positions, element }) => {
+    const ordered = [
+      { position: positions[0], branch: members[0] },
+      { position: positions[1], branch: members[1] }
+    ].sort((left, right) => POSITION_INDEX[left.position] - POSITION_INDEX[right.position]);
+    const first = ordered[0];
+    const second = ordered[1];
+    return `${BRANCH_POSITION_LABEL2[first.position]} ${withComitativeParticle(first.branch)} ${BRANCH_POSITION_LABEL2[second.position]} ${withSubjectParticle(second.branch)} ${members[0]}${members[1]}\uD569(${element})\uC5D0 \uD574\uB2F9`;
+  }).join(
+    ", "
+  )}\uD569\uB2C8\uB2E4.${divergenceSummary} \uC774 \uAD00\uBC95\uC740 \uC721\uD569\uC744 \uAD6D \uC131\uB9BD\uC774\uB098 \uCDA9 \uD574\uC18C\uC758 \uC7A0\uAE08 \uB300\uC0C1\uC73C\uB85C\uB294 \uC4F0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`;
+  const statement = (formed.length === 0 ? "\uC9C0\uC9C0\uC5D0\uC11C \uBC29\uD569\uC774\uB098 \uC0BC\uD569\uC73C\uB85C \uBCFC \uB9CC\uD55C \uAD6D\uC740 \uC774 \uAD00\uBC95\uC758 \uD45C\uC5D0\uC11C \uC131\uB9BD\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uBC18\uBC29\uD569\uACFC \uC0DD\uC9C0\xB7\uACE0\uC9C0\uB9CC\uC758 \uC9DD\uC740 \uC131\uB9BD\uC73C\uB85C \uBCF4\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4." : `\uC9C0\uC9C0\uC5D0\uC11C ${withObjectParticle(bureauSummary)} \uC774\uB8F9\uB2C8\uB2E4. ${transparencySummary}. \uC131\uB9BD \uC5EC\uBD80\uB9CC \uACC4\uC0B0\uD558\uBA70 \uAE38\uD749\uC740 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`) + sixHarmonySummary;
+  const omitted = omittedPillars(context.pillars);
+  return {
+    key: canonicalJsonStringify(values),
+    statement,
+    topic: "relationships",
+    values,
+    evidencePaths: ["pillars", "facts.structure.relationships"],
+    sourceReferenceIds: XINGCHONG_BUREAU_SOURCE_IDS,
+    comparison: comparison(
+      "xingchong.branch-bureau.v1",
+      "xingchong.branch-bureau",
+      "xingchong-resolution",
+      branches.map(({ branch }) => branch).join(""),
+      canonicalJsonStringify(
+        formed.map(({ id, completeness, state }) => ({ id, completeness, state }))
+      )
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function stemCombinationMatches(context) {
+  const stems = visibleStemObservations(context.pillars, { includeDay: true });
+  const branches = observedBranches(context);
+  const monthMainStem = XINGCHONG_RELATION_TABLES_V1.branchMainQi[context.pillars.month.branch.korean];
+  const monthElement = getHeavenlyStemElement2(monthMainStem);
+  const hasMainQiRoot = (stem) => branches.some(
+    ({ branch }) => getHeavenlyStemElement2(XINGCHONG_RELATION_TABLES_V1.branchMainQi[branch]) === getHeavenlyStemElement2(stem)
+  );
+  return XINGCHONG_RELATION_TABLES_V1.stemCombinations.flatMap((entry) => {
+    const [left, right] = entry.members;
+    const leftHits = stems.filter(({ stem }) => stem === left);
+    const rightHits = stems.filter(({ stem }) => stem === right);
+    if (leftHits.length === 0 || rightHits.length === 0) return [];
+    const leftHit = leftHits[0];
+    const rightHit = rightHits[0];
+    const memberPositions = /* @__PURE__ */ new Set([leftHit.position, rightHit.position]);
+    const transformElement = entry.element;
+    const monthSupport = monthElement === transformElement || ELEMENT_GENERATES2[monthElement] === transformElement;
+    const adjacentControllers = stems.filter(
+      ({ position: position2, stem }) => !memberPositions.has(position2) && ELEMENT_CONTROLS2[getHeavenlyStemElement2(stem)] === transformElement && (xingchongDistanceFactor(position2, leftHit.position) === 1 || xingchongDistanceFactor(position2, rightHit.position) === 1)
+    );
+    const rootedStems = [left, right].filter(
+      (stem) => getHeavenlyStemElement2(stem) !== transformElement && hasMainQiRoot(stem)
+    );
+    const distanceFactor = xingchongDistanceFactor(leftHit.position, rightHit.position);
+    const adjacent = distanceFactor === 1;
+    const noContention = leftHits.length === 1 && rightHits.length === 1;
+    const noAdjacentController = adjacentControllers.length === 0;
+    const noStrongRoot = rootedStems.length === 0;
+    const state = !noContention ? "\uC7C1\uD569" : (
+      // 이 관법은 붙어 있는 두 천간만 합으로 묶는다. 격각·연시처럼 떨어진 짝은
+      // 표에 맞더라도 합화 4조건을 따지지 않고 원격으로 남긴다.
+      !adjacent ? "\uC6D0\uACA9" : monthSupport && noAdjacentController && noStrongRoot ? "\uD569\uD654" : "\uAE30\uBC18"
+    );
+    return [
+      {
+        members: [left, right],
+        positions: [leftHit.position, rightHit.position],
+        transformElement,
+        distanceFactor,
+        adjacent,
+        monthSupport,
+        noAdjacentController,
+        noStrongRoot,
+        noContention,
+        rootedStems,
+        adjacentControllers: adjacentControllers.map(({ position: position2, stem }) => ({ position: position2, stem })),
+        state
+      }
+    ];
+  });
+}
+function evaluateStemCombinationState(context) {
+  const matches = stemCombinationMatches(context);
+  const monthBranch = context.pillars.month.branch.korean;
+  const values = {
+    table: XINGCHONG_RELATION_TABLE_ID_V1,
+    monthBranch,
+    monthMainStem: XINGCHONG_RELATION_TABLES_V1.branchMainQi[monthBranch],
+    transformConditions: "month-support-no-adjacent-controller-no-main-qi-root-no-contention",
+    transformRootScope: "transforming-stem-only",
+    stemCombinationAdjacency: "adjacent-only",
+    combinations: matches.map(
+      ({
+        members,
+        positions,
+        transformElement,
+        distanceFactor,
+        adjacent,
+        monthSupport,
+        noAdjacentController,
+        noStrongRoot,
+        noContention,
+        rootedStems,
+        adjacentControllers,
+        state
+      }) => ({
+        members: [...members],
+        positions: [...positions],
+        transformElement,
+        distanceFactor,
+        adjacent,
+        conditions: { monthSupport, noAdjacentController, noStrongRoot, noContention },
+        rootedStems: [...rootedStems],
+        adjacentControllers: adjacentControllers.map(({ position: position2, stem }) => ({
+          position: position2,
+          stem
+        })),
+        state
+      })
+    ),
+    status: "combination-state-not-fortune"
+  };
+  const summary = matches.map((match) => {
+    const [left, right] = match.members;
+    const [leftPosition, rightPosition] = match.positions;
+    const head = `${STEM_POSITION_LABEL[leftPosition]} ${withComitativeParticle(left)} ${STEM_POSITION_LABEL[rightPosition]} ${withTopicParticle(right)} ${left}${right}\uD569\uC785\uB2C8\uB2E4`;
+    if (match.state === "\uC7C1\uD569") {
+      return `${head}. \uAC19\uC740 \uAE00\uC790\uAC00 \uB458 \uC774\uC0C1\uC774\uB77C \uD558\uB098\uB97C \uB2E4\uD22C\uB294 \uC7C1\uD569\uC73C\uB85C \uBD05\uB2C8\uB2E4`;
+    }
+    if (match.state === "\uC6D0\uACA9") {
+      return `${head}. \uB2E4\uB9CC \uB450 \uAE00\uC790\uAC00 \uBD99\uC5B4 \uC788\uC9C0 \uC54A\uC544(\uAC70\uB9AC \uACC4\uC218 ${match.distanceFactor}) \uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 \uD569\uB825\uC774 \uB2FF\uC9C0 \uC54A\uB294 \uC6D0\uACA9\uC73C\uB85C \uB450\uACE0 \uD569\uD654 \uC870\uAC74\uC740 \uB530\uC9C0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4`;
+    }
+    if (match.state === "\uD569\uD654") {
+      return `${head}. \uD654\uC2E0 ${withSubjectParticle(match.transformElement)} \uC6D4\uC9C0 ${monthBranch}\uC5D0\uC11C \uD798\uC744 \uBC1B\uACE0, \uD654\uC2E0\uC744 \uB9C9\uB294 \uCC9C\uAC04\uB3C4 \uC5C6\uACE0, \uBCC0\uD574\uC57C \uD560 \uCC9C\uAC04\uC774 \uC9C0\uC9C0 \uC815\uAE30\uC5D0 \uBFCC\uB9AC\uB97C \uB450\uC9C0 \uC54A\uC544 \uC774 \uAD00\uBC95\uC758 4\uC870\uAC74\uC744 \uBAA8\uB450 \uCC44\uC6B4 \uD569\uD654\uB85C \uBD05\uB2C8\uB2E4`;
+    }
+    const reasons = [
+      ...match.monthSupport ? [] : [
+        `\uD654\uC2E0 ${withSubjectParticle(match.transformElement)} \uC6D4\uC9C0 ${monthBranch}\uC5D0\uC11C \uC655\uD558\uC9C0 \uC54A\uACE0`
+      ],
+      ...match.noAdjacentController ? [] : [
+        `\uD654\uC2E0\uC744 \uADF9\uD558\uB294 ${withSubjectParticle(
+          match.adjacentControllers.map(({ position: position2, stem }) => `${STEM_POSITION_LABEL[position2]} ${stem}`).join("\xB7")
+        )} \uC778\uC811\uD558\uACE0`
+      ],
+      ...match.noStrongRoot ? [] : [
+        `\uD654\uC2E0\uC73C\uB85C \uBCC0\uD574\uC57C \uD560 ${withSubjectParticle(match.rootedStems.join("\xB7"))} \uC9C0\uC9C0 \uC815\uAE30\uC5D0 \uBFCC\uB9AC\uB97C \uB450\uC5B4 \uBCF8\uB798 \uC624\uD589\uC744 \uBC84\uB9AC\uC9C0 \uBABB\uD558\uBBC0\uB85C`
+      ]
+    ];
+    return `${head}. ${reasons.join(" ")} \uD569\uC740 \uD558\uB418 \uD654\uD558\uC9C0\uB294 \uC54A\uB294 \uAE30\uBC18\uC73C\uB85C \uBD05\uB2C8\uB2E4`;
+  }).join(". ");
+  const statement = matches.length === 0 ? "\uCC9C\uAC04\uC5D0\uC11C \uC774 \uAD00\uBC95\uC758 \uD569 \uD45C\uC5D0 \uB9DE\uB294 \uC9DD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4. \uD569\uD654 \uC5EC\uBD80\uB97C \uB530\uC9C8 \uC790\uB9AC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4." : `${summary}. \uC774 \uAD00\uBC95\uC740 \uBD99\uC5B4 \uC788\uB294 \uC9DD\uB9CC \uD569\uC73C\uB85C \uBB36\uACE0 \uD569\uD654 4\uC870\uAC74\uC73C\uB85C \uD310\uC815\uD558\uBA70 \uAE38\uD749\uC740 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`;
+  const omitted = omittedPillars(context.pillars);
+  return {
+    key: canonicalJsonStringify(values),
+    statement,
+    topic: "relationships",
+    values,
+    evidencePaths: ["pillars", "facts.structure.relationships"],
+    sourceReferenceIds: XINGCHONG_STEM_COMBINATION_SOURCE_IDS,
+    comparison: comparison(
+      "xingchong.stem-combination-state.four-condition.v1",
+      "xingchong.stem-combination-state",
+      "xingchong-resolution",
+      `${context.pillars.day.stem.korean}:${monthBranch}`,
+      canonicalJsonStringify(matches.map(({ members, state }) => ({ members, state })))
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function punishmentCompleteness(kind, branches, members) {
+  if (kind === "self") return "self";
+  const triad = XINGCHONG_RELATION_TABLES_V1.punishmentTriads.find(
+    (entry) => members.every((member) => entry.members.includes(member))
+  );
+  if (triad === void 0) return "partial-pair";
+  return triad.members.every((member) => branches.some(({ branch }) => branch === member)) ? "full-triad" : "partial-pair";
+}
+function evaluateResolutionOrder(context) {
+  const branches = observedBranches(context);
+  const clashes = context.structure.relationships.branchClashes;
+  const punishments = context.structure.relationships.branchPunishments;
+  const initialBureaus = bureauMatches(context).filter(
+    ({ completeness }) => completeness !== "not-formed"
+  );
+  const brokenIds = new Set(
+    initialBureaus.filter(
+      ({ kind, peakBranch, positions }) => kind === "triad" && peakBranch !== null && clashes.some(
+        ({ members, positions: clashPositions }) => members[0] === peakBranch && positions.includes(clashPositions[0]) || members[1] === peakBranch && positions.includes(clashPositions[1])
+      )
+    ).map(({ id }) => id)
+  );
+  const lockedPositions = new Set(
+    initialBureaus.filter(({ id }) => !brokenIds.has(id)).flatMap(({ positions }) => [...positions])
+  );
+  const resolvedClashes = clashes.map(({ members, positions }) => {
+    const suppressed2 = positions.some((position2) => lockedPositions.has(position2));
+    return {
+      members: [members[0], members[1]],
+      positions: [positions[0], positions[1]],
+      distanceFactor: xingchongDistanceFactor(positions[0], positions[1]),
+      status: suppressed2 ? "suppressed" : "active",
+      reason: suppressed2 ? "\uD0D0\uD569\uB9DD\uCDA9" : null
+    };
+  });
+  const bureauStates = initialBureaus.map(
+    ({ kind, id, element, completeness, presentMembers, positions, peakBranch }) => ({
+      kind,
+      id,
+      element,
+      completeness,
+      presentMembers: [...presentMembers],
+      positions: [...positions],
+      peakBranch,
+      status: brokenIds.has(id) ? "broken" : "locked",
+      reason: brokenIds.has(id) ? "\uCDA9\uD574\uD569" : null
+    })
+  );
+  const resolvedPunishments = punishments.map(({ kind, members, positions }) => {
+    const completeness = punishmentCompleteness(kind, branches, members);
+    return {
+      kind,
+      members: [members[0], members[1]],
+      positions: [positions[0], positions[1]],
+      completeness,
+      distanceFactor: xingchongDistanceFactor(positions[0], positions[1])
+    };
+  });
+  const values = {
+    table: XINGCHONG_RELATION_TABLE_ID_V1,
+    resolutionOrder: "bureau-then-clash-then-bureau-break-v1",
+    passes: 2,
+    directionalBureauBreakPolicy: "not-broken-by-clash",
+    bureaus: bureauStates,
+    clashes: resolvedClashes.map(
+      ({ members, positions, distanceFactor, status, reason }) => ({
+        members: [...members],
+        positions: [...positions],
+        distanceFactor,
+        status,
+        reason
+      })
+    ),
+    punishments: resolvedPunishments,
+    distanceProfile: "adjacent-1.0-skipped-0.5-year-hour-0.2",
+    status: "resolution-order-not-fortune"
+  };
+  const suppressed = resolvedClashes.filter(({ status }) => status === "suppressed");
+  const active = resolvedClashes.filter(({ status }) => status === "active");
+  const clashSentence = resolvedClashes.length === 0 ? "\uC9C0\uC9C0\uC5D0\uC11C \uCDA9\uC73C\uB85C \uC7A1\uD788\uB294 \uC9DD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4." : [
+    ...suppressed.map(
+      ({ members, positions }) => `${BRANCH_POSITION_LABEL2[positions[0]]} ${withComitativeParticle(members[0])} ${BRANCH_POSITION_LABEL2[positions[1]]} ${withTopicParticle(members[1])} \uCDA9\uC774\uC9C0\uB9CC \uD55C\uCABD\uC774 \uAD6D\uC5D0 \uBB36\uC5EC \uC788\uC5B4 \uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 \uCDA9\uC774 \uB20C\uB9B0 \uC790\uB9AC\uB85C \uBD05\uB2C8\uB2E4(\uD0D0\uD569\uB9DD\uCDA9)`
+    ),
+    ...active.map(
+      ({ members, positions, distanceFactor }) => `${BRANCH_POSITION_LABEL2[positions[0]]} ${withComitativeParticle(members[0])} ${BRANCH_POSITION_LABEL2[positions[1]]} ${members[1]}\uC758 \uCDA9\uC740 \uADF8\uB300\uB85C \uC11C\uBA70 \uAC70\uB9AC \uACC4\uC218\uB294 ${distanceFactor}\uC785\uB2C8\uB2E4`
+    )
+  ].join(". ") + ".";
+  const brokenSentence = brokenIds.size === 0 ? "" : ` ${[...brokenIds].join("\xB7")} \uC0BC\uD569\uAD6D\uC740 \uC655\uC9C0\uAC00 \uCDA9\uC744 \uB9DE\uC544 \uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 \uAE68\uC9C4 \uAD6D\uC73C\uB85C \uBD05\uB2C8\uB2E4(\uCDA9\uD574\uD569).`;
+  const directionalPeakClashed = initialBureaus.filter(
+    ({ kind, presentMembers, positions }) => kind === "directional" && clashes.some(
+      ({ members, positions: clashPositions }) => TRIAD_PEAK_BRANCHES.has(members[0]) && presentMembers.includes(members[0]) && positions.includes(clashPositions[0]) || TRIAD_PEAK_BRANCHES.has(members[1]) && presentMembers.includes(members[1]) && positions.includes(clashPositions[1])
+    )
+  );
+  const directionalPolicySentence = directionalPeakClashed.length === 0 ? "" : ` ${directionalPeakClashed.map(({ id }) => id).join("\xB7")} \uBC29\uD569\uC740 \uC655\uC9C0\uAC00 \uCDA9\uC744 \uB9DE\uC558\uC9C0\uB9CC \uC774 \uAD00\uBC95\uC740 \uBC29\uD569\uC744 \uCDA9\uC73C\uB85C \uAE68\uC9C0 \uC54A\uB294 \uAD6D\uC73C\uB85C \uB450\uBA70, \uBC29\uD569\uB3C4 \uC655\uC9C0 \uCDA9\uC774\uBA74 \uAE68\uC9C4\uB2E4\uACE0 \uBCF4\uB294 \uACC4\uC5F4\uACFC \uAC08\uB9AC\uB294 \uC790\uB9AC\uC785\uB2C8\uB2E4.`;
+  const punishmentSentence = punishments.length === 0 ? " \uD615\uC73C\uB85C \uC7A1\uD788\uB294 \uC9DD\uC740 \uC5C6\uC2B5\uB2C8\uB2E4." : ` \uD615\uC740 ${resolvedPunishments.map((entry) => {
+    const record = entry;
+    const label = record.completeness === "full-triad" ? "\uC0BC\uD615\uC774 \uBAA8\uB450 \uBAA8\uC778 \uD615" : record.completeness === "self" ? "\uC790\uD615" : "\uB450 \uAE00\uC790\uB9CC \uBAA8\uC778 \uC0C1\uD615";
+    return `${BRANCH_POSITION_LABEL2[record.positions[0]]} ${withComitativeParticle(record.members[0])} ${BRANCH_POSITION_LABEL2[record.positions[1]]} ${record.members[1]}\uC758 ${label}`;
+  }).join(", ")}\uC785\uB2C8\uB2E4.`;
+  const omitted = omittedPillars(context.pillars);
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `${clashSentence}${brokenSentence}${directionalPolicySentence}${punishmentSentence} \uAC70\uB9AC \uACC4\uC218\uC640 \uC131\uB9BD \uC5EC\uBD80\uB9CC \uACC4\uC0B0\uD558\uBA70 \uAE38\uD749\uC740 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    topic: "relationships",
+    values,
+    evidencePaths: ["pillars", "facts.structure.relationships"],
+    sourceReferenceIds: XINGCHONG_RESOLUTION_SOURCE_IDS,
+    comparison: comparison(
+      "xingchong.resolution-order.two-pass.v1",
+      "xingchong.resolution-order",
+      "xingchong-resolution",
+      branches.map(({ branch }) => branch).join(""),
+      canonicalJsonStringify({
+        clashes: resolvedClashes.map(({ members, status }) => ({ members, status })),
+        broken: [...brokenIds]
+      })
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function evaluateXingchongResolutionRule(ruleId, context) {
+  if (ruleId === "xingchong.branch-bureau") return evaluateBranchBureau(context);
+  if (ruleId === "xingchong.stem-combination-state") return evaluateStemCombinationState(context);
+  if (ruleId === "xingchong.resolution-order") return evaluateResolutionOrder(context);
+  throw new RangeError(`\uC9C0\uC6D0\uD558\uC9C0 \uC54A\uB294 \uD615\uCDA9\uD68C\uD569 \uD574\uC18C \uADDC\uCE59\uC785\uB2C8\uB2E4: ${String(ruleId)}`);
+}
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/sources.json
 var sources_default5 = {
+  schemaVersion: "1",
+  sources: [
+    {
+      id: "yuanhai-ziping-combination-clash-v1",
+      kind: "classical-text",
+      title: "\u300A\u6DF5\u6D77\u5B50\u5E73\u300B \uD569\uCDA9\uB860",
+      citation: "\u5F90\u5927\u5347 \uACC4\uC5F4 \u300A\u6DF5\u6D77\u5B50\u5E73\u300B\uC758 \u4E09\u5408\xB7\u65B9\u5408\xB7\u516D\u5408\xB7\u5929\u5E72\u5408\uACFC \u6C96\uC5D0 \uAD00\uD55C \uC7A5. \uC774 Pack\uC740 \uD45C\uB9CC \uC62E\uACBC\uACE0 \uAE30\uC900 \uD310\uBCF8 \uB300\uC870\uB294 \uC544\uC9C1 \uD558\uC9C0 \uC54A\uC558\uB2E4.",
+      url: "https://zh.wikisource.org/zh-hant/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      locator: "\u8AD6\u5341\u5E72\u5408\xB7\u8AD6\u652F\u5408\xB7\u8AD6\u4E09\u5408\xB7\u8AD6\u6C96 \uD56D\uBAA9",
+      textualLayer: "base-text",
+      verification: "unverified"
+    },
+    {
+      id: "sanming-tonghui-xingchong-v1",
+      kind: "classical-text",
+      title: "\u300A\u4E09\u547D\u901A\u6703\u300B \u8AD6\u5211\u885D\u7834\u5BB3",
+      citation: "\u842C\u6C11\u82F1, \u300A\u4E09\u547D\u901A\u6703\u300B\uC758 \u5211\xB7\u885D\xB7\u7834\xB7\u5BB3 \uD56D\uBAA9. \uC0BC\uD615 \uC870\uD569\uACFC \uC790\uD615 \uC9C0\uC9C0\uB97C \uD655\uC778\uD558\uB294 \uB370\uB9CC \uC778\uC6A9\uD588\uC73C\uBA70 \uAE30\uC900 \uD310\uBCF8 \uB300\uC870\uB294 \uD558\uC9C0 \uC54A\uC558\uB2E4.",
+      url: "https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83",
+      locator: "\u8AD6\u5211\xB7\u8AD6\u885D\xB7\u8AD6\u7834\u5BB3 \uD56D\uBAA9",
+      textualLayer: "base-text",
+      verification: "unverified"
+    },
+    {
+      id: "oh-my-saju-xingchong-resolution-v1",
+      kind: "modern-convention",
+      title: "Oh My Saju xingchong resolution reconstruction",
+      citation: "\uAD6D \uC131\uB9BD\xB7\uD569\uD654 4\uC870\uAC74\xB7\uD0D0\uD569\uB9DD\uCDA9\xB7\uCDA9\uD574\uD569\uC744 2-pass \uB85C \uACC4\uC0B0\uD558\uB294 Pack \uADDC\uCE59. \uD569\uD654 \uBB34\uADFC \uC870\uAC74\uC740 \uD654\uC2E0\uC73C\uB85C \uBCC0\uD574\uC57C \uD558\uB294 \uCC9C\uAC04\uC5D0\uB9CC \uAC78\uACE0, \uCC9C\uAC04\uD569\uC740 \uBD99\uC5B4 \uC788\uB294 \uC9DD\uB9CC \uC778\uC815\uD558\uBA70, \uCDA9\uD574\uD569\uC740 \uC0BC\uD569\uAD6D\uC758 \uC655\uC9C0\uC5D0\uB9CC \uC801\uC6A9\uD574 \uBC29\uD569\uC740 \uCDA9\uC73C\uB85C \uAE68\uC9C0 \uC54A\uB294\uB2E4(\uBC29\uD569\uB3C4 \uC655\uC9C0 \uCDA9\uC774\uBA74 \uAE68\uC9C4\uB2E4\uACE0 \uBCF4\uB294 \uACC4\uC5F4\uACFC \uAC08\uB9B0\uB2E4). \uAC70\uB9AC \uACC4\uC218\uC640 \uBC18\uD569 3\uBD84\uB958\uB3C4 \uC774 Pack\uC758 \uD504\uB85C\uD30C\uC77C\uC774\uB2E4.",
+      url: "https://github.com/JaeSang1998/oh-my-saju/tree/main/plugins/oh-my-saju",
+      locator: "plugins/oh-my-saju/tradition-packs/xingchong-resolution/evaluate.ts",
+      textualLayer: "modern-analysis",
+      verification: "engine-tested"
+    }
+  ]
+};
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/sources.ts
+var XINGCHONG_RESOLUTION_REFERENCES_V1 = deepFreeze2(sources_default5.sources);
+var YUANHAI_ZIPING_COMBINATION_REFERENCE_V1 = XINGCHONG_RESOLUTION_REFERENCES_V1[0];
+var SANMING_XINGCHONG_REFERENCE_V1 = XINGCHONG_RESOLUTION_REFERENCES_V1[1];
+var XINGCHONG_ENGINE_RECONSTRUCTION_REFERENCE_V1 = XINGCHONG_RESOLUTION_REFERENCES_V1[2];
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/profile.ts
+var XINGCHONG_RESOLUTION_PARAMETERS_V1 = deepFreeze2({
+  relationTables: "xingchong-branch-relation-tables-v1",
+  partialDirectionalBureau: "not-recognized",
+  halfBureauGrades: ["strong-half", "weak-half", "not-formed"],
+  triadPeakBranches: ["\uC790", "\uC624", "\uBB18", "\uC720"],
+  wumeiTransform: "earth",
+  wumeiDivergence: "earth-or-fire-split",
+  sixHarmonyLockPolicy: "not-locked-for-clash-suppression",
+  transformConditions: "month-support-no-adjacent-controller-no-main-qi-root-no-contention",
+  transformRootBasis: "main-qi-only",
+  // 무근 조건은 본래 오행을 버리고 화신으로 변해야 하는 천간에만 건다.
+  // 갑기합土의 기·을경합金의 경처럼 본래 오행이 곧 화신인 천간의 통근은 합화를 막지 않는다.
+  transformRootScope: "transforming-stem-only",
+  // 천간합은 붙어 있는 짝만 합으로 묶는다. 격각·연시 원격 짝은 state '원격'으로 남긴다.
+  stemCombinationAdjacency: "adjacent-only",
+  resolutionOrder: "bureau-then-clash-then-bureau-break-v1",
+  // 충해합 판정이 원국의 충 목록에만 의존해 되먹임이 없으므로 해소는 2-pass 로 끝난다.
+  resolutionPasses: 2,
+  // 충해합은 삼합국의 왕지에만 건다. 방합도 왕지 충이면 깨진다고 보는 계열과 갈리는 자리다.
+  directionalBureauBreakPolicy: "not-broken-by-clash",
+  distanceProfile: "adjacent-1.0-skipped-0.5-year-hour-0.2",
+  punishmentCompleteness: ["full-triad", "partial-pair", "self"],
+  outputStatus: "formation-and-suppression-no-fortune"
+});
+var XINGCHONG_RESOLUTION_PROFILE_V1 = deepFreeze2({
+  schemaVersion: "1",
+  id: "xingchong-resolution",
+  version: "1.0.0",
+  displayName: "\uD615\uCDA9\uD68C\uD569 \uD574\uC18C \uC21C\uC11C",
+  school: "xingchong-resolution-reconstruction",
+  textualLayer: "reconstruction",
+  status: "stable",
+  enabledRuleIds: XINGCHONG_RESOLUTION_RULE_IDS_V1,
+  supportedTopics: ["relationships"],
+  references: [
+    YUANHAI_ZIPING_COMBINATION_REFERENCE_V1,
+    SANMING_XINGCHONG_REFERENCE_V1,
+    XINGCHONG_ENGINE_RECONSTRUCTION_REFERENCE_V1
+  ],
+  parameters: XINGCHONG_RESOLUTION_PARAMETERS_V1,
+  knownLimitations: ["doctrine-not-scientifically-validated", "xingchong-resolution-no-fortune"]
+});
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/artifacts.json
+var artifacts_default5 = {
+  schemaVersion: "1",
+  knowledgeSnapshot: "e6e8ada99452d7b9391c5c405f07c3b8b194979d1c54f3924f61c67b99b39705",
+  rules: "3d92e94ca71a0c5272426f5253d1c2243700a27c4e20ddaaf23ac7551c0f80a8",
+  fixtures: "c6cb7f35272944e556dab0cf2c66f3e839bcfed9761d5c3f33a583c82fda3532"
+};
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/fixtures.json
+var fixtures_default5 = {
+  schemaVersion: "1",
+  fixtureSets: [
+    {
+      id: "xingchong-resolution-v1.0:bureau-transform-and-resolution-order",
+      paths: ["plugins/oh-my-saju/tradition-packs/xingchong-resolution/evaluate.test.ts"]
+    }
+  ]
+};
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/provenance.json
+var provenance_default5 = {
+  schemaVersion: "1",
+  contract: "tradition-provenance-v1",
+  editionLocks: [
+    {
+      sourceReferenceId: "yuanhai-ziping-combination-clash-v1",
+      catalogUrl: "https://zh.wikisource.org/zh-hant/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      scanUrl: null,
+      publication: "Wikisource \u300A\u6DF5\u6D77\u5B50\u5E73\u300B public transcription; edition lock and scan checksum pending",
+      contentSha256: null,
+      status: "checksum-pending"
+    },
+    {
+      sourceReferenceId: "sanming-tonghui-xingchong-v1",
+      catalogUrl: "https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83",
+      scanUrl: null,
+      publication: "Wikisource \u300A\u4E09\u547D\u901A\u6703\u300B public transcription; edition lock and scan checksum pending",
+      contentSha256: null,
+      status: "checksum-pending"
+    }
+  ],
+  ruleTraces: [
+    {
+      ruleId: "xingchong.branch-bureau",
+      sourceReferenceIds: [
+        "yuanhai-ziping-combination-clash-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      sourceLocators: [
+        "\u8AD6\u4E09\u5408\xB7\u8AD6\u652F\u5408; Pack-local branch-relation-tables-v1 with three half-bureau grades"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "xingchong.stem-combination-state",
+      sourceReferenceIds: [
+        "yuanhai-ziping-combination-clash-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      sourceLocators: ["\u8AD6\u5341\u5E72\u5408; Pack-local four-condition transform test"],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "xingchong.resolution-order",
+      sourceReferenceIds: [
+        "yuanhai-ziping-combination-clash-v1",
+        "sanming-tonghui-xingchong-v1",
+        "oh-my-saju-xingchong-resolution-v1"
+      ],
+      sourceLocators: [
+        "\u8AD6\u6C96\xB7\u8AD6\u5211; Pack-local two-pass resolution order with \uD0D0\uD569\uB9DD\uCDA9 and \uCDA9\uD574\uD569"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    }
+  ]
+};
+
+// plugins/oh-my-saju/tradition-packs/xingchong-resolution/provenance.ts
+var PACK_DIRECTORY5 = "plugins/oh-my-saju/tradition-packs/xingchong-resolution";
+var KNOWLEDGE_RESOURCES5 = [
+  "sources.json",
+  "rules.json",
+  "branch-relation-tables-v1.json",
+  "profile.ts",
+  "evaluate.ts",
+  "fixtures.json",
+  "provenance.json"
+];
+var artifacts5 = artifactDigests(artifacts_default5);
+var fixtures5 = fixtureInventory(fixtures_default5);
+var declaredProvenance5 = provenanceData(provenance_default5);
+var XINGCHONG_RESOLUTION_PROVENANCE = deepFreeze2({
+  ruleIds: XINGCHONG_RESOLUTION_RULE_IDS_V1,
+  fixtureSetIds: fixtures5.fixtureSets.map(({ id }) => id),
+  knowledgeSnapshot: knowledgeSnapshot(
+    PACK_DIRECTORY5,
+    KNOWLEDGE_RESOURCES5,
+    artifacts5.knowledgeSnapshot
+  ),
+  editionLocks: declaredProvenance5.editionLocks,
+  ruleTraces: declaredProvenance5.ruleTraces,
+  rulesArtifact: artifact(
+    [
+      ...SHARED_TRADITION_RUNTIME_PATHS,
+      "plugins/oh-my-saju/runtime/traditions/provenance-support.ts",
+      "plugins/oh-my-saju/runtime/traditions/rule-registry.ts",
+      ...KNOWLEDGE_RESOURCES5.map((path) => `${PACK_DIRECTORY5}/${path}`),
+      `${PACK_DIRECTORY5}/sources.ts`,
+      `${PACK_DIRECTORY5}/provenance.ts`,
+      `${PACK_DIRECTORY5}/tradition-pack.json`
+    ],
+    artifacts5.rules,
+    "plugin-files"
+  ),
+  fixturesArtifact: artifact(
+    [`${PACK_DIRECTORY5}/fixtures.json`, ...fixtures5.fixtureSets.flatMap(({ paths }) => paths)],
+    artifacts5.fixtures,
+    "plugin-fixtures"
+  )
+});
+
+// plugins/oh-my-saju/tradition-packs/ziping/sources.json
+var sources_default6 = {
   schemaVersion: "1",
   sources: [
     {
@@ -12545,42 +13775,71 @@ var sources_default5 = {
       locator: "abstract and method taxonomy",
       textualLayer: "modern-analysis",
       verification: "bibliographic-only"
+    },
+    {
+      id: "yuanhai-ziping-yueling-fenye-v1",
+      kind: "classical-text",
+      title: "\u300A\u6DF5\u6D77\u5B50\u5E73\u300B \uC6D4\uB960\uBD84\uC57C \uC0AC\uB839 \uC77C\uC218\uD45C",
+      citation: "\u300A\u6DF5\u6D77\u5B50\u5E73\u300B \uACC4\uC5F4 \uD1B5\uC6A9\uBCF8\uC758 \u300C\u8AD6\u6708\u4EE4\u5206\u91CE\u300D \uC6D4\uB960\uBD84\uC57C \uC0AC\uB839 \uC77C\uC218. \uC720\uD30C\uB9C8\uB2E4 \uC77C\uC218\uAC00 \uB2EC\uB77C \uC774 \uD329\uC740 \uC5F0\uD574\uC790\uD3C9 \uACC4\uC5F4 \uD1B5\uC6A9\uBCF8 \uD55C \uAC00\uC9C0\uB9CC \uC62E\uACBC\uC2B5\uB2C8\uB2E4.",
+      url: "https://zh.wikisource.org/wiki/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      locator: "\u5377\u4E00, \u8AD6\u6708\u4EE4\u5206\u91CE \uACC4\uC5F4 \uD56D\uBAA9",
+      textualLayer: "base-text",
+      verification: "unverified"
     }
   ]
 };
 
 // plugins/oh-my-saju/tradition-packs/ziping/sources.ts
 var ZIPING_REFERENCES_V1 = deepFreeze2(
-  sources_default5.sources
+  sources_default6.sources
 );
 var ZIPING_MONTH_COMMAND_REFERENCE_V1 = ZIPING_REFERENCES_V1[0];
 var ZIPING_ENGINE_RECONSTRUCTION_REFERENCE_V1 = ZIPING_REFERENCES_V1[1];
 var ZIPING_KOREAN_METHODS_REFERENCE_V1 = ZIPING_REFERENCES_V1[2];
+var ZIPING_YUELING_FENYE_REFERENCE_V1 = ZIPING_REFERENCES_V1[3];
 
 // plugins/oh-my-saju/tradition-packs/ziping/profile.ts
 var ZIPING_MONTH_COMMAND_PARAMETERS_V1 = deepFreeze2({
-  monthHiddenStemTable: "saju-engine-hidden-stems-v1",
-  hiddenStemEnumeration: "table-order-membership-not-strength-v1",
+  monthHiddenStemTable: "yueling-fenye-yuanhai-v1",
+  hiddenStemEnumeration: "yueling-fenye-order-yuqi-jungqi-jeonggi-v1",
   transparencyDetection: "year-month-hour-visible-stems-v1",
   candidatePriority: "none",
-  specialMonthPatternRecognition: ["\u5EFA\u797F", "\u967D\u5203"],
-  successDefeatRescueRules: "not-implemented",
-  outputStatus: "candidate-or-indeterminate-not-final"
+  specialMonthPatternRecognition: ["\u5EFA\u797F", "\u967D\u5203", "\u6708\u52AB"],
+  successDefeatRescueRules: "ziping-pattern-integrity-v1",
+  patternIntegrityTable: "ziping-pattern-integrity-v1",
+  patternPriority: "main-qi-first",
+  patternPriorityAlternatives: ["commanding-first"],
+  peerMonthBranchHandling: "lu-blade-peer-excluded-from-inner-eight-patterns",
+  peerTransparencyHandling: "peer-transparency-never-establishes-inner-eight-pattern",
+  yangBladeScope: "yang-day-stems-only-no-yin-blade",
+  reliefAbsentBasis: "relief-gods-transparent-in-heavenly-stems-only",
+  reliefGodRootBasis: "pack-local-yueling-fenye-branch-hidden-stems",
+  rescueTableStatus: "pack-reconstruction-not-source-transcribed",
+  reliefGodScope: "pack-local-not-plugin-final-useful-god",
+  monthCommandDayTable: "yueling-fenye-yuanhai-v1",
+  outputStatus: "pack-local-pattern-and-relief-god-not-cross-school-final"
 });
 var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
   schemaVersion: "1",
   id: "ziping-month-command",
-  version: "1.0.0",
+  version: "1.2.0",
   displayName: "\uC790\uD3C9\uC9C4\uC804 \uC6D4\uB839\xB7\uACA9\uAD6D \uD6C4\uBCF4",
   school: "ziping-zhenquan-month-command-reconstruction",
   textualLayer: "reconstruction",
   status: "stable",
-  enabledRuleIds: ["ziping.month-command", "ziping.pattern-candidate"],
-  supportedTopics: ["pattern"],
+  enabledRuleIds: [
+    "ziping.month-command",
+    "ziping.pattern-candidate",
+    "ziping.governing-day",
+    "ziping.pattern-integrity",
+    "ziping.pattern-relief-god"
+  ],
+  supportedTopics: ["pattern", "season-climate", "useful-god"],
   references: [
     ZIPING_MONTH_COMMAND_REFERENCE_V1,
     ZIPING_ENGINE_RECONSTRUCTION_REFERENCE_V1,
-    ZIPING_KOREAN_METHODS_REFERENCE_V1
+    ZIPING_KOREAN_METHODS_REFERENCE_V1,
+    ZIPING_YUELING_FENYE_REFERENCE_V1
   ],
   parameters: ZIPING_MONTH_COMMAND_PARAMETERS_V1,
   knownLimitations: [
@@ -12590,26 +13849,30 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 });
 
 // plugins/oh-my-saju/tradition-packs/ziping/artifacts.json
-var artifacts_default5 = {
+var artifacts_default6 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "1ccded897bc40e6798af13da5d6b2cf361b9efd7c1cdc25108e3c7df1b5a9171",
-  rules: "432605f713ba4a761db694798a6c59e1447775bba0497a33cbc63b61eaaa2c23",
-  fixtures: "89a61e9f2e371e876f89ee18d632bef7ceb5bb64474e58085fcc1106daa64ac7"
+  knowledgeSnapshot: "8e0c01af6334073fe5735608f054ad91cc2f572873e4ddf659d4e0cc9dd0279f",
+  rules: "a75aeccc5508a2c79a6ef96a11db1f4896aa045de6cef984e53a9c504c0b9e32",
+  fixtures: "6dc147f3688a1ec24eb6ce584a66df78ac5ee8f2659ae739ac5b029c98ebe46c"
 };
 
 // plugins/oh-my-saju/tradition-packs/ziping/fixtures.json
-var fixtures_default5 = {
+var fixtures_default6 = {
   schemaVersion: "1",
   fixtureSets: [
     {
       id: "interpretation-fixtures-v1:ziping-month-command",
       paths: ["plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"]
+    },
+    {
+      id: "ziping-v1.2:pattern-integrity-and-relief-god",
+      paths: ["plugins/oh-my-saju/tradition-packs/ziping/evaluate.test.ts"]
     }
   ]
 };
 
 // plugins/oh-my-saju/tradition-packs/ziping/provenance.json
-var provenance_default5 = {
+var provenance_default6 = {
   schemaVersion: "1",
   contract: "tradition-provenance-v1",
   editionLocks: [
@@ -12627,9 +13890,10 @@ var provenance_default5 = {
       ruleId: "ziping.month-command",
       sourceReferenceIds: [
         "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
         "oh-my-saju-ziping-reconstruction-v1"
       ],
-      sourceLocators: ["\u8AD6\u7528\u795E; \u6708\u4EE4 and hidden-stem evidence"],
+      sourceLocators: ["\u8AD6\u7528\u795E; \u6708\u4EE4 and hidden-stem evidence", "\u8AD6\u6708\u4EE4\u5206\u91CE \uC6D4\uB960\uBD84\uC57C\uD45C"],
       formalizationStatus: "formalized-prose",
       transcriptionSha256: null,
       reviewerIds: []
@@ -12638,9 +13902,47 @@ var provenance_default5 = {
       ruleId: "ziping.pattern-candidate",
       sourceReferenceIds: [
         "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
         "oh-my-saju-ziping-reconstruction-v1"
       ],
-      sourceLocators: ["\u8AD6\u7528\u795E; \u8AD6\u7528\u795E\u6210\u6557\u6551\u61C9; Pack reconstruction v1"],
+      sourceLocators: ["\u8AD6\u7528\u795E; \u8AD6\u7528\u795E\u6210\u6557\u6551\u61C9; Pack reconstruction v1", "\u8AD6\u6708\u4EE4\u5206\u91CE \uC6D4\uB960\uBD84\uC57C\uD45C"],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ziping.governing-day",
+      sourceReferenceIds: [
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      sourceLocators: ["\u8AD6\u6708\u4EE4\u5206\u91CE; Pack-local month-command-days-v1 table"],
+      formalizationStatus: "literal-table",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ziping.pattern-integrity",
+      sourceReferenceIds: [
+        "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      sourceLocators: [
+        "\u8AD6\u7528\u795E\u6210\u6557\u6551\u61C9; \u8AD6\u5EFA\u797F\u6708\u52AB; Pack-local pattern-integrity-v1 \uC0C1\uC2E0\xB7\uD30C\uACA9 \uD45C"
+      ],
+      formalizationStatus: "reconstruction",
+      transcriptionSha256: null,
+      reviewerIds: []
+    },
+    {
+      ruleId: "ziping.pattern-relief-god",
+      sourceReferenceIds: [
+        "ziping-zhenquan-month-command-v1",
+        "yuanhai-ziping-yueling-fenye-v1",
+        "oh-my-saju-ziping-reconstruction-v1"
+      ],
+      sourceLocators: ["\u8AD6\u7528\u795E\u6210\u6557\u6551\u61C9 \uC0C1\uC2E0 \uD56D\uBAA9; Pack-local pattern-integrity-v1 \uC0C1\uC2E0\uD45C"],
       formalizationStatus: "reconstruction",
       transcriptionSha256: null,
       reviewerIds: []
@@ -12649,44 +13951,52 @@ var provenance_default5 = {
 };
 
 // plugins/oh-my-saju/tradition-packs/ziping/provenance.ts
-var PACK_DIRECTORY5 = "plugins/oh-my-saju/tradition-packs/ziping";
-var KNOWLEDGE_RESOURCES5 = [
+var PACK_DIRECTORY6 = "plugins/oh-my-saju/tradition-packs/ziping";
+var KNOWLEDGE_RESOURCES6 = [
   "sources.json",
   "rules.json",
+  "month-command-days-v1.json",
+  "pattern-integrity-v1.json",
   "profile.ts",
   "evaluate.ts",
   "fixtures.json",
   "provenance.json"
 ];
-var artifacts5 = artifactDigests(artifacts_default5);
-var fixtures5 = fixtureInventory(fixtures_default5);
-var declaredProvenance5 = provenanceData(provenance_default5);
+var artifacts6 = artifactDigests(artifacts_default6);
+var fixtures6 = fixtureInventory(fixtures_default6);
+var declaredProvenance6 = provenanceData(provenance_default6);
 var ZIPING_PROVENANCE = deepFreeze2({
-  ruleIds: ["ziping.month-command", "ziping.pattern-candidate"],
-  fixtureSetIds: fixtures5.fixtureSets.map(({ id }) => id),
+  ruleIds: [
+    "ziping.month-command",
+    "ziping.pattern-candidate",
+    "ziping.governing-day",
+    "ziping.pattern-integrity",
+    "ziping.pattern-relief-god"
+  ],
+  fixtureSetIds: fixtures6.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
-    PACK_DIRECTORY5,
-    KNOWLEDGE_RESOURCES5,
-    artifacts5.knowledgeSnapshot
+    PACK_DIRECTORY6,
+    KNOWLEDGE_RESOURCES6,
+    artifacts6.knowledgeSnapshot
   ),
-  editionLocks: declaredProvenance5.editionLocks,
-  ruleTraces: declaredProvenance5.ruleTraces,
+  editionLocks: declaredProvenance6.editionLocks,
+  ruleTraces: declaredProvenance6.ruleTraces,
   rulesArtifact: artifact(
     [
       ...SHARED_TRADITION_RUNTIME_PATHS,
       "plugins/oh-my-saju/runtime/traditions/provenance-support.ts",
       "plugins/oh-my-saju/runtime/traditions/rule-registry.ts",
-      ...KNOWLEDGE_RESOURCES5.map((path) => `${PACK_DIRECTORY5}/${path}`),
-      `${PACK_DIRECTORY5}/sources.ts`,
-      `${PACK_DIRECTORY5}/provenance.ts`,
-      `${PACK_DIRECTORY5}/tradition-pack.json`
+      ...KNOWLEDGE_RESOURCES6.map((path) => `${PACK_DIRECTORY6}/${path}`),
+      `${PACK_DIRECTORY6}/sources.ts`,
+      `${PACK_DIRECTORY6}/provenance.ts`,
+      `${PACK_DIRECTORY6}/tradition-pack.json`
     ],
-    artifacts5.rules,
+    artifacts6.rules,
     "plugin-files"
   ),
   fixturesArtifact: artifact(
-    [`${PACK_DIRECTORY5}/fixtures.json`, ...fixtures5.fixtureSets.flatMap(({ paths }) => paths)],
-    artifacts5.fixtures,
+    [`${PACK_DIRECTORY6}/fixtures.json`, ...fixtures6.fixtureSets.flatMap(({ paths }) => paths)],
+    artifacts6.fixtures,
     "plugin-fixtures"
   )
 });
@@ -12770,6 +14080,13 @@ var INTERPRETATION_RULE_CONTRACTS_V1 = deepFreeze2({
     observedPillars: ["day"],
     comparisonConceptId: "core.void-branches"
   },
+  "core.solar-term-position": {
+    topic: "season-climate",
+    category: "structural-observation",
+    requiredPillars: ["month"],
+    observedPillars: ["month"],
+    comparisonConceptId: "core.solar-term-position"
+  },
   "ziping.month-command": {
     topic: "pattern",
     category: "traditional-judgment",
@@ -12783,6 +14100,27 @@ var INTERPRETATION_RULE_CONTRACTS_V1 = deepFreeze2({
     requiredPillars: ["month", "day"],
     observedPillars: ["year", "month", "day", "hour"],
     comparisonConceptId: "pattern-candidates"
+  },
+  "ziping.governing-day": {
+    topic: "season-climate",
+    category: "traditional-judgment",
+    requiredPillars: ["month"],
+    observedPillars: ["month"],
+    comparisonConceptId: "ziping.governing-day"
+  },
+  "ziping.pattern-integrity": {
+    topic: "pattern",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ziping.pattern-integrity"
+  },
+  "ziping.pattern-relief-god": {
+    topic: "useful-god",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ziping.pattern-relief-god"
   },
   "ditianshui.seasonal-state": {
     topic: "strength",
@@ -12798,12 +14136,82 @@ var INTERPRETATION_RULE_CONTRACTS_V1 = deepFreeze2({
     observedPillars: ["year", "month", "day", "hour"],
     comparisonConceptId: "strength-evidence-ledger"
   },
+  "ditianshui.rooting-ledger": {
+    topic: "strength",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ditianshui.rooting-ledger"
+  },
+  "ditianshui.command-position": {
+    topic: "strength",
+    category: "traditional-judgment",
+    requiredPillars: ["month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ditianshui.command-position"
+  },
+  "ditianshui.strength-verdict": {
+    topic: "strength",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ditianshui.strength-verdict"
+  },
+  "ditianshui.follow-transform-patterns": {
+    topic: "strength",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "ditianshui.follow-transform-patterns"
+  },
+  "xingchong.branch-bureau": {
+    topic: "relationships",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "xingchong.branch-bureau"
+  },
+  "xingchong.stem-combination-state": {
+    topic: "relationships",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "xingchong.stem-combination-state"
+  },
+  "xingchong.resolution-order": {
+    topic: "relationships",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "xingchong.resolution-order"
+  },
   "qiongtong.climate-candidates": {
     topic: "useful-god",
     category: "traditional-judgment",
     requiredPillars: ["month", "day"],
     observedPillars: ["year", "month", "day", "hour"],
     comparisonConceptId: "useful-god-candidates"
+  },
+  "qiongtong.climate-tendency": {
+    topic: "season-climate",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "qiongtong.climate-tendency"
+  },
+  "qiongtong.candidate-condition": {
+    topic: "useful-god",
+    category: "traditional-judgment",
+    requiredPillars: ["month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "qiongtong.candidate-condition"
+  },
+  "qiongtong.pack-climate-priority": {
+    topic: "useful-god",
+    category: "traditional-judgment",
+    requiredPillars: ["month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "qiongtong.pack-climate-priority"
   },
   "sanming.travel-horse": {
     topic: "symbolic-stars",
@@ -12909,6 +14317,20 @@ var INTERPRETATION_RULE_CONTRACTS_V1 = deepFreeze2({
     requiredPillars: ["day"],
     observedPillars: ["year", "month", "day", "hour"],
     comparisonConceptId: "symbolic-star-raw-branch-match"
+  },
+  "sanming.resentment-pair": {
+    topic: "symbolic-stars",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "symbolic-star-branch-pair-match"
+  },
+  "sanming.ghost-gate-pair": {
+    topic: "symbolic-stars",
+    category: "traditional-judgment",
+    requiredPillars: ["year", "month", "day"],
+    observedPillars: ["year", "month", "day", "hour"],
+    comparisonConceptId: "symbolic-star-branch-pair-match"
   }
 });
 var INTERPRETATION_RULE_IDS_V1 = deepFreeze2(
@@ -12961,14 +14383,18 @@ function contract(profile, provenance, aiEnabled) {
 }
 var CALCULATION_BASELINE_PACK_REF = deepFreeze2({
   id: "calculation-baseline",
-  version: "1.1.0"
+  version: "1.2.0"
 });
-var ZIPING_PACK_REF = deepFreeze2({ id: "ziping", version: "1.0.0" });
-var DITIANSHUI_PACK_REF = deepFreeze2({ id: "ditianshui", version: "1.0.0" });
-var QIONGTONG_PACK_REF = deepFreeze2({ id: "qiongtong", version: "1.0.0" });
+var ZIPING_PACK_REF = deepFreeze2({ id: "ziping", version: "1.2.0" });
+var DITIANSHUI_PACK_REF = deepFreeze2({ id: "ditianshui", version: "1.2.0" });
+var QIONGTONG_PACK_REF = deepFreeze2({ id: "qiongtong", version: "1.2.0" });
 var SANMING_SYMBOLIC_CURATED_PACK_REF = deepFreeze2({
   id: "sanming-symbolic-curated",
-  version: "1.1.0"
+  version: "1.2.0"
+});
+var XINGCHONG_RESOLUTION_PACK_REF = deepFreeze2({
+  id: "xingchong-resolution",
+  version: "1.0.0"
 });
 var CATALOG = deepFreeze2([
   {
@@ -12994,8 +14420,8 @@ var CATALOG = deepFreeze2([
       outputBoundary: "chart-observation",
       sourceCoverage: {
         status: "complete",
-        verifiedUnits: 11,
-        totalUnits: 11,
+        verifiedUnits: 12,
+        totalUnits: 12,
         unit: "rules"
       },
       implementedCapabilityIds: [...COMMON_STRUCTURAL_PROFILE_V1.enabledRuleIds],
@@ -13043,7 +14469,7 @@ var CATALOG = deepFreeze2([
       sourceCoverage: {
         status: "partial",
         verifiedUnits: 1,
-        totalUnits: 2,
+        totalUnits: 5,
         unit: "rules"
       },
       implementedCapabilityIds: [
@@ -13051,14 +14477,13 @@ var CATALOG = deepFreeze2([
         "ziping.main-hidden-stem",
         "ziping.surface-transparency",
         "ziping.unranked-pattern-candidates",
-        "ziping.lu-yang-blade-base-candidate"
-      ],
-      unresolvedCapabilityIds: [
+        "ziping.lu-yang-blade-base-candidate",
         "ziping.governing-days",
         "ziping.success-defeat-rescue",
         "ziping.final-pattern",
         "ziping.useful-god"
-      ]
+      ],
+      unresolvedCapabilityIds: ["ziping.cross-school-final-useful-god"]
     },
     contract: contract(ZIPING_MONTH_COMMAND_PROFILE_V1, ZIPING_PROVENANCE, true),
     assurance: {
@@ -13101,17 +14526,21 @@ var CATALOG = deepFreeze2([
       sourceCoverage: {
         status: "partial",
         verifiedUnits: 1,
-        totalUnits: 2,
+        totalUnits: 6,
         unit: "rules"
       },
       implementedCapabilityIds: [
         "sanming.seasonal-state-table",
-        "ditianshui.visible-hidden-evidence-ledger"
-      ],
-      unresolvedCapabilityIds: [
-        "ditianshui.evidence-weighting",
+        "ditianshui.visible-hidden-evidence-ledger",
+        "ditianshui.rooting-ledger",
+        "ditianshui.rooting-damage-adjustment",
+        "ditianshui.command-position",
         "ditianshui.final-strength",
         "ditianshui.follow-transform-patterns"
+      ],
+      unresolvedCapabilityIds: [
+        "ditianshui.cross-school-final-strength",
+        "ditianshui.transformed-element-root-substitution"
       ]
     },
     contract: contract(DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1, DITIANSHUI_PROVENANCE, true),
@@ -13160,12 +14589,15 @@ var CATALOG = deepFreeze2([
       implementedCapabilityIds: [
         "qiongtong.120-cell-candidate-table",
         "qiongtong.candidate-presence",
-        "qiongtong.7-cell-source-audit"
+        "qiongtong.7-cell-source-audit",
+        "qiongtong.climate-tendency",
+        "qiongtong.candidate-transparency-and-root-check",
+        "qiongtong.final-climate-useful-god"
       ],
       unresolvedCapabilityIds: [
         "qiongtong.113-cell-source-audit",
-        "qiongtong.condition-evaluation",
-        "qiongtong.final-climate-useful-god"
+        "qiongtong.base-text-condition-clause-evaluation",
+        "qiongtong.cross-school-final-useful-god"
       ]
     },
     contract: contract(QIONGTONG_CLIMATE_PROFILE_V1, QIONGTONG_PROVENANCE, true),
@@ -13207,9 +14639,9 @@ var CATALOG = deepFreeze2([
       doctrineCoverage: "partial",
       outputBoundary: "traditional-evidence",
       sourceCoverage: {
-        status: "complete",
+        status: "partial",
         verifiedUnits: 15,
-        totalUnits: 15,
+        totalUnits: 17,
         unit: "rules"
       },
       implementedCapabilityIds: [
@@ -13220,9 +14652,12 @@ var CATALOG = deepFreeze2([
         "sanming.literary-star.raw-branch-match",
         "sanming.blade-after-lu-all-stems.raw-branch-match",
         "sanming.blade-yang-stems-only.raw-branch-match",
-        "sanming.unknown-hour-partial-observation"
+        "sanming.unknown-hour-partial-observation",
+        "sanming.resentment-pair-table-match",
+        "sanming.ghost-gate-pair-table-match"
       ],
       unresolvedCapabilityIds: [
+        "sanming.resentment-ghost-gate-edition-audit",
         "sanming.xianchi-heavenly-stem-nayin-qualification",
         "sanming.blade-variant-selection",
         "sanming.symbolic-star-meaning"
@@ -13247,6 +14682,61 @@ var CATALOG = deepFreeze2([
       sourceReferenceIds: ["sanming-tonghui-travel-horse-v1"],
       note: "no-quantitative-market-survey"
     }
+  },
+  {
+    packRef: XINGCHONG_RESOLUTION_PACK_REF,
+    profileRef: profileRef(XINGCHONG_RESOLUTION_PROFILE_V1),
+    displayName: XINGCHONG_RESOLUTION_PROFILE_V1.displayName,
+    kind: "classical-doctrine",
+    productPriority: 50,
+    lineage: {
+      work: "\u6DF5\u6D77\u5B50\u5E73 \uD569\uCDA9\uB860 + \u4E09\u547D\u901A\u6703 \u8AD6\u5211\u885D\u7834\u5BB3",
+      textualLayer: "reconstruction"
+    },
+    supportedTopics: XINGCHONG_RESOLUTION_PROFILE_V1.supportedTopics,
+    execution: {
+      deterministicGrounding: true,
+      aiSynthesis: "optional",
+      crossPackRawFindingMixing: "forbidden"
+    },
+    maturity: {
+      runtime: "stable",
+      implementation: "complete-for-declared-output",
+      doctrineCoverage: "partial",
+      outputBoundary: "traditional-evidence",
+      sourceCoverage: {
+        status: "partial",
+        verifiedUnits: 0,
+        totalUnits: 3,
+        unit: "rules"
+      },
+      implementedCapabilityIds: [
+        "xingchong.branch-bureau",
+        "xingchong.stem-combination-state",
+        "xingchong.resolution-order"
+      ],
+      unresolvedCapabilityIds: [
+        "xingchong.classical-edition-audit",
+        "xingchong.wumei-transform-selection",
+        "xingchong.transformed-element-substitution",
+        "xingchong.cross-school-resolution-order"
+      ]
+    },
+    contract: contract(XINGCHONG_RESOLUTION_PROFILE_V1, XINGCHONG_RESOLUTION_PROVENANCE, true),
+    assurance: {
+      release: "stable",
+      sourceFidelity: "unverified",
+      fixtureMaturity: "basic",
+      expertReview: "not-reviewed",
+      predictiveValidity: "not-established"
+    },
+    adoption: {
+      status: "documented",
+      market: "ko-KR",
+      asOf: "2026-08-20",
+      sourceReferenceIds: ["yuanhai-ziping-combination-clash-v1"],
+      note: "method-documented-no-market-share"
+    }
   }
 ]);
 var PROFILES = deepFreeze2([
@@ -13254,7 +14744,8 @@ var PROFILES = deepFreeze2([
   ZIPING_MONTH_COMMAND_PROFILE_V1,
   DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1,
   QIONGTONG_CLIMATE_PROFILE_V1,
-  SANMING_SYMBOLIC_CURATED_PROFILE_V1
+  SANMING_SYMBOLIC_CURATED_PROFILE_V1,
+  XINGCHONG_RESOLUTION_PROFILE_V1
 ]);
 var PROFILE_BY_PACK_KEY = new Map(
   CATALOG.map(
@@ -13266,7 +14757,8 @@ var DEFAULT_KOREAN_TRADITION_PACK_REFS_V1 = deepFreeze2([
   ZIPING_PACK_REF,
   DITIANSHUI_PACK_REF,
   QIONGTONG_PACK_REF,
-  SANMING_SYMBOLIC_CURATED_PACK_REF
+  SANMING_SYMBOLIC_CURATED_PACK_REF,
+  XINGCHONG_RESOLUTION_PACK_REF
 ]);
 function listTraditionPacks() {
   return CATALOG;
@@ -13275,6 +14767,161 @@ function resolveTraditionPackProfile(packRef) {
   return PROFILE_BY_PACK_KEY.get(`${packRef.id}@${packRef.version}`);
 }
 var BUILT_IN_TRADITION_PROFILES_V1 = PROFILES;
+
+// plugins/oh-my-saju/tradition-packs/ditianshui/follow-transform-v1.json
+var follow_transform_v1_default = {
+  schemaVersion: "1",
+  profileId: "ditianshui-follow-transform-v1",
+  note: "Pack-local \uC885\uACA9\xB7\uD654\uACA9\xB7\uC77C\uD589\uB4DD\uAE30\uACA9 conditions. Thresholds are this Pack's profile and differ by school.",
+  notes: {
+    revealedOfficerMaximum: "\uC77C\uD589\uB4DD\uAE30\uACA9\uC758 \uAD00\uC0B4 \uC0C1\uD55C\uC740 '\uCC9C\uAC04\uC5D0 \uD22C\uCD9C\uD55C \uAD00\uC0B4' \uC810\uC218\uC5D0\uB9CC \uC801\uC6A9\uD55C\uB2E4. \uAD6D\uC744 \uC774\uB8E8\uB294 \uC9C0\uC9C0\uB294 \uADF8 \uC790\uCCB4\uAC00 \uAD00\uC0B4 \uC9C0\uC7A5\uAC04\uC744 \uD488\uAE30 \uB54C\uBB38(\uAC00\uC0C9\uACA9 \uC9C4\xB7\uBBF8\uC758 \uC744, \uC885\uD601\uACA9 \uC0AC\uC758 \uBCD1\xB7\uC220\uC758 \uC815, \uC724\uD558\uACA9 \uC2E0\xB7\uC9C4\uC758 \uBB34\xB7\uCD95\uC758 \uAE30)\uC5D0, \uC9C0\uC7A5\uAC04\uAE4C\uC9C0 \uD569\uC0B0\uD55C \uAD00\uC0B4 \uC810\uC218\uB97C 0\uC73C\uB85C \uC694\uAD6C\uD558\uBA74 \uAC00\uC0C9\xB7\uC885\uD601\xB7\uC724\uD558 \uC138 \uACA9\uC774 \uC5B4\uB5A4 \uBA85\uC2DD\uC5D0\uC11C\uB3C4 \uC131\uB9BD\uD560 \uC218 \uC5C6\uB2E4. \uD1B5\uC124\uB3C4 \uC77C\uD589\uB4DD\uAE30\uACA9\uC740 '\uAD00\uC0B4\uC774 \uD22C\uCD9C\uD558\uC9C0 \uC54A\uC744 \uAC83'\uC744 \uC870\uAC74\uC73C\uB85C \uC0BC\uACE0 \uAD6D \uC548\uC5D0 \uC554\uC7A5\uB41C \uAD00\uC0B4\uC740 \uBB38\uC81C \uC0BC\uC9C0 \uC54A\uC73C\uBBC0\uB85C, \uD22C\uAC04 \uAD00\uC0B4\uB9CC \uC138\uACE0 \uC0C1\uD55C 0\uC810\uC744 \uB454\uB2E4.",
+    "\uC885\uAC15\uACA9-rooting-any": "\uC885\uC655\uACA9(rooted)\xB7\uC885\uC544\uACA9/\uC885\uC7AC\uACA9/\uC885\uC0B4\uACA9(rootless)\uACFC \uB2EC\uB9AC \uC885\uAC15\uACA9\uB9CC rooting=any \uC778 \uAC83\uC740 \uC774 \uD329\uC758 \uC720\uD30C \uC120\uD0DD\uC774\uB2E4. \uD1B5\uC124\uC0C1 \uC885\uAC15\uACA9\uC740 \uC778\uC131\uC774 \uADF9\uC655\uD574 \uC77C\uAC04\uC744 \uB530\uB974\uB294 \uC2E0\uC655 \uACC4\uC5F4\uC774\uB77C \uC885\uC655\uACA9\uACFC \uAC19\uC774 rooted \uB85C \uB450\uB294 \uAD00\uBC95\uC774 \uB2E4\uC218\uC124\uC774\uC9C0\uB9CC, \uC778\uC131\uC774 60\uC810 \uC774\uC0C1\uC774\uBA74 \uC77C\uAC04\uC758 \uBFCC\uB9AC \uC720\uBB34\uC640 \uBB34\uAD00\uD558\uAC8C \uC778\uC131\uC73C\uB85C \uC885\uD55C\uB2E4\uACE0 \uBCF4\uB294 \uAD00\uBC95\uB3C4 \uC788\uC5B4 \uC774 \uD329\uC740 \uD6C4\uC790\uB97C \uD0DD\uD588\uB2E4. \uBFCC\uB9AC \uC810\uC218\uB294 \uC870\uAC74\uC5D0\uC11C \uBE7C\uB418 \uADFC\uAC70 \uBB38\uC7A5\uC5D0\uB294 \uADF8\uB300\uB85C \uB178\uCD9C\uD55C\uB2E4.",
+    "\uAC11\uAE30\uD569\uD654\uD1A0-\uC6D4\uC9C0": "\uAC11\uAE30\uD569\uD654\uD1A0\uC758 monthBranches \uC5D0 \uC0AC\xB7\uC624\uAC00 \uB4E4\uC5B4\uAC04 \uAC83\uC740 \uD1B5\uC124(\uC9C4\uC220\uCD95\uBBF8 \uD1A0\uC6D4)\uBCF4\uB2E4 \uB113\uC740 \uC720\uD30C \uBCC0\uD615\uC774\uB2E4. \uB098\uBA38\uC9C0 4\uC885\uC740 '\uD654\uC2E0\uC758 \uC655\uC9C0 2\uAC1C + \uD574\uB2F9 \uC0BC\uD569\uC758 \uB098\uBA38\uC9C0 2\uAC1C' \uD328\uD134\uC744 \uB530\uB974\uB294\uB370, \uD1A0\uB294 \uC0BC\uD569\uAD6D\uC774 \uC5C6\uC5B4 \uD654\uC0DD\uD1A0(\u706B\u751F\u571F) \uB17C\uB9AC\uB85C \uD654\uC758 \uC655\uC9C0 \uC0AC\xB7\uC624\uB97C \uBCF4\uD0F0\uB2E4. \uD654\uACA9(\uD1A0) \uC131\uB9BD\uC744 \uB113\uD788\uB294 \uBC29\uD5A5\uC774\uBBC0\uB85C \uACB0\uACFC\uC5D0 \uC601\uD5A5\uC774 \uC788\uB2E4."
+  },
+  thresholds: {
+    dominantGroupMinimum: 60,
+    rootedMinimum: 0.2,
+    pseudoFollowObstructionMaximum: 10,
+    revealedOfficerMaximum: 0
+  },
+  followPatterns: [
+    { name: "\uC885\uC655\uACA9", dominantGroup: "\uBE44\uAC81", blockingGroups: ["\uAD00\uC0B4"], rooting: "rooted" },
+    {
+      name: "\uC885\uAC15\uACA9",
+      dominantGroup: "\uC778\uC131",
+      blockingGroups: ["\uC7AC\uC131"],
+      rooting: "any",
+      note: "\uC720\uD30C \uCC28\uC774. notes.\uC885\uAC15\uACA9-rooting-any \uCC38\uC870."
+    },
+    {
+      name: "\uC885\uC544\uACA9",
+      dominantGroup: "\uC2DD\uC0C1",
+      blockingGroups: ["\uC778\uC131"],
+      rooting: "rootless"
+    },
+    {
+      name: "\uC885\uC7AC\uACA9",
+      dominantGroup: "\uC7AC\uC131",
+      blockingGroups: ["\uC778\uC131", "\uBE44\uAC81"],
+      rooting: "rootless"
+    },
+    { name: "\uC885\uC0B4\uACA9", dominantGroup: "\uAD00\uC0B4", blockingGroups: ["\uC2DD\uC0C1"], rooting: "rootless" }
+  ],
+  stemTransforms: [
+    {
+      pair: ["\uAC11", "\uAE30"],
+      element: "\uD1A0",
+      monthBranches: ["\uC9C4", "\uC220", "\uCD95", "\uBBF8", "\uC0AC", "\uC624"],
+      note: "\uC0AC\xB7\uC624\uB294 \uC720\uD30C \uBCC0\uD615. notes.\uAC11\uAE30\uD569\uD654\uD1A0-\uC6D4\uC9C0 \uCC38\uC870."
+    },
+    { pair: ["\uC744", "\uACBD"], element: "\uAE08", monthBranches: ["\uC2E0", "\uC720", "\uCD95", "\uC0AC"] },
+    { pair: ["\uBCD1", "\uC2E0"], element: "\uC218", monthBranches: ["\uD574", "\uC790", "\uC2E0", "\uC9C4"] },
+    { pair: ["\uC815", "\uC784"], element: "\uBAA9", monthBranches: ["\uC778", "\uBB18", "\uD574", "\uBBF8"] },
+    { pair: ["\uBB34", "\uACC4"], element: "\uD654", monthBranches: ["\uC0AC", "\uC624", "\uC778", "\uC220"] }
+  ],
+  transformPartnerPositions: ["month", "hour"],
+  dominantElementPatterns: [
+    {
+      name: "\uACE1\uC9C1\uACA9",
+      element: "\uBAA9",
+      bureaus: [
+        ["\uD574", "\uBB18", "\uBBF8"],
+        ["\uC778", "\uBB18", "\uC9C4"]
+      ]
+    },
+    {
+      name: "\uC5FC\uC0C1\uACA9",
+      element: "\uD654",
+      bureaus: [
+        ["\uC778", "\uC624", "\uC220"],
+        ["\uC0AC", "\uC624", "\uBBF8"]
+      ]
+    },
+    { name: "\uAC00\uC0C9\uACA9", element: "\uD1A0", bureaus: [["\uC9C4", "\uC220", "\uCD95", "\uBBF8"]] },
+    {
+      name: "\uC885\uD601\uACA9",
+      element: "\uAE08",
+      bureaus: [
+        ["\uC0AC", "\uC720", "\uCD95"],
+        ["\uC2E0", "\uC720", "\uC220"]
+      ]
+    },
+    {
+      name: "\uC724\uD558\uACA9",
+      element: "\uC218",
+      bureaus: [
+        ["\uC2E0", "\uC790", "\uC9C4"],
+        ["\uD574", "\uC790", "\uCD95"]
+      ]
+    }
+  ]
+};
+
+// plugins/oh-my-saju/tradition-packs/ditianshui/root-rank-v1.json
+var root_rank_v1_default = {
+  schemaVersion: "1",
+  profileId: "ditianshui-root-rank-v1",
+  divergence: "wangzhi-residual-stem-included",
+  branchRank: {
+    \uC790: [
+      { stem: "\uACC4", rank: "\uC815\uAE30" },
+      { stem: "\uC784", rank: "\uC5EC\uAE30" }
+    ],
+    \uCD95: [
+      { stem: "\uAE30", rank: "\uC815\uAE30" },
+      { stem: "\uC2E0", rank: "\uC911\uAE30" },
+      { stem: "\uACC4", rank: "\uC5EC\uAE30" }
+    ],
+    \uC778: [
+      { stem: "\uAC11", rank: "\uC815\uAE30" },
+      { stem: "\uBCD1", rank: "\uC911\uAE30" },
+      { stem: "\uBB34", rank: "\uC5EC\uAE30" }
+    ],
+    \uBB18: [
+      { stem: "\uC744", rank: "\uC815\uAE30" },
+      { stem: "\uAC11", rank: "\uC5EC\uAE30" }
+    ],
+    \uC9C4: [
+      { stem: "\uBB34", rank: "\uC815\uAE30" },
+      { stem: "\uACC4", rank: "\uC911\uAE30" },
+      { stem: "\uC744", rank: "\uC5EC\uAE30" }
+    ],
+    \uC0AC: [
+      { stem: "\uBCD1", rank: "\uC815\uAE30" },
+      { stem: "\uACBD", rank: "\uC911\uAE30" },
+      { stem: "\uBB34", rank: "\uC5EC\uAE30" }
+    ],
+    \uC624: [
+      { stem: "\uC815", rank: "\uC815\uAE30" },
+      { stem: "\uAE30", rank: "\uC911\uAE30" },
+      { stem: "\uBCD1", rank: "\uC5EC\uAE30" }
+    ],
+    \uBBF8: [
+      { stem: "\uAE30", rank: "\uC815\uAE30" },
+      { stem: "\uC744", rank: "\uC911\uAE30" },
+      { stem: "\uC815", rank: "\uC5EC\uAE30" }
+    ],
+    \uC2E0: [
+      { stem: "\uACBD", rank: "\uC815\uAE30" },
+      { stem: "\uC784", rank: "\uC911\uAE30" },
+      { stem: "\uBB34", rank: "\uC5EC\uAE30" }
+    ],
+    \uC720: [
+      { stem: "\uC2E0", rank: "\uC815\uAE30" },
+      { stem: "\uACBD", rank: "\uC5EC\uAE30" }
+    ],
+    \uC220: [
+      { stem: "\uBB34", rank: "\uC815\uAE30" },
+      { stem: "\uC815", rank: "\uC911\uAE30" },
+      { stem: "\uC2E0", rank: "\uC5EC\uAE30" }
+    ],
+    \uD574: [
+      { stem: "\uC784", rank: "\uC815\uAE30" },
+      { stem: "\uAC11", rank: "\uC911\uAE30" },
+      { stem: "\uBB34", rank: "\uC5EC\uAE30" }
+    ]
+  }
+};
 
 // plugins/oh-my-saju/tradition-packs/ditianshui/seasonal-state-table.json
 var seasonal_state_table_default = {
@@ -13293,6 +14940,44 @@ var seasonal_state_table_default = {
     \uC790: "\uC218",
     \uCD95: "\uD1A0"
   }
+};
+
+// plugins/oh-my-saju/tradition-packs/ditianshui/strength-score-v1.json
+var strength_score_v1_default = {
+  schemaVersion: "1",
+  profileId: "ditianshui-position-weighted-v1",
+  note: "Pack-local position weighting. Other schools weight positions differently; this table is this Pack's profile, not a consensus.",
+  positionPoints: {
+    yearStem: 10,
+    monthStem: 13,
+    hourStem: 11,
+    yearBranch: 8,
+    monthBranch: 30,
+    dayBranch: 16,
+    hourBranch: 12
+  },
+  rankShare: {
+    three: [
+      { rank: "\uC815\uAE30", share: 0.6 },
+      { rank: "\uC911\uAE30", share: 0.3 },
+      { rank: "\uC5EC\uAE30", share: 0.1 }
+    ],
+    two: [
+      { rank: "\uC815\uAE30", share: 0.7 },
+      { rank: "\uC5EC\uAE30", share: 0.3 }
+    ],
+    one: [{ rank: "\uC815\uAE30", share: 1 }]
+  },
+  supportTenGods: ["\uBE44\uACAC", "\uAC81\uC7AC", "\uC815\uC778", "\uD3B8\uC778"],
+  thresholds: [
+    { minimum: 78, grade: "\uD0DC\uC655" },
+    { minimum: 60, grade: "\uC2E0\uAC15" },
+    { minimum: 52, grade: "\uC57D\uD55C \uC2E0\uAC15" },
+    { minimum: 48, grade: "\uC911\uD654" },
+    { minimum: 32, grade: "\uC2E0\uC57D" },
+    { minimum: 15, grade: "\uD0DC\uC57D" },
+    { minimum: 0, grade: "\uADF9\uC57D" }
+  ]
 };
 
 // plugins/oh-my-saju/tradition-packs/ditianshui/evaluate.ts
@@ -13340,6 +15025,12 @@ function getDitianshuiSeasonalState(subject, monthBranch) {
   return deepFreeze2({ rulerElement, state: seasonalState(rulerElement, subject) });
 }
 function evaluateDitianshuiPackRule(ruleId, context) {
+  if (ruleId === "ditianshui.rooting-ledger") return evaluateRootingLedger(context);
+  if (ruleId === "ditianshui.command-position") return evaluateCommandPosition(context);
+  if (ruleId === "ditianshui.strength-verdict") return evaluateStrengthVerdict(context);
+  if (ruleId === "ditianshui.follow-transform-patterns") {
+    return evaluateFollowTransformPatterns(context);
+  }
   const dayStem = context.pillars.day.stem.korean;
   const dayElement = getHeavenlyStemElement2(dayStem);
   const monthBranch = context.pillars.month.branch.korean;
@@ -13429,6 +15120,870 @@ function evaluateDitianshuiPackRule(ruleId, context) {
       "ditianshui-strength-evidence",
       subjectKey,
       canonicalJsonStringify(values)
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+var DITIANSHUI_ROOT_RANK_TABLE_ID_V1 = "ditianshui-root-rank-v1";
+function requireRootRankEntry(value, branch) {
+  if (!isRecord2(value) || !HEAVENLY_STEMS2.includes(value.stem) || value.rank !== "\uC815\uAE30" && value.rank !== "\uC911\uAE30" && value.rank !== "\uC5EC\uAE30") {
+    throw new TypeError(`Invalid Ditianshui root rank entry for branch ${branch}.`);
+  }
+  return { stem: value.stem, rank: value.rank };
+}
+function requireRootRankEntries(value, branch) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new TypeError(`Invalid Ditianshui root rank table for branch ${branch}.`);
+  }
+  return value.map((entry) => requireRootRankEntry(entry, branch));
+}
+function parseRootRankTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== DITIANSHUI_ROOT_RANK_TABLE_ID_V1 || !isRecord2(value.branchRank)) {
+    throw new TypeError("Invalid Ditianshui root rank table.");
+  }
+  const declared = value.branchRank;
+  return Object.fromEntries(
+    EARTHLY_BRANCHES2.map((branch) => [branch, requireRootRankEntries(declared[branch], branch)])
+  );
+}
+var DITIANSHUI_ROOT_RANK_V1 = deepFreeze2(parseRootRankTable(root_rank_v1_default));
+var ROOT_RANK_STRENGTH = {
+  \uC815\uAE30: 0.85,
+  \uC911\uAE30: 0.45,
+  \uC5EC\uAE30: 0.25
+};
+var ROOT_RANK_ORDER = {
+  \uC815\uAE30: 3,
+  \uC911\uAE30: 2,
+  \uC5EC\uAE30: 1
+};
+var ROOT_LU_BRANCH = {
+  \uAC11: "\uC778",
+  \uC744: "\uBB18",
+  \uBCD1: "\uC0AC",
+  \uC815: "\uC624",
+  \uBB34: "\uC0AC",
+  \uAE30: "\uC624",
+  \uACBD: "\uC2E0",
+  \uC2E0: "\uC720",
+  \uC784: "\uD574",
+  \uACC4: "\uC790"
+};
+var ROOT_BLADE_BRANCH = {
+  \uAC11: "\uBB18",
+  \uC744: "\uC778",
+  \uBCD1: "\uC624",
+  \uC815: "\uC0AC",
+  \uBB34: "\uC624",
+  \uAE30: "\uC0AC",
+  \uACBD: "\uC720",
+  \uC2E0: "\uC2E0",
+  \uC784: "\uC790",
+  \uACC4: "\uD574"
+};
+var ROOT_POSITION_FACTOR = {
+  year: 0.6,
+  month: 1.2,
+  day: 1,
+  hour: 0.8
+};
+var BRANCH_POSITION_LABEL3 = {
+  year: "\uC5F0\uC9C0",
+  month: "\uC6D4\uC9C0",
+  day: "\uC77C\uC9C0",
+  hour: "\uC2DC\uC9C0"
+};
+var SUPPORT_TEN_GODS = /* @__PURE__ */ new Set(["\uBE44\uACAC", "\uAC81\uC7AC", "\uC815\uC778", "\uD3B8\uC778"]);
+function roundToHundredths(value) {
+  return Math.round(value * 100) / 100;
+}
+function joinRootPhrases(phrases) {
+  if (phrases.length <= 1) return phrases.join("");
+  const head = phrases.slice(0, -1);
+  return `${head.slice(0, -1).concat(withComitativeParticle(head[head.length - 1])).join(", ")} ${phrases[phrases.length - 1]}`;
+}
+function joinDamageReasons(reasons) {
+  return reasons.map(
+    (reason, index) => index === reasons.length - 1 ? reason : withComitativeParticle(reason)
+  ).join(" ");
+}
+var DITIANSHUI_ROOT_DAMAGE_V1 = { clash: 0.5, punishment: 0.8 };
+var DITIANSHUI_DAMAGE_ADJUSTMENT_ID_V1 = "clash-0.5-punishment-0.8";
+function relationshipPartners(relationships, position2) {
+  return [
+    ...new Set(
+      relationships.filter(({ positions }) => positions.includes(position2)).map(({ positions, members }) => members[positions[0] === position2 ? 1 : 0])
+    )
+  ];
+}
+function rootDamageAt(context, position2) {
+  const { branchClashes, branchPunishments } = context.structure.relationships;
+  const clashed = relationshipPartners(branchClashes, position2);
+  const punished = relationshipPartners(branchPunishments, position2);
+  return {
+    factor: roundToHundredths(
+      (clashed.length === 0 ? 1 : DITIANSHUI_ROOT_DAMAGE_V1.clash) * (punished.length === 0 ? 1 : DITIANSHUI_ROOT_DAMAGE_V1.punishment)
+    ),
+    reasons: [
+      ...clashed.length === 0 ? [] : [`\uCDA9(${clashed.join("\xB7")})`],
+      ...punished.length === 0 ? [] : [`\uD615(${punished.join("\xB7")})`]
+    ]
+  };
+}
+function computeRootingLedger(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const dayElement = getHeavenlyStemElement2(dayStem);
+  const roots = PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    if (pillar === null) return [];
+    const branch = pillar.branch.korean;
+    const sameElement = DITIANSHUI_ROOT_RANK_V1[branch].filter(
+      ({ stem }) => getHeavenlyStemElement2(stem) === dayElement
+    );
+    if (sameElement.length === 0) return [];
+    const strongest = sameElement.reduce(
+      (best, entry) => ROOT_RANK_ORDER[entry.rank] > ROOT_RANK_ORDER[best.rank] ? entry : best
+    );
+    const kind = ROOT_LU_BRANCH[dayStem] === branch ? "\uAC74\uB85D" : ROOT_BLADE_BRANCH[dayStem] === branch ? "\uC655\uC9C0" : null;
+    const base = kind === "\uAC74\uB85D" ? 1 : kind === "\uC655\uC9C0" ? 0.95 : ROOT_RANK_STRENGTH[strongest.rank];
+    const positionFactor = ROOT_POSITION_FACTOR[position2];
+    const damage = rootDamageAt(context, position2);
+    return [
+      {
+        position: position2,
+        branch,
+        stem: strongest.stem,
+        rank: strongest.rank,
+        kind,
+        base,
+        positionFactor,
+        damageFactor: damage.factor,
+        damageReasons: damage.reasons,
+        score: roundToHundredths(base * positionFactor * damage.factor)
+      }
+    ];
+  });
+  const rootScore = roundToHundredths(
+    roots.reduce(
+      (total, { base, positionFactor, damageFactor }) => total + base * positionFactor * damageFactor,
+      0
+    )
+  );
+  return {
+    roots,
+    rootScore,
+    rootGrade: rootScore === 0 ? "\uBBF8\uD1B5\uADFC" : rootScore < 0.85 ? "\uC57D\uADFC" : "\uC720\uADFC"
+  };
+}
+function evaluateRootingLedger(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const dayElement = getHeavenlyStemElement2(dayStem);
+  const monthBranch = context.pillars.month.branch.korean;
+  const { roots, rootScore, rootGrade } = computeRootingLedger(context);
+  const gradePhrase = rootGrade === "\uBBF8\uD1B5\uADFC" ? "\uBFCC\uB9AC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4" : rootGrade === "\uC57D\uADFC" ? "\uBFCC\uB9AC\uAC00 \uC788\uC73C\uB098 \uC57D\uD55C \uCABD\uC785\uB2C8\uB2E4" : "\uBFCC\uB9AC\uAC00 \uB69C\uB837\uD55C \uCABD\uC785\uB2C8\uB2E4";
+  const rootSummary = joinRootPhrases(
+    roots.map(
+      ({ position: position2, branch, stem, rank, kind }) => `${BRANCH_POSITION_LABEL3[position2]} ${branch}\uC758 ${stem}(${kind === null ? rank : `${rank}\xB7${kind}`})`
+    )
+  );
+  const damagedRoots = roots.filter(({ damageReasons }) => damageReasons.length > 0);
+  const damagePhrase = damagedRoots.length === 0 ? "\uCDA9\uC774\uB098 \uD615\uC5D0 \uAC78\uB9B0 \uBFCC\uB9AC\uB294 \uC5C6\uC2B5\uB2C8\uB2E4." : damagedRoots.map(
+    ({ position: position2, branch, damageReasons, damageFactor }) => `${BRANCH_POSITION_LABEL3[position2]} ${withTopicParticle(branch)} ${joinDamageReasons(damageReasons)}\uC5D0 \uAC78\uB824 ${damageFactor}\uBC30\uB85C \uBD05\uB2C8\uB2E4.`
+  ).join(" ");
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    dayMasterElement: dayElement,
+    roots: roots.map(
+      ({
+        position: position2,
+        branch,
+        stem,
+        rank,
+        kind,
+        base,
+        positionFactor,
+        damageFactor,
+        damageReasons,
+        score
+      }) => ({
+        position: position2,
+        branch,
+        stem,
+        rank,
+        kind,
+        base,
+        positionFactor,
+        damageFactor,
+        damageReasons,
+        score
+      })
+    ),
+    rootScore,
+    rootGrade,
+    table: DITIANSHUI_ROOT_RANK_TABLE_ID_V1,
+    damageAdjustment: DITIANSHUI_DAMAGE_ADJUSTMENT_ID_V1,
+    damageBasis: "engine-computed-branch-clashes-and-punishments",
+    transformedElementAdjustment: "not-applied"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: (roots.length === 0 ? `${dayStem}${dayElement} \uC77C\uAC04\uC740 \uC5B4\uB290 \uC9C0\uC9C0\uC5D0\uC11C\uB3C4 \uAC19\uC740 \uAE30\uC6B4\uC758 \uBFCC\uB9AC\uB97C \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. ` : `${dayStem}${dayElement} \uC77C\uAC04\uC740 ${rootSummary}\uC5D0 \uBFCC\uB9AC\uB97C \uB461\uB2C8\uB2E4. `) + `${damagePhrase} \uC190\uC0C1 \uBCF4\uC815\uC744 \uC801\uC6A9\uD55C \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}, ${gradePhrase}. \uCDA9\uC740 0.5\uBC30, \uD615\uC740 0.8\uBC30\uB85C \uACF1\uD574 \uC801\uC6A9\uD558\uBA70 \uD569\uD654\uB85C \uC9C0\uC9C0 \uC624\uD589\uC774 \uBC14\uB00C\uB294 \uACBD\uC6B0\uB294 \uC544\uC9C1 \uBC18\uC601\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    topic: "strength",
+    values,
+    evidencePaths: ["pillars", "facts.structure.hiddenStems", "facts.structure.relationships"],
+    sourceReferenceIds: DITIANSHUI_LEDGER_SOURCE_IDS,
+    comparison: comparison(
+      "ditianshui.rooting-ledger.v1",
+      "ditianshui.rooting-ledger",
+      "ditianshui-strength-evidence",
+      `${dayStem}:${monthBranch}`,
+      `${rootGrade}:${rootScore}`
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function strengthGradeFor(hasMonthCommand, hasDayGround, hasForce) {
+  if (hasMonthCommand && hasDayGround && hasForce) {
+    return { grade: "\uB9E4\uC6B0 \uAC15\uD55C \uCABD", family: "strong" };
+  }
+  if (hasMonthCommand && hasDayGround) return { grade: "\uAC15\uD55C \uCABD", family: "strong" };
+  if (hasMonthCommand && hasForce) return { grade: "\uAC15\uD55C \uCABD", family: "strong" };
+  if (hasDayGround && hasForce) return { grade: "\uC911\uAC04\uC5D0\uC11C \uAC15\uD55C \uCABD", family: "strong" };
+  if (hasMonthCommand) return { grade: "\uC911\uAC04", family: "medium" };
+  if (hasDayGround) return { grade: "\uC57D\uD55C \uCABD", family: "weak" };
+  if (hasForce) return { grade: "\uC57D\uD55C \uCABD", family: "weak" };
+  return { grade: "\uB9E4\uC6B0 \uC57D\uD55C \uCABD", family: "weak" };
+}
+function strengthLeaningFor(family, counts) {
+  if (family === "weak") {
+    if (counts.officer >= 2 && counts.support >= 1) return "\uC778\uC131\uC73C\uB85C \uB20C\uB9B0 \uD798\uC744 \uBC1B\uC544 \uC4F0\uB294 \uCABD";
+    if (counts.officer >= 2) return "\uAE30\uB300\uB294 \uC790\uB9AC\uAC00 \uC5C6\uC5B4 \uAD00\uC131\uC5D0 \uADF8\uB300\uB85C \uB20C\uB9AC\uB294 \uCABD";
+    if (counts.wealth >= 3) return "\uBE44\uAC81\uC73C\uB85C \uC7AC\uC131\uC744 \uB098\uB220 \uAC10\uB2F9\uD558\uB294 \uCABD";
+    if (counts.drain >= 3) return "\uC778\uC131\uC73C\uB85C \uB0B4\uBCF4\uB0B8 \uD798\uC744 \uB418\uBC1B\uB294 \uCABD";
+    return "\uC778\uC131\uACFC \uBE44\uAC81 \uC5B4\uB290 \uCABD\uC5D0 \uAE30\uB300\uB294\uC9C0 \uC6D0\uAD6D\uB9CC\uC73C\uB85C\uB294 \uD55C\uCABD\uC73C\uB85C \uC881\uD600\uC9C0\uC9C0 \uC54A\uB294 \uCABD";
+  }
+  if (family === "strong") {
+    if (counts.officer >= 1) return "\uAD00\uC131\uC73C\uB85C \uBA3C\uC800 \uBC29\uD5A5\uC744 \uC7A1\uB294 \uCABD";
+    if (counts.drain >= 2) return "\uC2DD\uC0C1\uC73C\uB85C \uBA3C\uC800 \uB0B4\uBCF4\uB0B4\uB294 \uCABD";
+    if (counts.wealth >= 2) return "\uC7AC\uC131\uC73C\uB85C \uBA3C\uC800 \uB0B4\uBCF4\uB0B4\uB294 \uCABD";
+    return "\uB0B4\uBCF4\uB0BC \uC790\uB9AC\uAC00 \uB69C\uB837\uD558\uC9C0 \uC54A\uC544 \uD798\uC774 \uC548\uC5D0 \uBA38\uBB34\uB294 \uCABD";
+  }
+  return "\uD55C\uCABD\uC73C\uB85C \uD06C\uAC8C \uAE30\uC6B8\uC9C0 \uC54A\uC544 \uACC4\uC808\uACFC \uBC30\uCE58\uB97C \uD568\uAED8 \uBD10\uC57C \uD558\uB294 \uCABD";
+}
+function evaluateCommandPosition(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const dayElement = getHeavenlyStemElement2(dayStem);
+  const monthBranch = context.pillars.month.branch.korean;
+  const dayBranch = context.pillars.day.branch.korean;
+  const monthMainStem = BRANCH_MAIN_STEM2[monthBranch];
+  const dayMainStem = BRANCH_MAIN_STEM2[dayBranch];
+  const monthTenGod = getTenGod2(dayStem, monthMainStem);
+  const dayTenGod = getTenGod2(dayStem, dayMainStem);
+  const hasMonthCommand = SUPPORT_TEN_GODS.has(monthTenGod);
+  const hasDayGround = SUPPORT_TEN_GODS.has(dayTenGod);
+  const forceCharacters = [
+    ...visibleStemObservations(context.pillars, { includeDay: false }).map(
+      ({ position: position2, stem }) => ({ position: position2, stem, origin: "stem" })
+    ),
+    ...PILLAR_POSITIONS.flatMap((position2) => {
+      const pillar = context.pillars[position2];
+      return pillar === null ? [] : [
+        {
+          position: position2,
+          stem: BRANCH_MAIN_STEM2[pillar.branch.korean],
+          origin: "branch-main-stem"
+        }
+      ];
+    })
+  ].map(({ position: position2, stem, origin }) => ({
+    position: position2,
+    stem,
+    origin,
+    tenGod: getTenGod2(dayStem, stem)
+  }));
+  const countOf = (predicate) => forceCharacters.filter(({ tenGod }) => predicate(tenGod)).length;
+  const supportCount = countOf((tenGod) => SUPPORT_TEN_GODS.has(tenGod));
+  const drainCount = countOf((tenGod) => tenGod === "\uC2DD\uC2E0" || tenGod === "\uC0C1\uAD00");
+  const wealthCount = countOf((tenGod) => tenGod === "\uD3B8\uC7AC" || tenGod === "\uC815\uC7AC");
+  const officerCount = countOf((tenGod) => tenGod === "\uC815\uAD00" || tenGod === "\uD3B8\uAD00");
+  const hasForce = supportCount >= 3;
+  const { grade, family } = strengthGradeFor(hasMonthCommand, hasDayGround, hasForce);
+  const leaning = strengthLeaningFor(family, {
+    support: supportCount,
+    drain: drainCount,
+    wealth: wealthCount,
+    officer: officerCount
+  });
+  const filledFlags = [hasMonthCommand, hasDayGround, hasForce].filter(Boolean).length;
+  const flagSummary = filledFlags === 3 ? "\uC138 \uC790\uB9AC\uB97C \uBAA8\uB450 \uCC44\uC6CC" : filledFlags === 2 ? "\uC138 \uC790\uB9AC \uAC00\uC6B4\uB370 \uB458\uC744 \uCC44\uC6CC" : filledFlags === 1 ? "\uC138 \uC790\uB9AC \uAC00\uC6B4\uB370 \uD558\uB098\uB9CC \uCC44\uC6CC" : "\uC138 \uC790\uB9AC \uBAA8\uB450 \uBE44\uC5B4";
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    hasMonthCommand,
+    hasDayGround,
+    hasForce,
+    supportCount,
+    drainCount,
+    wealthCount,
+    officerCount,
+    grade,
+    leaning,
+    basisPositions: {
+      monthCommand: { branch: monthBranch, mainStem: monthMainStem, tenGod: monthTenGod },
+      dayGround: { branch: dayBranch, mainStem: dayMainStem, tenGod: dayTenGod },
+      force: {
+        characterCount: forceCharacters.length,
+        characters: forceCharacters.map(({ position: position2, stem, origin, tenGod }) => ({
+          position: position2,
+          stem,
+          origin,
+          tenGod
+        }))
+      }
+    },
+    status: "strength-grade-candidate-not-final-verdict"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC815\uAE30 ${withTopicParticle(monthMainStem)} \uC77C\uAC04 ${dayStem}${dayElement}\uC5D0\uAC8C ${withCopulaClause(monthTenGod)} \uC6D4\uB839\uC744 ${hasMonthCommand ? "\uC5BB\uC5C8\uACE0" : "\uC5BB\uC9C0 \uBABB\uD588\uACE0"}, \uC77C\uC9C0 ${dayBranch}\uC758 \uC815\uAE30 ${withTopicParticle(dayMainStem)} ${withCopulaClause(dayTenGod)} \uC77C\uC9C0${hasDayGround ? "\uB294 \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4" : hasMonthCommand ? "\uB294 \uC5BB\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4" : "\uB3C4 \uC5BB\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4"}. \uC77C\uAC04\uC744 \uBE80 \uB098\uBA38\uC9C0 ${forceCharacters.length}\uAE00\uC790\uC5D0\uC11C \uC778\uC131\xB7\uBE44\uAC81\uC740 ${supportCount}\uAC1C\uB85C \uC138\uB825${hasForce ? "\uC740 \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4" : hasMonthCommand || hasDayGround ? "\uC740 \uC5BB\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4" : "\uB3C4 \uC5BB\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4"}. \uAC19\uC740 \uAE00\uC790\uC5D0\uC11C \uC2DD\uC0C1\uC740 ${drainCount}\uAC1C, \uC7AC\uC131\uC740 ${wealthCount}\uAC1C, \uAD00\uC131\uC740 ${officerCount}\uAC1C\uC785\uB2C8\uB2E4. ${flagSummary} ${grade} \uD6C4\uBCF4\uC774\uBA70, ${withAdverbialParticle(leaning)} \uBD05\uB2C8\uB2E4. \uC774 \uAC12\uC740 \uB4DD\uB839\xB7\uB4DD\uC9C0\xB7\uB4DD\uC138 \uC138 \uC790\uB9AC\uB9CC \uC138\uB294 \uD6C4\uBCF4 \uB4F1\uAE09\uC774\uBA70, \uAC19\uC740 \uD329\uC758 \uC704\uCE58 \uBC30\uC810 \uD310\uC815\uACFC\uB294 \uCC99\uB3C4\uAC00 \uB2EC\uB77C \uAC15\uC57D \uD45C\uD604\uC774 \uC5B4\uAE0B\uB0A0 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC720\uD30C \uAC04 \uCD5C\uC885 \uD655\uC815\uC740 \uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    topic: "strength",
+    values,
+    evidencePaths: ["pillars", "facts.structure.hiddenStems"],
+    sourceReferenceIds: DITIANSHUI_LEDGER_SOURCE_IDS,
+    comparison: comparison(
+      "ditianshui.command-position.v1",
+      "ditianshui.command-position",
+      "ditianshui-strength-evidence",
+      `${dayStem}:${monthBranch}:${dayBranch}`,
+      grade
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+var DITIANSHUI_TEN_GOD_GROUPS = [
+  "\uBE44\uAC81",
+  "\uC778\uC131",
+  "\uC2DD\uC0C1",
+  "\uC7AC\uC131",
+  "\uAD00\uC0B4"
+];
+var TEN_GOD_NAMES = [
+  "\uBE44\uACAC",
+  "\uAC81\uC7AC",
+  "\uC2DD\uC2E0",
+  "\uC0C1\uAD00",
+  "\uD3B8\uC7AC",
+  "\uC815\uC7AC",
+  "\uD3B8\uAD00",
+  "\uC815\uAD00",
+  "\uD3B8\uC778",
+  "\uC815\uC778"
+];
+function ditianshuiTenGodGroup(tenGod) {
+  if (tenGod === "\uBE44\uACAC" || tenGod === "\uAC81\uC7AC") return "\uBE44\uAC81";
+  if (tenGod === "\uC815\uC778" || tenGod === "\uD3B8\uC778") return "\uC778\uC131";
+  if (tenGod === "\uC2DD\uC2E0" || tenGod === "\uC0C1\uAD00") return "\uC2DD\uC0C1";
+  if (tenGod === "\uC815\uC7AC" || tenGod === "\uD3B8\uC7AC") return "\uC7AC\uC131";
+  return "\uAD00\uC0B4";
+}
+var DITIANSHUI_SCORE_SLOT_IDS = [
+  "yearStem",
+  "monthStem",
+  "hourStem",
+  "yearBranch",
+  "monthBranch",
+  "dayBranch",
+  "hourBranch"
+];
+var STEM_SLOT_BY_POSITION = {
+  year: "yearStem",
+  month: "monthStem",
+  hour: "hourStem"
+};
+var BRANCH_SLOT_BY_POSITION = {
+  year: "yearBranch",
+  month: "monthBranch",
+  day: "dayBranch",
+  hour: "hourBranch"
+};
+var STEM_POSITION_LABEL2 = {
+  year: "\uC5F0\uAC04",
+  month: "\uC6D4\uAC04",
+  day: "\uC77C\uAC04",
+  hour: "\uC2DC\uAC04"
+};
+function requireFiniteNumber(value, label) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new TypeError(`Invalid Ditianshui numeric entry for ${label}.`);
+  }
+  return value;
+}
+function requireStemValue(value, label) {
+  if (!HEAVENLY_STEMS2.includes(value)) {
+    throw new TypeError(`Invalid Ditianshui stem entry for ${label}.`);
+  }
+  return value;
+}
+function requireBranchValue(value, label) {
+  if (!EARTHLY_BRANCHES2.includes(value)) {
+    throw new TypeError(`Invalid Ditianshui branch entry for ${label}.`);
+  }
+  return value;
+}
+function requireElementValue(value, label) {
+  if (value === "\uBAA9" || value === "\uD654" || value === "\uD1A0" || value === "\uAE08" || value === "\uC218") {
+    return value;
+  }
+  throw new TypeError(`Invalid Ditianshui element entry for ${label}.`);
+}
+function requireGroupValue(value, label) {
+  if (!DITIANSHUI_TEN_GOD_GROUPS.includes(value)) {
+    throw new TypeError(`Invalid Ditianshui ten-god group entry for ${label}.`);
+  }
+  return value;
+}
+function requireRankValue(value, label) {
+  if (value !== "\uC815\uAE30" && value !== "\uC911\uAE30" && value !== "\uC5EC\uAE30") {
+    throw new TypeError(`Invalid Ditianshui rank entry for ${label}.`);
+  }
+  return value;
+}
+function parseRankShare(value, label) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new TypeError(`Invalid Ditianshui rank share list for ${label}.`);
+  }
+  return value.map((entry) => {
+    if (!isRecord2(entry)) throw new TypeError(`Invalid Ditianshui rank share for ${label}.`);
+    return {
+      rank: requireRankValue(entry.rank, label),
+      share: requireFiniteNumber(entry.share, label)
+    };
+  }).sort((left, right) => ROOT_RANK_ORDER[right.rank] - ROOT_RANK_ORDER[left.rank]).map(({ share }) => share);
+}
+function parseStrengthThresholds(value) {
+  const thresholds = value.map((entry) => {
+    if (!isRecord2(entry) || typeof entry.grade !== "string") {
+      throw new TypeError("Invalid Ditianshui strength threshold entry.");
+    }
+    return { minimum: requireFiniteNumber(entry.minimum, entry.grade), grade: entry.grade };
+  });
+  if (thresholds.length === 0) {
+    throw new TypeError("Ditianshui strength thresholds must not be empty.");
+  }
+  thresholds.forEach((entry, index) => {
+    const previous = thresholds[index - 1];
+    if (previous !== void 0 && previous.minimum <= entry.minimum) {
+      throw new TypeError(
+        `Ditianshui strength thresholds must be strictly descending (${previous.grade} \u2192 ${entry.grade}).`
+      );
+    }
+  });
+  if (thresholds[thresholds.length - 1].minimum !== 0) {
+    throw new TypeError("Ditianshui strength thresholds must end at minimum 0.");
+  }
+  return thresholds;
+}
+function parseStrengthScoreTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || typeof value.profileId !== "string" || !isRecord2(value.positionPoints) || !isRecord2(value.rankShare) || !Array.isArray(value.supportTenGods) || !Array.isArray(value.thresholds)) {
+    throw new TypeError("Invalid Ditianshui strength score table.");
+  }
+  const positionPoints = value.positionPoints;
+  const rankShare = value.rankShare;
+  return {
+    profileId: value.profileId,
+    positionPoints: Object.fromEntries(
+      DITIANSHUI_SCORE_SLOT_IDS.map((slot) => [
+        slot,
+        requireFiniteNumber(positionPoints[slot], slot)
+      ])
+    ),
+    rankShareByCount: {
+      1: parseRankShare(rankShare.one, "one"),
+      2: parseRankShare(rankShare.two, "two"),
+      3: parseRankShare(rankShare.three, "three")
+    },
+    supportTenGods: value.supportTenGods.map((entry) => {
+      if (!TEN_GOD_NAMES.includes(entry)) {
+        throw new TypeError("Invalid Ditianshui support ten-god entry.");
+      }
+      return entry;
+    }),
+    thresholds: parseStrengthThresholds(value.thresholds)
+  };
+}
+var DITIANSHUI_STRENGTH_SCORE_V1 = deepFreeze2(
+  parseStrengthScoreTable(strength_score_v1_default)
+);
+var DITIANSHUI_STRENGTH_SCORE_PROFILE_ID_V1 = DITIANSHUI_STRENGTH_SCORE_V1.profileId;
+function computeStrengthScore(context) {
+  const table = DITIANSHUI_STRENGTH_SCORE_V1;
+  const dayStem = context.pillars.day.stem.korean;
+  const raw = PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    if (pillar === null) return [];
+    const branchSlot = BRANCH_SLOT_BY_POSITION[position2];
+    const branch = pillar.branch.korean;
+    const rankEntries = [...DITIANSHUI_ROOT_RANK_V1[branch]].sort(
+      (left, right) => ROOT_RANK_ORDER[right.rank] - ROOT_RANK_ORDER[left.rank]
+    );
+    const shares = table.rankShareByCount[rankEntries.length];
+    if (shares === void 0 || shares.length !== rankEntries.length) {
+      throw new TypeError(`No Ditianshui rank share declared for branch ${branch}.`);
+    }
+    const stemSlot = STEM_SLOT_BY_POSITION[position2];
+    const stemEntries = stemSlot === void 0 ? [] : [
+      {
+        slot: stemSlot,
+        position: position2,
+        origin: "stem",
+        stem: pillar.stem.korean,
+        rank: null,
+        points: table.positionPoints[stemSlot]
+      }
+    ];
+    return [
+      ...stemEntries,
+      ...rankEntries.map(({ stem, rank }, index) => ({
+        slot: branchSlot,
+        position: position2,
+        origin: "hidden-stem",
+        stem,
+        rank,
+        points: table.positionPoints[branchSlot] * shares[index]
+      }))
+    ];
+  });
+  const declaredTotal = [...new Set(raw.map(({ slot }) => slot))].reduce(
+    (total, slot) => total + table.positionPoints[slot],
+    0
+  );
+  if (declaredTotal <= 0) throw new TypeError("Ditianshui strength score has no declared slots.");
+  const normalizationFactor = 100 / declaredTotal;
+  const entries = raw.map((entry) => {
+    const tenGod = getTenGod2(dayStem, entry.stem);
+    return {
+      slot: entry.slot,
+      position: entry.position,
+      origin: entry.origin,
+      stem: entry.stem,
+      rank: entry.rank,
+      tenGod,
+      group: ditianshuiTenGodGroup(tenGod),
+      points: roundToHundredths(entry.points * normalizationFactor)
+    };
+  });
+  const rawPointsOf = (index) => raw[index].points * normalizationFactor;
+  const supportScore = roundToHundredths(
+    entries.reduce(
+      (total, { tenGod }, index) => table.supportTenGods.includes(tenGod) ? total + rawPointsOf(index) : total,
+      0
+    )
+  );
+  const groupScores = Object.fromEntries(
+    DITIANSHUI_TEN_GOD_GROUPS.map((group) => [
+      group,
+      roundToHundredths(
+        entries.reduce(
+          (total, entry, index) => entry.group === group ? total + rawPointsOf(index) : total,
+          0
+        )
+      )
+    ])
+  );
+  const threshold = table.thresholds.find(({ minimum }) => supportScore >= minimum);
+  return {
+    entries,
+    declaredTotal,
+    normalizationFactor: roundToHundredths(normalizationFactor),
+    supportScore,
+    groupScores,
+    grade: threshold?.grade ?? table.thresholds[table.thresholds.length - 1].grade,
+    coverage: omittedPillars(context.pillars).length === 0 ? "complete" : "partial"
+  };
+}
+function groupScorePhrase(groupScores) {
+  return DITIANSHUI_TEN_GOD_GROUPS.map((group) => `${group} ${groupScores[group]}`).join("\xB7");
+}
+function evaluateStrengthVerdict(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const dayElement = getHeavenlyStemElement2(dayStem);
+  const monthBranch = context.pillars.month.branch.korean;
+  const score = computeStrengthScore(context);
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    dayMasterElement: dayElement,
+    strengthScoreProfile: DITIANSHUI_STRENGTH_SCORE_PROFILE_ID_V1,
+    positionPoints: DITIANSHUI_STRENGTH_SCORE_V1.positionPoints,
+    thresholds: DITIANSHUI_STRENGTH_SCORE_V1.thresholds,
+    supportTenGods: DITIANSHUI_STRENGTH_SCORE_V1.supportTenGods,
+    supportScore: score.supportScore,
+    grade: score.grade,
+    groupScores: score.groupScores,
+    declaredTotal: score.declaredTotal,
+    normalizationFactor: score.normalizationFactor,
+    entries: score.entries,
+    profileDivergence: "position-weights-and-thresholds-differ-by-school",
+    status: "pack-local-strength-verdict-not-cross-school-final"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `\uC801\uCC9C\uC218 \uAD00\uBC95\uC758 \uC704\uCE58 \uBC30\uC810\uC73C\uB85C \uACC4\uC0B0\uD558\uBA74 \uC77C\uAC04 ${dayStem}${dayElement}\uC5D0\uAC8C \uD798\uC744 \uBCF4\uD0DC\uB294 \uC790\uB9AC\uB294 100\uC810 \uAC00\uC6B4\uB370 ${score.supportScore}\uC810\uC785\uB2C8\uB2E4. \uADF8\uB8F9\uBCC4\uB85C\uB294 ${groupScorePhrase(score.groupScores)}\uC810\uC785\uB2C8\uB2E4. \uC774 \uD329 \uAE30\uC900\uC73C\uB85C\uB294 ${withAdverbialParticle(score.grade)} \uBD05\uB2C8\uB2E4. ` + (score.coverage === "partial" ? "\uC2DC\uC8FC\uB97C \uBAB0\uB77C \uC2DC\uC9C0\uC640 \uC2DC\uAC04 \uBC30\uC810\uC744 \uBE7C\uACE0 \uB098\uBA38\uC9C0\uB97C 100\uC73C\uB85C \uD658\uC0B0\uD588\uC2B5\uB2C8\uB2E4. " : "") + "\uBC30\uC810\uD45C\uC640 \uC784\uACC4\uAC12\uC740 \uC774 \uD329\uC758 \uD504\uB85C\uD30C\uC77C\uC774\uBA70 \uC720\uD30C\uB9C8\uB2E4 \uB2E4\uB985\uB2C8\uB2E4. \uC720\uD30C \uAC04 \uCD5C\uC885 \uC2E0\uAC15\xB7\uC2E0\uC57D\uC740 \uD655\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+    topic: "strength",
+    values,
+    evidencePaths: ["pillars", "facts.structure.hiddenStems"],
+    sourceReferenceIds: DITIANSHUI_LEDGER_SOURCE_IDS,
+    comparison: comparison(
+      "ditianshui.strength-verdict.v1",
+      "ditianshui.strength-verdict",
+      "ditianshui-strength-evidence",
+      `${dayStem}:${monthBranch}`,
+      `${score.grade}:${score.supportScore}`
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function parseFollowTransformTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || typeof value.profileId !== "string" || !isRecord2(value.thresholds) || !Array.isArray(value.followPatterns) || !Array.isArray(value.stemTransforms) || !Array.isArray(value.transformPartnerPositions) || !Array.isArray(value.dominantElementPatterns)) {
+    throw new TypeError("Invalid Ditianshui follow-transform table.");
+  }
+  const thresholds = value.thresholds;
+  return {
+    profileId: value.profileId,
+    dominantGroupMinimum: requireFiniteNumber(
+      thresholds.dominantGroupMinimum,
+      "dominantGroupMinimum"
+    ),
+    rootedMinimum: requireFiniteNumber(thresholds.rootedMinimum, "rootedMinimum"),
+    pseudoFollowObstructionMaximum: requireFiniteNumber(
+      thresholds.pseudoFollowObstructionMaximum,
+      "pseudoFollowObstructionMaximum"
+    ),
+    revealedOfficerMaximum: requireFiniteNumber(
+      thresholds.revealedOfficerMaximum,
+      "revealedOfficerMaximum"
+    ),
+    followPatterns: value.followPatterns.map((entry) => {
+      if (!isRecord2(entry) || typeof entry.name !== "string" || !Array.isArray(entry.blockingGroups) || entry.rooting !== "rooted" && entry.rooting !== "rootless" && entry.rooting !== "any") {
+        throw new TypeError("Invalid Ditianshui follow pattern entry.");
+      }
+      const name = entry.name;
+      return {
+        name,
+        dominantGroup: requireGroupValue(entry.dominantGroup, name),
+        blockingGroups: entry.blockingGroups.map(
+          (group) => requireGroupValue(group, name)
+        ),
+        rooting: entry.rooting
+      };
+    }),
+    stemTransforms: value.stemTransforms.map((entry) => {
+      if (!isRecord2(entry) || !Array.isArray(entry.pair) || !Array.isArray(entry.monthBranches)) {
+        throw new TypeError("Invalid Ditianshui stem transform entry.");
+      }
+      const pair = entry.pair;
+      if (pair.length !== 2) throw new TypeError("Invalid Ditianshui stem transform pair.");
+      return {
+        pair: [requireStemValue(pair[0], "pair"), requireStemValue(pair[1], "pair")],
+        element: requireElementValue(entry.element, "stemTransform"),
+        monthBranches: entry.monthBranches.map(
+          (branch) => requireBranchValue(branch, "stemTransform")
+        )
+      };
+    }),
+    transformPartnerPositions: value.transformPartnerPositions.map(
+      (position2) => {
+        if (position2 !== "month" && position2 !== "hour") {
+          throw new TypeError("Invalid Ditianshui transform partner position.");
+        }
+        return position2;
+      }
+    ),
+    dominantElementPatterns: value.dominantElementPatterns.map((entry) => {
+      if (!isRecord2(entry) || typeof entry.name !== "string" || !Array.isArray(entry.bureaus)) {
+        throw new TypeError("Invalid Ditianshui dominant-element pattern entry.");
+      }
+      const name = entry.name;
+      return {
+        name,
+        element: requireElementValue(entry.element, name),
+        bureaus: entry.bureaus.map((bureau) => {
+          if (!Array.isArray(bureau)) throw new TypeError("Invalid Ditianshui bureau entry.");
+          return bureau.map((branch) => requireBranchValue(branch, name));
+        })
+      };
+    })
+  };
+}
+var DITIANSHUI_FOLLOW_TRANSFORM_V1 = deepFreeze2(
+  parseFollowTransformTable(follow_transform_v1_default)
+);
+function followPatternMatches(table, groupScores, rootScore) {
+  return table.followPatterns.flatMap((pattern) => {
+    const dominant = groupScores[pattern.dominantGroup];
+    if (dominant < table.dominantGroupMinimum) return [];
+    const rooted = rootScore > table.rootedMinimum;
+    const rootingMet = pattern.rooting === "any" ? true : pattern.rooting === "rooted" ? rooted : !rooted;
+    if (!rootingMet) return [];
+    const blockingScore = roundToHundredths(
+      pattern.blockingGroups.reduce((total, group) => total + groupScores[group], 0)
+    );
+    if (blockingScore > table.pseudoFollowObstructionMaximum) return [];
+    const blockingPhrase = pattern.blockingGroups.map((group) => `${group} ${groupScores[group]}\uC810`).join("\xB7");
+    const rootingPhrase = pattern.rooting === "any" ? ` \uC77C\uAC04 \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}\uC774\uBA70, \uC774 \uACA9\uC740 \uBFCC\uB9AC \uC720\uBB34\uB97C \uC870\uAC74\uC73C\uB85C \uB530\uC9C0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : pattern.rooting === "rooted" ? ` \uC77C\uAC04 \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}\uC774\uBA70 \uC774 \uAD00\uBC95\uC758 \uC720\uADFC \uAE30\uC900(${table.rootedMinimum} \uCD08\uACFC)\uC5D0 \uB4ED\uB2C8\uB2E4.` : ` \uC77C\uAC04 \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}\uC774\uBA70 \uC774 \uAD00\uBC95\uC758 \uBB34\uADFC \uAE30\uC900(${table.rootedMinimum} \uC774\uD558)\uC5D0 \uB4ED\uB2C8\uB2E4.`;
+    return [
+      {
+        kind: "follow",
+        name: pattern.name,
+        state: blockingScore === 0 ? "\uC131\uB9BD" : "\uAC00\uC885",
+        basis: `${pattern.dominantGroup} \uADF8\uB8F9\uC774 100\uC810 \uAC00\uC6B4\uB370 ${dominant}\uC810\uC774\uACE0 \uB9C9\uB294 \uC790\uB9AC\uB294 ${blockingPhrase}\uC785\uB2C8\uB2E4.` + rootingPhrase,
+        details: {
+          dominantGroup: pattern.dominantGroup,
+          dominantScore: dominant,
+          blockingGroups: [...pattern.blockingGroups],
+          blockingScore,
+          rooting: pattern.rooting,
+          rootScore
+        }
+      }
+    ];
+  });
+}
+function transformChecks(context, table, rootScore) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  return table.transformPartnerPositions.flatMap((partnerPosition) => {
+    const pillar = context.pillars[partnerPosition];
+    if (pillar === null) return [];
+    const partnerStem = pillar.stem.korean;
+    const transform = table.stemTransforms.find(
+      ({ pair }) => pair[0] === dayStem && pair[1] === partnerStem || pair[1] === dayStem && pair[0] === partnerStem
+    );
+    if (transform === void 0) return [];
+    const monthBranchQualified = transform.monthBranches.includes(monthBranch);
+    const dayMasterRootless = rootScore <= table.rootedMinimum;
+    const opposingStems = visibleStemObservations(context.pillars, { includeDay: false }).filter(({ position: position2 }) => position2 !== partnerPosition).filter(({ stem }) => ELEMENT_CONTROLS2[getHeavenlyStemElement2(stem)] === transform.element).map(({ position: position2, stem }) => `${STEM_POSITION_LABEL2[position2]} ${stem}`);
+    return [
+      {
+        partnerPosition,
+        partnerStem,
+        combination: `${transform.pair[0]}${transform.pair[1]}\uD569`,
+        transformElement: transform.element,
+        monthBranchQualified,
+        dayMasterRootless,
+        opposingStems,
+        formed: monthBranchQualified && dayMasterRootless && opposingStems.length === 0
+      }
+    ];
+  });
+}
+function transformPatternMatches(checks, monthBranch, dayStem, rootScore, rootedMinimum) {
+  return checks.filter(({ formed }) => formed).map((check) => ({
+    kind: "transform",
+    name: `\uD654\uACA9(${check.transformElement})`,
+    state: "\uC131\uB9BD",
+    basis: `\uC77C\uAC04 ${withComitativeParticle(dayStem)} ${STEM_POSITION_LABEL2[check.partnerPosition]} ${withSubjectParticle(check.partnerStem)} ${check.combination}\uC774\uACE0 \uD654\uC2E0\uC740 ${check.transformElement}\uC785\uB2C8\uB2E4. \uC6D4\uC9C0 ${withSubjectParticle(monthBranch)} \uD654\uC2E0\uC774 \uC124 \uC790\uB9AC\uC5D0 \uB4E4\uACE0, \uC77C\uAC04 \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}\uC774\uBA70 \uC774 \uAD00\uBC95\uC758 \uBB34\uADFC \uAE30\uC900(${rootedMinimum} \uC774\uD558)\uC5D0 \uB4ED\uB2C8\uB2E4. \uD654\uC2E0\uC744 \uADF9\uD558\uB294 \uCC9C\uAC04\uB3C4 \uD22C\uCD9C\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.`,
+    details: {
+      partnerPosition: check.partnerPosition,
+      partnerStem: check.partnerStem,
+      combination: check.combination,
+      transformElement: check.transformElement,
+      monthBranch
+    }
+  }));
+}
+function dominantElementMatches(table, branches, rootBranches, dayElement, officerScore, revealedOfficerScore) {
+  return table.dominantElementPatterns.flatMap((pattern) => {
+    if (pattern.element !== dayElement) return [];
+    if (revealedOfficerScore > table.revealedOfficerMaximum) return [];
+    const bureau = pattern.bureaus.find(
+      (members) => members.every((member) => branches.includes(member))
+    );
+    if (bureau === void 0) return [];
+    if (!rootBranches.some((branch) => bureau.includes(branch))) return [];
+    return [
+      {
+        kind: "dominant-element",
+        name: pattern.name,
+        state: "\uC131\uB9BD",
+        basis: `\uC9C0\uC9C0\uC5D0 ${withSubjectParticle(bureau.join("\xB7"))} \uBAA8\uB450 \uBAA8\uC5EC ${pattern.element} \uAD6D\uC744 \uC774\uB8E8\uACE0, \uC77C\uAC04 \uC624\uD589\uB3C4 ${pattern.element}\uC785\uB2C8\uB2E4. \uCC9C\uAC04\uC5D0 \uD22C\uCD9C\uD55C \uAD00\uC0B4\uC740 ${revealedOfficerScore}\uC810\uC73C\uB85C \uC774 \uAD00\uBC95\uC758 \uC0C1\uD55C(${table.revealedOfficerMaximum}\uC810 \uC774\uD558)\uC5D0 \uB4E4\uACE0, \uAD6D\uC744 \uC774\uB8E8\uB294 \uC9C0\uC9C0\uAC00 \uD488\uC740 \uC9C0\uC7A5\uAC04 \uAD00\uC0B4(\uAD00\uC0B4 \uADF8\uB8F9 \uD569\uACC4 ${officerScore}\uC810)\uC740 \uAD6D\uC744 \uAE68\uB294 \uAC83\uC73C\uB85C \uBCF4\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC77C\uAC04\uC740 \uADF8 \uAD6D\uC758 \uC9C0\uC9C0\uC5D0 \uD1B5\uADFC\uD569\uB2C8\uB2E4.`,
+        details: {
+          element: pattern.element,
+          bureau: [...bureau],
+          officerScore,
+          revealedOfficerScore,
+          revealedOfficerMaximum: table.revealedOfficerMaximum
+        }
+      }
+    ];
+  });
+}
+function evaluateFollowTransformPatterns(context) {
+  const table = DITIANSHUI_FOLLOW_TRANSFORM_V1;
+  const dayStem = context.pillars.day.stem.korean;
+  const dayElement = getHeavenlyStemElement2(dayStem);
+  const monthBranch = context.pillars.month.branch.korean;
+  const { roots, rootScore } = computeRootingLedger(context);
+  const { groupScores, entries } = computeStrengthScore(context);
+  const revealedOfficerScore = roundToHundredths(
+    entries.filter(({ origin, group }) => origin === "stem" && group === "\uAD00\uC0B4").reduce((total, { points }) => total + points, 0)
+  );
+  const branches = PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    return pillar === null ? [] : [pillar.branch.korean];
+  });
+  const checks = transformChecks(context, table, rootScore);
+  const patterns = [
+    ...dominantElementMatches(
+      table,
+      branches,
+      roots.map(({ branch }) => branch),
+      dayElement,
+      groupScores["\uAD00\uC0B4"],
+      revealedOfficerScore
+    ),
+    ...transformPatternMatches(checks, monthBranch, dayStem, rootScore, table.rootedMinimum),
+    ...followPatternMatches(table, groupScores, rootScore)
+  ];
+  const primary = patterns[0];
+  const others = patterns.slice(1);
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    dayMasterElement: dayElement,
+    rootScore,
+    groupScores,
+    patterns: patterns.map(
+      ({ kind, name, state, basis, details }) => ({ kind, name, state, basis, details })
+    ),
+    primaryPattern: primary === void 0 ? null : primary.name,
+    verdict: primary === void 0 ? "\uC815\uACA9" : primary.state === "\uAC00\uC885" ? "\uAC00\uC885" : "\uC131\uB9BD",
+    transformChecks: checks,
+    thresholds: {
+      dominantGroupMinimum: table.dominantGroupMinimum,
+      rootedMinimum: table.rootedMinimum,
+      pseudoFollowObstructionMaximum: table.pseudoFollowObstructionMaximum,
+      revealedOfficerMaximum: table.revealedOfficerMaximum
+    },
+    revealedOfficerScore,
+    followTransformProfile: table.profileId,
+    transformPartnerPositions: [...table.transformPartnerPositions],
+    patternPrecedence: "dominant-element-then-transform-then-follow",
+    status: "pack-local-pattern-no-fortune-meaning"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `${dayStem}${dayElement} \uC77C\uAC04\uC758 \uADF8\uB8F9 \uC810\uC218\uB294 ${groupScorePhrase(groupScores)}\uC810\uC774\uACE0 \uC190\uC0C1 \uBCF4\uC815\uC744 \uC801\uC6A9\uD55C \uBFCC\uB9AC \uC810\uC218\uB294 ${rootScore}\uC785\uB2C8\uB2E4. ` + (primary === void 0 ? "\uC774 \uAD00\uBC95\uC758 \uC885\uACA9\xB7\uD654\uACA9\xB7\uC77C\uD589\uB4DD\uAE30\uACA9 \uC870\uAC74\uC5D0\uB294 \uC5B4\uB290 \uAC83\uB3C4 \uB2FF\uC9C0 \uC54A\uC544 \uC815\uACA9\uC73C\uB85C \uBD05\uB2C8\uB2E4. " : `${withAdverbialParticle(primary.state === "\uAC00\uC885" ? `${primary.name} \uAC00\uC885 \uD6C4\uBCF4` : primary.name)} \uBD05\uB2C8\uB2E4. ${primary.basis} ` + (others.length === 0 ? "" : `\uAC19\uC740 \uC870\uAC74\uC5D0\uC11C ${others.map(({ name }) => name).join("\xB7")}\uB3C4 \uD568\uAED8 \uC7A1\uD799\uB2C8\uB2E4. `)) + "\uC870\uAC74\uACFC \uC784\uACC4\uAC12\uC740 \uC774 \uD329\uC758 \uD504\uB85C\uD30C\uC77C\uC774\uBA70 \uC720\uD30C\uB9C8\uB2E4 \uB2E4\uB985\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uC0AC\uAC74 \uC758\uBBF8\uB294 \uBD99\uC774\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+    topic: "strength",
+    values,
+    evidencePaths: ["pillars", "facts.structure.hiddenStems", "facts.structure.relationships"],
+    sourceReferenceIds: DITIANSHUI_LEDGER_SOURCE_IDS,
+    comparison: comparison(
+      "ditianshui.follow-transform-patterns.v1",
+      "ditianshui.follow-transform-patterns",
+      "ditianshui-strength-evidence",
+      `${dayStem}:${monthBranch}`,
+      primary === void 0 ? "\uC815\uACA9" : `${primary.name}:${primary.state}`
     ),
     ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
   };
@@ -13606,9 +16161,37 @@ var QIONGTONG_CLIMATE_TABLE_V1_METADATA = deepFreeze2({
   sourceWork: "\uAD81\uD1B5\uBCF4\uAC10(\u7AAE\u901A\u5BF6\u9451)",
   sourceTranscriptionRevision: "Wikisource oldid 2294674",
   sourceScanEdition: "1937 \u300A\u7AAE\u901A\u5BF6\u9451\u8A55\u8A3B\u300B",
+  /**
+   * 큐레이트 7칸 밖에서 전사 오류가 확인되어 저본 문구로 되돌린 셀 목록.
+   * 저본(Wikisource oldid 2294674) 대조까지만 마쳤고 1937년 판면 대조는
+   * 아직 하지 않았으므로 verification 등급은 큐레이트 7칸으로 올리지 않는다.
+   */
+  baseTextCorrectedCells: [
+    {
+      cell: "\uAC11:\uBBF8",
+      correctedTo: ["\uACC4", "\uC815", "\uACBD"],
+      basis: "\u516D\u6708\u7532\u6728 \u5148\u4E01\u5F8C\u5E9A\uFF0C\u7121\u7678\u4EA6\u53EF \u2014 \u58EC\uC740 \uC6D0\uBB38\uC5D0 \uC5C6\uC74C"
+    },
+    {
+      cell: "\uC815:\uC9C4",
+      correctedTo: ["\uAC11", "\uACBD"],
+      basis: "\u4E09\u6708\u4E01\u706B \u5148\u7528\u7532\u6728\u5F15\u4E01\u5236\u571F\uFF0C\u6B21\u770B\u5E9A\u91D1 \u2014 \u620A\u571F\uB294 \uC81C\uAC70 \uB300\uC0C1(\u75C5)"
+    },
+    {
+      cell: "\uC2E0:\uC720",
+      correctedTo: ["\uC784", "\uAC11"],
+      basis: "\u516B\u6708\u8F9B\u91D1 \u5C08\u7528\u58EC\u6C34\u6DD8\u6D17\uFF0C\u898B\u7532\u5236\u571F\u65B9\u5999 \u2014 \u4E01\uC740 \uC6D0\uBB38\uC5D0 \uC5C6\uC74C"
+    },
+    {
+      cell: "\uACC4:\uC624",
+      correctedTo: ["\uACBD", "\uC2E0", "\uC784", "\uACC4"],
+      basis: "\u4E94\u6708\u7678\u6C34 \u5FC5\u9808\u5E9A\u8F9B\u70BA\u751F\u8EAB\u4E4B\u672C \u2026 \u65B9\u5F97\u8F9B\u91D1\u4E4B\u7528 \u2014 \u8F9B \uB204\uB77D \uBCF5\uC6D0"
+    }
+  ],
   cautions: [
     "\uD310\uBCF8 \uBC0F \uC804\uC0AC \uCC28\uC774\uAC00 \uB0A8\uC544 \uC788\uC5B4 \uCD5C\uC885 \uC6A9\uC2E0\uC73C\uB85C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uB2E4.",
     "\uBC30\uC5F4 \uC21C\uC11C\uB294 \uC804\uC0AC\uB41C \uD6C4\uBCF4 \uC21C\uC11C\uC774\uBA70 \uAC15\uB3C4 \uC810\uC218\uB098 \uD655\uB960\uC774 \uC544\uB2C8\uB2E4.",
+    "\uC774 \uD329\uC740 \uC804\uC0AC \uC21C\uC11C\uB97C \uD6C4\uBCF4 \uC0C1\uD0DC\uAC00 \uAC19\uC744 \uB54C\uC758 \uD0C0\uC774\uBE0C\uB808\uC774\uD06C\uB85C\uB9CC \uC4F0\uBA70, \uADF8 \uC21C\uC11C\uB97C \uC6D0\uBB38\uC774 \uB9E4\uAE34 \uC6B0\uC5F4\uB85C \uC81C\uC2DC\uD558\uC9C0 \uC54A\uB294\uB2E4.",
     "\uACA9\uAD6D\uC6A9\uC2E0 \uBC0F \uC5B5\uBD80\uC6A9\uC2E0\uACFC \uBCD1\uD569\uD558\uAC70\uB098 \uB2E4\uC218\uACB0\uB85C \uACE0\uB974\uC9C0 \uC54A\uB294\uB2E4."
   ]
 });
@@ -13621,7 +16204,7 @@ var QIONGTONG_CLIMATE_CANDIDATES_V1 = deepFreeze2({
     \uC9C4: ["\uACBD", "\uC784"],
     \uC0AC: ["\uACC4", "\uC815"],
     \uC624: ["\uACC4", "\uC815", "\uACBD"],
-    \uBBF8: ["\uACC4", "\uC815", "\uC784"],
+    \uBBF8: ["\uACC4", "\uC815", "\uACBD"],
     \uC2E0: ["\uACBD", "\uC815", "\uC784"],
     \uC720: ["\uC815", "\uBCD1", "\uACBD"],
     \uC220: ["\uACBD", "\uAC11", "\uC815", "\uC784", "\uACC4"],
@@ -13660,7 +16243,7 @@ var QIONGTONG_CLIMATE_CANDIDATES_V1 = deepFreeze2({
     \uCD95: ["\uAC11", "\uACBD"],
     \uC778: ["\uAC11", "\uACBD"],
     \uBB18: ["\uACBD", "\uAC11"],
-    \uC9C4: ["\uAC11", "\uACBD", "\uBB34"],
+    \uC9C4: ["\uAC11", "\uACBD"],
     \uC0AC: ["\uAC11", "\uACBD"],
     \uC624: ["\uC784", "\uACBD", "\uACC4"],
     \uBBF8: ["\uAC11", "\uC784", "\uACBD"],
@@ -13721,7 +16304,7 @@ var QIONGTONG_CLIMATE_CANDIDATES_V1 = deepFreeze2({
     \uC624: ["\uC784", "\uAE30", "\uACC4"],
     \uBBF8: ["\uC784", "\uACBD", "\uAC11"],
     \uC2E0: ["\uC784", "\uAC11", "\uBB34"],
-    \uC720: ["\uC784", "\uAC11", "\uC815"],
+    \uC720: ["\uC784", "\uAC11"],
     \uC220: ["\uC784", "\uAC11"],
     \uD574: ["\uC784", "\uBCD1"]
   },
@@ -13746,7 +16329,7 @@ var QIONGTONG_CLIMATE_CANDIDATES_V1 = deepFreeze2({
     \uBB18: ["\uACBD", "\uC2E0"],
     \uC9C4: ["\uBCD1", "\uC2E0", "\uAC11"],
     \uC0AC: ["\uC2E0"],
-    \uC624: ["\uACBD", "\uC784", "\uACC4"],
+    \uC624: ["\uACBD", "\uC2E0", "\uC784", "\uACC4"],
     \uBBF8: ["\uACBD", "\uC2E0", "\uACC4"],
     \uC2E0: ["\uC815"],
     \uC720: ["\uC2E0", "\uBCD1"],
@@ -13765,12 +16348,82 @@ function getQiongtongClimateCellSource(dayStem, monthBranch) {
   return CURATED_CELL_SOURCES[`${dayStem}:${monthBranch}`] ?? null;
 }
 
+// plugins/oh-my-saju/tradition-packs/qiongtong/climate-baseline-v1.json
+var climate_baseline_v1_default = {
+  schemaVersion: "1",
+  profileId: "qiongtong-climate-baseline-v1",
+  status: "modern-reconstruction-not-classical",
+  monthBaselineBasis: {
+    temperature: "12\uC9C0 \uD55C \uBC14\uD034\uB97C -3(\uC790) \u2026 +3(\uC624) \uB85C \uADE0\uB4F1\uD558\uAC8C \uBC30\uCE58\uD55C \uC644\uC804 \uB2E8\uC870 \uC0AC\uC778 \uACE1\uC120. \uACE0\uC804 \uC218\uCE58\uAC00 \uC544\uB2C8\uB77C \uC774 \uD329\uC774 \uC815\uD55C \uC7AC\uAD6C\uC131 \uB208\uAE08\uC774\uB2E4.",
+    moisture: "\uACC4\uC808 \uBE14\uB85D(\uC0AC\uC624\uBBF8 \uC870 \u2192 \uC2E0\uC720\uC220 \uC870 \u2192 \uD574\uC790\uCD95 \uC2B5 \u2192 \uC778\uBB18\uC9C4 \uC2B5) \uC0AC\uC774\uB97C \uD55C \uCE78\uC529 \uC644\uB9CC\uD788 \uC787\uB294 \uACBD\uC0AC\uAC12\uC774\uB2E4. \uD574(0)\uB294 \uC220(+1)\uACFC \uC790(-1) \uC0AC\uC774\uC758 \uC804\uC774\uAC12\uC73C\uB85C \uB454 \uAC83\uC774\uC9C0 \u4EA5\uAC00 \uC790\xB7\uCD95\uBCF4\uB2E4 \uB35C \uC2B5\uD558\uB2E4\uB294 \uC8FC\uC7A5\uC774 \uC544\uB2C8\uB2E4. \uC9C4(-1)\uC740 \u6C34\u5EAB(\uC2B5\uD1A0), \uC220(+1)\uC740 \u706B\u5EAB(\uC870\uD1A0)\uB77C\uB294 \uD1B5\uC124\uC744 \uBC18\uC601\uD55C \uBE14\uB85D \uB0B4 \uC608\uC678\uB2E4.",
+    moistureUsage: "moisture \uAC12\uC740 \uC5B4\uB5A4 \uB4F1\uAE09 \uD310\uC815\uC5D0\uB3C4 \uC4F0\uC774\uC9C0 \uC54A\uC73C\uBA70 \uBB38\uC7A5 \uD45C\uC2DC\uC640 \uBE44\uAD50 \uD0A4\uC5D0\uB9CC \uB4E4\uC5B4\uAC04\uB2E4. \uB4F1\uAE09(grades)\uC740 temperature \uC808\uB313\uAC12\uB9CC\uC73C\uB85C \uC815\uD55C\uB2E4.",
+    openQuestion: "\u4EA5\uB97C \uC790\xB7\uCD95\uACFC \uAC19\uC740 -1 \uB85C \uB0B4\uB9AC\uB294 \uB300\uC548\uC774 \uC788\uC73C\uB098 \uADFC\uAC70\uAC00 \uB420 \uACE0\uC804 \uC218\uCE58\uD45C\uAC00 \uC5C6\uC5B4 \uC804\uC774\uAC12\uC744 \uC720\uC9C0\uD55C\uB2E4."
+  },
+  monthBaseline: {
+    \uC790: { temperature: -3, moisture: -1 },
+    \uCD95: { temperature: -2, moisture: -1 },
+    \uC778: { temperature: -1, moisture: 0 },
+    \uBB18: { temperature: 0, moisture: 0 },
+    \uC9C4: { temperature: 1, moisture: -1 },
+    \uC0AC: { temperature: 2, moisture: 1 },
+    \uC624: { temperature: 3, moisture: 2 },
+    \uBBF8: { temperature: 2, moisture: 2 },
+    \uC2E0: { temperature: 1, moisture: 1 },
+    \uC720: { temperature: 0, moisture: 1 },
+    \uC220: { temperature: -1, moisture: 1 },
+    \uD574: { temperature: -2, moisture: 0 }
+  },
+  adjustments: {
+    fireCharacterTemperatureDelta: 0.5,
+    waterCharacterTemperatureDelta: -0.5,
+    earthCharacterThreshold: 4,
+    earthCharacterMoistureDelta: 0.5,
+    summerHourBranchTemperatureDelta: 0.5,
+    winterHourBranchTemperatureDelta: -0.5,
+    shallowEntryDepthPercent: 33,
+    shallowEntryTemperatureDelta: 0.5
+  },
+  grades: {
+    urgentAbsoluteTemperature: 2.5,
+    tiltedAbsoluteTemperature: 1.5,
+    urgentLabel: "\uD55C\uB09C \uC870\uC808\uC774 \uAE09\uD55C \uC790\uB9AC",
+    tiltedLabel: "\uD55C\uB09C \uAE30\uC6B8\uAE30\uAC00 \uB69C\uB837\uD55C \uC790\uB9AC",
+    balancedLabel: "\uD55C\uB09C\uC774 \uD06C\uAC8C \uCE58\uC6B0\uCE58\uC9C0 \uC54A\uC740 \uC790\uB9AC"
+  }
+};
+
+// plugins/oh-my-saju/tradition-packs/qiongtong/hidden-stems-v1.json
+var hidden_stems_v1_default = {
+  schemaVersion: "1",
+  profileId: "qiongtong-hidden-stems-v1",
+  note: "Pack-local \uC9C0\uC7A5\uAC04 \uD45C. \uC870\uD6C4 \uD6C4\uBCF4\uC758 \uBFCC\uB9AC \uD310\uC815\uC5D0\uB9CC \uC4F0\uBA70 \uB2E4\uB978 \uD329\uC758 \uD45C\uB97C \uC77D\uC9C0 \uC54A\uB294\uB2E4.",
+  branchHiddenStems: {
+    \uC790: ["\uC784", "\uACC4"],
+    \uCD95: ["\uACC4", "\uC2E0", "\uAE30"],
+    \uC778: ["\uBB34", "\uBCD1", "\uAC11"],
+    \uBB18: ["\uAC11", "\uC744"],
+    \uC9C4: ["\uC744", "\uACC4", "\uBB34"],
+    \uC0AC: ["\uBB34", "\uACBD", "\uBCD1"],
+    \uC624: ["\uBCD1", "\uAE30", "\uC815"],
+    \uBBF8: ["\uC815", "\uC744", "\uAE30"],
+    \uC2E0: ["\uBB34", "\uC784", "\uACBD"],
+    \uC720: ["\uACBD", "\uC2E0"],
+    \uC220: ["\uC2E0", "\uC815", "\uBB34"],
+    \uD574: ["\uBB34", "\uAC11", "\uC784"]
+  }
+};
+
 // plugins/oh-my-saju/tradition-packs/qiongtong/evaluate.ts
 var QIONGTONG_SOURCE_IDS = [
   "qiongtong-day-stem-month-climate-v1",
   "oh-my-saju-qiongtong-lookup-v1"
 ];
-function evaluateQiongtongPackRule(context) {
+function evaluateQiongtongPackRule(ruleId, context) {
+  if (ruleId === "qiongtong.candidate-condition") return evaluateCandidateCondition(context);
+  if (ruleId === "qiongtong.pack-climate-priority") return evaluatePackClimatePriority(context);
+  return ruleId === "qiongtong.climate-tendency" ? evaluateClimateTendency(context) : evaluateClimateCandidates(context);
+}
+function evaluateClimateCandidates(context) {
   const dayStem = context.pillars.day.stem.korean;
   const monthBranch = context.pillars.month.branch.korean;
   const candidates = getQiongtongClimateCandidates(dayStem, monthBranch);
@@ -13851,31 +16504,907 @@ function evaluateQiongtongPackRule(context) {
     ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
   };
 }
+var QIONGTONG_CLIMATE_BASELINE_TABLE_ID_V1 = "qiongtong-climate-baseline-v1";
+var SUMMER_HOUR_BRANCHES = ["\uC0AC", "\uC624", "\uBBF8"];
+var WINTER_HOUR_BRANCHES = ["\uD574", "\uC790", "\uCD95"];
+function requireNumber(value, field) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new TypeError(`Invalid Qiongtong climate baseline field ${field}.`);
+  }
+  return value;
+}
+function requireText(value, field) {
+  if (typeof value !== "string" || value.length === 0) {
+    throw new TypeError(`Invalid Qiongtong climate baseline field ${field}.`);
+  }
+  return value;
+}
+function requireClimateBaseline(value, branch) {
+  if (!isRecord2(value)) {
+    throw new TypeError(`Invalid Qiongtong climate baseline for month branch ${branch}.`);
+  }
+  return {
+    temperature: requireNumber(value.temperature, `${branch}.temperature`),
+    moisture: requireNumber(value.moisture, `${branch}.moisture`)
+  };
+}
+function parseClimateBaselineTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== QIONGTONG_CLIMATE_BASELINE_TABLE_ID_V1 || !isRecord2(value.monthBaseline) || !isRecord2(value.adjustments) || !isRecord2(value.grades)) {
+    throw new TypeError("Invalid Qiongtong climate baseline table.");
+  }
+  const declaredBaseline = value.monthBaseline;
+  const declaredAdjustments = value.adjustments;
+  const declaredGrades = value.grades;
+  return {
+    monthBaseline: Object.fromEntries(
+      EARTHLY_BRANCHES2.map((branch) => [
+        branch,
+        requireClimateBaseline(declaredBaseline[branch], branch)
+      ])
+    ),
+    adjustments: {
+      fireCharacterTemperatureDelta: requireNumber(
+        declaredAdjustments.fireCharacterTemperatureDelta,
+        "fireCharacterTemperatureDelta"
+      ),
+      waterCharacterTemperatureDelta: requireNumber(
+        declaredAdjustments.waterCharacterTemperatureDelta,
+        "waterCharacterTemperatureDelta"
+      ),
+      earthCharacterThreshold: requireNumber(
+        declaredAdjustments.earthCharacterThreshold,
+        "earthCharacterThreshold"
+      ),
+      earthCharacterMoistureDelta: requireNumber(
+        declaredAdjustments.earthCharacterMoistureDelta,
+        "earthCharacterMoistureDelta"
+      ),
+      summerHourBranchTemperatureDelta: requireNumber(
+        declaredAdjustments.summerHourBranchTemperatureDelta,
+        "summerHourBranchTemperatureDelta"
+      ),
+      winterHourBranchTemperatureDelta: requireNumber(
+        declaredAdjustments.winterHourBranchTemperatureDelta,
+        "winterHourBranchTemperatureDelta"
+      ),
+      shallowEntryDepthPercent: requireNumber(
+        declaredAdjustments.shallowEntryDepthPercent,
+        "shallowEntryDepthPercent"
+      ),
+      shallowEntryTemperatureDelta: requireNumber(
+        declaredAdjustments.shallowEntryTemperatureDelta,
+        "shallowEntryTemperatureDelta"
+      )
+    },
+    grades: {
+      urgentAbsoluteTemperature: requireNumber(
+        declaredGrades.urgentAbsoluteTemperature,
+        "urgentAbsoluteTemperature"
+      ),
+      tiltedAbsoluteTemperature: requireNumber(
+        declaredGrades.tiltedAbsoluteTemperature,
+        "tiltedAbsoluteTemperature"
+      ),
+      urgentLabel: requireText(declaredGrades.urgentLabel, "urgentLabel"),
+      tiltedLabel: requireText(declaredGrades.tiltedLabel, "tiltedLabel"),
+      balancedLabel: requireText(declaredGrades.balancedLabel, "balancedLabel")
+    }
+  };
+}
+var QIONGTONG_CLIMATE_BASELINE_V1 = deepFreeze2(
+  parseClimateBaselineTable(climate_baseline_v1_default)
+);
+function roundToHundredths2(value) {
+  return Math.round(value * 100) / 100;
+}
+function signedIndex(value) {
+  return value > 0 ? `+${value}` : `${value}`;
+}
+function previousMonthBranch(branch) {
+  const index = EARTHLY_BRANCHES2.indexOf(branch);
+  return EARTHLY_BRANCHES2[(index + EARTHLY_BRANCHES2.length - 1) % EARTHLY_BRANCHES2.length];
+}
+function evaluateClimateTendency(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const hourBranch = context.pillars.hour?.branch.korean ?? null;
+  const baseline = QIONGTONG_CLIMATE_BASELINE_V1.monthBaseline[monthBranch];
+  const { adjustments: parameters, grades } = QIONGTONG_CLIMATE_BASELINE_V1;
+  const characterElements = PILLAR_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    return pillar === null ? [] : [
+      getHeavenlyStemElement2(pillar.stem.korean),
+      getHeavenlyStemElement2(BRANCH_MAIN_STEM2[pillar.branch.korean])
+    ];
+  });
+  const fireCount = characterElements.filter((element) => element === "\uD654").length;
+  const waterCount = characterElements.filter((element) => element === "\uC218").length;
+  const earthCount = characterElements.filter((element) => element === "\uD1A0").length;
+  const adjustments = [];
+  let temperatureIndex = baseline.temperature;
+  let moistureIndex = baseline.moisture;
+  if (fireCount > 0) {
+    const delta = parameters.fireCharacterTemperatureDelta * fireCount;
+    temperatureIndex += delta;
+    adjustments.push({
+      id: "fire-characters",
+      axis: "temperature",
+      delta,
+      basis: `\uD654 ${fireCount}`
+    });
+  }
+  if (waterCount > 0) {
+    const delta = parameters.waterCharacterTemperatureDelta * waterCount;
+    temperatureIndex += delta;
+    adjustments.push({
+      id: "water-characters",
+      axis: "temperature",
+      delta,
+      basis: `\uC218 ${waterCount}`
+    });
+  }
+  if (earthCount >= parameters.earthCharacterThreshold) {
+    const delta = parameters.earthCharacterMoistureDelta;
+    moistureIndex += delta;
+    adjustments.push({
+      id: "earth-characters",
+      axis: "moisture",
+      delta,
+      basis: `\uD1A0 ${earthCount}`
+    });
+  }
+  if (hourBranch !== null && SUMMER_HOUR_BRANCHES.includes(hourBranch)) {
+    const delta = parameters.summerHourBranchTemperatureDelta;
+    temperatureIndex += delta;
+    adjustments.push({
+      id: "summer-hour-branch",
+      axis: "temperature",
+      delta,
+      basis: `\uC2DC\uC9C0 ${hourBranch}`
+    });
+  }
+  if (hourBranch !== null && WINTER_HOUR_BRANCHES.includes(hourBranch)) {
+    const delta = parameters.winterHourBranchTemperatureDelta;
+    temperatureIndex += delta;
+    adjustments.push({
+      id: "winter-hour-branch",
+      axis: "temperature",
+      delta,
+      basis: `\uC2DC\uC9C0 ${hourBranch}`
+    });
+  }
+  if (context.solarTerm !== null) {
+    const depthPercent = Math.round(
+      (context.solarTerm.birthEpochMilliseconds - context.solarTerm.monthStart.epochMilliseconds) / (context.solarTerm.monthEnd.epochMilliseconds - context.solarTerm.monthStart.epochMilliseconds) * 100
+    );
+    if (depthPercent < parameters.shallowEntryDepthPercent) {
+      const previousBranch = previousMonthBranch(monthBranch);
+      const direction = Math.sign(
+        QIONGTONG_CLIMATE_BASELINE_V1.monthBaseline[previousBranch].temperature - baseline.temperature
+      );
+      const delta = direction * parameters.shallowEntryTemperatureDelta;
+      temperatureIndex += delta;
+      adjustments.push({
+        id: "shallow-solar-term-entry",
+        axis: "temperature",
+        delta,
+        basis: `\uC808\uC785 ${depthPercent}% \xB7 \uC9C1\uC804 ${previousBranch}\uC6D4`
+      });
+    }
+  }
+  temperatureIndex = roundToHundredths2(temperatureIndex);
+  moistureIndex = roundToHundredths2(moistureIndex);
+  const absoluteTemperature = Math.abs(temperatureIndex);
+  const grade = absoluteTemperature >= grades.urgentAbsoluteTemperature ? grades.urgentLabel : absoluteTemperature >= grades.tiltedAbsoluteTemperature ? grades.tiltedLabel : grades.balancedLabel;
+  const tilt = temperatureIndex > 0 ? "\uB530\uB73B\uD55C \uCABD\uC73C\uB85C \uAE30\uC6C1\uB2C8\uB2E4" : temperatureIndex < 0 ? "\uCC2C \uCABD\uC73C\uB85C \uAE30\uC6C1\uB2C8\uB2E4" : "\uC5B4\uB290 \uCABD\uC73C\uB85C\uB3C4 \uAE30\uC6B8\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4";
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    monthBranch,
+    baseTemperature: baseline.temperature,
+    baseMoisture: baseline.moisture,
+    temperatureIndex,
+    moistureIndex,
+    grade,
+    gradeAxis: "temperature-only",
+    fireCount,
+    waterCount,
+    earthCount,
+    hourBranch,
+    adjustments,
+    status: "climate-observation-not-prescription"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `${monthBranch}\uC6D4\uC740 \uD55C\uB09C \uAE30\uC900\uAC12 ${signedIndex(baseline.temperature)}, \uC870\uC2B5 \uAE30\uC900\uAC12 ${signedIndex(baseline.moisture)}\uC778 \uC790\uB9AC\uC785\uB2C8\uB2E4. ${withObjectParticle(`\uC6D0\uAD6D\uC758 \uD654 ${fireCount}\xB7\uC218 ${waterCount} \uBC30\uCE58${hourBranch === null ? "" : `\uC640 \uC2DC\uC9C0 ${hourBranch}`}`)} \uBC18\uC601\uD558\uBA74 \uD55C\uB09C \uC9C0\uD45C\uB294 ${withAdverbialParticle(signedIndex(temperatureIndex))} ${tilt}. ${grade}\uC785\uB2C8\uB2E4. \uC870\uC2B5 \uC9C0\uD45C\uB294 ${signedIndex(moistureIndex)}\uC774\uBA70, \uC774 \uC9C0\uD45C\uB294 \uB4F1\uAE09 \uD310\uC815\uC5D0 \uC4F0\uC9C0 \uC54A\uACE0 \uCC38\uACE0\uB85C\uB9CC \uC801\uC2B5\uB2C8\uB2E4. ${context.solarTerm === null ? "\uC808\uC785 \uC2EC\uCC9C\uC740 \uC0DD\uC2DC\uAC00 \uD655\uC815\uB418\uC5B4\uC57C \uBC18\uC601\uD569\uB2C8\uB2E4. " : ""}\uC774 \uAD00\uBC95\uC758 \uD604\uB300 \uC7AC\uAD6C\uC131 \uC9C0\uD45C\uC774\uBA70 \uCD5C\uC885 \uCC98\uBC29\uC744 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    topic: "season-climate",
+    values,
+    evidencePaths: context.solarTerm === null ? ["pillars"] : [
+      "pillars",
+      "chronology.epochMilliseconds",
+      "audit.evidence.monthStart",
+      "audit.evidence.monthEnd"
+    ],
+    sourceReferenceIds: QIONGTONG_SOURCE_IDS,
+    comparison: comparison(
+      "qiongtong.climate-tendency.v1",
+      "qiongtong.climate-tendency",
+      "qiongtong-climate",
+      `${dayStem}:${monthBranch}`,
+      `${signedIndex(temperatureIndex)}|${signedIndex(moistureIndex)}`
+    ),
+    ...context.solarTerm === null || omitted.length > 0 ? { coverage: "partial", omittedPillars: omitted } : {}
+  };
+}
+var QIONGTONG_HIDDEN_STEM_TABLE_ID_V1 = "qiongtong-hidden-stems-v1";
+function requireHiddenStemList(value, branch) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new TypeError(`Invalid Qiongtong hidden-stem list for branch ${branch}.`);
+  }
+  return value.map((entry) => {
+    if (!HEAVENLY_STEMS2.includes(entry)) {
+      throw new TypeError(`Invalid Qiongtong hidden stem for branch ${branch}.`);
+    }
+    return entry;
+  });
+}
+function parseHiddenStemTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== QIONGTONG_HIDDEN_STEM_TABLE_ID_V1 || !isRecord2(value.branchHiddenStems)) {
+    throw new TypeError("Invalid Qiongtong hidden-stem table.");
+  }
+  const declared = value.branchHiddenStems;
+  return Object.fromEntries(
+    EARTHLY_BRANCHES2.map((branch) => [branch, requireHiddenStemList(declared[branch], branch)])
+  );
+}
+var QIONGTONG_HIDDEN_STEMS_V1 = deepFreeze2(parseHiddenStemTable(hidden_stems_v1_default));
+var QIONGTONG_CANDIDATE_STATE_LABEL = {
+  "transparent-and-rooted": "\uB4DC\uB7EC\uB098\uACE0 \uBFCC\uB9AC\uB3C4 \uC788\uC5B4 \uBC14\uB85C \uC4F8 \uC218 \uC788\uB294 \uC790\uB9AC",
+  "transparent-only": "\uB4DC\uB7EC\uB0AC\uC73C\uB098 \uBFCC\uB9AC\uAC00 \uC5C6\uC5B4 \uD798\uC774 \uC57D\uD55C \uC790\uB9AC",
+  "rooted-only": "\uC9C0\uC7A5\uAC04\uC5D0\uB9CC \uC788\uC5B4 \uB4DC\uB7EC\uB098\uC9C0 \uC54A\uC740 \uC790\uB9AC",
+  absent: "\uC6D0\uAD6D\uC5D0 \uC5C6\uC5B4 \uC774 \uBA85\uC2DD\uC5D0\uC11C\uB294 \uC4F8 \uC218 \uC5C6\uB294 \uC790\uB9AC"
+};
+var QIONGTONG_CANDIDATE_STATE_RANK = {
+  "transparent-and-rooted": 3,
+  "transparent-only": 2,
+  "rooted-only": 1,
+  absent: 0
+};
+function candidateConditions(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const candidates = getQiongtongClimateCandidates(dayStem, monthBranch);
+  const visible = visibleStemObservations(context.pillars, { includeDay: true });
+  return candidates.map((stem, index) => {
+    const element = getHeavenlyStemElement2(stem);
+    const transparentPositions = visible.filter((observation2) => observation2.stem === stem).map(({ position: position2 }) => position2);
+    const rootBranches = PILLAR_POSITIONS.flatMap((position2) => {
+      const pillar = context.pillars[position2];
+      if (pillar === null) return [];
+      const branch = pillar.branch.korean;
+      return QIONGTONG_HIDDEN_STEMS_V1[branch].filter((hidden) => getHeavenlyStemElement2(hidden) === element).map((hidden) => ({
+        position: position2,
+        branch,
+        stem: hidden,
+        evidencePath: `pillars.${position2}.branch`
+      }));
+    });
+    const transparent = transparentPositions.length > 0;
+    const rooted = rootBranches.length > 0;
+    const state = transparent ? rooted ? "transparent-and-rooted" : "transparent-only" : rooted ? "rooted-only" : "absent";
+    return {
+      stem,
+      element,
+      transcribedOrder: index + 1,
+      transparentPositions,
+      rootBranches,
+      transparent,
+      rooted,
+      state,
+      label: QIONGTONG_CANDIDATE_STATE_LABEL[state]
+    };
+  });
+}
+function cellVerification(dayStem, monthBranch) {
+  const cellSource = getQiongtongClimateCellSource(dayStem, monthBranch);
+  return cellSource === null ? {
+    verified: false,
+    verification: "experimental-transcription-only",
+    notice: "\uC774 \uCE78\uC740 \uC544\uC9C1 \uAE30\uC900 \uD310\uBA74\uACFC \uB300\uC870\uD558\uC9C0 \uC54A\uC740 \uC2E4\uD5D8\uC6A9 \uC804\uC0AC\uC785\uB2C8\uB2E4(120\uCE78 \uC911 7\uCE78\uB9CC \uB300\uC870 \uC644\uB8CC). "
+  } : {
+    verified: true,
+    verification: cellSource.verification,
+    notice: "\uC774 \uCE78\uC740 \uAE30\uC900 \uD310\uBA74\uACFC \uB300\uC870\uD55C 7\uCE78\uC5D0 \uC18D\uD569\uB2C8\uB2E4. "
+  };
+}
+function conditionValues(condition) {
+  return {
+    stem: condition.stem,
+    element: condition.element,
+    transcribedOrder: condition.transcribedOrder,
+    transparent: condition.transparent,
+    rooted: condition.rooted,
+    transparentPositions: [...condition.transparentPositions],
+    rootBranches: condition.rootBranches.map(({ position: position2, branch, stem, evidencePath }) => ({
+      position: position2,
+      branch,
+      stem,
+      evidencePath
+    })),
+    state: condition.state,
+    label: condition.label
+  };
+}
+function conditionPhrase(condition) {
+  const transparency = condition.transparentPositions.length === 0 ? "\uD22C\uAC04 \uC5C6\uC74C" : `\uD22C\uAC04 ${condition.transparentPositions.map((position2) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
+  const roots = condition.rootBranches.length === 0 ? "\uC9C0\uC9C0 \uBFCC\uB9AC \uC5C6\uC74C" : `\uC9C0\uC9C0 ${[...new Set(condition.rootBranches.map(({ branch }) => branch))].join("\xB7")}\uC5D0 \uBFCC\uB9AC`;
+  return `${condition.stem}(${transparency}, ${roots} \u2192 ${condition.label})`;
+}
+function evaluateCandidateCondition(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const conditions = candidateConditions(context);
+  const cell = cellVerification(dayStem, monthBranch);
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    monthBranch,
+    cellVerification: cell.verification,
+    cellSourceReviewed: cell.verified,
+    hiddenStemTable: QIONGTONG_HIDDEN_STEM_TABLE_ID_V1,
+    rootBasis: "same-element-in-branch-hidden-stems",
+    transparencyBasis: "year-month-day-hour-visible-stems",
+    candidateConditions: conditions.map(conditionValues),
+    usableCandidateStems: conditions.filter(({ state }) => state !== "absent").map(({ stem }) => stem),
+    status: "pack-local-candidate-condition-not-final"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `${dayStem} \uC77C\uAC04\xB7${monthBranch}\uC6D4\uC758 \uC870\uD6C4 \uD6C4\uBCF4\uB97C \uD22C\uAC04\uACFC \uC9C0\uC9C0 \uBFCC\uB9AC\uB85C \uB530\uC9C0\uBA74 ${conditions.map(conditionPhrase).join("; ")}\uC785\uB2C8\uB2E4. ` + cell.notice + "\uD22C\uAC04\uACFC \uBFCC\uB9AC\uB9CC \uBCF4\uB294 \uC774 \uAD00\uBC95\uC758 \uC131\uB9BD \uD3C9\uAC00\uC774\uBA70, \uC6D0\uBB38\uC774 \uB2E8 \uC870\uAC74\uC808\uC740 \uC544\uC9C1 \uD310\uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uAE38\uD749\uC774\uB098 \uCD5C\uC885 \uC6A9\uC2E0\uB3C4 \uC5EC\uAE30\uC11C \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+    topic: "useful-god",
+    values,
+    evidencePaths: ["pillars"],
+    sourceReferenceIds: QIONGTONG_SOURCE_IDS,
+    comparison: comparison(
+      "qiongtong.candidate-condition.v1",
+      "qiongtong.candidate-condition",
+      "qiongtong-climate",
+      `${dayStem}:${monthBranch}`,
+      conditions.map(({ stem, state }) => `${stem}:${state}`).join("|")
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+function evaluatePackClimatePriority(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const conditions = candidateConditions(context);
+  const cell = cellVerification(dayStem, monthBranch);
+  const ranked = [...conditions].sort((left, right) => {
+    const byState = QIONGTONG_CANDIDATE_STATE_RANK[right.state] - QIONGTONG_CANDIDATE_STATE_RANK[left.state];
+    return byState !== 0 ? byState : left.transcribedOrder - right.transcribedOrder;
+  });
+  const primary = ranked[0];
+  const usable = primary.state !== "absent";
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    monthBranch,
+    priorityStem: primary.stem,
+    priorityElement: primary.element,
+    priorityState: primary.state,
+    priorityLabel: primary.label,
+    usable,
+    cellVerification: cell.verification,
+    cellSourceReviewed: cell.verified,
+    tieBreak: "candidate-state-then-transcribed-order",
+    rankedCandidates: ranked.map(({ stem, state, transcribedOrder }) => ({
+      stem,
+      state,
+      transcribedOrder
+    })),
+    candidateConditions: conditions.map(conditionValues),
+    scope: "pack-local-climate-priority-not-plugin-final-useful-god",
+    status: usable ? "pack-local-climate-priority-selected" : "pack-local-climate-priority-not-present-in-chart"
+  };
+  return {
+    key: canonicalJsonStringify(values),
+    statement: (usable ? `\uC774 \uD329\uC758 \uC131\uB9BD \uD3C9\uAC00\uC5D0\uC11C \uAC00\uC7A5 \uC4F8 \uC218 \uC788\uB294 \uC870\uD6C4 \uD6C4\uBCF4\uB294 ${primary.stem}(${primary.element})\uC774\uBA70 ${primary.label}\uC785\uB2C8\uB2E4. ` + cell.notice + (cell.verified ? "\uAD81\uD1B5\uBCF4\uAC10 \uC870\uD6C4\uC6A9\uC2E0\uC73C\uB85C\uB294 \uC774 \uC790\uB9AC\uB97C 1\uC21C\uC704\uB85C \uBD05\uB2C8\uB2E4. " : "\uADF8\uB798\uC11C \uAD81\uD1B5\uBCF4\uAC10\uC774 \uB9E4\uAE34 1\uC21C\uC704\uAC00 \uC544\uB2C8\uB77C \uC774 \uD329 \uC804\uC0AC \uAE30\uC900\uC758 1\uC21C\uC704\uB85C\uB9CC \uC801\uC2B5\uB2C8\uB2E4. ") : `\uC774 \uD329\uC758 \uC870\uD6C4 \uD6C4\uBCF4 ${withTopicParticle(
+      conditions.map(({ stem }) => stem).join("\xB7")
+    )} \uC6D0\uAD6D\uC758 \uCC9C\uAC04\uC5D0\uB3C4 \uC9C0\uC7A5\uAC04\uC5D0\uB3C4 \uC5C6\uC5B4, \uC870\uD6C4\uB85C \uC4F8 \uC218 \uC788\uB294 \uC790\uB9AC\uAC00 \uC774 \uBA85\uC2DD\uC5D0\uB294 \uC5C6\uC2B5\uB2C8\uB2E4. \uC774 \uD329 \uC804\uC0AC \uC21C\uC11C \uAE30\uC900 1\uC21C\uC704\uC778 ${primary.stem}\uC758 \uC790\uB9AC\uB9CC \uC801\uC5B4 \uB461\uB2C8\uB2E4. ` + cell.notice) + "\uC21C\uC704\uB294 \uC774 \uD329\uC758 \uC870\uD6C4 \uAE30\uC900\uC77C \uBFD0\uC774\uBA70, \uACA9\uAD6D\xB7\uC5B5\uBD80\uB97C \uD569\uCE5C \uD50C\uB7EC\uADF8\uC778\uC758 \uCD5C\uC885 \uC6A9\uC2E0\uC774 \uC544\uB2D9\uB2C8\uB2E4.",
+    topic: "useful-god",
+    values,
+    evidencePaths: ["pillars"],
+    sourceReferenceIds: QIONGTONG_SOURCE_IDS,
+    comparison: comparison(
+      "qiongtong.pack-climate-priority.v1",
+      "qiongtong.pack-climate-priority",
+      "qiongtong-climate",
+      `${dayStem}:${monthBranch}`,
+      `${primary.stem}:${primary.state}`
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+
+// plugins/oh-my-saju/tradition-packs/ziping/month-command-days-v1.json
+var month_command_days_v1_default = {
+  schemaVersion: "1",
+  profileId: "yueling-fenye-yuanhai-v1",
+  monthCommand: {
+    \uC790: [
+      { stem: "\uC784", rank: "\uC5EC\uAE30", days: 10 },
+      { stem: "\uACC4", rank: "\uC815\uAE30", days: 20 }
+    ],
+    \uCD95: [
+      { stem: "\uACC4", rank: "\uC5EC\uAE30", days: 9 },
+      { stem: "\uC2E0", rank: "\uC911\uAE30", days: 3 },
+      { stem: "\uAE30", rank: "\uC815\uAE30", days: 18 }
+    ],
+    \uC778: [
+      { stem: "\uBB34", rank: "\uC5EC\uAE30", days: 7 },
+      { stem: "\uBCD1", rank: "\uC911\uAE30", days: 7 },
+      { stem: "\uAC11", rank: "\uC815\uAE30", days: 16 }
+    ],
+    \uBB18: [
+      { stem: "\uAC11", rank: "\uC5EC\uAE30", days: 10 },
+      { stem: "\uC744", rank: "\uC815\uAE30", days: 20 }
+    ],
+    \uC9C4: [
+      { stem: "\uC744", rank: "\uC5EC\uAE30", days: 9 },
+      { stem: "\uACC4", rank: "\uC911\uAE30", days: 3 },
+      { stem: "\uBB34", rank: "\uC815\uAE30", days: 18 }
+    ],
+    \uC0AC: [
+      { stem: "\uBB34", rank: "\uC5EC\uAE30", days: 7 },
+      { stem: "\uACBD", rank: "\uC911\uAE30", days: 7 },
+      { stem: "\uBCD1", rank: "\uC815\uAE30", days: 16 }
+    ],
+    \uC624: [
+      { stem: "\uBCD1", rank: "\uC5EC\uAE30", days: 10 },
+      { stem: "\uAE30", rank: "\uC911\uAE30", days: 9 },
+      { stem: "\uC815", rank: "\uC815\uAE30", days: 11 }
+    ],
+    \uBBF8: [
+      { stem: "\uC815", rank: "\uC5EC\uAE30", days: 9 },
+      { stem: "\uC744", rank: "\uC911\uAE30", days: 3 },
+      { stem: "\uAE30", rank: "\uC815\uAE30", days: 18 }
+    ],
+    \uC2E0: [
+      { stem: "\uBB34", rank: "\uC5EC\uAE30", days: 7 },
+      { stem: "\uC784", rank: "\uC911\uAE30", days: 7 },
+      { stem: "\uACBD", rank: "\uC815\uAE30", days: 16 }
+    ],
+    \uC720: [
+      { stem: "\uACBD", rank: "\uC5EC\uAE30", days: 10 },
+      { stem: "\uC2E0", rank: "\uC815\uAE30", days: 20 }
+    ],
+    \uC220: [
+      { stem: "\uC2E0", rank: "\uC5EC\uAE30", days: 9 },
+      { stem: "\uC815", rank: "\uC911\uAE30", days: 3 },
+      { stem: "\uBB34", rank: "\uC815\uAE30", days: 18 }
+    ],
+    \uD574: [
+      { stem: "\uBB34", rank: "\uC5EC\uAE30", days: 7 },
+      { stem: "\uAC11", rank: "\uC911\uAE30", days: 7 },
+      { stem: "\uC784", rank: "\uC815\uAE30", days: 16 }
+    ]
+  }
+};
+
+// plugins/oh-my-saju/tradition-packs/ziping/pattern-integrity-v1.json
+var pattern_integrity_v1_default = {
+  schemaVersion: "1",
+  profileId: "ziping-pattern-integrity-v1",
+  patternPriority: "main-qi-first",
+  patternPriorityAlternatives: ["commanding-first"],
+  reliefTableStatus: "pack-reconstruction-from-relief-and-breaking-chapters",
+  note: "Pack-local \uACA9 \uD655\uC815\xB7\uC0C1\uC2E0\xB7\uD30C\uACA9 table. \uB85D\xB7\uC591\uC778\xB7\uC6D4\uAC81 \uC6D4\uC9C0\uB294 \uB0B4\uACA9 8\uACA9\uC5D0\uC11C \uC81C\uC678\uD558\uBA70, \uC774 \uC138 \uACA9\uC740 \uC6D4\uC9C0 \uC790\uCCB4\uB85C\uB9CC \uC11C\uACE0 \uC9C0\uC7A5\uAC04 \uD22C\uAC04\uC73C\uB85C\uB294 \uC138\uC6B0\uC9C0 \uC54A\uB294\uB2E4. \uC591\uC778\uC740 \uC591\uAC04(\uAC11\xB7\uBCD1\xB7\uBB34\xB7\uACBD\xB7\uC784)\uC5D0\uB9CC \uC138\uC6B4\uB2E4(\uC74C\uAC04 \uC5ED\uD589 \uC591\uC778=\uC74C\uC778\uC740 \uCC44\uD0DD\uD558\uC9C0 \uC54A\uB294\uB2E4). \uC790\uD3C9\uC9C4\uC804 8\uACA9\uC740 \uC778\uC218\uACA9 \uD558\uB098\uB97C \uC21C\uC6A9\uC73C\uB85C \uB450\uC9C0\uB9CC \uC774 \uD329\uC740 \uC0AC\uD749\uC2E0\uC5D0 \u689F(\uD3B8\uC778)\uAC00 \uB4DC\uB294 \uACC4\uC5F4\uC744 \uB530\uB77C \uD3B8\uC778\uACA9\uC744 \uC5ED\uC6A9\uC73C\uB85C \uBD84\uB9AC\uD588\uACE0, \uADF8 \uACB0\uACFC \uC2DD\uC2E0\uACA9\uC758 \uB3C4\uC2DD(\uD3B8\uC778\uC774 \uC2DD\uC2E0\uC744 \uC5CE\uC74C)\uACFC \uD3B8\uC778\uACA9\uC758 \uD3B8\uC778\uB3C4\uC2DD(\uD3B8\uC778\uACA9\uC774 \uC2DD\uC2E0\uC744 \uB9CC\uB098\uB294 \uBC30\uCE58)\uC774 \uC774\uB984\uC774 \uACB9\uCE5C\uB2E4. \uB458\uC740 \uC11C\uB85C \uB2E4\uB978 \uD56D\uBAA9\uC774\uB2E4. \uAD6C\uC751(\uB9C9\uB294 \uAE00\uC790) \uBAA9\uB85D\uC740 \uC774 \uD329\uC758 \uC7AC\uAD6C\uC131\uC774\uBA70 \uC6D0\uBB38 \uC804\uC0AC\uAC00 \uC544\uB2C8\uB2E4. relief-absent \uC694\uC778\uC758 \uC131\uB9BD \uC5EC\uBD80\uB294 \uC774 \uD45C\uC758 tenGods \uAC00 \uC544\uB2C8\uB77C \uD574\uB2F9 \uACA9\uC758 \uC0C1\uC2E0(reliefGods)\uC774 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB85C \uD310\uC815\uD55C\uB2E4.",
+  luBranch: {
+    \uAC11: "\uC778",
+    \uC744: "\uBB18",
+    \uBCD1: "\uC0AC",
+    \uC815: "\uC624",
+    \uBB34: "\uC0AC",
+    \uAE30: "\uC624",
+    \uACBD: "\uC2E0",
+    \uC2E0: "\uC720",
+    \uC784: "\uD574",
+    \uACC4: "\uC790"
+  },
+  yangBladeBranch: {
+    \uAC11: "\uBB18",
+    \uBCD1: "\uC624",
+    \uBB34: "\uC624",
+    \uACBD: "\uC720",
+    \uC784: "\uC790"
+  },
+  tenGodGroups: {
+    \uC7AC\uC131: ["\uC815\uC7AC", "\uD3B8\uC7AC"],
+    \uAD00\uC131: ["\uC815\uAD00"],
+    \uAD00\uC0B4: ["\uC815\uAD00", "\uD3B8\uAD00"],
+    \uC778\uC131: ["\uC815\uC778", "\uD3B8\uC778"],
+    \uC2DD\uC0C1: ["\uC2DD\uC2E0", "\uC0C1\uAD00"],
+    \uC2DD\uC2E0: ["\uC2DD\uC2E0"],
+    \uC591\uC778: ["\uAC81\uC7AC"],
+    \uBE44\uAC81: ["\uBE44\uACAC", "\uAC81\uC7AC"]
+  },
+  patterns: {
+    \uC815\uAD00\uACA9: {
+      track: "inner-eight",
+      direction: "\uC21C\uC6A9",
+      reliefGods: ["\uC7AC\uC131", "\uC778\uC131"],
+      breakingFactors: [
+        {
+          id: "\uC0C1\uAD00\uACAC\uAD00",
+          label: "\uC0C1\uAD00 \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uC0C1\uAD00"],
+          rescueGroups: ["\uC778\uC131"],
+          rescueStatus: "modeled"
+        },
+        {
+          id: "\uAD00\uC0B4\uD63C\uC7A1",
+          label: "\uAD00\uC0B4\uD63C\uC7A1",
+          kind: "mixed-officer",
+          tenGods: ["\uC815\uAD00", "\uD3B8\uAD00"],
+          rescueGroups: [],
+          rescueStatus: "not-modeled"
+        },
+        {
+          id: "\uC6D4\uC9C0\uCDA9",
+          label: "\uC6D4\uC9C0 \uCDA9",
+          kind: "month-branch-clash",
+          tenGods: [],
+          rescueGroups: [],
+          rescueStatus: "not-modeled"
+        }
+      ]
+    },
+    \uC815\uC7AC\uACA9: {
+      track: "inner-eight",
+      direction: "\uC21C\uC6A9",
+      reliefGods: ["\uC2DD\uC0C1", "\uAD00\uC131"],
+      breakingFactors: [
+        {
+          id: "\uAD70\uAC81\uC7C1\uC7AC",
+          label: "\uAC81\uC7AC \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uAC81\uC7AC"],
+          rescueGroups: ["\uAD00\uC0B4"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uD3B8\uC7AC\uACA9: {
+      track: "inner-eight",
+      direction: "\uC21C\uC6A9",
+      reliefGods: ["\uC2DD\uC0C1", "\uAD00\uC131"],
+      breakingFactors: [
+        {
+          id: "\uAD70\uAC81\uC7C1\uC7AC",
+          label: "\uAC81\uC7AC \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uAC81\uC7AC"],
+          rescueGroups: ["\uAD00\uC0B4"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uC815\uC778\uACA9: {
+      track: "inner-eight",
+      direction: "\uC21C\uC6A9",
+      reliefGods: ["\uAD00\uC0B4"],
+      breakingFactors: [
+        {
+          id: "\uD0D0\uC7AC\uAD34\uC778",
+          label: "\uC7AC\uC131 \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uC815\uC7AC", "\uD3B8\uC7AC"],
+          rescueGroups: ["\uBE44\uAC81"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uC2DD\uC2E0\uACA9: {
+      track: "inner-eight",
+      direction: "\uC21C\uC6A9",
+      reliefGods: ["\uC7AC\uC131"],
+      breakingFactors: [
+        {
+          id: "\uB3C4\uC2DD",
+          label: "\uD3B8\uC778 \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uD3B8\uC778"],
+          rescueGroups: ["\uC7AC\uC131"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uCE60\uC0B4\uACA9: {
+      track: "inner-eight",
+      direction: "\uC5ED\uC6A9",
+      reliefGods: ["\uC2DD\uC2E0", "\uC591\uC778"],
+      breakingFactors: [
+        {
+          id: "\uCE60\uC0B4\uBB34\uC81C",
+          label: "\uC81C\uBCF5 \uC5C6\uC74C",
+          note: "\uC131\uB9BD \uC5EC\uBD80\uB294 \uC774 \uACA9\uC758 \uC0C1\uC2E0(\uC2DD\uC2E0\xB7\uC591\uC778)\uC774 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB85C \uBCF8\uB2E4.",
+          kind: "relief-absent",
+          tenGods: [],
+          rescueGroups: [],
+          rescueStatus: "absence-is-the-factor"
+        }
+      ]
+    },
+    \uC0C1\uAD00\uACA9: {
+      track: "inner-eight",
+      direction: "\uC5ED\uC6A9",
+      reliefGods: ["\uC778\uC131", "\uC7AC\uC131"],
+      breakingFactors: [
+        {
+          id: "\uC0C1\uAD00\uACAC\uAD00",
+          label: "\uC815\uAD00 \uD22C\uCD9C",
+          kind: "stem-transparent",
+          tenGods: ["\uC815\uAD00"],
+          rescueGroups: ["\uC7AC\uC131"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uD3B8\uC778\uACA9: {
+      track: "inner-eight",
+      direction: "\uC5ED\uC6A9",
+      reliefGods: ["\uC7AC\uC131"],
+      breakingFactors: [
+        {
+          id: "\uD3B8\uC778\uB3C4\uC2DD",
+          label: "\uC2DD\uC2E0 \uD22C\uCD9C",
+          note: "\uD3B8\uC778\uACA9\uC774 \uC2DD\uC2E0\uC744 \uB9CC\uB09C \uBC30\uCE58. \uC2DD\uC2E0\uACA9\uC758 '\uB3C4\uC2DD'\uACFC\uB294 \uB2E4\uB978 \uD56D\uBAA9\uC774\uB2E4.",
+          kind: "stem-transparent",
+          tenGods: ["\uC2DD\uC2E0"],
+          rescueGroups: ["\uC7AC\uC131"],
+          rescueStatus: "modeled"
+        }
+      ]
+    },
+    \uC591\uC778\uACA9: {
+      track: "special",
+      direction: "\uC5ED\uC6A9",
+      reliefGods: ["\uAD00\uC0B4"],
+      breakingFactors: [
+        {
+          id: "\uC591\uC778\uBB34\uC81C",
+          label: "\uC81C\uBCF5 \uC5C6\uC74C",
+          note: "\uC131\uB9BD \uC5EC\uBD80\uB294 \uC774 \uACA9\uC758 \uC0C1\uC2E0(\uAD00\uC0B4)\uC774 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB85C \uBCF8\uB2E4.",
+          kind: "relief-absent",
+          tenGods: [],
+          rescueGroups: [],
+          rescueStatus: "absence-is-the-factor"
+        }
+      ]
+    },
+    \uAC74\uB85D\uACA9: {
+      track: "special",
+      direction: null,
+      reliefGods: ["\uC7AC\uC131", "\uAD00\uC0B4", "\uC2DD\uC0C1"],
+      breakingFactors: []
+    },
+    \uC6D4\uAC81\uACA9: {
+      track: "special",
+      direction: null,
+      reliefGods: ["\uC7AC\uC131", "\uAD00\uC0B4", "\uC2DD\uC0C1"],
+      breakingFactors: []
+    }
+  }
+};
 
 // plugins/oh-my-saju/tradition-packs/ziping/evaluate.ts
 var ZIPING_SOURCE_IDS = [
   "ziping-zhenquan-month-command-v1",
+  "yuanhai-ziping-yueling-fenye-v1",
   "oh-my-saju-ziping-reconstruction-v1"
 ];
-var LU_BRANCH = {
-  \uAC11: "\uC778",
-  \uC744: "\uBB18",
-  \uBCD1: "\uC0AC",
-  \uC815: "\uC624",
-  \uBB34: "\uC0AC",
-  \uAE30: "\uC624",
-  \uACBD: "\uC2E0",
-  \uC2E0: "\uC720",
-  \uC784: "\uD574",
-  \uACC4: "\uC790"
+var ZIPING_GOVERNING_DAY_SOURCE_IDS = [
+  "yuanhai-ziping-yueling-fenye-v1",
+  "oh-my-saju-ziping-reconstruction-v1"
+];
+var MILLISECONDS_PER_DAY2 = 864e5;
+var STEM_POSITION_LABEL3 = {
+  year: "\uC5F0\uAC04",
+  month: "\uC6D4\uAC04",
+  day: "\uC77C\uAC04",
+  hour: "\uC2DC\uAC04"
 };
-var YANG_BLADE_BRANCH = {
-  \uAC11: "\uBB18",
-  \uBCD1: "\uC624",
-  \uBB34: "\uC624",
-  \uACBD: "\uC720",
-  \uC784: "\uC790"
-};
+function requireMonthCommandSegment(value, monthBranch) {
+  if (!isRecord2(value) || !HEAVENLY_STEMS2.includes(value.stem) || value.rank !== "\uC5EC\uAE30" && value.rank !== "\uC911\uAE30" && value.rank !== "\uC815\uAE30" || typeof value.days !== "number" || !Number.isFinite(value.days) || value.days <= 0) {
+    throw new TypeError(`Invalid Ziping governing-day segment for month branch ${monthBranch}.`);
+  }
+  return { stem: value.stem, rank: value.rank, days: value.days };
+}
+function requireMonthCommandSegments(value, monthBranch) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new TypeError(`Invalid Ziping governing-day table for month branch ${monthBranch}.`);
+  }
+  const segments = value.map(
+    (entry) => requireMonthCommandSegment(entry, monthBranch)
+  );
+  if (segments[segments.length - 1].rank !== "\uC815\uAE30") {
+    throw new TypeError(`Ziping governing-day table for ${monthBranch} must end with \uC815\uAE30.`);
+  }
+  return segments;
+}
+var ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1 = "yueling-fenye-yuanhai-v1";
+function parseMonthCommandDayTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1 || !isRecord2(value.monthCommand)) {
+    throw new TypeError("Invalid Ziping governing-day table.");
+  }
+  const declared = value.monthCommand;
+  return Object.fromEntries(
+    EARTHLY_BRANCHES2.map((branch) => [
+      branch,
+      requireMonthCommandSegments(declared[branch], branch)
+    ])
+  );
+}
+var ZIPING_MONTH_COMMAND_DAYS_V1 = deepFreeze2(parseMonthCommandDayTable(month_command_days_v1_default));
+function governingSegment(segments, elapsedDays) {
+  let boundary = 0;
+  for (const segment of segments) {
+    boundary += segment.days;
+    if (elapsedDays < boundary) return segment;
+  }
+  return segments[segments.length - 1];
+}
+function segmentSummary(segments) {
+  return segments.map(({ stem, days }) => `${stem} ${days}\uC77C`).join(" \xB7 ");
+}
+function segmentValues(segments) {
+  return segments.map(({ stem, rank, days }) => ({ stem, rank, days }));
+}
+var ZIPING_PATTERN_INTEGRITY_TABLE_ID_V1 = "ziping-pattern-integrity-v1";
+var ZIPING_RELIEF_GROUPS = [
+  "\uC7AC\uC131",
+  "\uAD00\uC131",
+  "\uAD00\uC0B4",
+  "\uC778\uC131",
+  "\uC2DD\uC0C1",
+  "\uC2DD\uC2E0",
+  "\uC591\uC778",
+  "\uBE44\uAC81"
+];
+var ZIPING_PATTERN_NAMES = [
+  "\uC815\uAD00\uACA9",
+  "\uC815\uC7AC\uACA9",
+  "\uD3B8\uC7AC\uACA9",
+  "\uC815\uC778\uACA9",
+  "\uC2DD\uC2E0\uACA9",
+  "\uCE60\uC0B4\uACA9",
+  "\uC0C1\uAD00\uACA9",
+  "\uD3B8\uC778\uACA9",
+  "\uC591\uC778\uACA9",
+  "\uAC74\uB85D\uACA9",
+  "\uC6D4\uAC81\uACA9"
+];
+var TEN_GOD_NAMES2 = [
+  "\uBE44\uACAC",
+  "\uAC81\uC7AC",
+  "\uC2DD\uC2E0",
+  "\uC0C1\uAD00",
+  "\uD3B8\uC7AC",
+  "\uC815\uC7AC",
+  "\uD3B8\uAD00",
+  "\uC815\uAD00",
+  "\uD3B8\uC778",
+  "\uC815\uC778"
+];
+function requireStem2(value, label) {
+  if (!HEAVENLY_STEMS2.includes(value)) {
+    throw new TypeError(`Invalid Ziping pattern-integrity stem at ${label}.`);
+  }
+  return value;
+}
+function requireBranch2(value, label) {
+  if (!EARTHLY_BRANCHES2.includes(value)) {
+    throw new TypeError(`Invalid Ziping pattern-integrity branch at ${label}.`);
+  }
+  return value;
+}
+function requireTenGodList(value, label) {
+  if (!Array.isArray(value)) {
+    throw new TypeError(`Invalid Ziping pattern-integrity ten-god list at ${label}.`);
+  }
+  return value.map((entry) => {
+    if (!TEN_GOD_NAMES2.includes(entry)) {
+      throw new TypeError(`Invalid Ziping pattern-integrity ten god at ${label}.`);
+    }
+    return entry;
+  });
+}
+function requireReliefGroupList(value, label) {
+  if (!Array.isArray(value)) {
+    throw new TypeError(`Invalid Ziping relief-god list at ${label}.`);
+  }
+  return value.map((entry) => {
+    if (!ZIPING_RELIEF_GROUPS.includes(entry)) {
+      throw new TypeError(`Invalid Ziping relief-god group at ${label}.`);
+    }
+    return entry;
+  });
+}
+function requireBreakingFactor(value, label) {
+  if (!isRecord2(value) || typeof value.id !== "string" || typeof value.label !== "string" || value.kind !== "stem-transparent" && value.kind !== "mixed-officer" && value.kind !== "month-branch-clash" && value.kind !== "relief-absent" || value.rescueStatus !== "modeled" && value.rescueStatus !== "not-modeled" && value.rescueStatus !== "absence-is-the-factor") {
+    throw new TypeError(`Invalid Ziping breaking factor at ${label}.`);
+  }
+  return {
+    id: value.id,
+    label: value.label,
+    kind: value.kind,
+    tenGods: requireTenGodList(value.tenGods, `${label}.tenGods`),
+    rescueGroups: requireReliefGroupList(value.rescueGroups, `${label}.rescueGroups`),
+    rescueStatus: value.rescueStatus
+  };
+}
+function requirePatternEntry(value, label) {
+  if (!isRecord2(value) || value.track !== "inner-eight" && value.track !== "special" || value.direction !== "\uC21C\uC6A9" && value.direction !== "\uC5ED\uC6A9" && value.direction !== null || !Array.isArray(value.breakingFactors)) {
+    throw new TypeError(`Invalid Ziping pattern entry at ${label}.`);
+  }
+  return {
+    track: value.track,
+    direction: value.direction,
+    reliefGods: requireReliefGroupList(value.reliefGods, `${label}.reliefGods`),
+    breakingFactors: value.breakingFactors.map(
+      (entry, index) => requireBreakingFactor(entry, `${label}.breakingFactors[${index}]`)
+    )
+  };
+}
+function parsePatternIntegrityTable(value) {
+  if (!isRecord2(value) || value.schemaVersion !== "1" || value.profileId !== ZIPING_PATTERN_INTEGRITY_TABLE_ID_V1 || typeof value.patternPriority !== "string" || !Array.isArray(value.patternPriorityAlternatives) || typeof value.reliefTableStatus !== "string" || !isRecord2(value.luBranch) || !isRecord2(value.yangBladeBranch) || !isRecord2(value.tenGodGroups) || !isRecord2(value.patterns)) {
+    throw new TypeError("Invalid Ziping pattern-integrity table.");
+  }
+  const declaredLu = value.luBranch;
+  const declaredBlade = value.yangBladeBranch;
+  const declaredGroups = value.tenGodGroups;
+  const declaredPatterns = value.patterns;
+  return {
+    profileId: value.profileId,
+    patternPriority: value.patternPriority,
+    patternPriorityAlternatives: value.patternPriorityAlternatives.map(
+      (entry, index) => {
+        if (typeof entry !== "string") {
+          throw new TypeError(`Invalid Ziping patternPriorityAlternatives[${index}].`);
+        }
+        return entry;
+      }
+    ),
+    reliefTableStatus: value.reliefTableStatus,
+    luBranch: Object.fromEntries(
+      HEAVENLY_STEMS2.map((stem) => [stem, requireBranch2(declaredLu[stem], `luBranch.${stem}`)])
+    ),
+    yangBladeBranch: Object.fromEntries(
+      Object.entries(declaredBlade).map(([stem, branch]) => [
+        requireStem2(stem, `yangBladeBranch.${stem}`),
+        requireBranch2(branch, `yangBladeBranch.${stem}`)
+      ])
+    ),
+    tenGodGroups: Object.fromEntries(
+      ZIPING_RELIEF_GROUPS.map((group) => [
+        group,
+        requireTenGodList(declaredGroups[group], `tenGodGroups.${group}`)
+      ])
+    ),
+    patterns: Object.fromEntries(
+      ZIPING_PATTERN_NAMES.map((pattern) => [
+        pattern,
+        requirePatternEntry(declaredPatterns[pattern], `patterns.${pattern}`)
+      ])
+    )
+  };
+}
+var ZIPING_PATTERN_INTEGRITY_V1 = deepFreeze2(
+  parsePatternIntegrityTable(pattern_integrity_v1_default)
+);
+var LU_BRANCH = ZIPING_PATTERN_INTEGRITY_V1.luBranch;
+var YANG_BLADE_BRANCH = ZIPING_PATTERN_INTEGRITY_V1.yangBladeBranch;
 var PATTERN_FOR_TEN_GOD = {
   \uBE44\uACAC: "\uC6D4\uAC81\uACA9",
   \uAC81\uC7AC: "\uC6D4\uAC81\uACA9",
@@ -13891,16 +17420,30 @@ var PATTERN_FOR_TEN_GOD = {
 function zipingPattern(dayStem, sourceStem) {
   return PATTERN_FOR_TEN_GOD[getTenGod2(dayStem, sourceStem)];
 }
+function zipingMonthMainStem(monthBranch) {
+  const segments = ZIPING_MONTH_COMMAND_DAYS_V1[monthBranch];
+  return segments[segments.length - 1].stem;
+}
 function zipingSpecialMonthPattern(dayStem, monthBranch) {
   if (LU_BRANCH[dayStem] === monthBranch) return "\uAC74\uB85D\uACA9";
   if (YANG_BLADE_BRANCH[dayStem] === monthBranch) return "\uC591\uC778\uACA9";
-  return null;
+  const mainTenGod = getTenGod2(dayStem, zipingMonthMainStem(monthBranch));
+  return mainTenGod === "\uBE44\uACAC" || mainTenGod === "\uAC81\uC7AC" ? "\uC6D4\uAC81\uACA9" : null;
+}
+function zipingSpecialMonthPatternBasis(pattern) {
+  if (pattern === "\uAC74\uB85D\uACA9") return "lu-month-branch";
+  if (pattern === "\uC591\uC778\uACA9") return "yang-blade-month-branch";
+  return "peer-month-branch";
 }
 function evaluateZipingPackRule(ruleId, context) {
+  if (ruleId === "ziping.pattern-integrity") return evaluateZipingPatternIntegrity(context);
+  if (ruleId === "ziping.pattern-relief-god") return evaluateZipingPatternReliefGod(context);
   const dayStem = context.pillars.day.stem.korean;
   const monthBranch = context.pillars.month.branch.korean;
-  const monthHiddenStems = HIDDEN_STEMS[monthBranch].map(({ stem }) => stem);
-  const mainHiddenStem = BRANCH_MAIN_STEM2[monthBranch];
+  const monthSegments = ZIPING_MONTH_COMMAND_DAYS_V1[monthBranch];
+  const monthHiddenStems = monthSegments.map(({ stem }) => stem);
+  const mainHiddenStem = monthSegments[monthSegments.length - 1].stem;
+  const monthHiddenStemSummary = monthSegments.map(({ stem, rank }) => `${rank} ${stem}`).join(" \xB7 ");
   const subjectKey = `${dayStem}:${monthBranch}`;
   const omitted = omittedPillars(context.pillars);
   if (ruleId === "ziping.month-command") {
@@ -13908,13 +17451,16 @@ function evaluateZipingPackRule(ruleId, context) {
       dayMaster: dayStem,
       monthBranch,
       hiddenStems: monthHiddenStems,
+      hiddenStemTable: ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1,
+      hiddenStemOrder: "\uC5EC\uAE30-\uC911\uAE30-\uC815\uAE30",
+      segments: segmentValues(monthSegments),
       mainHiddenStem,
       governingStem: null,
       status: "month-command-evidence-not-final"
     };
     return {
       key: canonicalJsonStringify(values2),
-      statement: `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC9C0\uC7A5\uAC04\uC740 ${monthHiddenStems.join("\xB7")}\uC774\uBA70 \uBCF8\uAE30\uB294 ${mainHiddenStem}\uC785\uB2C8\uB2E4. \uC0AC\uB839 \uC77C\uC218\uC640 \uACA9\uAD6D \uC131\uD328\uB294 \uC544\uC9C1 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+      statement: `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC9C0\uC7A5\uAC04\uC740 \uC6D4\uB960\uBD84\uC57C \uC21C\uC11C\uB85C ${monthHiddenStemSummary}\uC774\uBA70 \uBCF8\uAE30\uB294 ${mainHiddenStem}\uC785\uB2C8\uB2E4. \uC0AC\uB839 \uC77C\uC218\uC640 \uACA9\uAD6D \uC131\uD328\uB294 \uC544\uC9C1 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
       topic: "pattern",
       values: values2,
       evidencePaths: ["pillars.day.stem", "pillars.month.branch"],
@@ -13928,67 +17474,143 @@ function evaluateZipingPackRule(ruleId, context) {
       )
     };
   }
+  if (ruleId === "ziping.governing-day") {
+    const segments = ZIPING_MONTH_COMMAND_DAYS_V1[monthBranch];
+    const tableSummary = segmentSummary(segments);
+    const tableCaveat = "\uC0AC\uB839 \uC77C\uC218\uB294 \uC720\uD30C\uB9C8\uB2E4 \uB2EC\uB77C \uC774 \uD45C\uB294 \uC5F0\uD574\uC790\uD3C9 \uACC4\uC5F4 \uD1B5\uC6A9\uBCF8\uC785\uB2C8\uB2E4.";
+    if (context.solarTerm === null) {
+      const values3 = {
+        monthBranch,
+        elapsedDays: null,
+        commandingStem: null,
+        commandingRank: null,
+        commandingElement: null,
+        transparent: false,
+        transparentPositions: [],
+        table: ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1,
+        segments: segmentValues(segments),
+        status: "governing-day-undetermined-without-birth-instant"
+      };
+      return {
+        key: canonicalJsonStringify(values3),
+        statement: `${monthBranch}\uC6D4\uC758 \uC6D4\uB960\uBD84\uC57C\uB294 ${withAdverbialParticle(tableSummary)} \uB098\uB269\uB2C8\uB2E4. \uC808\uC785 \uACBD\uACFC\uC77C\uC774 \uD655\uC815\uB418\uC9C0 \uC54A\uC544 \uC0AC\uB839 \uAE00\uC790\uB294 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. ${tableCaveat}`,
+        topic: "season-climate",
+        values: values3,
+        evidencePaths: ["pillars.month.branch"],
+        sourceReferenceIds: ZIPING_GOVERNING_DAY_SOURCE_IDS,
+        comparison: comparison(
+          "ziping.governing-day.v1",
+          "ziping.governing-day",
+          "ziping-month-command",
+          monthBranch,
+          "undetermined"
+        ),
+        coverage: "partial",
+        omittedPillars: omitted
+      };
+    }
+    const elapsedDays = Math.round(
+      (context.solarTerm.birthEpochMilliseconds - context.solarTerm.monthStart.epochMilliseconds) / MILLISECONDS_PER_DAY2 * 100
+    ) / 100;
+    const commanding = governingSegment(segments, elapsedDays);
+    const commandingElement = getHeavenlyStemElement2(commanding.stem);
+    const transparentPositions = visibleStemObservations(context.pillars, { includeDay: true }).filter(({ stem }) => stem === commanding.stem).map(({ position: position2 }) => position2);
+    const values2 = {
+      monthBranch,
+      elapsedDays,
+      commandingStem: commanding.stem,
+      commandingRank: commanding.rank,
+      commandingElement,
+      transparent: transparentPositions.length > 0,
+      transparentPositions,
+      table: ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1,
+      segments: segmentValues(segments),
+      status: "governing-day-from-month-command-day-table"
+    };
+    const transparencySentence = transparentPositions.length === 0 ? `\uC0AC\uB839 \uAE00\uC790 ${withTopicParticle(commanding.stem)} \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB098\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.` : `\uC0AC\uB839 \uAE00\uC790 ${withTopicParticle(commanding.stem)} ${transparentPositions.map((position2) => STEM_POSITION_LABEL3[position2]).join("\xB7")}\uC5D0 \uB4DC\uB7EC\uB098 \uC788\uC2B5\uB2C8\uB2E4.`;
+    return {
+      key: canonicalJsonStringify(values2),
+      statement: `${monthBranch}\uC6D4\uC758 \uC6D4\uB960\uBD84\uC57C\uC5D0\uC11C \uC808\uC785 ${elapsedDays}\uC77C\uC9F8\uB294 ${commanding.stem} \uC0AC\uB839 \uAD6C\uAC04\uC785\uB2C8\uB2E4(${tableSummary}). ${transparencySentence} ${tableCaveat}`,
+      topic: "season-climate",
+      values: values2,
+      evidencePaths: ["pillars", "chronology.epochMilliseconds", "audit.evidence.monthStart"],
+      sourceReferenceIds: ZIPING_GOVERNING_DAY_SOURCE_IDS,
+      comparison: comparison(
+        "ziping.governing-day.v1",
+        "ziping.governing-day",
+        "ziping-month-command",
+        monthBranch,
+        `${commanding.stem}:${commanding.rank}`
+      )
+    };
+  }
   const exposed = visibleStemObservations(context.pillars, { includeDay: false });
-  const patternCandidates = monthHiddenStems.map((sourceStem) => {
+  const patternCandidates = monthSegments.map(({ stem: sourceStem, rank: sourceRank }) => {
     const exposedStemRefs = exposed.filter(({ stem }) => stem === sourceStem).map(({ position: position2, stem }) => ({
       position: position2,
       stem,
       evidencePath: `pillars.${position2}.stem`
     }));
-    const unresolvedReasons = [
-      "governing-day-not-implemented",
-      "success-defeat-rescue-rules-not-implemented",
-      ...context.pillars.hour === null && exposedStemRefs.length === 0 ? ["hour-transparency-unobserved"] : []
-    ];
+    const unresolvedReasons = context.pillars.hour === null && exposedStemRefs.length === 0 ? ["hour-transparency-unobserved"] : [];
+    const tenGod = getTenGod2(dayStem, sourceStem);
+    const peer = tenGod === "\uBE44\uACAC" || tenGod === "\uAC81\uC7AC";
     return {
       sourceStem,
-      tenGod: getTenGod2(dayStem, sourceStem),
+      sourceRank,
+      tenGod,
       pattern: zipingPattern(dayStem, sourceStem),
       isMainHiddenStem: sourceStem === mainHiddenStem,
       exposedStemRefs,
-      status: exposedStemRefs.length > 0 ? "candidate" : "indeterminate",
-      supportingConditions: exposedStemRefs.length > 0 ? ["month-hidden-stem-visible-in-heavenly-stems"] : [],
+      status: peer ? "rejected" : exposedStemRefs.length > 0 ? "candidate" : "indeterminate",
+      supportingConditions: !peer && exposedStemRefs.length > 0 ? ["month-hidden-stem-visible-in-heavenly-stems"] : [],
       defeatingConditions: [],
       rescueConditions: [],
-      unresolvedReasons,
-      rejectionReason: null
+      unresolvedReasons: peer ? [] : unresolvedReasons,
+      rejectionReason: peer ? "peer-ten-god-not-established-by-transparency" : null
     };
   });
   const specialMonthPattern = zipingSpecialMonthPattern(dayStem, monthBranch);
   const basePatternCandidate = specialMonthPattern === null ? null : {
     pattern: specialMonthPattern,
-    basis: "day-stem-lu-or-yang-blade-month-branch",
+    basis: zipingSpecialMonthPatternBasis(specialMonthPattern),
     status: "candidate",
-    unresolvedReasons: ["success-defeat-rescue-rules-not-implemented"]
+    unresolvedReasons: []
   };
   const candidatePatterns = [
     .../* @__PURE__ */ new Set([
       ...specialMonthPattern === null ? [] : [specialMonthPattern],
-      ...patternCandidates.map(({ pattern }) => pattern)
+      ...patternCandidates.filter(({ rejectionReason }) => rejectionReason === null).map(({ pattern }) => pattern)
     ])
   ];
   const basePatternSummary = basePatternCandidate === null ? "" : `${basePatternCandidate.pattern}(\uC6D4\uC9C0\xB7\uC77C\uAC04 \uAD00\uACC4\uC758 \uAE30\uCD08 \uD6C4\uBCF4); `;
-  const candidateSummary = patternCandidates.map(({ pattern, sourceStem, exposedStemRefs, status }) => {
+  const candidateSummary = patternCandidates.map(({ pattern, sourceStem, sourceRank, exposedStemRefs, status }) => {
     const transparency = exposedStemRefs.length === 0 ? context.pillars.hour === null ? "\uC0BC\uC8FC\uC5D0\uC11C \uD22C\uAC04\uC744 \uCC3E\uC9C0 \uBABB\uD568\xB7\uC2DC\uC8FC \uBBF8\uC0C1" : "\uD22C\uAC04 \uC5C6\uC74C" : `\uD22C\uAC04 ${exposedStemRefs.map(({ position: position2 }) => PILLAR_POSITION_LABEL[position2]).join("\xB7")}`;
-    const statusLabel = status === "candidate" ? "\uD6C4\uBCF4" : "\uBBF8\uC815";
-    return `${pattern}(${sourceStem}, ${transparency}, ${statusLabel})`;
+    const statusLabel = status === "rejected" ? "\uBE44\uAC81\uC774\uB77C \uC81C\uC678" : status === "candidate" ? "\uD6C4\uBCF4" : "\uBBF8\uC815";
+    return `${pattern}(${sourceRank} ${sourceStem}, ${transparency}, ${statusLabel})`;
   }).join("; ");
   const values = {
     dayMaster: dayStem,
     monthBranch,
     mainHiddenStem,
     candidateSourceStems: monthHiddenStems,
+    hiddenStemTable: ZIPING_MONTH_COMMAND_DAY_TABLE_ID_V1,
     candidatePatterns,
-    candidateOrderMeaning: "hidden-stem-table-order-not-strength-or-priority",
+    candidateOrderMeaning: "yueling-fenye-table-order-not-strength-or-priority",
     basePatternCandidate,
     patternCandidates,
-    rejectedCandidates: [],
+    rejectedCandidates: patternCandidates.filter(({ rejectionReason }) => rejectionReason !== null).map(({ sourceStem, sourceRank, tenGod, rejectionReason }) => ({
+      sourceStem,
+      sourceRank,
+      tenGod,
+      rejectionReason
+    })),
     finalPattern: null,
-    status: "candidates-with-explicit-indeterminacy"
+    finalPatternResolvedBy: "ziping.pattern-integrity",
+    status: "candidates-resolved-by-pattern-integrity-rule"
   };
   return {
     key: canonicalJsonStringify(values),
-    statement: `\uC790\uD3C9 \uC6D4\uB839 \uADDC\uCE59\uC5D0\uC11C \uB098\uC628 \uACA9\uAD6D \uD6C4\uBCF4\uB294 ${basePatternSummary}${candidateSummary}\uC774\uBA70 \uC21C\uC704\uB294 \uB9E4\uAE30\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uAC01 \uD6C4\uBCF4\uAC00 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB294 \uAE30\uB85D\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uB9CC \uC0AC\uB839\xB7\uD68C\uC9C0\xB7\uC131\uD328\xB7\uAD6C\uC751 \uADDC\uCE59\uC744 \uBAA8\uB450 \uC801\uC6A9\uD558\uC9C0 \uC54A\uC544 \uCD5C\uC885 \uACA9\uAD6D\uC740 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`,
+    statement: `\uC790\uD3C9 \uC6D4\uB839 \uADDC\uCE59\uC5D0\uC11C \uB098\uC628 \uACA9\uAD6D \uD6C4\uBCF4\uB294 ${basePatternSummary}${candidateSummary}\uC774\uBA70 \uC774 \uBAA9\uB85D\uC5D0\uB294 \uC21C\uC704\uB97C \uB9E4\uAE30\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uAC01 \uD6C4\uBCF4\uAC00 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB0AC\uB294\uC9C0\uB294 \uAE30\uB85D\uD588\uC2B5\uB2C8\uB2E4. \uC774 \uAC00\uC6B4\uB370 \uC5B4\uB290 \uAC83\uC744 \uACA9\uC73C\uB85C \uC138\uC6B0\uACE0 \uC131\uD328\uB97C \uC5B4\uB5BB\uAC8C \uBCF4\uB294\uC9C0\uB294 \uC774 \uD329\uC758 ziping.pattern-integrity \uADDC\uCE59\uC5D0\uC11C \uC815\uD569\uB2C8\uB2E4.`,
     topic: "pattern",
     values,
     evidencePaths: ["pillars"],
@@ -14003,14 +17625,445 @@ function evaluateZipingPackRule(ruleId, context) {
     ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
   };
 }
+var ZIPING_STEM_POSITIONS = ["year", "month", "day", "hour"];
+var ZIPING_RANK_ORDER = {
+  \uC815\uAE30: 0,
+  \uC911\uAE30: 1,
+  \uC5EC\uAE30: 2
+};
+function mainQiFirstSegments(monthBranch) {
+  return [...ZIPING_MONTH_COMMAND_DAYS_V1[monthBranch]].sort(
+    (left, right) => ZIPING_RANK_ORDER[left.rank] - ZIPING_RANK_ORDER[right.rank]
+  );
+}
+function determineZipingPattern(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const segments = mainQiFirstSegments(monthBranch);
+  const mainSegment = segments[0];
+  const exposed = visibleStemObservations(context.pillars, { includeDay: false });
+  const positionsOf2 = (stem) => exposed.filter((observation2) => observation2.stem === stem).map(({ position: position2 }) => position2);
+  const mainTenGod = getTenGod2(dayStem, mainSegment.stem);
+  const specialPattern = zipingSpecialMonthPattern(dayStem, monthBranch);
+  if (specialPattern !== null) {
+    const transparentPositions = positionsOf2(mainSegment.stem);
+    return {
+      pattern: specialPattern,
+      track: "special",
+      basis: zipingSpecialMonthPatternBasis(specialPattern),
+      via: transparentPositions.length > 0 ? "transparent" : "hidden-only",
+      sourceStem: mainSegment.stem,
+      sourceRank: mainSegment.rank,
+      transparentPositions
+    };
+  }
+  for (const segment of segments) {
+    const segmentTenGod = getTenGod2(dayStem, segment.stem);
+    if (segmentTenGod === "\uBE44\uACAC" || segmentTenGod === "\uAC81\uC7AC") continue;
+    const transparentPositions = positionsOf2(segment.stem);
+    if (transparentPositions.length === 0) continue;
+    return {
+      pattern: PATTERN_FOR_TEN_GOD[segmentTenGod],
+      track: "inner-eight",
+      basis: "transparent-month-hidden-stem",
+      via: "transparent",
+      sourceStem: segment.stem,
+      sourceRank: segment.rank,
+      transparentPositions
+    };
+  }
+  return {
+    pattern: PATTERN_FOR_TEN_GOD[mainTenGod],
+    track: "inner-eight",
+    basis: "hidden-only-main-qi",
+    via: "hidden-only",
+    sourceStem: mainSegment.stem,
+    sourceRank: mainSegment.rank,
+    transparentPositions: []
+  };
+}
+function zipingRootReferences(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  return ZIPING_STEM_POSITIONS.flatMap((position2) => {
+    const pillar = context.pillars[position2];
+    if (pillar === null) return [];
+    const branch = pillar.branch.korean;
+    return ZIPING_MONTH_COMMAND_DAYS_V1[branch].map(({ stem, rank }) => ({
+      position: position2,
+      branch,
+      stem,
+      rank,
+      tenGod: getTenGod2(dayStem, stem),
+      evidencePath: `pillars.${position2}.branch`
+    }));
+  });
+}
+function zipingVisibleReferences(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  return visibleStemObservations(context.pillars, { includeDay: false }).map(
+    ({ stem, position: position2 }) => ({
+      position: position2,
+      stem,
+      tenGod: getTenGod2(dayStem, stem),
+      evidencePath: `pillars.${position2}.stem`
+    })
+  );
+}
+function computeZipingPatternIntegrity(context) {
+  const dayStem = context.pillars.day.stem.korean;
+  const determination = determineZipingPattern(context);
+  const entry = ZIPING_PATTERN_INTEGRITY_V1.patterns[determination.pattern];
+  const visible = zipingVisibleReferences(context);
+  const roots = zipingRootReferences(context);
+  const monthClashed = context.structure.relationships.branchClashes.some(
+    ({ positions }) => positions.includes("month")
+  );
+  const dayStemHasYangBlade = YANG_BLADE_BRANCH[dayStem] !== void 0;
+  const excludedReliefGods = entry.reliefGods.filter(
+    (group) => group === "\uC591\uC778" && !dayStemHasYangBlade
+  );
+  const effectiveReliefGods = entry.reliefGods.filter(
+    (group) => !excludedReliefGods.includes(group)
+  );
+  const reliefAssessments = effectiveReliefGods.map((group) => {
+    const tenGods = ZIPING_PATTERN_INTEGRITY_V1.tenGodGroups[group];
+    const transparentStems = visible.filter(({ tenGod }) => tenGods.includes(tenGod));
+    const rootedBranches = roots.filter(({ tenGod }) => tenGods.includes(tenGod));
+    return {
+      group,
+      tenGods,
+      transparentStems,
+      rootedBranches,
+      transparent: transparentStems.length > 0,
+      rooted: rootedBranches.length > 0
+    };
+  });
+  const presentReliefGods = reliefAssessments.filter(({ transparent }) => transparent).map(({ group }) => group);
+  const rootedReliefGods = reliefAssessments.filter(({ transparent, rooted }) => transparent && rooted).map(({ group }) => group);
+  const hiddenOnlyReliefGods = reliefAssessments.filter(({ transparent, rooted }) => !transparent && rooted).map(({ group }) => group);
+  const breakingAssessments = entry.breakingFactors.map((factor) => {
+    const matchedStems = visible.filter(({ tenGod }) => factor.tenGods.includes(tenGod));
+    const present = factor.kind === "stem-transparent" ? matchedStems.length > 0 : factor.kind === "mixed-officer" ? factor.tenGods.every(
+      (tenGod) => visible.some((reference) => reference.tenGod === tenGod)
+    ) : factor.kind === "month-branch-clash" ? monthClashed : (
+      // relief-absent(칠살무제·양인무제): 제복은 천간에 드러나야 인정한다.
+      // 지장간에만 있는 글자는 상신 문장에서도 상신으로 세우지 않으므로
+      // 여기서도 제복으로 세지 않는다.
+      presentReliefGods.length === 0
+    );
+    const evidence2 = factor.kind === "month-branch-clash" ? monthClashed ? [`\uC6D4\uC9C0 ${context.pillars.month.branch.korean} \uCDA9`] : [] : factor.kind === "relief-absent" ? present ? [
+      `${effectiveReliefGods.join("\xB7")} \uCC9C\uAC04 \uD22C\uCD9C \uC5C6\uC74C`,
+      ...hiddenOnlyReliefGods.length === 0 ? [] : [`${hiddenOnlyReliefGods.join("\xB7")} \uC9C0\uC7A5\uAC04\uC5D0\uB9CC \uC788\uC74C`]
+    ] : [] : present ? matchedStems.map(
+      ({ position: position2, stem, tenGod }) => `${STEM_POSITION_LABEL3[position2]} ${stem} ${tenGod}`
+    ) : [];
+    const rescuedBy = !present || factor.rescueStatus !== "modeled" ? [] : factor.rescueGroups.filter(
+      (group) => visible.some(
+        ({ tenGod }) => ZIPING_PATTERN_INTEGRITY_V1.tenGodGroups[group].includes(tenGod)
+      )
+    );
+    return {
+      id: factor.id,
+      label: factor.label,
+      kind: factor.kind,
+      present,
+      evidence: evidence2,
+      rescueGroups: factor.rescueGroups,
+      rescueStatus: factor.rescueStatus,
+      rescuedBy,
+      rescued: present && rescuedBy.length > 0
+    };
+  });
+  const presentBreakingFactors = breakingAssessments.filter(({ present }) => present).map(({ id }) => id);
+  const unrescuedBreakingFactors = breakingAssessments.filter(({ present, rescued }) => present && !rescued).map(({ id }) => id);
+  const integrity = unrescuedBreakingFactors.length > 0 ? "\uD30C\uACA9" : rootedReliefGods.length > 0 ? "\uC131\uACA9" : presentReliefGods.length > 0 ? "\uC131\uACA9\uC774\uC9C0\uB9CC \uC0C1\uC2E0\uC774 \uD5C8\uC57D\uD568" : "\uACA9\uC740 \uC11C\uC9C0\uB9CC \uC0C1\uC2E0\uC774 \uC5C6\uC5B4 \uACA9\uAD6D\uC73C\uB85C\uB294 \uACB0\uB860\uC774 \uB098\uC9C0 \uC54A\uC74C";
+  const unresolvedReasons = [
+    ...new Set(
+      breakingAssessments.filter(({ present, rescueStatus }) => present && rescueStatus === "not-modeled").map(({ id }) => `rescue-not-modeled-for-${id}`)
+    ),
+    ...entry.direction === null ? ["direction-not-declared-for-peer-pattern"] : [],
+    ...omittedPillars(context.pillars).length > 0 ? ["hour-pillar-unobserved"] : []
+  ];
+  return {
+    determination,
+    entry,
+    effectiveReliefGods,
+    excludedReliefGods,
+    reliefAssessments,
+    presentReliefGods,
+    rootedReliefGods,
+    hiddenOnlyReliefGods,
+    breakingAssessments,
+    presentBreakingFactors,
+    unrescuedBreakingFactors,
+    integrity,
+    unresolvedReasons
+  };
+}
+function reliefAssessmentValues(assessment) {
+  return {
+    group: assessment.group,
+    tenGods: [...assessment.tenGods],
+    transparent: assessment.transparent,
+    rooted: assessment.rooted,
+    transparentStems: assessment.transparentStems.map(
+      ({ position: position2, stem, tenGod, evidencePath }) => ({ position: position2, stem, tenGod, evidencePath })
+    ),
+    rootedBranches: assessment.rootedBranches.map(
+      ({ position: position2, branch, stem, rank, tenGod, evidencePath }) => ({
+        position: position2,
+        branch,
+        stem,
+        rank,
+        tenGod,
+        evidencePath
+      })
+    )
+  };
+}
+function breakingAssessmentValues(assessment) {
+  return {
+    id: assessment.id,
+    label: assessment.label,
+    kind: assessment.kind,
+    present: assessment.present,
+    evidence: [...assessment.evidence],
+    rescueGroups: [...assessment.rescueGroups],
+    rescueStatus: assessment.rescueStatus,
+    rescuedBy: [...assessment.rescuedBy],
+    rescued: assessment.rescued
+  };
+}
+function patternIntegrityValues(context, integrity) {
+  const { determination, entry } = integrity;
+  return {
+    dayMaster: context.pillars.day.stem.korean,
+    monthBranch: context.pillars.month.branch.korean,
+    pattern: determination.pattern,
+    track: determination.track,
+    basis: determination.basis,
+    via: determination.via,
+    sourceStem: determination.sourceStem,
+    sourceRank: determination.sourceRank,
+    transparentPositions: [...determination.transparentPositions],
+    direction: entry.direction,
+    reliefGods: [...entry.reliefGods],
+    effectiveReliefGods: [...integrity.effectiveReliefGods],
+    excludedReliefGods: [...integrity.excludedReliefGods],
+    reliefGodExclusionBasis: integrity.excludedReliefGods.length === 0 ? null : "yang-blade-only-for-yang-day-stems",
+    presentReliefGods: [...integrity.presentReliefGods],
+    rootedReliefGods: [...integrity.rootedReliefGods],
+    hiddenOnlyReliefGods: [...integrity.hiddenOnlyReliefGods],
+    reliefAssessments: integrity.reliefAssessments.map(reliefAssessmentValues),
+    breakingFactors: entry.breakingFactors.map(({ id }) => id),
+    presentBreakingFactors: [...integrity.presentBreakingFactors],
+    unrescuedBreakingFactors: [...integrity.unrescuedBreakingFactors],
+    breakingAssessments: integrity.breakingAssessments.map(breakingAssessmentValues),
+    integrity: integrity.integrity,
+    patternPriority: ZIPING_PATTERN_INTEGRITY_V1.patternPriority,
+    patternPriorityAlternatives: [...ZIPING_PATTERN_INTEGRITY_V1.patternPriorityAlternatives],
+    reliefTableStatus: ZIPING_PATTERN_INTEGRITY_V1.reliefTableStatus,
+    unresolvedReasons: [...integrity.unresolvedReasons],
+    status: "pack-local-pattern-integrity-not-cross-school-final"
+  };
+}
+var ZIPING_RELIEF_FALLBACK_SENTENCE = "\uC0C1\uC2E0\uC774 \uC11C\uC9C0 \uC54A\uC73C\uBA74 \uACA9\uAD6D\uB9CC\uC73C\uB85C\uB294 \uACB0\uB860\uC774 \uB098\uC9C0 \uC54A\uC73C\uBBC0\uB85C, \uC774\uB54C\uB294 \uC5B5\uBD80\uB85C \uCD95\uC744 \uC62E\uACA8 \uBD05\uB2C8\uB2E4.";
+var ZIPING_PATTERN_SCOPE_SENTENCE = "\uACA9 \uD655\uC815\uACFC \uC131\uD328\uB294 \uC774 \uD329\uC758 \uD45C\uC640 \uC21C\uC11C\uB97C \uB530\uB978 \uD310\uC815\uC774\uBA70 \uC720\uD30C\uB9C8\uB2E4 \uB2E4\uB985\uB2C8\uB2E4.";
+function patternBasisSentence(context, determination) {
+  const monthBranch = context.pillars.month.branch.korean;
+  const dayStem = context.pillars.day.stem.korean;
+  const positions = determination.transparentPositions.map((position2) => STEM_POSITION_LABEL3[position2]).join("\xB7");
+  if (determination.basis === "lu-month-branch") {
+    return `\uC6D4\uC9C0 ${withTopicParticle(monthBranch)} \uC77C\uAC04 ${dayStem}\uC758 \uB85D\uC774\uB77C \uB0B4\uACA9 \uC5EC\uB35F \uACA9\uC5D0\uC11C \uBE7C\uACE0 ${withAdverbialParticle(determination.pattern)} \uBD05\uB2C8\uB2E4.`;
+  }
+  if (determination.basis === "yang-blade-month-branch") {
+    return `\uC6D4\uC9C0 ${withTopicParticle(monthBranch)} \uC77C\uAC04 ${dayStem}\uC758 \uC591\uC778\uC774\uB77C \uB0B4\uACA9 \uC5EC\uB35F \uACA9\uC5D0\uC11C \uBE7C\uACE0 ${withAdverbialParticle(determination.pattern)} \uBD05\uB2C8\uB2E4.`;
+  }
+  if (determination.basis === "peer-month-branch") {
+    return `\uC6D4\uC9C0 ${monthBranch}\uC758 \uBCF8\uAE30 ${withSubjectParticle(determination.sourceStem)} \uC77C\uAC04 ${dayStem}\uC758 \uBE44\uAC81\uC774\uB77C \uB0B4\uACA9 \uC5EC\uB35F \uACA9\uC5D0\uC11C \uBE7C\uACE0 ${withAdverbialParticle(determination.pattern)} \uBD05\uB2C8\uB2E4.`;
+  }
+  if (determination.basis === "transparent-month-hidden-stem") {
+    return `\uC6D4\uC9C0 ${monthBranch}\uC758 ${determination.sourceRank} ${withSubjectParticle(determination.sourceStem)} ${positions}\uC5D0 \uD22C\uCD9C\uD574 ${withAdverbialParticle(determination.pattern)} \uBD05\uB2C8\uB2E4.`;
+  }
+  return `\uC6D4\uC9C0 ${monthBranch}\uC758 \uC9C0\uC7A5\uAC04\uC774 \uCC9C\uAC04\uC5D0 \uD558\uB098\uB3C4 \uD22C\uCD9C\uD558\uC9C0 \uC54A\uC544 \uBCF8\uAE30 ${determination.sourceStem} \uAE30\uC900\uC758 \uC554\uACA9\uC73C\uB85C ${withObjectParticle(determination.pattern)} \uC138\uC6C1\uB2C8\uB2E4.`;
+}
+function directionSentence(pattern, direction) {
+  if (direction === "\uC21C\uC6A9") {
+    return `${withTopicParticle(pattern)} \uC0AC\uAE38\uC2E0\uC774\uB77C \uC21C\uC6A9\uC73C\uB85C \uBD05\uB2C8\uB2E4.`;
+  }
+  if (direction === "\uC5ED\uC6A9") {
+    return `${withTopicParticle(pattern)} \uC0AC\uD749\uC2E0\uC774\uB77C \uC5ED\uC6A9\uC73C\uB85C \uBD05\uB2C8\uB2E4.`;
+  }
+  return `${withTopicParticle(pattern)} \uC0AC\uAE38\uC2E0\uC5D0\uB3C4 \uC0AC\uD749\uC2E0\uC5D0\uB3C4 \uB4E4\uC9C0 \uC54A\uC544 \uC21C\uC6A9\xB7\uC5ED\uC6A9\uC744 \uC815\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`;
+}
+function reliefSentence(integrity) {
+  const declared = integrity.effectiveReliefGods.join("\xB7");
+  const exclusion = integrity.excludedReliefGods.length === 0 ? "" : ` \uC774 \uAD00\uBC95\uC740 \uC591\uC778\uC744 \uC591\uAC04\uC5D0\uB9CC \uC138\uC6B0\uBBC0\uB85C \uC74C\uAC04\uC778 \uC774 \uC77C\uAC04\uC5D0\uAC8C\uB294 ${withObjectParticle(integrity.excludedReliefGods.join("\xB7"))} \uC0C1\uC2E0 \uD6C4\uBCF4\uC5D0\uC11C \uBE8D\uB2C8\uB2E4.`;
+  if (integrity.rootedReliefGods.length > 0) {
+    const rooted = integrity.reliefAssessments.filter(
+      ({ group }) => integrity.rootedReliefGods.includes(group)
+    );
+    const evidence2 = rooted.map((assessment) => {
+      const stems = assessment.transparentStems.map(({ position: position2, stem }) => `${STEM_POSITION_LABEL3[position2]} ${stem}`).join("\xB7");
+      const branches = [...new Set(assessment.rootedBranches.map(({ branch }) => branch))].join(
+        "\xB7"
+      );
+      return `${assessment.group}(${stems} \uD22C\uCD9C, \uC9C0\uC9C0 ${branches}\uC5D0 \uBFCC\uB9AC)`;
+    }).join("; ");
+    return `\uC774 \uACA9\uC758 \uC0C1\uC2E0 \uD6C4\uBCF4\uB294 ${declared}\uC774\uACE0, \uADF8 \uAC00\uC6B4\uB370 ${withSubjectParticle(evidence2)} \uC2E4\uC81C\uB85C \uC11C \uC788\uC2B5\uB2C8\uB2E4.${exclusion}`;
+  }
+  if (integrity.presentReliefGods.length > 0) {
+    const shallow = integrity.reliefAssessments.filter(
+      ({ group }) => integrity.presentReliefGods.includes(group)
+    );
+    const evidence2 = shallow.map((assessment) => {
+      const stems = assessment.transparentStems.map(({ position: position2, stem }) => `${STEM_POSITION_LABEL3[position2]} ${stem}`).join("\xB7");
+      return `${assessment.group}(${stems} \uD22C\uCD9C, \uC9C0\uC9C0 \uBFCC\uB9AC \uC5C6\uC74C)`;
+    }).join("; ");
+    return `\uC774 \uACA9\uC758 \uC0C1\uC2E0 \uD6C4\uBCF4\uB294 ${declared}\uC774\uACE0, ${withAdverbialParticle(evidence2)} \uB4DC\uB7EC\uB0AC\uC2B5\uB2C8\uB2E4.${exclusion}`;
+  }
+  const hidden = integrity.hiddenOnlyReliefGods.length === 0 ? "" : ` ${withTopicParticle(integrity.hiddenOnlyReliefGods.join("\xB7"))} \uC9C0\uC7A5\uAC04\uC5D0\uB9CC \uC788\uC5B4 \uC0C1\uC2E0\uC73C\uB85C \uC138\uC6B0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.`;
+  return `\uC774 \uACA9\uC758 \uC0C1\uC2E0 \uD6C4\uBCF4\uB294 ${declared}\uC774\uC9C0\uB9CC \uCC9C\uAC04\uC5D0 \uD558\uB098\uB3C4 \uB4DC\uB7EC\uB098\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.${hidden}${exclusion}`;
+}
+function breakingFactorSubject(assessment, monthBranch) {
+  if (assessment.kind === "month-branch-clash") return `\uC6D4\uC9C0 ${monthBranch} \uCDA9`;
+  if (assessment.evidence.length === 0) return assessment.label;
+  return `${assessment.label}(${assessment.evidence.join("\xB7")})`;
+}
+function breakingSentence(integrity, monthBranch) {
+  const present = integrity.breakingAssessments.filter(({ present: found }) => found);
+  if (present.length === 0) {
+    return "\uC774 \uACA9\uC758 \uD30C\uACA9 \uC694\uC778 \uD45C\uC5D0\uC11C\uB294 \uAC78\uB9AC\uB294 \uC790\uB9AC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.";
+  }
+  return present.map((assessment) => {
+    if (assessment.kind === "relief-absent") {
+      return `\uC81C\uBCF5\uD560 ${withSubjectParticle(integrity.effectiveReliefGods.join("\xB7"))} \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB098\uC9C0 \uC54A\uC544 ${withAdverbialParticle(assessment.id)} \uBD05\uB2C8\uB2E4.`;
+    }
+    const subject = breakingFactorSubject(assessment, monthBranch);
+    return assessment.rescued ? `${withSubjectParticle(subject)} \uC788\uC73C\uB098 ${withSubjectParticle(assessment.rescuedBy.join("\xB7"))} \uB9C9\uC544 \uD30C\uACA9\uC73C\uB85C \uBCF4\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.` : `${withSubjectParticle(subject)} \uC788\uACE0 \uB9C9\uB294 \uAE00\uC790\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.`;
+  }).join(" ");
+}
+function integritySentence(integrity) {
+  if (integrity.integrity === "\uD30C\uACA9") {
+    return `\uADF8\uB798\uC11C \uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 ${withAdverbialParticle(integrity.determination.pattern)} \uC138\uC6B0\uB418 \uD30C\uACA9\uC73C\uB85C \uBD05\uB2C8\uB2E4.`;
+  }
+  if (integrity.integrity === "\uC131\uACA9") {
+    return `\uADF8\uB798\uC11C \uC774 \uAD00\uBC95\uC5D0\uC11C\uB294 \uC131\uACA9\uC73C\uB85C \uBD05\uB2C8\uB2E4.`;
+  }
+  if (integrity.integrity === "\uC131\uACA9\uC774\uC9C0\uB9CC \uC0C1\uC2E0\uC774 \uD5C8\uC57D\uD568") {
+    return "\uADF8\uB798\uC11C \uC131\uACA9\uC73C\uB85C \uBCF4\uB418 \uC0C1\uC2E0\uC774 \uBFCC\uB9AC\uAC00 \uC5C6\uC5B4 \uD5C8\uC57D\uD55C \uC790\uB9AC\uB85C \uBD05\uB2C8\uB2E4.";
+  }
+  return `\uADF8\uB798\uC11C ${withTopicParticle(integrity.determination.pattern)} \uC11C\uC9C0\uB9CC \uC0C1\uC2E0\uC774 \uC5C6\uC5B4 \uACA9\uAD6D\uC73C\uB85C\uB294 \uACB0\uB860\uC774 \uB098\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. ${ZIPING_RELIEF_FALLBACK_SENTENCE}`;
+}
+function evaluateZipingPatternIntegrity(context) {
+  const integrity = computeZipingPatternIntegrity(context);
+  const values = patternIntegrityValues(context, integrity);
+  const omitted = omittedPillars(context.pillars);
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  return {
+    key: canonicalJsonStringify(values),
+    statement: `${patternBasisSentence(context, integrity.determination)} ${directionSentence(integrity.determination.pattern, integrity.entry.direction)} ${reliefSentence(integrity)} ${breakingSentence(integrity, monthBranch)} ${integritySentence(integrity)} ` + ZIPING_PATTERN_SCOPE_SENTENCE,
+    topic: "pattern",
+    values,
+    evidencePaths: ["pillars", "facts.structure.relationships.branchClashes"],
+    sourceReferenceIds: ZIPING_SOURCE_IDS,
+    comparison: comparison(
+      "ziping.pattern-integrity.v1",
+      "ziping.pattern-integrity",
+      "ziping-month-command",
+      `${dayStem}:${monthBranch}`,
+      `${integrity.determination.pattern}:${integrity.integrity}`
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
+var ZIPING_RELIEF_SCOPE_SENTENCE = "\uC774 \uD329\uC740 \uC790\uAE30 \uAD00\uBC95 \uC548\uC5D0\uC11C\uB9CC \uC0C1\uC2E0\uC744 \uC815\uD569\uB2C8\uB2E4. \uC870\uD6C4\uB098 \uC5B5\uBD80 \uAE30\uC900\uC758 \uC6A9\uC2E0\uACFC\uB294 \uB2E4\uB97C \uC218 \uC788\uC73C\uBA70, \uC774 \uC0C1\uC2E0\uC740 \uD50C\uB7EC\uADF8\uC778\uC774 \uC815\uD55C \uCD5C\uC885 \uC6A9\uC2E0\uC774 \uC544\uB2D9\uB2C8\uB2E4.";
+function evaluateZipingPatternReliefGod(context) {
+  const integrity = computeZipingPatternIntegrity(context);
+  const dayStem = context.pillars.day.stem.korean;
+  const monthBranch = context.pillars.month.branch.korean;
+  const selected = integrity.rootedReliefGods.length > 0 ? integrity.rootedReliefGods : integrity.presentReliefGods;
+  const omitted = omittedPillars(context.pillars);
+  const values = {
+    dayMaster: dayStem,
+    monthBranch,
+    pattern: integrity.determination.pattern,
+    direction: integrity.entry.direction,
+    integrity: integrity.integrity,
+    reliefGods: [...integrity.entry.reliefGods],
+    effectiveReliefGods: [...integrity.effectiveReliefGods],
+    excludedReliefGods: [...integrity.excludedReliefGods],
+    presentReliefGods: [...integrity.presentReliefGods],
+    rootedReliefGods: [...integrity.rootedReliefGods],
+    hiddenOnlyReliefGods: [...integrity.hiddenOnlyReliefGods],
+    selectedReliefGods: [...selected],
+    reliefAssessments: integrity.reliefAssessments.map(reliefAssessmentValues),
+    reliefTableStatus: ZIPING_PATTERN_INTEGRITY_V1.reliefTableStatus,
+    fallbackWhenAbsent: "strength-balancing-useful-god-second-step",
+    scope: "pack-local-pattern-relief-god-not-plugin-final-useful-god",
+    status: selected.length === 0 ? "relief-god-absent-fallback-to-strength-balancing" : integrity.integrity === "\uD30C\uACA9" ? "pack-local-relief-god-selected-but-pattern-broken" : "pack-local-relief-god-selected"
+  };
+  const evidence2 = selected.length === 0 ? "" : integrity.reliefAssessments.filter(({ group }) => selected.includes(group)).map((assessment) => {
+    const stems = assessment.transparentStems.map(
+      ({ position: position2, stem, tenGod }) => `${STEM_POSITION_LABEL3[position2]} ${stem} ${tenGod}`
+    ).join("\xB7");
+    const branches = [
+      ...new Set(assessment.rootedBranches.map(({ branch }) => branch))
+    ].join("\xB7");
+    return `${assessment.group}${branches.length === 0 ? `(${stems})` : `(${stems}, \uC9C0\uC9C0 ${branches}\uC5D0 \uBFCC\uB9AC)`}`;
+  }).join("; ");
+  return {
+    key: canonicalJsonStringify(values),
+    statement: selected.length === 0 ? `\uC790\uD3C9 \uACA9\uAD6D \uAE30\uC900\uC73C\uB85C \uC774 \uBA85\uC2DD\uC758 ${withTopicParticle(integrity.determination.pattern)} \uC0C1\uC2E0\uC774 \uCC9C\uAC04\uC5D0 \uB4DC\uB7EC\uB098\uC9C0 \uC54A\uC544 \uACA9\uAD6D\uB9CC\uC73C\uB85C\uB294 \uC6A9\uC2E0\uC744 \uC815\uD558\uC9C0 \uBABB\uD569\uB2C8\uB2E4. ${ZIPING_RELIEF_FALLBACK_SENTENCE} ${ZIPING_RELIEF_SCOPE_SENTENCE}` : integrity.integrity === "\uD30C\uACA9" ? (
+      // 파격이면 상신이 서 있어도 격을 살리지 못한다.  같은 응답의
+      // ziping.pattern-integrity 가 파격이라고 한 것과 어긋나지 않게
+      // '상신'이 아니라 '상신 후보'로 적는다.
+      `\uC790\uD3C9 \uACA9\uAD6D \uAE30\uC900\uC73C\uB85C \uC774 \uBA85\uC2DD\uC758 \uC0C1\uC2E0 \uD6C4\uBCF4\uB294 ${selected.join("\xB7")}\uC785\uB2C8\uB2E4. ${withSubjectParticle(evidence2)} ${withObjectParticle(integrity.determination.pattern)} \uB3D5\uB294 \uC790\uB9AC\uC774\uC9C0\uB9CC, \uC774 \uACA9\uC740 \uD30C\uACA9\uC774\uB77C \uC0C1\uC2E0\uC774 \uACA9\uC744 \uC0B4\uB9AC\uC9C0 \uBABB\uD569\uB2C8\uB2E4. ${ZIPING_RELIEF_FALLBACK_SENTENCE} ${ZIPING_RELIEF_SCOPE_SENTENCE}`
+    ) : `\uC790\uD3C9 \uACA9\uAD6D \uAE30\uC900\uC73C\uB85C \uC774 \uBA85\uC2DD\uC758 \uC0C1\uC2E0\uC740 ${selected.join("\xB7")}\uC785\uB2C8\uB2E4. ${withSubjectParticle(evidence2)} ${withObjectParticle(integrity.determination.pattern)} \uB3D5\uB294 \uC790\uB9AC\uB85C \uBD05\uB2C8\uB2E4. ${ZIPING_RELIEF_SCOPE_SENTENCE}`,
+    topic: "useful-god",
+    values,
+    evidencePaths: ["pillars", "facts.structure.relationships.branchClashes"],
+    sourceReferenceIds: ZIPING_SOURCE_IDS,
+    comparison: comparison(
+      "ziping.pattern-relief-god.v1",
+      "ziping.pattern-relief-god",
+      "ziping-month-command",
+      `${dayStem}:${monthBranch}`,
+      selected.length === 0 ? "none" : selected.join("|")
+    ),
+    ...omitted.length === 0 ? {} : { coverage: "partial", omittedPillars: omitted }
+  };
+}
 
 // plugins/oh-my-saju/runtime/traditions/rule-registry.ts
+var ZIPING_RULE_IDS_V1 = [
+  "ziping.month-command",
+  "ziping.pattern-candidate",
+  "ziping.governing-day",
+  "ziping.pattern-integrity",
+  "ziping.pattern-relief-god"
+];
+var DITIANSHUI_RULE_IDS_V1 = [
+  "ditianshui.seasonal-state",
+  "ditianshui.support-ledger",
+  "ditianshui.rooting-ledger",
+  "ditianshui.command-position",
+  "ditianshui.strength-verdict",
+  "ditianshui.follow-transform-patterns"
+];
+var QIONGTONG_RULE_IDS_V1 = [
+  "qiongtong.climate-candidates",
+  "qiongtong.climate-tendency",
+  "qiongtong.candidate-condition",
+  "qiongtong.pack-climate-priority"
+];
 var BUILT_IN_TRADITION_PACKS = [
   {
     id: "ziping",
-    ruleIds: ["ziping.month-command", "ziping.pattern-candidate"],
+    ruleIds: ZIPING_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== "ziping.month-command" && ruleId !== "ziping.pattern-candidate") {
+      if (!ZIPING_RULE_IDS_V1.includes(ruleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Ziping Tradition Pack.`);
       }
       return evaluateZipingPackRule(ruleId, context);
@@ -14018,22 +18071,34 @@ var BUILT_IN_TRADITION_PACKS = [
   },
   {
     id: "ditianshui",
-    ruleIds: ["ditianshui.seasonal-state", "ditianshui.support-ledger"],
+    ruleIds: DITIANSHUI_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== "ditianshui.seasonal-state" && ruleId !== "ditianshui.support-ledger") {
+      if (!DITIANSHUI_RULE_IDS_V1.includes(ruleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Ditianshui Tradition Pack.`);
       }
       return evaluateDitianshuiPackRule(ruleId, context);
     }
   },
   {
-    id: "qiongtong",
-    ruleIds: ["qiongtong.climate-candidates"],
+    id: "xingchong-resolution",
+    ruleIds: XINGCHONG_RESOLUTION_RULE_IDS_V1,
     evaluate: (ruleId, context) => {
-      if (ruleId !== "qiongtong.climate-candidates") {
+      if (!XINGCHONG_RESOLUTION_RULE_IDS_V1.includes(ruleId)) {
+        throw new TypeError(
+          `Rule ${ruleId} is not owned by the Xingchong Resolution Tradition Pack.`
+        );
+      }
+      return evaluateXingchongResolutionRule(ruleId, context);
+    }
+  },
+  {
+    id: "qiongtong",
+    ruleIds: QIONGTONG_RULE_IDS_V1,
+    evaluate: (ruleId, context) => {
+      if (!QIONGTONG_RULE_IDS_V1.includes(ruleId)) {
         throw new TypeError(`Rule ${ruleId} is not owned by the Qiongtong Tradition Pack.`);
       }
-      return evaluateQiongtongPackRule(context);
+      return evaluateQiongtongPackRule(ruleId, context);
     }
   },
   {
@@ -14120,6 +18185,7 @@ var INTERPRETATION_TOPICS = /* @__PURE__ */ new Set([
   "yin-yang",
   "ten-gods",
   "relationships",
+  "season-climate",
   "void-branches",
   "strength",
   "pattern",
@@ -14463,6 +18529,43 @@ function structuralEvidence(candidate, exactPath) {
   );
   return evidence(candidate, ...paths);
 }
+var SEASON_LABEL_BY_MONTH_BRANCH = {
+  \uC778: "\uCD08\uBD04",
+  \uBB18: "\uD55C\uBD04",
+  \uC9C4: "\uB2A6\uBD04",
+  \uC0AC: "\uCD08\uC5EC\uB984",
+  \uC624: "\uD55C\uC5EC\uB984",
+  \uBBF8: "\uB2A6\uC5EC\uB984",
+  \uC2E0: "\uCD08\uAC00\uC744",
+  \uC720: "\uD55C\uAC00\uC744",
+  \uC220: "\uB2A6\uAC00\uC744",
+  \uD574: "\uCD08\uACA8\uC6B8",
+  \uC790: "\uD55C\uACA8\uC6B8",
+  \uCD95: "\uB2A6\uACA8\uC6B8"
+};
+var MILLISECONDS_PER_DAY3 = 864e5;
+function roundToHundredths3(value) {
+  return Math.round(value * 100) / 100;
+}
+function solarTermContext(candidate) {
+  const report = candidate.exactReport;
+  if (report === null) return null;
+  const { monthStart, monthEnd, lichun } = report.audit.evidence;
+  return {
+    birthEpochMilliseconds: report.chronology.epochMilliseconds,
+    monthStart: {
+      name: monthStart.name,
+      hanja: monthStart.hanja,
+      epochMilliseconds: monthStart.epochMilliseconds
+    },
+    monthEnd: {
+      name: monthEnd.name,
+      hanja: monthEnd.hanja,
+      epochMilliseconds: monthEnd.epochMilliseconds
+    },
+    lichun: { epochMilliseconds: lichun.epochMilliseconds }
+  };
+}
 var RELATION_POSITION_LABELS = {
   year: "\uC5F0",
   month: "\uC6D4",
@@ -14543,7 +18646,8 @@ function evaluateCandidateRule(candidate, ruleId) {
     const structure = candidate.pillars.hour === null ? knownStructuralAnalysis(candidate) : structuralAnalysis(candidate);
     const match = evaluateBuiltInTraditionPackRule(ruleId, {
       pillars: candidate.pillars,
-      structure
+      structure,
+      solarTerm: solarTermContext(candidate)
     });
     const evidencePaths = candidate.exactReport === null ? [
       ...new Set(
@@ -14592,7 +18696,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       matches: [
         {
           key: `${position2}:${pillar.cycleIndex}`,
-          statement: `${PILLAR_POSITION_LABEL[position2]}\uB294 ${pillar.korean}(${pillar.hanja})\uC785\uB2C8\uB2E4.`,
+          statement: `${withTopicParticle(PILLAR_POSITION_LABEL[position2])} ${pillar.korean}(${pillar.hanja})\uC785\uB2C8\uB2E4.`,
           topic: "chart-overview",
           values: {
             position: position2,
@@ -14623,7 +18727,7 @@ function evaluateCandidateRule(candidate, ruleId) {
       omittedPillars: omittedPillars2
     };
     const compact = FIVE_ELEMENTS2.map(
-      (element) => `${element} ${balance.percentages[element]}%`
+      (element) => `${element} ${Math.round(balance.percentages[element] * 100) / 100}%`
     ).join(", ");
     return {
       kind: "matches",
@@ -14792,6 +18896,87 @@ function evaluateCandidateRule(candidate, ruleId) {
           ),
           sourceReferenceIds: [GROWTH_STAGE_SOURCE_ID],
           ...partial ? { coverage: "partial", omittedPillars: omittedPillars2 } : {}
+        }
+      ]
+    };
+  }
+  if (ruleId === "core.solar-term-position") {
+    const monthBranch = candidate.pillars.month.branch.korean;
+    const seasonLabel = SEASON_LABEL_BY_MONTH_BRANCH[monthBranch];
+    const solarTerm = solarTermContext(candidate);
+    if (solarTerm === null) {
+      const omittedPillars2 = omittedPillarsFor(candidate);
+      const values2 = {
+        monthBranch,
+        seasonLabel,
+        status: "month-branch-season-only",
+        omittedPillars: omittedPillars2
+      };
+      return {
+        kind: "matches",
+        matches: [
+          {
+            key: canonicalJsonStringify(values2),
+            statement: `\uC6D4\uC9C0\uB294 ${monthBranch}\uC774\uBA70 ${seasonLabel}\uC5D0 \uD574\uB2F9\uD569\uB2C8\uB2E4. \uC815\uD655\uD55C \uC808\uC785 \uACBD\uACFC\uC77C\uC740 \uC0DD\uC2DC\uAC00 \uD655\uC815\uB418\uC5B4\uC57C \uACC4\uC0B0\uD569\uB2C8\uB2E4.`,
+            topic: "season-climate",
+            values: values2,
+            evidence: evidence(candidate, "pillars.month"),
+            sourceReferenceIds: [COMMON_SOURCE_ID],
+            coverage: "partial",
+            omittedPillars: omittedPillars2
+          }
+        ]
+      };
+    }
+    const elapsedDays = roundToHundredths3(
+      (solarTerm.birthEpochMilliseconds - solarTerm.monthStart.epochMilliseconds) / MILLISECONDS_PER_DAY3
+    );
+    const remainingDays = roundToHundredths3(
+      (solarTerm.monthEnd.epochMilliseconds - solarTerm.birthEpochMilliseconds) / MILLISECONDS_PER_DAY3
+    );
+    const spanDays = roundToHundredths3(
+      (solarTerm.monthEnd.epochMilliseconds - solarTerm.monthStart.epochMilliseconds) / MILLISECONDS_PER_DAY3
+    );
+    const depthPercent = Math.round(
+      (solarTerm.birthEpochMilliseconds - solarTerm.monthStart.epochMilliseconds) / (solarTerm.monthEnd.epochMilliseconds - solarTerm.monthStart.epochMilliseconds) * 100
+    );
+    const daysSinceLichun = roundToHundredths3(
+      (solarTerm.birthEpochMilliseconds - solarTerm.lichun.epochMilliseconds) / MILLISECONDS_PER_DAY3
+    );
+    const values = {
+      monthBranch,
+      seasonLabel,
+      termName: solarTerm.monthStart.name,
+      termHanja: solarTerm.monthStart.hanja,
+      nextTermName: solarTerm.monthEnd.name,
+      nextTermHanja: solarTerm.monthEnd.hanja,
+      elapsedDays,
+      remainingDays,
+      spanDays,
+      depthPercent,
+      daysSinceLichun,
+      beforeLichun: daysSinceLichun < 0,
+      nearSolarTermEdge: elapsedDays < 3 || remainingDays < 3
+    };
+    const elapsedText = elapsedDays < 1 ? `${roundToHundredths3(elapsedDays * 24)}\uC2DC\uAC04` : `${elapsedDays}\uC77C`;
+    const remainingText = remainingDays < 1 ? `${roundToHundredths3(remainingDays * 24)}\uC2DC\uAC04` : `${remainingDays}\uC77C`;
+    const lichunSentence = daysSinceLichun < 0 ? `\uC774 \uD574 \uC785\uCD98\uAE4C\uC9C0\uB294 ${-daysSinceLichun < 1 ? `${roundToHundredths3(-daysSinceLichun * 24)}\uC2DC\uAC04` : `${roundToHundredths3(-daysSinceLichun)}\uC77C`} \uB0A8\uC544 \uC55E \uC0AC\uC8FC\uD574\uC758 \uB05D\uC790\uB77D\uC785\uB2C8\uB2E4.` : daysSinceLichun < 1 ? `\uC785\uCD98\uC774 \uC9C0\uB09C \uC9C0 ${roundToHundredths3(daysSinceLichun * 24)}\uC2DC\uAC04\uC9F8\uC785\uB2C8\uB2E4.` : `\uC785\uCD98\uC774 \uC9C0\uB09C \uC9C0 ${daysSinceLichun}\uC77C\uC9F8\uC785\uB2C8\uB2E4.`;
+    return {
+      kind: "matches",
+      matches: [
+        {
+          key: canonicalJsonStringify(values),
+          statement: `\uCD9C\uC0DD \uC2DC\uAC01\uC740 ${solarTerm.monthStart.name}(${solarTerm.monthStart.hanja}) \uC808\uC785 \uB4A4 ${elapsedText}\uC774\uACE0 \uB2E4\uC74C \uC808\uAE30 ${solarTerm.monthEnd.name}(${solarTerm.monthEnd.hanja})\uAE4C\uC9C0 ${remainingText} \uB0A8\uC558\uC2B5\uB2C8\uB2E4. \uC6D4\uC9C0\uB294 ${monthBranch}\uC774\uBA70 ${seasonLabel}\uC5D0 \uD574\uB2F9\uD558\uACE0, \uC808\uAE30 \uAD6C\uAC04\uC758 ${depthPercent}%\uB97C \uC9C0\uB09C \uC790\uB9AC\uC785\uB2C8\uB2E4. ` + lichunSentence,
+          topic: "season-climate",
+          values,
+          evidence: evidence(
+            candidate,
+            "chronology.epochMilliseconds",
+            "audit.evidence.monthStart",
+            "audit.evidence.monthEnd",
+            "audit.evidence.lichun"
+          ),
+          sourceReferenceIds: [COMMON_SOURCE_ID]
         }
       ]
     };
@@ -15273,6 +19458,7 @@ var SAJU_TOPIC_TITLES = deepFreeze2({
   "yin-yang": "\uC74C\uC591 \uBD84\uD3EC",
   "ten-gods": "\uC2ED\uC2E0",
   relationships: "\uD569\xB7\uCDA9 \uB4F1 \uAE30\uB465 \uAD00\uACC4",
+  "season-climate": "\uC808\uAE30\uC640 \uACC4\uC808",
   "void-branches": "\uACF5\uB9DD",
   strength: "\uC2E0\uAC15\xB7\uC2E0\uC57D",
   pattern: "\uACA9\uAD6D",
@@ -16706,7 +20892,7 @@ function calculateSajuDailyTransit(request) {
 var import_moment_timezone5 = __toESM(require_moment_timezone2(), 1);
 
 // src/features/luck-pillars.ts
-var MILLISECONDS_PER_DAY2 = 864e5;
+var MILLISECONDS_PER_DAY4 = 864e5;
 var MONTH_OPENING_TERM_INDICES2 = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
 function positiveModulo2(value, modulus) {
   const remainder = value % modulus;
@@ -16739,7 +20925,7 @@ function distanceToOpeningDays(birthInstant, openings, forward) {
     }
   }
   if (boundary === void 0) return 0;
-  return Math.abs(boundary - birthInstant) / MILLISECONDS_PER_DAY2;
+  return Math.abs(boundary - birthInstant) / MILLISECONDS_PER_DAY4;
 }
 function traditionalStartOffset(daysToOpening) {
   let startYears = Math.floor(daysToOpening / 3);
@@ -20158,17 +24344,21 @@ var DOMAIN_PATTERNS = {
   "work-study": /(?:업무|직장|과제|공부|학습|시험|제출|자료|보고서|성과|완성도|프로젝트|피드백)/u
 };
 var PROFILE_ROLE_VALUES = /* @__PURE__ */ new Set([
+  "climate",
   "core",
+  "resource",
   "strength",
   "blind-spot",
   "work",
   "money",
   "relationships"
 ]);
-var PROFILE_BASIS_PATTERN = /(?:일간|월령|연지|월지|일지|시지|연주|월주|일주|시주|천간|지지|지장간|계절|사령|통근|뿌리|투간|반복|중첩|겹치|오행|음양|비견|겁재|인성|식상|상관|재성|정재|편재|관성|정관|편관|천간합|지지합|합충|충형|형파|파해|(?:봄|여름|가을|겨울|한겨울)(?:철|의)?|(?:목|화|토|금|수|나무|불|흙|쇠|물)(?:의|\s)?(?:기운|세력)|[갑을병정무기경신임계](?:목|화|토|금|수)|[자축인묘진사오미신유술해]월|[갑을병정무기경신임계][자축인묘진사오미신유술해])/u;
+var PROFILE_BASIS_PATTERN = /(?:일간|연간|월간|월령|연지|월지|일지|시지|연주|월주|일주|시주|천간|지지|지장간|계절|절기|절입|사령|한난|득령|득지|득세|통근|뿌리|투간|반복|중첩|겹치|오행|음양|비견|겁재|인성|식상|상관|재성|정재|편재|관성|정관|편관|천간합|지지합|합충|충형|형파|파해|(?:봄|여름|가을|겨울|한겨울)(?:철|의)?|(?:목|화|토|금|수|나무|불|흙|쇠|물)(?:의|\s)?(?:기운|세력)|[갑을병정무기경신임계](?:목|화|토|금|수)|[자축인묘진사오미신유술해]월|[갑을병정무기경신임계][자축인묘진사오미신유술해])/u;
 var MISFRAMED_SEASON_PATTERN = /(?:봄|여름|가을|겨울|계절)\s*(?:기운|기세)?[^.?!\n]{0,20}(?:환경|상황)(?:에서는|에서|일 때)/u;
 var PRESENTATION_AUDIT_PATTERN = /(?:최종\s*(?:판정|확정)|확정할 수 없|과학적\s*타당성|현실\s*예측|프로필|\bfinding\b|\bpack\b)/iu;
 var PROFILE_ROLE_PATTERNS = {
+  climate: /(?:계절|절기|추위|더위|찬|더운|따뜻|서늘|건조|습|온도|기온|겨울|여름|봄|가을|한여름|한겨울)/u,
+  resource: /(?:기대|의지|버티|받쳐|힘|중심|주도|끌고|밀고|맡기|넘기|기댈|지탱|자기\s*힘|남의\s*힘)/u,
   work: /(?:업무|직업|직장|조직|프로젝트|과제|공부|학습|시험|기획|분석|창작|표현|전문성|결과물|성과|마감|실행|일하는|역할)/u,
   money: /(?:돈|재물|수입|지출|소비|저축|축적|현금|보상|비용|투자|자원|재정|경제|재성|정재|편재)/u,
   relationships: /(?:관계|상대|사람|가까운|대화|소통|의견|갈등|조언|통제|독립\s*영역|힘겨루기|연애|배우자|친구|동료)/u
@@ -20178,6 +24368,7 @@ var PROFILE_BLIND_SPOT_PATTERN = /(?:과해|늦|굳|간섭|갈등|힘겨루기|�
 var PROFILE_GENERIC_COACHING_PATTERN = /(?:여러\s*조건을\s*빠르게\s*읽|맥락과\s*논리를\s*함께\s*정리|판단\s*기준이\s*다를\s*때|이유를\s*먼저\s*공유|현재\s*환경의\s*규칙|실제\s*행동\s*기준|마무리\s*속도가\s*빨라|관계의\s*오해가\s*줄|결론을\s*잠시\s*보류|기준을\s*다시\s*비교|습관이\s*균형|서로의\s*(?:방식|결정\s*영역)[^.?!\n]{0,24}분명)/u;
 var PROFILE_INTERNAL_JARGON_PATTERN = /(?:비겁\s*근거|(?:겉|속)장부|지장간\s*장부|표면에는[^.?!\n]{0,80}지장간에는|원시\s*일치|후보로\s*표시|명식\s*중심에\s*놓)/u;
 var PROFILE_TRANSLATIONESE_PATTERN = /(?:현실적?\s*(?:결과|성과)[^.?!\n]{0,20}(?:흘려|이어|연결)|복원력으로\s*(?:쓰|작동)|자원을?\s*(?:빠르게\s*)?배치|이중\s*리듬|(?:판단|기준|강점|추진력)(?:이|가)\s*선명|거리(?:가|를)\s*(?:빨리\s*)?회복|(?:구조|흐름|통로|중심축)(?:이|가|은|는)?\s*(?:작동|완성|열리))/u;
+var PROFILE_ELEMENT_VIRTUE_PATTERN = /(?:목|화|토|금|수|나무|불|흙|쇠|물)\s*(?:기운|기)?[^.?!\n]{0,10}(?:있어|많아|강해|덕분)[^.?!\n]{0,12}(?:지혜|총명|따뜻|의리|포용|신의|인자|명랑|현명|똑똑)/u;
 var PROFILE_RELATIONSHIP_REACTION_PATTERN = /(?:가까워|친밀|신뢰|서운|감정|마음|오해|갈등|말을\s*줄|버티|밀어붙|거리(?:를|가)|회피|다투|화해|풀어|연애|가족|친구)/u;
 var PROFILE_RECYCLED_CONCEPTS = [
   {
@@ -20203,6 +24394,7 @@ var DEFAULT_PROFILE_TOPICS = /* @__PURE__ */ new Set([
   "five-elements",
   "ten-gods",
   "relationships",
+  "season-climate",
   "strength"
 ]);
 function fail(message, details = {}) {
@@ -20442,6 +24634,66 @@ function copyDefaultProfileDraft(value) {
     kind: "default-profile",
     thesis: copyProfileThesisRef(value.thesis, "presentationDraft.thesis"),
     core: [coreFirst, coreSecond],
+    temperament: {
+      strength: copyProfileParagraphRef(
+        value.temperament.strength,
+        "presentationDraft.temperament.strength",
+        "strength"
+      ),
+      blindSpot: copyProfileParagraphRef(
+        value.temperament.blindSpot,
+        "presentationDraft.temperament.blindSpot",
+        "blind-spot"
+      )
+    },
+    work: copyProfileRefList(value.work, "presentationDraft.work", "work"),
+    ...money === void 0 ? {} : { money },
+    relationships: copyProfileRefList(
+      value.relationships,
+      "presentationDraft.relationships",
+      "relationships"
+    )
+  };
+}
+function copyDefaultProfileV3Draft(value) {
+  if (!isRecord2(value)) fail("presentationDraft must be an object.");
+  assertOnlyKeys2(
+    value,
+    [
+      "schemaVersion",
+      "kind",
+      "climate",
+      "thesis",
+      "core",
+      "resource",
+      "temperament",
+      "work",
+      "money",
+      "relationships"
+    ],
+    "presentationDraft"
+  );
+  if (value.schemaVersion !== "3" || value.kind !== "default-profile") {
+    fail("presentationDraft has an unsupported schema or kind.");
+  }
+  const climate = copyProfileParagraphRef(value.climate, "presentationDraft.climate", "climate");
+  if (!Array.isArray(value.core) || value.core.length !== 2) {
+    fail("presentationDraft.core must contain exactly two central mechanisms.");
+  }
+  if (!isRecord2(value.temperament)) {
+    fail("presentationDraft.temperament must be an object.");
+  }
+  assertOnlyKeys2(value.temperament, ["strength", "blindSpot"], "presentationDraft.temperament");
+  const coreFirst = copyProfileParagraphRef(value.core[0], "presentationDraft.core[0]", "core");
+  const coreSecond = copyProfileParagraphRef(value.core[1], "presentationDraft.core[1]", "core");
+  const money = value.money === void 0 ? void 0 : copyProfileRefList(value.money, "presentationDraft.money", "money");
+  return {
+    schemaVersion: "3",
+    kind: "default-profile",
+    climate,
+    thesis: copyProfileThesisRef(value.thesis, "presentationDraft.thesis"),
+    core: [coreFirst, coreSecond],
+    resource: copyProfileParagraphRef(value.resource, "presentationDraft.resource", "resource"),
     temperament: {
       strength: copyProfileParagraphRef(
         value.temperament.strength,
@@ -20721,7 +24973,7 @@ function assertProfileBridge(resolved, structure, path) {
       path
     });
   }
-  if (!PROFILE_BASIS_PATTERN.test(structure.basis) || structure.interpretation.length < 12 || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(resolved.text)) {
+  if (!PROFILE_BASIS_PATTERN.test(structure.basis) || structure.interpretation.length < 12 || structure.role !== "climate" && MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(structure.interpretation)) {
     fail("A default-profile paragraph must expose a specific Saju basis and its plain meaning.", {
       policy: "chart-to-interpretation-bridge",
       path
@@ -20733,7 +24985,19 @@ function assertProfileBridge(resolved, structure, path) {
       path
     });
   }
-  if (structure.role === "work" && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation) || structure.role === "money" && (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) || !resolved.topics.includes("ten-gods")) || structure.role === "relationships" && (!PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation) || !PROFILE_RELATIONSHIP_REACTION_PATTERN.test(structure.interpretation)) || structure.role === "strength" && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation) || structure.role === "blind-spot" && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation)) {
+  if (GENERIC_BARNUM_PATTERN.test(structure.interpretation)) {
+    fail("A default-profile interpretation cannot fall back to flattering generalities.", {
+      policy: "generic-barnum-profile-text",
+      path
+    });
+  }
+  if (PROFILE_ELEMENT_VIRTUE_PATTERN.test(structure.interpretation)) {
+    fail("A default-profile interpretation cannot equate an element or day master with a virtue.", {
+      policy: "element-to-virtue-shortcut",
+      path
+    });
+  }
+  if (structure.role === "climate" && !PROFILE_ROLE_PATTERNS.climate.test(structure.interpretation) || structure.role === "resource" && !PROFILE_ROLE_PATTERNS.resource.test(structure.interpretation) || structure.role === "work" && !PROFILE_ROLE_PATTERNS.work.test(structure.interpretation) || structure.role === "money" && (!PROFILE_ROLE_PATTERNS.money.test(structure.interpretation) || !resolved.topics.includes("ten-gods")) || structure.role === "relationships" && (!PROFILE_ROLE_PATTERNS.relationships.test(structure.interpretation) || !PROFILE_RELATIONSHIP_REACTION_PATTERN.test(structure.interpretation)) || structure.role === "strength" && !PROFILE_STRENGTH_PATTERN.test(structure.interpretation) || structure.role === "blind-spot" && !PROFILE_BLIND_SPOT_PATTERN.test(structure.interpretation)) {
     fail("A default-profile paragraph must match the semantic role of its section.", {
       policy: "default-profile-role",
       path,
@@ -20750,9 +25014,15 @@ function assertProfileBridge(resolved, structure, path) {
   return { ...resolved, structure };
 }
 function assertProfileThesis(resolved, structure) {
-  if (orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null || !PROFILE_BASIS_PATTERN.test(structure.basis) || structure.portrait.length < 12 || PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(resolved.text)) {
+  if (orderedFacetPositions(resolved.text, [structure.basis, structure.portrait]) === null || !PROFILE_BASIS_PATTERN.test(structure.basis) || structure.portrait.length < 12 || PROFILE_GENERIC_COACHING_PATTERN.test(structure.portrait) || MISFRAMED_SEASON_PATTERN.test(resolved.text) || PRESENTATION_AUDIT_PATTERN.test(resolved.text) || PROFILE_INTERNAL_JARGON_PATTERN.test(resolved.text) || PROFILE_TRANSLATIONESE_PATTERN.test(structure.portrait)) {
     fail("The default-profile thesis must connect specific chart evidence to a clear portrait.", {
       policy: "chart-to-interpretation-bridge",
+      path: "thesis"
+    });
+  }
+  if (GENERIC_BARNUM_PATTERN.test(structure.portrait)) {
+    fail("The default-profile thesis cannot fall back to flattering generalities.", {
+      policy: "generic-barnum-profile-text",
       path: "thesis"
     });
   }
@@ -20764,24 +25034,14 @@ function assertProfileThesis(resolved, structure) {
     });
   }
 }
-function resolveDefaultProfile(reading, draft) {
-  const forbiddenTokens = forbiddenIdentityTokens(reading);
-  const resolve = (ref) => resolveParagraphRef(reading, ref, forbiddenTokens);
-  const resolveProfile = (value, path) => assertProfileBridge(resolve(value.paragraph), value.structure, path);
-  const resolveProfileList = (values, path) => values.filter((value) => value !== void 0).map((value, index) => resolveProfile(value, `${path}[${index}]`));
-  const thesisParagraph = resolve(draft.thesis.paragraph);
-  assertProfileThesis(thesisParagraph, draft.thesis.structure);
-  const thesis = {
-    ...thesisParagraph,
-    structure: draft.thesis.structure
-  };
-  const core = [
-    resolveProfile(draft.core[0], "core[0]"),
-    resolveProfile(draft.core[1], "core[1]")
-  ];
-  const work = resolveProfileList(draft.work, "work");
-  const relationships = resolveProfileList(draft.relationships, "relationships");
-  const money = draft.money === void 0 ? void 0 : resolveProfileList(draft.money, "money");
+function resolveProfileParagraph(reading, forbiddenTokens, value, path) {
+  return assertProfileBridge(
+    resolveParagraphRef(reading, value.paragraph, forbiddenTokens),
+    value.structure,
+    path
+  );
+}
+function assertProfileMoneySection(reading, money) {
   const tenGodRow = profileTenGodTexts(reading);
   const visibleWealthCount = tenGodRow?.reduce((count, text) => count + (text.match(/(?:정재|편재)/gu)?.length ?? 0), 0) ?? 0;
   if (visibleWealthCount >= 2 && money === void 0) {
@@ -20790,27 +25050,9 @@ function resolveDefaultProfile(reading, draft) {
       visibleWealthCount
     });
   }
-  const resolved = {
-    thesis,
-    core,
-    temperament: {
-      strength: resolveProfile(draft.temperament.strength, "temperament.strength"),
-      blindSpot: resolveProfile(draft.temperament.blindSpot, "temperament.blindSpot")
-    },
-    work,
-    ...money === void 0 ? {} : { money },
-    relationships
-  };
-  const all = [
-    resolved.thesis,
-    ...resolved.core,
-    resolved.temperament.strength,
-    resolved.temperament.blindSpot,
-    ...resolved.work,
-    ...resolved.money ?? [],
-    ...resolved.relationships
-  ];
-  if (all.length < SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs) {
+}
+function assertProfileCoherence(resolved, all, interpretationTexts, minimumDistinctParagraphs) {
+  if (all.length < minimumDistinctParagraphs) {
     fail("The default profile is missing required evidence-backed sections.", {
       policy: "default-profile-required"
     });
@@ -20828,18 +25070,10 @@ function resolveDefaultProfile(reading, draft) {
       policy: "distinct-presentation-prose"
     });
   }
-  const interpretationTexts = [
-    draft.thesis.structure.portrait,
-    ...resolved.core.map(({ structure }) => structure.interpretation),
-    resolved.temperament.strength.structure.interpretation,
-    resolved.temperament.blindSpot.structure.interpretation,
-    ...resolved.work.map(({ structure }) => structure.interpretation),
-    ...(resolved.money ?? []).map(({ structure }) => structure.interpretation),
-    ...resolved.relationships.map(({ structure }) => structure.interpretation)
-  ];
+  const recycledLimit = Math.max(3, Math.ceil(interpretationTexts.length / 3));
   for (const concept of PROFILE_RECYCLED_CONCEPTS) {
     const reusedAcross = interpretationTexts.filter((text) => concept.pattern.test(text)).length;
-    if (reusedAcross >= 3) {
+    if (reusedAcross >= recycledLimit) {
       fail("A default profile cannot recycle one abstract conclusion across life areas.", {
         policy: "recycled-profile-conclusion",
         concept: concept.id,
@@ -20887,6 +25121,109 @@ function resolveDefaultProfile(reading, draft) {
       maximumCharacters: SAJU_NARRATION_PRESENTATION_POLICY.broadReading.maxPresentationCharacters
     });
   }
+}
+function profileInterpretationTexts(resolved) {
+  return [
+    resolved.thesis.structure.portrait,
+    ...resolved.core.map(({ structure }) => structure.interpretation),
+    resolved.temperament.strength.structure.interpretation,
+    resolved.temperament.blindSpot.structure.interpretation,
+    ...resolved.work.map(({ structure }) => structure.interpretation),
+    ...(resolved.money ?? []).map(({ structure }) => structure.interpretation),
+    ...resolved.relationships.map(({ structure }) => structure.interpretation)
+  ];
+}
+function resolveDefaultProfile(reading, draft) {
+  const forbiddenTokens = forbiddenIdentityTokens(reading);
+  const resolveProfile = (value, path) => resolveProfileParagraph(reading, forbiddenTokens, value, path);
+  const resolveProfileList = (values, path) => values.filter((value) => value !== void 0).map((value, index) => resolveProfile(value, `${path}[${index}]`));
+  const thesisParagraph = resolveParagraphRef(reading, draft.thesis.paragraph, forbiddenTokens);
+  assertProfileThesis(thesisParagraph, draft.thesis.structure);
+  const thesis = {
+    ...thesisParagraph,
+    structure: draft.thesis.structure
+  };
+  const core = [
+    resolveProfile(draft.core[0], "core[0]"),
+    resolveProfile(draft.core[1], "core[1]")
+  ];
+  const work = resolveProfileList(draft.work, "work");
+  const relationships = resolveProfileList(draft.relationships, "relationships");
+  const money = draft.money === void 0 ? void 0 : resolveProfileList(draft.money, "money");
+  assertProfileMoneySection(reading, money);
+  const resolved = {
+    thesis,
+    core,
+    temperament: {
+      strength: resolveProfile(draft.temperament.strength, "temperament.strength"),
+      blindSpot: resolveProfile(draft.temperament.blindSpot, "temperament.blindSpot")
+    },
+    work,
+    ...money === void 0 ? {} : { money },
+    relationships
+  };
+  assertProfileCoherence(
+    resolved,
+    defaultProfileItems(resolved),
+    profileInterpretationTexts(resolved),
+    SAJU_NARRATION_PRESENTATION_POLICY.broadReading.profileV2MinimumDistinctParagraphs
+  );
+  return resolved;
+}
+function assertProfileSlotTopic(resolved, topic, path, policy) {
+  if (!resolved.topics.includes(topic)) {
+    fail("A required default-profile slot must quote prose from its own topic.", {
+      policy,
+      path,
+      topics: resolved.topics
+    });
+  }
+}
+function resolveDefaultProfileV3(reading, draft) {
+  const forbiddenTokens = forbiddenIdentityTokens(reading);
+  const resolveProfile = (value, path) => resolveProfileParagraph(reading, forbiddenTokens, value, path);
+  const resolveProfileList = (values, path) => values.filter((value) => value !== void 0).map((value, index) => resolveProfile(value, `${path}[${index}]`));
+  const climate = resolveProfile(draft.climate, "climate");
+  assertProfileSlotTopic(climate, "season-climate", "climate", "climate-slot-topic");
+  const thesisParagraph = resolveParagraphRef(reading, draft.thesis.paragraph, forbiddenTokens);
+  assertProfileThesis(thesisParagraph, draft.thesis.structure);
+  const thesis = {
+    ...thesisParagraph,
+    structure: draft.thesis.structure
+  };
+  const core = [
+    resolveProfile(draft.core[0], "core[0]"),
+    resolveProfile(draft.core[1], "core[1]")
+  ];
+  const resource = resolveProfile(draft.resource, "resource");
+  assertProfileSlotTopic(resource, "strength", "resource", "resource-slot-topic");
+  const work = resolveProfileList(draft.work, "work");
+  const relationships = resolveProfileList(draft.relationships, "relationships");
+  const money = draft.money === void 0 ? void 0 : resolveProfileList(draft.money, "money");
+  assertProfileMoneySection(reading, money);
+  const resolved = {
+    climate,
+    thesis,
+    core,
+    resource,
+    temperament: {
+      strength: resolveProfile(draft.temperament.strength, "temperament.strength"),
+      blindSpot: resolveProfile(draft.temperament.blindSpot, "temperament.blindSpot")
+    },
+    work,
+    ...money === void 0 ? {} : { money },
+    relationships
+  };
+  assertProfileCoherence(
+    resolved,
+    defaultProfileV3Items(resolved),
+    [
+      resolved.climate.structure.interpretation,
+      resolved.resource.structure.interpretation,
+      ...profileInterpretationTexts(resolved)
+    ],
+    SAJU_NARRATION_PRESENTATION_POLICY.broadReading.minimumDistinctParagraphs
+  );
   return resolved;
 }
 function inputCalendarLabel(date) {
@@ -20994,6 +25331,15 @@ function markedProfileFacet(value, text) {
 }
 function renderedProfileBridge(value) {
   return `${markedProfileFacet(value, value.structure.interpretation)} _(\uADFC\uAC70: ${escapeBroadPresentationMarkdownText(value.structure.basis)})_`;
+}
+var BASIS_CONNECTIVE_ENDING_PATTERN = /(?:면서|면|고|며|서|지만|어야|아야)$/u;
+function renderedProfileBridgeV3(value) {
+  const marker = value.uncertaintyMarker;
+  const trimmedBasis = value.structure.basis.replace(/[\s.,]+$/u, "");
+  const basis = escapeBroadPresentationMarkdownText(trimmedBasis);
+  const interpretation = escapeBroadPresentationMarkdownText(value.structure.interpretation);
+  const joiner = BASIS_CONNECTIVE_ENDING_PATTERN.test(trimmedBasis) ? " " : " \u2014 ";
+  return `${marker === null ? "" : `${marker} `}${basis}${joiner}${interpretation}`;
 }
 function presentationItems(resolved) {
   return [
@@ -21113,7 +25459,73 @@ function renderDefaultProfileMarkdown(reading, resolved) {
   ];
   return lines.join("\n");
 }
+function defaultProfileV3Items(resolved) {
+  return [resolved.climate, resolved.resource, ...defaultProfileItems(resolved)];
+}
+function renderDefaultProfileV3Markdown(reading, resolved) {
+  const pillars = profilePillarTexts(reading);
+  const tenGods = profileTenGodTexts(reading);
+  const legend = uncertaintyLegendForItems(defaultProfileV3Items(resolved));
+  const elementTable = profileElementTable(reading);
+  const moneyLines = resolved.money === void 0 ? [] : [
+    "",
+    "## \uB3C8\uACFC \uD604\uC2E4 \uAC10\uAC01",
+    "",
+    ...resolved.money.map((item) => `- ${renderedProfileBridgeV3(item)}`)
+  ];
+  const lines = [
+    reading.calculationKind === "exact" ? exactBasis(reading) : possibilityBasis(reading),
+    ...legend === null ? [] : ["", legend],
+    "",
+    "| \uAD6C\uBD84 | \uB144\uC8FC | \uC6D4\uC8FC | \uC77C\uC8FC | \uC2DC\uC8FC |",
+    "| --- | --- | --- | --- | --- |",
+    `| \uAC04\uC9C0 | ${pillars.join(" | ")} |`,
+    ...tenGods === null ? [] : [`| \uC2ED\uC2E0 | ${tenGods.join(" | ")} |`],
+    ...elementTable.length === 0 ? [] : ["", ...elementTable],
+    "",
+    `**\uD575\uC2EC \uC694\uC57D:** ${markedProfileFacet(resolved.thesis, resolved.thesis.structure.portrait)}`,
+    "",
+    `_(\uADFC\uAC70: ${escapeBroadPresentationMarkdownText(resolved.thesis.structure.basis)})_`,
+    "",
+    `## ${SAJU_TOPIC_TITLES["season-climate"]}`,
+    "",
+    `- ${renderedProfileBridgeV3(resolved.climate)}`,
+    "",
+    "## \uC131\uACA9\uACFC \uD589\uB3D9 \uBC29\uC2DD",
+    "",
+    ...resolved.core.map((item) => `- ${renderedProfileBridgeV3(item)}`),
+    "",
+    "## \uD0C0\uACE0\uB09C \uD798\uACFC \uC4F0\uB294 \uBC95",
+    "",
+    `- ${renderedProfileBridgeV3(resolved.resource)}`,
+    "",
+    "## \uAC15\uC810\uACFC \uC8FC\uC758\uC810",
+    "",
+    `- **\uC798 \uD480\uB9B4 \uB54C:** ${renderedProfileBridgeV3(resolved.temperament.strength)}`,
+    `- **\uC555\uBC15\uC744 \uBC1B\uC744 \uB54C:** ${renderedProfileBridgeV3(resolved.temperament.blindSpot)}`,
+    "",
+    "## \uC77C\xB7\uC7AC\uB2A5",
+    "",
+    ...resolved.work.map((item) => `- ${renderedProfileBridgeV3(item)}`),
+    ...moneyLines,
+    "",
+    "## \uAD00\uACC4",
+    "",
+    ...resolved.relationships.map((item) => `- ${renderedProfileBridgeV3(item)}`)
+  ];
+  return lines.join("\n");
+}
 function validateAndRenderOhMySajuBroadPresentation(value, reading) {
+  if (isRecord2(value) && value.schemaVersion === "3" && value.kind === "default-profile") {
+    const sourceRefs2 = copyDefaultProfileV3Draft(value);
+    const resolved2 = resolveDefaultProfileV3(reading, sourceRefs2);
+    return deepFreeze2({
+      schemaVersion: "3",
+      kind: "default-profile",
+      sourceRefs: sourceRefs2,
+      markdown: renderDefaultProfileV3Markdown(reading, resolved2)
+    });
+  }
   if (isRecord2(value) && value.schemaVersion === "2" && value.kind === "default-profile") {
     const sourceRefs2 = copyDefaultProfileDraft(value);
     const resolved2 = resolveDefaultProfile(reading, sourceRefs2);
@@ -21439,7 +25851,7 @@ function relationStatement(kind, firstLabel, secondLabel, firstPosition, secondP
     "branch-harm": "\uC9C0\uC9C0\uD574"
   }[kind];
   const detail = punishment?.kind === "directed-cycle" ? punishment.direction === "left-to-right" ? `${members[0]}\u2192${members[1]}` : `${members[1]}\u2192${members[0]}` : members.join("\xB7");
-  return `${firstLabel} ${POSITION_LABELS[firstPosition]}\uC640 ${secondLabel} ${POSITION_LABELS[secondPosition]} \uC0AC\uC774\uC5D0\uB294 ${relation}(${detail})\uC774 \uC788\uC2B5\uB2C8\uB2E4.`;
+  return `${firstLabel} ${POSITION_LABELS[firstPosition]}\uC640 ${secondLabel} ${POSITION_LABELS[secondPosition]} \uC0AC\uC774\uC5D0\uB294 ${withSubjectParticle(`${relation}(${detail})`)} \uC788\uC2B5\uB2C8\uB2E4.`;
 }
 function collectPairObservations(pair, firstRequest, secondRequest, observations) {
   const firstDay = pair.first.pillars.day;
@@ -21630,7 +26042,7 @@ function directionalRangeFindings(observations, pairIds, firstRequest, secondReq
       (left, right) => left.localeCompare(right, "ko")
     );
     const members = unique(directional.flatMap((finding) => finding.members));
-    const statement = tenGods.length === 1 ? `\uBAA8\uB4E0 \uD6C4\uBCF4\uC5D0\uC11C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${tenGods[0]}\uC73C\uB85C \uAC19\uC2B5\uB2C8\uB2E4.` : `\uC785\uB825 \uBC94\uC704\uC5D0 \uB530\uB77C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${tenGods.join("\xB7")} \uAC00\uC6B4\uB370 \uD558\uB098\uB85C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.`;
+    const statement = tenGods.length === 1 ? `\uBAA8\uB4E0 \uD6C4\uBCF4\uC5D0\uC11C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${withAdverbialParticle(tenGods[0])} \uAC19\uC2B5\uB2C8\uB2E4.` : `\uC785\uB825 \uBC94\uC704\uC5D0 \uB530\uB77C ${from.label}\uC758 \uC77C\uAC04\uC744 \uAE30\uC900\uC73C\uB85C \uBCF8 ${to.label}\uC758 \uC77C\uAC04 \uC2ED\uC2E0\uC740 ${tenGods.join("\xB7")} \uAC00\uC6B4\uB370 \uD558\uB098\uB85C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.`;
     const key = JSON.stringify({
       kind: "day-master-ten-god-range",
       direction,

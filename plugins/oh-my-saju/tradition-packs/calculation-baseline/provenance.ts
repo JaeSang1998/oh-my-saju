@@ -39,6 +39,7 @@ export const CALCULATION_BASELINE_PROVENANCE: TraditionPackProvenance = deepFree
     'core.relationships',
     'core.growth-stages',
     'core.void-branches',
+    'core.solar-term-position',
   ],
   fixtureSetIds: fixtures.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(

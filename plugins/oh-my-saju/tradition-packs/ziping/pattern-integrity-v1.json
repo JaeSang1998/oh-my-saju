@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "1",
+  "profileId": "ziping-pattern-integrity-v1",
+  "patternPriority": "main-qi-first",
+  "patternPriorityAlternatives": ["commanding-first"],
+  "reliefTableStatus": "pack-reconstruction-from-relief-and-breaking-chapters",
+  "note": "Pack-local 격 확정·상신·파격 table. 록·양인·월겁 월지는 내격 8격에서 제외하며, 이 세 격은 월지 자체로만 서고 지장간 투간으로는 세우지 않는다. 양인은 양간(갑·병·무·경·임)에만 세운다(음간 역행 양인=음인은 채택하지 않는다). 자평진전 8격은 인수격 하나를 순용으로 두지만 이 팩은 사흉신에 梟(편인)가 드는 계열을 따라 편인격을 역용으로 분리했고, 그 결과 식신격의 도식(편인이 식신을 엎음)과 편인격의 편인도식(편인격이 식신을 만나는 배치)이 이름이 겹친다. 둘은 서로 다른 항목이다. 구응(막는 글자) 목록은 이 팩의 재구성이며 원문 전사가 아니다. relief-absent 요인의 성립 여부는 이 표의 tenGods 가 아니라 해당 격의 상신(reliefGods)이 천간에 드러났는지로 판정한다.",
+  "luBranch": {
+    "갑": "인",
+    "을": "묘",
+    "병": "사",
+    "정": "오",
+    "무": "사",
+    "기": "오",
+    "경": "신",
+    "신": "유",
+    "임": "해",
+    "계": "자"
+  },
+  "yangBladeBranch": {
+    "갑": "묘",
+    "병": "오",
+    "무": "오",
+    "경": "유",
+    "임": "자"
+  },
+  "tenGodGroups": {
+    "재성": ["정재", "편재"],
+    "관성": ["정관"],
+    "관살": ["정관", "편관"],
+    "인성": ["정인", "편인"],
+    "식상": ["식신", "상관"],
+    "식신": ["식신"],
+    "양인": ["겁재"],
+    "비겁": ["비견", "겁재"]
+  },
+  "patterns": {
+    "정관격": {
+      "track": "inner-eight",
+      "direction": "순용",
+      "reliefGods": ["재성", "인성"],
+      "breakingFactors": [
+        {
+          "id": "상관견관",
+          "label": "상관 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["상관"],
+          "rescueGroups": ["인성"],
+          "rescueStatus": "modeled"
+        },
+        {
+          "id": "관살혼잡",
+          "label": "관살혼잡",
+          "kind": "mixed-officer",
+          "tenGods": ["정관", "편관"],
+          "rescueGroups": [],
+          "rescueStatus": "not-modeled"
+        },
+        {
+          "id": "월지충",
+          "label": "월지 충",
+          "kind": "month-branch-clash",
+          "tenGods": [],
+          "rescueGroups": [],
+          "rescueStatus": "not-modeled"
+        }
+      ]
+    },
+    "정재격": {
+      "track": "inner-eight",
+      "direction": "순용",
+      "reliefGods": ["식상", "관성"],
+      "breakingFactors": [
+        {
+          "id": "군겁쟁재",
+          "label": "겁재 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["겁재"],
+          "rescueGroups": ["관살"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "편재격": {
+      "track": "inner-eight",
+      "direction": "순용",
+      "reliefGods": ["식상", "관성"],
+      "breakingFactors": [
+        {
+          "id": "군겁쟁재",
+          "label": "겁재 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["겁재"],
+          "rescueGroups": ["관살"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "정인격": {
+      "track": "inner-eight",
+      "direction": "순용",
+      "reliefGods": ["관살"],
+      "breakingFactors": [
+        {
+          "id": "탐재괴인",
+          "label": "재성 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["정재", "편재"],
+          "rescueGroups": ["비겁"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "식신격": {
+      "track": "inner-eight",
+      "direction": "순용",
+      "reliefGods": ["재성"],
+      "breakingFactors": [
+        {
+          "id": "도식",
+          "label": "편인 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["편인"],
+          "rescueGroups": ["재성"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "칠살격": {
+      "track": "inner-eight",
+      "direction": "역용",
+      "reliefGods": ["식신", "양인"],
+      "breakingFactors": [
+        {
+          "id": "칠살무제",
+          "label": "제복 없음",
+          "note": "성립 여부는 이 격의 상신(식신·양인)이 천간에 드러났는지로 본다.",
+          "kind": "relief-absent",
+          "tenGods": [],
+          "rescueGroups": [],
+          "rescueStatus": "absence-is-the-factor"
+        }
+      ]
+    },
+    "상관격": {
+      "track": "inner-eight",
+      "direction": "역용",
+      "reliefGods": ["인성", "재성"],
+      "breakingFactors": [
+        {
+          "id": "상관견관",
+          "label": "정관 투출",
+          "kind": "stem-transparent",
+          "tenGods": ["정관"],
+          "rescueGroups": ["재성"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "편인격": {
+      "track": "inner-eight",
+      "direction": "역용",
+      "reliefGods": ["재성"],
+      "breakingFactors": [
+        {
+          "id": "편인도식",
+          "label": "식신 투출",
+          "note": "편인격이 식신을 만난 배치. 식신격의 '도식'과는 다른 항목이다.",
+          "kind": "stem-transparent",
+          "tenGods": ["식신"],
+          "rescueGroups": ["재성"],
+          "rescueStatus": "modeled"
+        }
+      ]
+    },
+    "양인격": {
+      "track": "special",
+      "direction": "역용",
+      "reliefGods": ["관살"],
+      "breakingFactors": [
+        {
+          "id": "양인무제",
+          "label": "제복 없음",
+          "note": "성립 여부는 이 격의 상신(관살)이 천간에 드러났는지로 본다.",
+          "kind": "relief-absent",
+          "tenGods": [],
+          "rescueGroups": [],
+          "rescueStatus": "absence-is-the-factor"
+        }
+      ]
+    },
+    "건록격": {
+      "track": "special",
+      "direction": null,
+      "reliefGods": ["재성", "관살", "식상"],
+      "breakingFactors": []
+    },
+    "월겁격": {
+      "track": "special",
+      "direction": null,
+      "reliefGods": ["재성", "관살", "식상"],
+      "breakingFactors": []
+    }
+  }
+}

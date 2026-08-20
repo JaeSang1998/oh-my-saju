@@ -90,10 +90,10 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     const inputReference = readSkillFile('references/input-and-runtime.md');
 
     expect(skill).toContain('Set `request.readingMode` explicitly');
-    expect(skill).toContain('For `readingMode: "broad"`, the v2 `presentationDraft` is required');
+    expect(skill).toContain('For `readingMode: "broad"`, the v3 `presentationDraft` is required');
     expect(skill).toContain('output `result.presentation.markdown` exactly');
     expect(skill).toMatch(/Do not\s+rephrase it/u);
-    expect(inputReference).toMatch(/seven or\s+more distinct validated paragraphs/u);
+    expect(inputReference).toMatch(/ten or\s+more distinct validated paragraphs/u);
     expect(inputReference).toMatch(/quotes exact ordered `basis` and\s+`portrait` spans/u);
     expect(inputReference).toMatch(
       /declares its `role` and quotes exact ordered `basis` and\s+`interpretation` spans/u,
@@ -131,7 +131,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     expect(inputReference).toContain('join their conclusions');
   });
 
-  test('ships the conversation-policy improvement as a new plugin patch version', () => {
+  test('ships the conversation-policy improvement as a new plugin minor version', () => {
     const portable = JSON.parse(readProjectFile('plugins/oh-my-saju/plugin.json')) as {
       version: string;
     };
@@ -146,7 +146,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       skills: { 'oh-my-saju': string };
     };
 
-    expect(portable.version).toBe('0.4.5');
+    expect(portable.version).toBe('0.6.0');
     expect(codex.version).toBe(portable.version);
     expect(claude.version).toBe(portable.version);
     expect(versions.plugin).toBe(portable.version);

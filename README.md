@@ -10,10 +10,10 @@
 </p>
 
 <p>
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white" />
   <img alt="Node.js 18+" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" />
   <img alt="saju-engine 0.9.0" src="https://img.shields.io/badge/saju--engine-0.9.0-765A3D" />
-  <img alt="Oh My Saju plugin 0.4.5" src="https://img.shields.io/badge/plugin-0.4.5-A66A3F" />
+  <img alt="Oh My Saju plugin 0.6.0" src="https://img.shields.io/badge/plugin-0.6.0-A66A3F" />
   <img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
 </p>
 
@@ -41,7 +41,7 @@ Oh My Saju는 만세력 계산, 전통 규칙 평가, AI 풀이를 한곳에 모
 | 배포물              | 역할                                                                    |
 | ------------------- | ----------------------------------------------------------------------- |
 | `saju-engine@0.9.0` | 원국, 한국 음양력, 절기, 시간대, 생시 후보, 세운·절월·대운·일진 계산    |
-| `oh-my-saju@0.4.5`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
+| `oh-my-saju@0.6.0`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
 
 ## 빠른 시작
 
@@ -123,13 +123,14 @@ Node.js 18 이상이 필요합니다. npm 패키지 배포 전에는 저장소 �
 학파에 따라 달라지는 규칙은 계산 코어와 분리해 버전별로 관리합니다. 각 결과에는
 규칙 ID, 적용 위치, 출전과 관법 버전이 붙습니다.
 
-| 규칙 팩                          | 현재 범위                                       |
-| -------------------------------- | ----------------------------------------------- |
-| `calculation-baseline@1.1.0`     | 공통 구조 관찰과 관법을 명시한 십이운성         |
-| `ziping@1.0.0`                   | 《자평진전》 계열의 월령·격국 후보              |
-| `ditianshui@1.0.0`               | 《적천수》 계열의 왕쇠 증거 장부                |
-| `qiongtong@1.0.0`                | 《궁통보감》 계열의 일간×월령 조후 후보         |
-| `sanming-symbolic-curated@1.1.0` | 기준 기둥과 위치를 보존하는 15개 엄선 신살 규칙 |
+| 규칙 팩                          | 현재 범위                                         |
+| -------------------------------- | ------------------------------------------------- |
+| `calculation-baseline@1.2.0`     | 공통 구조 관찰, 절기 좌표, 관법을 명시한 십이운성 |
+| `ziping@1.2.0`                   | 《자평진전》 계열의 월령·사령·격 확정과 성패      |
+| `ditianshui@1.2.0`               | 《적천수》 계열의 통근·강약 판정·종화격           |
+| `qiongtong@1.2.0`                | 《궁통보감》 계열의 한난조습과 조후 후보 성립     |
+| `sanming-symbolic-curated@1.2.0` | 기준 기둥과 위치를 보존하는 17개 엄선 신살 규칙   |
+| `xingchong-resolution@1.0.0`     | 방합·삼합·합화 성립과 탐합망충·충해합 해소 순서   |
 
 규칙 팩끼리 비교할 때는 같은 의미의 결과만 일치·불일치로 묶습니다. 비교 기준 자체가
 다르면 `semantic-mismatch`로 남겨 원래 결과를 보존합니다.

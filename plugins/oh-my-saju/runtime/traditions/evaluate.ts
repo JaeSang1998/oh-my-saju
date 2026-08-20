@@ -36,7 +36,8 @@ import {
   growthStageFor,
 } from '../../tradition-packs/calculation-baseline/growth-stages';
 import { evaluateBuiltInTraditionPackRule } from './rule-registry';
-import { PILLAR_POSITION_LABEL } from './rule-helpers';
+import type { SolarTermContext } from './rule-evaluator-types';
+import { PILLAR_POSITION_LABEL, withTopicParticle } from './rule-helpers';
 import {
   INTERPRETATION_RULE_CONTRACTS_V1,
   INTERPRETATION_RULE_IDS_V1,
@@ -124,6 +125,7 @@ const INTERPRETATION_TOPICS = new Set<string>([
   'yin-yang',
   'ten-gods',
   'relationships',
+  'season-climate',
   'void-branches',
   'strength',
   'pattern',
@@ -629,6 +631,48 @@ type RawRelationMatch = {
   readonly kind?: 'directed-cycle' | 'mutual' | 'self';
 };
 
+/** Conventional Korean season label of a month branch; not a doctrine judgment. */
+const SEASON_LABEL_BY_MONTH_BRANCH: Readonly<Record<string, string>> = {
+  인: '초봄',
+  묘: '한봄',
+  진: '늦봄',
+  사: '초여름',
+  오: '한여름',
+  미: '늦여름',
+  신: '초가을',
+  유: '한가을',
+  술: '늦가을',
+  해: '초겨울',
+  자: '한겨울',
+  축: '늦겨울',
+};
+
+const MILLISECONDS_PER_DAY = 86_400_000;
+
+function roundToHundredths(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+function solarTermContext(candidate: EvaluationCandidate): SolarTermContext | null {
+  const report = candidate.exactReport;
+  if (report === null) return null;
+  const { monthStart, monthEnd, lichun } = report.audit.evidence;
+  return {
+    birthEpochMilliseconds: report.chronology.epochMilliseconds,
+    monthStart: {
+      name: monthStart.name,
+      hanja: monthStart.hanja,
+      epochMilliseconds: monthStart.epochMilliseconds,
+    },
+    monthEnd: {
+      name: monthEnd.name,
+      hanja: monthEnd.hanja,
+      epochMilliseconds: monthEnd.epochMilliseconds,
+    },
+    lichun: { epochMilliseconds: lichun.epochMilliseconds },
+  };
+}
+
 const RELATION_POSITION_LABELS: Readonly<Record<PillarPosition, string>> = {
   year: '연',
   month: '월',
@@ -728,6 +772,7 @@ function evaluateCandidateRule(
     const match = evaluateBuiltInTraditionPackRule(ruleId, {
       pillars: candidate.pillars,
       structure,
+      solarTerm: solarTermContext(candidate),
     });
     const evidencePaths =
       candidate.exactReport === null
@@ -781,7 +826,7 @@ function evaluateCandidateRule(
       matches: [
         {
           key: `${position}:${pillar.cycleIndex}`,
-          statement: `${PILLAR_POSITION_LABEL[position]}는 ${pillar.korean}(${pillar.hanja})입니다.`,
+          statement: `${withTopicParticle(PILLAR_POSITION_LABEL[position])} ${pillar.korean}(${pillar.hanja})입니다.`,
           topic: 'chart-overview',
           values: {
             position,
@@ -812,8 +857,10 @@ function evaluateCandidateRule(
       knownPillars: partial ? known!.knownPillars : ALL_PILLARS,
       omittedPillars,
     };
+    // `values` keeps the exact ratio; the sentence rounds so a three-pillar
+    // subtotal does not read as 21.666667%.
     const compact = FIVE_ELEMENTS.map(
-      (element) => `${element} ${balance.percentages[element]}%`,
+      (element) => `${element} ${Math.round(balance.percentages[element] * 100) / 100}%`,
     ).join(', ');
     return {
       kind: 'matches',
@@ -1014,6 +1061,108 @@ function evaluateCandidateRule(
           ),
           sourceReferenceIds: [GROWTH_STAGE_SOURCE_ID],
           ...(partial ? { coverage: 'partial' as const, omittedPillars } : {}),
+        },
+      ],
+    };
+  }
+
+  if (ruleId === 'core.solar-term-position') {
+    const monthBranch = candidate.pillars.month.branch.korean;
+    const seasonLabel = SEASON_LABEL_BY_MONTH_BRANCH[monthBranch]!;
+    const solarTerm = solarTermContext(candidate);
+    if (solarTerm === null) {
+      const omittedPillars = omittedPillarsFor(candidate);
+      const values: Readonly<Record<string, JsonValue>> = {
+        monthBranch,
+        seasonLabel,
+        status: 'month-branch-season-only',
+        omittedPillars,
+      };
+      return {
+        kind: 'matches',
+        matches: [
+          {
+            key: canonicalJsonStringify(values),
+            statement: `월지는 ${monthBranch}이며 ${seasonLabel}에 해당합니다. 정확한 절입 경과일은 생시가 확정되어야 계산합니다.`,
+            topic: 'season-climate',
+            values,
+            evidence: evidence(candidate, 'pillars.month'),
+            sourceReferenceIds: [COMMON_SOURCE_ID],
+            coverage: 'partial' as const,
+            omittedPillars,
+          },
+        ],
+      };
+    }
+    const elapsedDays = roundToHundredths(
+      (solarTerm.birthEpochMilliseconds - solarTerm.monthStart.epochMilliseconds) /
+        MILLISECONDS_PER_DAY,
+    );
+    const remainingDays = roundToHundredths(
+      (solarTerm.monthEnd.epochMilliseconds - solarTerm.birthEpochMilliseconds) /
+        MILLISECONDS_PER_DAY,
+    );
+    const spanDays = roundToHundredths(
+      (solarTerm.monthEnd.epochMilliseconds - solarTerm.monthStart.epochMilliseconds) /
+        MILLISECONDS_PER_DAY,
+    );
+    const depthPercent = Math.round(
+      ((solarTerm.birthEpochMilliseconds - solarTerm.monthStart.epochMilliseconds) /
+        (solarTerm.monthEnd.epochMilliseconds - solarTerm.monthStart.epochMilliseconds)) *
+        100,
+    );
+    const daysSinceLichun = roundToHundredths(
+      (solarTerm.birthEpochMilliseconds - solarTerm.lichun.epochMilliseconds) /
+        MILLISECONDS_PER_DAY,
+    );
+    const values: Readonly<Record<string, JsonValue>> = {
+      monthBranch,
+      seasonLabel,
+      termName: solarTerm.monthStart.name,
+      termHanja: solarTerm.monthStart.hanja,
+      nextTermName: solarTerm.monthEnd.name,
+      nextTermHanja: solarTerm.monthEnd.hanja,
+      elapsedDays,
+      remainingDays,
+      spanDays,
+      depthPercent,
+      daysSinceLichun,
+      beforeLichun: daysSinceLichun < 0,
+      nearSolarTermEdge: elapsedDays < 3 || remainingDays < 3,
+    };
+    // Under a day the rounded day count reads as an unresolved `0일`, so the
+    // sentence switches to hours while `values` keeps the exact day figure.
+    const elapsedText =
+      elapsedDays < 1 ? `${roundToHundredths(elapsedDays * 24)}시간` : `${elapsedDays}일`;
+    const remainingText =
+      remainingDays < 1 ? `${roundToHundredths(remainingDays * 24)}시간` : `${remainingDays}일`;
+    // `evidence.lichun` is the Lichun of the calendar year, so a birth before it
+    // sits at the tail of the previous Saju year and the distance reads negative.
+    const lichunSentence =
+      daysSinceLichun < 0
+        ? `이 해 입춘까지는 ${-daysSinceLichun < 1 ? `${roundToHundredths(-daysSinceLichun * 24)}시간` : `${roundToHundredths(-daysSinceLichun)}일`} 남아 앞 사주해의 끝자락입니다.`
+        : daysSinceLichun < 1
+          ? `입춘이 지난 지 ${roundToHundredths(daysSinceLichun * 24)}시간째입니다.`
+          : `입춘이 지난 지 ${daysSinceLichun}일째입니다.`;
+    return {
+      kind: 'matches',
+      matches: [
+        {
+          key: canonicalJsonStringify(values),
+          statement:
+            `출생 시각은 ${solarTerm.monthStart.name}(${solarTerm.monthStart.hanja}) 절입 뒤 ${elapsedText}이고 다음 절기 ${solarTerm.monthEnd.name}(${solarTerm.monthEnd.hanja})까지 ${remainingText} 남았습니다. ` +
+            `월지는 ${monthBranch}이며 ${seasonLabel}에 해당하고, 절기 구간의 ${depthPercent}%를 지난 자리입니다. ` +
+            lichunSentence,
+          topic: 'season-climate',
+          values,
+          evidence: evidence(
+            candidate,
+            'chronology.epochMilliseconds',
+            'audit.evidence.monthStart',
+            'audit.evidence.monthEnd',
+            'audit.evidence.lichun',
+          ),
+          sourceReferenceIds: [COMMON_SOURCE_ID],
         },
       ],
     };

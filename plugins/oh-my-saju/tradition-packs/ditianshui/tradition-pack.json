@@ -3,7 +3,7 @@
   "schemaVersion": "1",
   "kind": "oh-my-saju-tradition-pack",
   "id": "ditianshui",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "displayName": "적천수 왕쇠 근거",
   "compatibility": {
     "coreEngineSchemaVersions": ["5"],
@@ -19,12 +19,17 @@
       "immutability": "content-addressed",
       "algorithm": "sha256",
       "canonicalization": "ordered-file-bytes-with-path-v1",
-      "digest": "b58764e77101ba1453ce6e09d2fe7b14cc3758411300866ca6947e8e516cb5d3",
+      "digest": "467b12c377f3ab1cb66471ea80c0f0e8db1f0ab0db784d772ac8b76e4fdc7dba",
       "provenanceContract": "tradition-provenance-v1",
       "queryContract": "static-resource-query-v1"
     },
     "sources": ["sources.json"],
-    "tables": ["seasonal-state-table.json"],
+    "tables": [
+      "seasonal-state-table.json",
+      "root-rank-v1.json",
+      "strength-score-v1.json",
+      "follow-transform-v1.json"
+    ],
     "rules": ["rules.json", "profile.ts", "evaluate.ts"],
     "fixtures": ["fixtures.json"],
     "provenance": ["provenance.json"]

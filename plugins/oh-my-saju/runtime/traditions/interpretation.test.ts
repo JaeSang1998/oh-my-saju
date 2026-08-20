@@ -73,7 +73,7 @@ describe('evaluateSajuInterpretation — exact chart', () => {
       schemaVersion: '2',
       profile: {
         id: 'common-structural',
-        version: '1.1.0',
+        version: '1.2.0',
         school: 'cross-school-common',
       },
       subject: {

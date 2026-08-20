@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1",
+  "rules": [
+    {
+      "id": "xingchong.branch-bureau",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "xingchong.stem-combination-state",
+      "formalization": "reconstruction"
+    },
+    {
+      "id": "xingchong.resolution-order",
+      "formalization": "reconstruction"
+    }
+  ]
+}

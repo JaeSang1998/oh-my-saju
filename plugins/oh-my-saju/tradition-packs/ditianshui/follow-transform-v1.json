@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1",
+  "profileId": "ditianshui-follow-transform-v1",
+  "note": "Pack-local 종격·화격·일행득기격 conditions. Thresholds are this Pack's profile and differ by school.",
+  "notes": {
+    "revealedOfficerMaximum": "일행득기격의 관살 상한은 '천간에 투출한 관살' 점수에만 적용한다. 국을 이루는 지지는 그 자체가 관살 지장간을 품기 때문(가색격 진·미의 을, 종혁격 사의 병·술의 정, 윤하격 신·진의 무·축의 기)에, 지장간까지 합산한 관살 점수를 0으로 요구하면 가색·종혁·윤하 세 격이 어떤 명식에서도 성립할 수 없다. 통설도 일행득기격은 '관살이 투출하지 않을 것'을 조건으로 삼고 국 안에 암장된 관살은 문제 삼지 않으므로, 투간 관살만 세고 상한 0점을 둔다.",
+    "종강격-rooting-any": "종왕격(rooted)·종아격/종재격/종살격(rootless)과 달리 종강격만 rooting=any 인 것은 이 팩의 유파 선택이다. 통설상 종강격은 인성이 극왕해 일간을 따르는 신왕 계열이라 종왕격과 같이 rooted 로 두는 관법이 다수설이지만, 인성이 60점 이상이면 일간의 뿌리 유무와 무관하게 인성으로 종한다고 보는 관법도 있어 이 팩은 후자를 택했다. 뿌리 점수는 조건에서 빼되 근거 문장에는 그대로 노출한다.",
+    "갑기합화토-월지": "갑기합화토의 monthBranches 에 사·오가 들어간 것은 통설(진술축미 토월)보다 넓은 유파 변형이다. 나머지 4종은 '화신의 왕지 2개 + 해당 삼합의 나머지 2개' 패턴을 따르는데, 토는 삼합국이 없어 화생토(火生土) 논리로 화의 왕지 사·오를 보탰다. 화격(토) 성립을 넓히는 방향이므로 결과에 영향이 있다."
+  },
+  "thresholds": {
+    "dominantGroupMinimum": 60,
+    "rootedMinimum": 0.2,
+    "pseudoFollowObstructionMaximum": 10,
+    "revealedOfficerMaximum": 0
+  },
+  "followPatterns": [
+    { "name": "종왕격", "dominantGroup": "비겁", "blockingGroups": ["관살"], "rooting": "rooted" },
+    {
+      "name": "종강격",
+      "dominantGroup": "인성",
+      "blockingGroups": ["재성"],
+      "rooting": "any",
+      "note": "유파 차이. notes.종강격-rooting-any 참조."
+    },
+    {
+      "name": "종아격",
+      "dominantGroup": "식상",
+      "blockingGroups": ["인성"],
+      "rooting": "rootless"
+    },
+    {
+      "name": "종재격",
+      "dominantGroup": "재성",
+      "blockingGroups": ["인성", "비겁"],
+      "rooting": "rootless"
+    },
+    { "name": "종살격", "dominantGroup": "관살", "blockingGroups": ["식상"], "rooting": "rootless" }
+  ],
+  "stemTransforms": [
+    {
+      "pair": ["갑", "기"],
+      "element": "토",
+      "monthBranches": ["진", "술", "축", "미", "사", "오"],
+      "note": "사·오는 유파 변형. notes.갑기합화토-월지 참조."
+    },
+    { "pair": ["을", "경"], "element": "금", "monthBranches": ["신", "유", "축", "사"] },
+    { "pair": ["병", "신"], "element": "수", "monthBranches": ["해", "자", "신", "진"] },
+    { "pair": ["정", "임"], "element": "목", "monthBranches": ["인", "묘", "해", "미"] },
+    { "pair": ["무", "계"], "element": "화", "monthBranches": ["사", "오", "인", "술"] }
+  ],
+  "transformPartnerPositions": ["month", "hour"],
+  "dominantElementPatterns": [
+    {
+      "name": "곡직격",
+      "element": "목",
+      "bureaus": [
+        ["해", "묘", "미"],
+        ["인", "묘", "진"]
+      ]
+    },
+    {
+      "name": "염상격",
+      "element": "화",
+      "bureaus": [
+        ["인", "오", "술"],
+        ["사", "오", "미"]
+      ]
+    },
+    { "name": "가색격", "element": "토", "bureaus": [["진", "술", "축", "미"]] },
+    {
+      "name": "종혁격",
+      "element": "금",
+      "bureaus": [
+        ["사", "유", "축"],
+        ["신", "유", "술"]
+      ]
+    },
+    {
+      "name": "윤하격",
+      "element": "수",
+      "bureaus": [
+        ["신", "자", "진"],
+        ["해", "자", "축"]
+      ]
+    }
+  ]
+}

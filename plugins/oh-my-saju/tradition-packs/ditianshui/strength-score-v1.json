@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1",
+  "profileId": "ditianshui-position-weighted-v1",
+  "note": "Pack-local position weighting. Other schools weight positions differently; this table is this Pack's profile, not a consensus.",
+  "positionPoints": {
+    "yearStem": 10,
+    "monthStem": 13,
+    "hourStem": 11,
+    "yearBranch": 8,
+    "monthBranch": 30,
+    "dayBranch": 16,
+    "hourBranch": 12
+  },
+  "rankShare": {
+    "three": [
+      { "rank": "정기", "share": 0.6 },
+      { "rank": "중기", "share": 0.3 },
+      { "rank": "여기", "share": 0.1 }
+    ],
+    "two": [
+      { "rank": "정기", "share": 0.7 },
+      { "rank": "여기", "share": 0.3 }
+    ],
+    "one": [{ "rank": "정기", "share": 1 }]
+  },
+  "supportTenGods": ["비견", "겁재", "정인", "편인"],
+  "thresholds": [
+    { "minimum": 78, "grade": "태왕" },
+    { "minimum": 60, "grade": "신강" },
+    { "minimum": 52, "grade": "약한 신강" },
+    { "minimum": 48, "grade": "중화" },
+    { "minimum": 32, "grade": "신약" },
+    { "minimum": 15, "grade": "태약" },
+    { "minimum": 0, "grade": "극약" }
+  ]
+}

@@ -1,5 +1,48 @@
 # Changelog
 
+## Oh My Saju plugin 0.6.0 — 2026-08-20
+
+- Added the `xingchong-resolution@1.0.0` Tradition Pack for 형충회합 with Pack-local
+  방합·삼합·육합·천간합 tables and three rules: `xingchong.branch-bureau`,
+  `xingchong.stem-combination-state`, and `xingchong.resolution-order` (a bounded two-pass
+  탐합망충·충해합 order with distance coefficients).
+- Added `ziping.pattern-integrity` and `ziping.pattern-relief-god`: the Pack now fixes one pattern
+  by `main-qi-first` priority, judges 성격·파격 against its own relief-god and breaking-factor
+  tables, and states the fall back to strength balancing when no relief god stands.
+- Added `ditianshui.strength-verdict` and `ditianshui.follow-transform-patterns`, and applied clash
+  (×0.5) and punishment (×0.8) damage to `ditianshui.rooting-ledger`.
+- Added `qiongtong.candidate-condition` and `qiongtong.pack-climate-priority`, which grade each
+  transcribed climate candidate by transparency and branch root and name this Pack's first
+  priority.
+- Added `sanming.resentment-pair` and `sanming.ghost-gate-pair` under the opt-in `symbolic-stars`
+  topic, which stays out of a default reading unless the user asks for 신살;
+  the 원진 and 귀문 tables are kept apart because they agree on only four of six pairs, and both
+  rules report table matches without event meaning.
+- Kept every new verdict Pack-local: `final-pattern`, `final-strength`, and `final-useful-god`
+  remain declared unsupported deterministic outputs, and each Pack now records a
+  `cross-school-*` unresolved capability instead.
+- Bumped `ziping`, `ditianshui`, `qiongtong`, and `sanming-symbolic-curated` to 1.2.0 and updated
+  the 구현된 것 / 구현되지 않은 것 ledger in `docs/research/korean-saju-practical-order.md`.
+
+## Oh My Saju plugin 0.5.0 — 2026-08-20
+
+- Added the `season-climate` reading topic and five new Tradition Pack rules that place a birth
+  instant in the Korean practical interpretation order: `core.solar-term-position`
+  (calculation-baseline), `ziping.governing-day`, `qiongtong.climate-tendency`,
+  `ditianshui.rooting-ledger`, and `ditianshui.command-position`.
+- Raised the default broad reading to display contract v3: `절기와 계절` and
+  `타고난 힘과 쓰는 법` sections, ten required distinct paragraphs, and `근거 — 해석` bullets
+  that read the chart basis before its meaning instead of appending it in parentheses.
+- Added `climate` and `resource` presentation slots, a Barnum gate and an element-to-virtue gate
+  on interpretation spans, and a season-as-environment exemption limited to the climate slot;
+  schema 2 presentation drafts stay accepted.
+- Rewrote the Korean style reference around `~로 봅니다` judgments, a wider banned-translationese
+  list, uneven paragraph length, element-and-season metaphors only, and at least one hard
+  sentence per reading.
+- Published `docs/research/korean-saju-practical-order.md` with the graded evidence behind the
+  new rules, including the school-dependent tables that remain uncollated against primary texts.
+- Bumped `calculation-baseline` to 1.2.0 and `ziping`, `ditianshui`, and `qiongtong` to 1.1.0.
+
 ## Oh My Saju plugin 0.4.5 — 2026-07-31
 
 - Added the `ziping-structural-compatibility@1.0.0` two-person workflow with separate natal

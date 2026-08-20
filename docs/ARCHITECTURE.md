@@ -121,9 +121,13 @@ Pack provenance는 source/rule/table/helper/fixture의 실제 bytes와 version�
 덮어쓰게 하지 않습니다.
 
 현재 Pack은 `calculation-baseline`, `ziping`, `ditianshui`, `qiongtong`,
-`sanming-symbolic-curated`입니다. `calculation-baseline@1.1.0`은 명시적 관법표의
-12운성 단계를 구조 관찰로만 내보내며, `sanming-symbolic-curated@1.1.0`은 연지·일간
-기준 15개 엄선 신살을 각기 다른 규칙 ID와 출전으로 관측합니다. 생시 미상은 전체
+`sanming-symbolic-curated`, `xingchong-resolution`입니다. `xingchong-resolution@1.0.0`은
+방합·삼합·육합·천간합 표와 합화 4조건, 탐합망충·충해합 해소 순서를 팩 로컬 표로만
+계산하며 길흉을 붙이지 않습니다. `ditianshui@1.2.0`은 통근 손상 보정(충 0.5·형 0.8, 곱셈),
+팩 로컬 100점 위치 배점 강약 판정, 종격·화격·일행득기격 조건을 자기 표로만 계산합니다.
+배점표와 임계값은 이 팩의 프로파일이며 유파 간 최종 신강·신약은 확정하지 않습니다. `ziping@1.2.0`은 월지가 일간의 록·양인·비겁이면 내격 여덟 격에서 빼고, 본기→중기→여기 투간 순서로 격을 확정한 뒤 팩 로컬 상신·파격 표로 성패를 판정합니다. 상신은 이 관법 안의 용신이며 플러그인의 최종 용신이 아니고, 상신이 서지 않으면 억부로 축을 옮긴다는 사실을 문장에 남깁니다. `qiongtong@1.2.0`은 조후 후보마다 투간·지지 뿌리를 따져 쓸 수 있는 자리인지 평가하고 이 팩 기준 1순위까지만 정합니다. `calculation-baseline@1.2.0`은 명시적 관법표의
+12운성 단계를 구조 관찰로만 내보내며, `sanming-symbolic-curated@1.2.0`은 연지·일간
+기준 17개 엄선 신살(원진·귀문 쌍 포함)을 각기 다른 규칙 ID와 출전으로 관측합니다. 생시 미상은 전체
 부재가 아닌 부분 관측으로 남기고, 학파 차이가 있는 양인은 두 variant로 보존합니다.
 이는 길흉·사건 해석이 아닙니다.
 각 Pack은 고유 namespace와 isolated finding set을 반환합니다. comparison은 호환되는

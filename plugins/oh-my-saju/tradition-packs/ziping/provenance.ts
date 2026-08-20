@@ -17,6 +17,8 @@ const PACK_DIRECTORY = 'plugins/oh-my-saju/tradition-packs/ziping';
 const KNOWLEDGE_RESOURCES = [
   'sources.json',
   'rules.json',
+  'month-command-days-v1.json',
+  'pattern-integrity-v1.json',
   'profile.ts',
   'evaluate.ts',
   'fixtures.json',
@@ -27,7 +29,13 @@ const fixtures = fixtureInventory(fixtureData);
 const declaredProvenance = provenanceData(provenanceContractData);
 
 export const ZIPING_PROVENANCE: TraditionPackProvenance = deepFreeze({
-  ruleIds: ['ziping.month-command', 'ziping.pattern-candidate'],
+  ruleIds: [
+    'ziping.month-command',
+    'ziping.pattern-candidate',
+    'ziping.governing-day',
+    'ziping.pattern-integrity',
+    'ziping.pattern-relief-god',
+  ],
   fixtureSetIds: fixtures.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
     PACK_DIRECTORY,

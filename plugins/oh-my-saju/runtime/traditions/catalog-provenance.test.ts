@@ -244,7 +244,7 @@ describe('Tradition Pack provenance', () => {
 
   test('classical Packs disclose pending checksums and independent-review status', () => {
     const entries = listTraditionPacks().filter(({ kind }) => kind === 'classical-doctrine');
-    expect(entries).toHaveLength(4);
+    expect(entries).toHaveLength(5);
     for (const { contract } of entries) {
       expect(
         contract.reproducibility.editionLocks.every(

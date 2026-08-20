@@ -4,6 +4,10 @@
     {
       "id": "interpretation-fixtures-v1:ziping-month-command",
       "paths": ["plugins/oh-my-saju/runtime/traditions/school-comparison.test.ts"]
+    },
+    {
+      "id": "ziping-v1.2:pattern-integrity-and-relief-god",
+      "paths": ["plugins/oh-my-saju/tradition-packs/ziping/evaluate.test.ts"]
     }
   ]
 }

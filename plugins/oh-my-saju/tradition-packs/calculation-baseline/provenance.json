@@ -115,6 +115,16 @@
       "formalizationStatus": "formalized-prose",
       "transcriptionSha256": null,
       "reviewerIds": []
+    },
+    {
+      "ruleId": "core.solar-term-position",
+      "sourceReferenceIds": ["saju-engine-calculation-contract-v1"],
+      "sourceLocators": [
+        "plugins/oh-my-saju/runtime/traditions/evaluate.ts#core.solar-term-position"
+      ],
+      "formalizationStatus": "formalized-prose",
+      "transcriptionSha256": null,
+      "reviewerIds": []
     }
   ]
 }

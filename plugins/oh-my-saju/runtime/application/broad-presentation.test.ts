@@ -72,6 +72,7 @@ const SUMMARY_TEXTS = {
   qiongtong: '가까운 사이에서도 생각의 과정과 결론을 나누어 말하면 오해가 줄어듭니다.',
   'sanming-symbolic-curated':
     '여러 가능성을 살피되 기준과 마감을 정해 두면 일의 마무리가 빨라집니다.',
+  'xingchong-resolution': '한 번에 여러 일이 겹칠 때 순서를 먼저 정하면 미루는 일이 줄어듭니다.',
 } as const;
 
 function broadDraftsFor(tasks: readonly BroadTaskFixture[]): readonly OhMySajuNarrationDraft[] {
@@ -326,13 +327,14 @@ describe('broad-reading presentation contract', () => {
     });
   });
 
-  test('stable-only 근거가 7개 기본 프로필 슬롯을 만들 수 없으면 prepare에서 일찍 설명한다', async () => {
+  test('stable-only 근거가 10개 기본 프로필 슬롯을 만들 수 없으면 prepare에서 일찍 설명한다', async () => {
     const sparseRequest = {
       calculation: {
         kind: 'possibilities' as const,
         request: {
           birth: {
-            date: { calendar: 'gregorian' as const, year: 1996, month: 5, day: 27 },
+            // 소서 절입(1995-07-07 23:00 KST)을 가로지르는 구간이라 월주·일주가 후보마다 달라진다.
+            date: { calendar: 'gregorian' as const, year: 1995, month: 7, day: 7 },
             time: {
               kind: 'range' as const,
               startInclusive: { hour: 22, minute: 30 },
@@ -359,7 +361,7 @@ describe('broad-reading presentation contract', () => {
         code: 'INVALID_COMMAND',
         details: {
           policy: 'insufficient-broad-presentation-capacity',
-          requiredParagraphSlots: 7,
+          requiredParagraphSlots: 10,
           recommendation: 'use-include-candidate-dependent-or-focused',
         },
       },
@@ -1029,6 +1031,41 @@ describe('broad-reading presentation contract', () => {
     expect(markdown).not.toContain('확인된 기둥만 반영한 내용입니다.');
   });
 
+  test('schemaVersion 3 draft는 legacy 경로가 아니라 v3 계약으로 검증한다', async () => {
+    const prepared = await prepareBroadReading();
+    const result = await validateBroad(prepared, undefined, {
+      schemaVersion: '3',
+      kind: 'default-profile',
+    });
+
+    expect(result).toMatchObject({
+      ok: false,
+      command: 'validate-reading',
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        message: 'presentationDraft.climate must be an object.',
+        details: { path: 'presentationDraft.climate' },
+      },
+    });
+  });
+
+  test('schemaVersion 2 draft는 v3 필수 슬롯 없이도 legacy 경로로 내려가지 않는다', async () => {
+    const prepared = await prepareBroadReading();
+    const result = await validateBroad(prepared, undefined, {
+      schemaVersion: '2',
+      kind: 'default-profile',
+    });
+
+    expect(result).toMatchObject({
+      ok: false,
+      command: 'validate-reading',
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        message: 'presentationDraft.core must contain exactly two central mechanisms.',
+      },
+    });
+  });
+
   test('focused 요청은 broad presentation 없이 기존 검증 흐름을 유지한다', async () => {
     const request = {
       ...BROAD_REQUEST,
@@ -1089,7 +1126,7 @@ describe('broad-reading presentation contract', () => {
     if (!result.ok || result.command !== 'prepare-reading') return;
     expect(
       result.result.narrationTasks.map(({ request }) => request.task.readingPolicy.mode),
-    ).toEqual(['focused', 'focused', 'focused', 'focused', 'focused']);
+    ).toEqual(['focused', 'focused', 'focused', 'focused', 'focused', 'focused']);
   });
 
   test('명시적 technical-audit 분류도 질문 주제로 사전 거부하지 않는다', async () => {

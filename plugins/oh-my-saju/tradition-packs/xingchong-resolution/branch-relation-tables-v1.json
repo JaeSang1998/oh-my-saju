@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1",
+  "profileId": "xingchong-branch-relation-tables-v1",
+  "wumeiTransform": "earth",
+  "directionalBureaus": [
+    { "id": "인묘진", "members": ["인", "묘", "진"], "element": "목" },
+    { "id": "사오미", "members": ["사", "오", "미"], "element": "화" },
+    { "id": "신유술", "members": ["신", "유", "술"], "element": "금" },
+    { "id": "해자축", "members": ["해", "자", "축"], "element": "수" }
+  ],
+  "triadBureaus": [
+    { "id": "신자진", "growth": "신", "peak": "자", "storage": "진", "element": "수" },
+    { "id": "해묘미", "growth": "해", "peak": "묘", "storage": "미", "element": "목" },
+    { "id": "인오술", "growth": "인", "peak": "오", "storage": "술", "element": "화" },
+    { "id": "사유축", "growth": "사", "peak": "유", "storage": "축", "element": "금" }
+  ],
+  "sixCombinations": [
+    { "members": ["자", "축"], "element": "토" },
+    { "members": ["인", "해"], "element": "목" },
+    { "members": ["묘", "술"], "element": "화" },
+    { "members": ["진", "유"], "element": "금" },
+    { "members": ["사", "신"], "element": "수" },
+    { "members": ["오", "미"], "element": "토", "divergence": "earth-or-fire-split" }
+  ],
+  "stemCombinations": [
+    { "members": ["갑", "기"], "element": "토" },
+    { "members": ["을", "경"], "element": "금" },
+    { "members": ["병", "신"], "element": "수" },
+    { "members": ["정", "임"], "element": "목" },
+    { "members": ["무", "계"], "element": "화" }
+  ],
+  "punishmentTriads": [
+    { "id": "인사신", "members": ["인", "사", "신"] },
+    { "id": "축술미", "members": ["축", "술", "미"] }
+  ],
+  "branchMainQi": {
+    "자": "계",
+    "축": "기",
+    "인": "갑",
+    "묘": "을",
+    "진": "무",
+    "사": "병",
+    "오": "정",
+    "미": "기",
+    "신": "경",
+    "유": "신",
+    "술": "무",
+    "해": "임"
+  }
+}

@@ -82,18 +82,19 @@ describe('createAiSajuReading', () => {
           mode: 'chart-first-profile',
           format: 'chart-and-short-sections',
           maxParagraphSentences: 3,
-          maxSections: 4,
+          maxSections: 6,
           maxParagraphsPerSection: 3,
-          maxNarrativeCharacters: 3_200,
+          maxNarrativeCharacters: 4_800,
           maxParagraphCharacters: 900,
           advancedDoctrine: 'only-when-explicitly-requested',
           neverEndWithLimitations: true,
           broadReading: {
             finalSelectionRequired: true,
-            minimumDistinctParagraphs: 7,
+            minimumDistinctParagraphs: 10,
+            profileV2MinimumDistinctParagraphs: 7,
             legacyMinimumDistinctParagraphs: 9,
-            maxSelectedParagraphCharacters: 420,
-            maxPresentationCharacters: 2_200,
+            maxSelectedParagraphCharacters: 460,
+            maxPresentationCharacters: 3_800,
             structuredLivedPatternRequired: false,
             structuredEvidenceBridgeRequired: true,
           },
@@ -109,7 +110,7 @@ describe('createAiSajuReading', () => {
       },
       template: {
         id: 'saju-grounded-narration',
-        version: '4.3.0',
+        version: '5.0.0',
       },
     });
     expect(reading).toMatchObject({
@@ -129,7 +130,7 @@ describe('createAiSajuReading', () => {
         defaultDisplay: false,
       },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '4.3.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '5.0.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,
@@ -168,7 +169,7 @@ describe('createAiSajuReading', () => {
     expect(serializedRequest).not.toContain('"chronology"');
     expect(serializedRequest).not.toContain('"originalText"');
     expect(serializedRequest).not.toContain('"values"');
-    expect(captured?.evidence.profile).toEqual({ id: 'common-structural', version: '1.1.0' });
+    expect(captured?.evidence.profile).toEqual({ id: 'common-structural', version: '1.2.0' });
     expect(captured?.evidence.nonDisplayGuardrails).toMatchObject({
       neverQuoteOrParaphrase: true,
       profileLimitations: expect.any(Array),
@@ -176,7 +177,7 @@ describe('createAiSajuReading', () => {
     });
     expect(captured?.evidence.nonDisplayGuardrails.profileLimitations.length).toBeGreaterThan(0);
     expect(
-      captured?.evidence.findings.every(({ id }) => id.startsWith('common-structural@1.1.0:')),
+      captured?.evidence.findings.every(({ id }) => id.startsWith('common-structural@1.2.0:')),
     ).toBe(true);
     expect(reading.audit.privacy).toMatchObject({
       structuredBirthRequestSentToNarrator: false,

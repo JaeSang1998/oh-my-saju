@@ -22,12 +22,12 @@ const EXACT_CALCULATION = {
   },
 };
 
-const ZIPING: TraditionPackRef = { id: 'ziping', version: '1.0.0' };
+const ZIPING: TraditionPackRef = { id: 'ziping', version: '1.2.0' };
 const DITIANSHUI: TraditionPackRef = {
   id: 'ditianshui',
-  version: '1.0.0',
+  version: '1.2.0',
 };
-const QIONGTONG: TraditionPackRef = { id: 'qiongtong', version: '1.0.0' };
+const QIONGTONG: TraditionPackRef = { id: 'qiongtong', version: '1.2.0' };
 
 function coordinate(
   outcomeKey: string,
@@ -54,6 +54,7 @@ describe('Tradition Pack catalog', () => {
       'ditianshui',
       'qiongtong',
       'sanming-symbolic-curated',
+      'xingchong-resolution',
     ]);
     expect(catalog.every(({ assurance }) => assurance.release === 'stable')).toBe(true);
     expect(
@@ -67,8 +68,8 @@ describe('Tradition Pack catalog', () => {
         outputBoundary: 'chart-observation',
         sourceCoverage: {
           status: 'complete',
-          verifiedUnits: 11,
-          totalUnits: 11,
+          verifiedUnits: 12,
+          totalUnits: 12,
           unit: 'rules',
         },
         implementedCapabilityIds: [
@@ -83,6 +84,7 @@ describe('Tradition Pack catalog', () => {
           'core.relationships',
           'core.growth-stages',
           'core.void-branches',
+          'core.solar-term-position',
         ],
         unresolvedCapabilityIds: [],
       },
@@ -94,7 +96,7 @@ describe('Tradition Pack catalog', () => {
         sourceCoverage: {
           status: 'partial',
           verifiedUnits: 1,
-          totalUnits: 2,
+          totalUnits: 5,
           unit: 'rules',
         },
         implementedCapabilityIds: [
@@ -103,13 +105,12 @@ describe('Tradition Pack catalog', () => {
           'ziping.surface-transparency',
           'ziping.unranked-pattern-candidates',
           'ziping.lu-yang-blade-base-candidate',
-        ],
-        unresolvedCapabilityIds: [
           'ziping.governing-days',
           'ziping.success-defeat-rescue',
           'ziping.final-pattern',
           'ziping.useful-god',
         ],
+        unresolvedCapabilityIds: ['ziping.cross-school-final-useful-god'],
       },
       {
         runtime: 'stable',
@@ -119,17 +120,21 @@ describe('Tradition Pack catalog', () => {
         sourceCoverage: {
           status: 'partial',
           verifiedUnits: 1,
-          totalUnits: 2,
+          totalUnits: 6,
           unit: 'rules',
         },
         implementedCapabilityIds: [
           'sanming.seasonal-state-table',
           'ditianshui.visible-hidden-evidence-ledger',
-        ],
-        unresolvedCapabilityIds: [
-          'ditianshui.evidence-weighting',
+          'ditianshui.rooting-ledger',
+          'ditianshui.rooting-damage-adjustment',
+          'ditianshui.command-position',
           'ditianshui.final-strength',
           'ditianshui.follow-transform-patterns',
+        ],
+        unresolvedCapabilityIds: [
+          'ditianshui.cross-school-final-strength',
+          'ditianshui.transformed-element-root-substitution',
         ],
       },
       {
@@ -147,11 +152,14 @@ describe('Tradition Pack catalog', () => {
           'qiongtong.120-cell-candidate-table',
           'qiongtong.candidate-presence',
           'qiongtong.7-cell-source-audit',
+          'qiongtong.climate-tendency',
+          'qiongtong.candidate-transparency-and-root-check',
+          'qiongtong.final-climate-useful-god',
         ],
         unresolvedCapabilityIds: [
           'qiongtong.113-cell-source-audit',
-          'qiongtong.condition-evaluation',
-          'qiongtong.final-climate-useful-god',
+          'qiongtong.base-text-condition-clause-evaluation',
+          'qiongtong.cross-school-final-useful-god',
         ],
       },
       {
@@ -160,9 +168,9 @@ describe('Tradition Pack catalog', () => {
         doctrineCoverage: 'partial',
         outputBoundary: 'traditional-evidence',
         sourceCoverage: {
-          status: 'complete',
+          status: 'partial',
           verifiedUnits: 15,
-          totalUnits: 15,
+          totalUnits: 17,
           unit: 'rules',
         },
         implementedCapabilityIds: [
@@ -174,11 +182,37 @@ describe('Tradition Pack catalog', () => {
           'sanming.blade-after-lu-all-stems.raw-branch-match',
           'sanming.blade-yang-stems-only.raw-branch-match',
           'sanming.unknown-hour-partial-observation',
+          'sanming.resentment-pair-table-match',
+          'sanming.ghost-gate-pair-table-match',
         ],
         unresolvedCapabilityIds: [
+          'sanming.resentment-ghost-gate-edition-audit',
           'sanming.xianchi-heavenly-stem-nayin-qualification',
           'sanming.blade-variant-selection',
           'sanming.symbolic-star-meaning',
+        ],
+      },
+      {
+        runtime: 'stable',
+        implementation: 'complete-for-declared-output',
+        doctrineCoverage: 'partial',
+        outputBoundary: 'traditional-evidence',
+        sourceCoverage: {
+          status: 'partial',
+          verifiedUnits: 0,
+          totalUnits: 3,
+          unit: 'rules',
+        },
+        implementedCapabilityIds: [
+          'xingchong.branch-bureau',
+          'xingchong.stem-combination-state',
+          'xingchong.resolution-order',
+        ],
+        unresolvedCapabilityIds: [
+          'xingchong.classical-edition-audit',
+          'xingchong.wumei-transform-selection',
+          'xingchong.transformed-element-substitution',
+          'xingchong.cross-school-resolution-order',
         ],
       },
     ]);
@@ -241,12 +275,26 @@ describe('calculateSajuSchoolComparison', () => {
       values: {
         monthBranch: '사',
         mainHiddenStem: '병',
-        candidateSourceStems: ['병', '무', '경'],
-        candidatePatterns: ['식신격', '편재격', '칠살격'],
-        candidateOrderMeaning: 'hidden-stem-table-order-not-strength-or-priority',
+        // 월지 지장간은 이 팩의 월률분야표(여기 → 중기 → 정기)에서 읽는다.
+        candidateSourceStems: ['무', '경', '병'],
+        candidatePatterns: ['편재격', '칠살격', '식신격'],
+        candidateOrderMeaning: 'yueling-fenye-table-order-not-strength-or-priority',
         patternCandidates: [
           expect.objectContaining({
+            sourceStem: '무',
+            sourceRank: '여기',
+            pattern: '편재격',
+            status: 'indeterminate',
+          }),
+          expect.objectContaining({
+            sourceStem: '경',
+            sourceRank: '중기',
+            pattern: '칠살격',
+            status: 'indeterminate',
+          }),
+          expect.objectContaining({
             sourceStem: '병',
+            sourceRank: '정기',
             pattern: '식신격',
             status: 'candidate',
             exposedStemRefs: [
@@ -257,19 +305,10 @@ describe('calculateSajuSchoolComparison', () => {
               },
             ],
           }),
-          expect.objectContaining({
-            sourceStem: '무',
-            pattern: '편재격',
-            status: 'indeterminate',
-          }),
-          expect.objectContaining({
-            sourceStem: '경',
-            pattern: '칠살격',
-            status: 'indeterminate',
-          }),
         ],
         finalPattern: null,
-        status: 'candidates-with-explicit-indeterminacy',
+        finalPatternResolvedBy: 'ziping.pattern-integrity',
+        status: 'candidates-resolved-by-pattern-integrity-rule',
       },
       comparison: {
         definitionId: 'ziping.month-command-pattern-candidate.v1',

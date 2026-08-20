@@ -18,6 +18,9 @@ const KNOWLEDGE_RESOURCES = [
   'sources.json',
   'rules.json',
   'seasonal-state-table.json',
+  'root-rank-v1.json',
+  'strength-score-v1.json',
+  'follow-transform-v1.json',
   'profile.ts',
   'evaluate.ts',
   'fixtures.json',
@@ -28,7 +31,14 @@ const fixtures = fixtureInventory(fixtureData);
 const declaredProvenance = provenanceData(provenanceContractData);
 
 export const DITIANSHUI_PROVENANCE: TraditionPackProvenance = deepFreeze({
-  ruleIds: ['ditianshui.seasonal-state', 'ditianshui.support-ledger'],
+  ruleIds: [
+    'ditianshui.seasonal-state',
+    'ditianshui.support-ledger',
+    'ditianshui.rooting-ledger',
+    'ditianshui.command-position',
+    'ditianshui.strength-verdict',
+    'ditianshui.follow-transform-patterns',
+  ],
   fixtureSetIds: fixtures.fixtureSets.map(({ id }) => id),
   knowledgeSnapshot: knowledgeSnapshot(
     PACK_DIRECTORY,

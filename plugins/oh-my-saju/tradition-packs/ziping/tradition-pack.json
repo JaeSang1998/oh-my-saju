@@ -3,7 +3,7 @@
   "schemaVersion": "1",
   "kind": "oh-my-saju-tradition-pack",
   "id": "ziping",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "displayName": "자평진전 월령",
   "compatibility": {
     "coreEngineSchemaVersions": ["5"],
@@ -19,12 +19,12 @@
       "immutability": "content-addressed",
       "algorithm": "sha256",
       "canonicalization": "ordered-file-bytes-with-path-v1",
-      "digest": "1ccded897bc40e6798af13da5d6b2cf361b9efd7c1cdc25108e3c7df1b5a9171",
+      "digest": "8e0c01af6334073fe5735608f054ad91cc2f572873e4ddf659d4e0cc9dd0279f",
       "provenanceContract": "tradition-provenance-v1",
       "queryContract": "static-resource-query-v1"
     },
     "sources": ["sources.json"],
-    "tables": [],
+    "tables": ["month-command-days-v1.json", "pattern-integrity-v1.json"],
     "rules": ["rules.json", "profile.ts", "evaluate.ts"],
     "fixtures": ["fixtures.json"],
     "provenance": ["provenance.json"]

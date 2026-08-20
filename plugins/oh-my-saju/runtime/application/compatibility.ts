@@ -13,6 +13,7 @@ import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { assertSafeIdentifier } from '../reading/option-validation';
 import { calculateKoreanSajuAnalysis } from '../traditions/calculate-korean-analysis';
 import { getBranchTenGod, getHeavenlyStemElement, getTenGod } from '../traditions/domain';
+import { withAdverbialParticle, withSubjectParticle } from '../traditions/rule-helpers';
 import type {
   ExactKoreanSajuAnalysisResult,
   PossibilityKoreanSajuAnalysisResult,
@@ -457,7 +458,7 @@ function relationStatement(
         ? `${members[0]}→${members[1]}`
         : `${members[1]}→${members[0]}`
       : members.join('·');
-  return `${firstLabel} ${POSITION_LABELS[firstPosition]}와 ${secondLabel} ${POSITION_LABELS[secondPosition]} 사이에는 ${relation}(${detail})이 있습니다.`;
+  return `${firstLabel} ${POSITION_LABELS[firstPosition]}와 ${secondLabel} ${POSITION_LABELS[secondPosition]} 사이에는 ${withSubjectParticle(`${relation}(${detail})`)} 있습니다.`;
 }
 
 function collectPairObservations(
@@ -695,7 +696,7 @@ function directionalRangeFindings(
     const members = unique(directional.flatMap((finding) => finding.members));
     const statement =
       tenGods.length === 1
-        ? `모든 후보에서 ${from.label}의 일간을 기준으로 본 ${to.label}의 일간 십신은 ${tenGods[0]}으로 같습니다.`
+        ? `모든 후보에서 ${from.label}의 일간을 기준으로 본 ${to.label}의 일간 십신은 ${withAdverbialParticle(tenGods[0]!)} 같습니다.`
         : `입력 범위에 따라 ${from.label}의 일간을 기준으로 본 ${to.label}의 일간 십신은 ${tenGods.join('·')} 가운데 하나로 달라집니다.`;
     const key = JSON.stringify({
       kind: 'day-master-ten-god-range',

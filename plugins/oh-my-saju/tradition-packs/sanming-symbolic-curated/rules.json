@@ -62,6 +62,16 @@
     {
       "id": "sanming.blade-yang-stems-only",
       "formalization": "literal-table"
+    },
+    {
+      "id": "sanming.resentment-pair",
+      "formalization": "literal-table",
+      "tableSeparation": "resentment-and-ghost-gate-tables-kept-apart"
+    },
+    {
+      "id": "sanming.ghost-gate-pair",
+      "formalization": "literal-table",
+      "tableSeparation": "resentment-and-ghost-gate-tables-kept-apart"
     }
   ]
 }

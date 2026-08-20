@@ -30,6 +30,16 @@
       "locator": "abstract and method taxonomy",
       "textualLayer": "modern-analysis",
       "verification": "bibliographic-only"
+    },
+    {
+      "id": "yuanhai-ziping-yueling-fenye-v1",
+      "kind": "classical-text",
+      "title": "《淵海子平》 월률분야 사령 일수표",
+      "citation": "《淵海子平》 계열 통용본의 「論月令分野」 월률분야 사령 일수. 유파마다 일수가 달라 이 팩은 연해자평 계열 통용본 한 가지만 옮겼습니다.",
+      "url": "https://zh.wikisource.org/wiki/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3",
+      "locator": "卷一, 論月令分野 계열 항목",
+      "textualLayer": "base-text",
+      "verification": "unverified"
     }
   ]
 }

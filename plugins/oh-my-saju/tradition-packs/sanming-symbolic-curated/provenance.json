@@ -179,6 +179,22 @@
       "formalizationStatus": "literal-table",
       "transcriptionSha256": null,
       "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.resentment-pair",
+      "sourceReferenceIds": ["korean-circulated-resentment-ghost-gate-v1"],
+      "sourceLocators": ["원진 6쌍 대조표; 귀문 표와 분리 보존"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
+    },
+    {
+      "ruleId": "sanming.ghost-gate-pair",
+      "sourceReferenceIds": ["korean-circulated-resentment-ghost-gate-v1"],
+      "sourceLocators": ["귀문 6쌍 대조표; 원진 표와 분리 보존"],
+      "formalizationStatus": "literal-table",
+      "transcriptionSha256": null,
+      "reviewerIds": []
     }
   ]
 }

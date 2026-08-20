@@ -2,7 +2,7 @@
   "schemaVersion": "1",
   "fixtureSets": [
     {
-      "id": "sanming-symbolic-curated-v1.1:four-triad-twelve-branch-ten-stem-partial",
+      "id": "sanming-symbolic-curated-v1.2:four-triad-twelve-branch-ten-stem-pair-tables",
       "paths": ["plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/evaluate.test.ts"]
     }
   ]

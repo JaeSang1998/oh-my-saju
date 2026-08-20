@@ -226,9 +226,37 @@ export const QIONGTONG_CLIMATE_TABLE_V1_METADATA = deepFreeze({
   sourceWork: '궁통보감(窮通寶鑑)',
   sourceTranscriptionRevision: 'Wikisource oldid 2294674',
   sourceScanEdition: '1937 《窮通寶鑑評註》',
+  /**
+   * 큐레이트 7칸 밖에서 전사 오류가 확인되어 저본 문구로 되돌린 셀 목록.
+   * 저본(Wikisource oldid 2294674) 대조까지만 마쳤고 1937년 판면 대조는
+   * 아직 하지 않았으므로 verification 등급은 큐레이트 7칸으로 올리지 않는다.
+   */
+  baseTextCorrectedCells: [
+    {
+      cell: '갑:미',
+      correctedTo: ['계', '정', '경'],
+      basis: '六月甲木 先丁後庚，無癸亦可 — 壬은 원문에 없음',
+    },
+    {
+      cell: '정:진',
+      correctedTo: ['갑', '경'],
+      basis: '三月丁火 先用甲木引丁制土，次看庚金 — 戊土는 제거 대상(病)',
+    },
+    {
+      cell: '신:유',
+      correctedTo: ['임', '갑'],
+      basis: '八月辛金 專用壬水淘洗，見甲制土方妙 — 丁은 원문에 없음',
+    },
+    {
+      cell: '계:오',
+      correctedTo: ['경', '신', '임', '계'],
+      basis: '五月癸水 必須庚辛為生身之本 … 方得辛金之用 — 辛 누락 복원',
+    },
+  ],
   cautions: [
     '판본 및 전사 차이가 남아 있어 최종 용신으로 사용할 수 없다.',
     '배열 순서는 전사된 후보 순서이며 강도 점수나 확률이 아니다.',
+    '이 팩은 전사 순서를 후보 상태가 같을 때의 타이브레이크로만 쓰며, 그 순서를 원문이 매긴 우열로 제시하지 않는다.',
     '격국용신 및 억부용신과 병합하거나 다수결로 고르지 않는다.',
   ],
 } as const);
@@ -248,7 +276,7 @@ export const QIONGTONG_CLIMATE_CANDIDATES_V1: ClimateCandidateTable = deepFreeze
     진: ['경', '임'],
     사: ['계', '정'],
     오: ['계', '정', '경'],
-    미: ['계', '정', '임'],
+    미: ['계', '정', '경'],
     신: ['경', '정', '임'],
     유: ['정', '병', '경'],
     술: ['경', '갑', '정', '임', '계'],
@@ -287,7 +315,7 @@ export const QIONGTONG_CLIMATE_CANDIDATES_V1: ClimateCandidateTable = deepFreeze
     축: ['갑', '경'],
     인: ['갑', '경'],
     묘: ['경', '갑'],
-    진: ['갑', '경', '무'],
+    진: ['갑', '경'],
     사: ['갑', '경'],
     오: ['임', '경', '계'],
     미: ['갑', '임', '경'],
@@ -348,7 +376,7 @@ export const QIONGTONG_CLIMATE_CANDIDATES_V1: ClimateCandidateTable = deepFreeze
     오: ['임', '기', '계'],
     미: ['임', '경', '갑'],
     신: ['임', '갑', '무'],
-    유: ['임', '갑', '정'],
+    유: ['임', '갑'],
     술: ['임', '갑'],
     해: ['임', '병'],
   },
@@ -373,7 +401,7 @@ export const QIONGTONG_CLIMATE_CANDIDATES_V1: ClimateCandidateTable = deepFreeze
     묘: ['경', '신'],
     진: ['병', '신', '갑'],
     사: ['신'],
-    오: ['경', '임', '계'],
+    오: ['경', '신', '임', '계'],
     미: ['경', '신', '계'],
     신: ['정'],
     유: ['신', '병'],

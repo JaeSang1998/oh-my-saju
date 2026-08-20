@@ -65,14 +65,24 @@ or a bare SHA-256 digest.
 
 The Korean preset currently installs:
 
-- Pack `calculation-baseline@1.1.0`, profile `common-structural@1.1.0`, including the explicitly
+- Pack `calculation-baseline@1.2.0`, profile `common-structural@1.2.0`, including the explicitly
   parameterized 12 growth-stage lookup with no automatic strength or favorability meaning;
-- Pack `ziping@1.0.0`, profile `ziping-month-command@1.0.0`;
-- Pack `ditianshui@1.0.0`, profile `ditianshui-strength-evidence@1.0.0`;
-- Pack `qiongtong@1.0.0`, profile `qiongtong-climate@1.0.0`;
-- Pack `sanming-symbolic-curated@1.1.0`, profile `sanming-symbolic-curated@1.1.0`, with 15
-  separately cited raw symbolic-star rules, explicit blade variants, and no automatic 길흉 or
-  event meaning.
+- Pack `ziping@1.2.0`, profile `ziping-month-command@1.2.0`, which decides one pattern and its
+  success or defeat with Pack-local relief-god and breaking-factor tables; the relief god is this
+  Pack's useful god, not the plugin's final one;
+- Pack `ditianshui@1.2.0`, profile `ditianshui-strength-evidence@1.2.0`, which applies clash and
+  punishment damage to the rooting ledger, returns a Pack-local strength verdict from its own
+  position-weighted 100-point profile, and screens follow/transform/dominant-element patterns
+  without attaching fortune meaning;
+- Pack `qiongtong@1.2.0`, profile `qiongtong-climate@1.2.0`, which grades each climate candidate
+  by transparency and branch root and names this Pack's first priority, not the plugin's final
+  useful god;
+- Pack `sanming-symbolic-curated@1.2.0`, profile `sanming-symbolic-curated@1.2.0`, with 17
+  separately cited raw symbolic-star rules, explicit blade variants, separately kept 원진 and
+  귀문 tables, and no automatic 길흉 or event meaning;
+- Pack `xingchong-resolution@1.0.0`, profile `xingchong-resolution@1.0.0`, which decides branch
+  bureaus, stem-combination transform state, and a two-pass clash/punishment resolution order
+  (탐합망충, 충해합) from Pack-local relation tables.
 
 Each Pack produces findings from its own source lineage. Narration tasks contain one Pack finding
 set only. Never pool raw findings into one provider prompt, average disagreements, or select a

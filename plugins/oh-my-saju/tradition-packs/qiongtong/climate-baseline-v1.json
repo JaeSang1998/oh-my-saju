@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1",
+  "profileId": "qiongtong-climate-baseline-v1",
+  "status": "modern-reconstruction-not-classical",
+  "monthBaselineBasis": {
+    "temperature": "12지 한 바퀴를 -3(자) … +3(오) 로 균등하게 배치한 완전 단조 사인 곡선. 고전 수치가 아니라 이 팩이 정한 재구성 눈금이다.",
+    "moisture": "계절 블록(사오미 조 → 신유술 조 → 해자축 습 → 인묘진 습) 사이를 한 칸씩 완만히 잇는 경사값이다. 해(0)는 술(+1)과 자(-1) 사이의 전이값으로 둔 것이지 亥가 자·축보다 덜 습하다는 주장이 아니다. 진(-1)은 水庫(습토), 술(+1)은 火庫(조토)라는 통설을 반영한 블록 내 예외다.",
+    "moistureUsage": "moisture 값은 어떤 등급 판정에도 쓰이지 않으며 문장 표시와 비교 키에만 들어간다. 등급(grades)은 temperature 절댓값만으로 정한다.",
+    "openQuestion": "亥를 자·축과 같은 -1 로 내리는 대안이 있으나 근거가 될 고전 수치표가 없어 전이값을 유지한다."
+  },
+  "monthBaseline": {
+    "자": { "temperature": -3, "moisture": -1 },
+    "축": { "temperature": -2, "moisture": -1 },
+    "인": { "temperature": -1, "moisture": 0 },
+    "묘": { "temperature": 0, "moisture": 0 },
+    "진": { "temperature": 1, "moisture": -1 },
+    "사": { "temperature": 2, "moisture": 1 },
+    "오": { "temperature": 3, "moisture": 2 },
+    "미": { "temperature": 2, "moisture": 2 },
+    "신": { "temperature": 1, "moisture": 1 },
+    "유": { "temperature": 0, "moisture": 1 },
+    "술": { "temperature": -1, "moisture": 1 },
+    "해": { "temperature": -2, "moisture": 0 }
+  },
+  "adjustments": {
+    "fireCharacterTemperatureDelta": 0.5,
+    "waterCharacterTemperatureDelta": -0.5,
+    "earthCharacterThreshold": 4,
+    "earthCharacterMoistureDelta": 0.5,
+    "summerHourBranchTemperatureDelta": 0.5,
+    "winterHourBranchTemperatureDelta": -0.5,
+    "shallowEntryDepthPercent": 33,
+    "shallowEntryTemperatureDelta": 0.5
+  },
+  "grades": {
+    "urgentAbsoluteTemperature": 2.5,
+    "tiltedAbsoluteTemperature": 1.5,
+    "urgentLabel": "한난 조절이 급한 자리",
+    "tiltedLabel": "한난 기울기가 뚜렷한 자리",
+    "balancedLabel": "한난이 크게 치우치지 않은 자리"
+  }
+}

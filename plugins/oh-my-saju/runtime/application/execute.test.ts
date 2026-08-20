@@ -115,13 +115,13 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.4.5',
+        version: '0.6.0',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '4.3.0',
+          version: '5.0.0',
         },
         outputSchemaVersion: '3',
         claimGateVersion: '3',
@@ -133,6 +133,7 @@ describe('executeOhMySaju', () => {
       'ditianshui',
       'qiongtong',
       'sanming-symbolic-curated',
+      'xingchong-resolution',
     ]);
     for (const pack of response.result.binding.packs) {
       expect(pack.rulesArtifactDigest).toMatch(/^[a-f0-9]{64}$/u);
@@ -156,6 +157,7 @@ describe('executeOhMySaju', () => {
       'ditianshui',
       'qiongtong',
       'sanming-symbolic-curated',
+      'xingchong-resolution',
     ]);
     for (const task of response.result.narrationTasks) {
       expect(task.request.evidence.profile).toEqual(
@@ -174,18 +176,19 @@ describe('executeOhMySaju', () => {
         mode: 'chart-first-profile',
         format: 'chart-and-short-sections',
         maxParagraphSentences: 3,
-        maxSections: 4,
+        maxSections: 6,
         maxParagraphsPerSection: 3,
-        maxNarrativeCharacters: 3_200,
+        maxNarrativeCharacters: 4_800,
         maxParagraphCharacters: 900,
         advancedDoctrine: 'only-when-explicitly-requested',
         neverEndWithLimitations: true,
         broadReading: {
           finalSelectionRequired: true,
-          minimumDistinctParagraphs: 7,
+          minimumDistinctParagraphs: 10,
+          profileV2MinimumDistinctParagraphs: 7,
           legacyMinimumDistinctParagraphs: 9,
-          maxSelectedParagraphCharacters: 420,
-          maxPresentationCharacters: 2_200,
+          maxSelectedParagraphCharacters: 460,
+          maxPresentationCharacters: 3_800,
           structuredLivedPatternRequired: false,
           structuredEvidenceBridgeRequired: true,
         },
@@ -277,7 +280,7 @@ describe('executeOhMySaju', () => {
     expect(validated.ok).toBe(true);
     if (!validated.ok || validated.command !== 'validate-reading') return;
     expect(validated.result.binding).toEqual(prepared.result.binding);
-    expect(validated.result.reading.packReadings).toHaveLength(5);
+    expect(validated.result.reading.packReadings).toHaveLength(6);
     expect(
       validated.result.reading.packReadings.every(
         ({ reading }) =>

@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import {
   executeOhMySaju,
   type OhMySajuDefaultProfileDraft,
+  type OhMySajuDefaultProfileV3Draft,
   type OhMySajuNarrationDraft,
   type OhMySajuParagraphRef,
   type OhMySajuProfileParagraphRef,
@@ -60,6 +61,7 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
         const month = chartFindings.find(({ ruleId }) => ruleId === 'core.pillar-month');
         const day = chartFindings.find(({ ruleId }) => ruleId === 'core.pillar-day');
         const tenGods = finding(task, 'ten-gods');
+        const solarTerm = finding(task, 'season-climate');
         if (month === undefined || day === undefined) {
           throw new Error('baseline requires month and day pillar findings');
         }
@@ -71,6 +73,19 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
               findingIds: [dayMaster.id, month.id, day.id],
             },
             sections: [
+              {
+                topic: 'season-climate',
+                paragraphs: [
+                  {
+                    text: '대설 절입 뒤 28.95일이라 자월이 거의 다 지났고 다음 절기인 소한까지 하루가 남지 않았습니다. 한겨울의 찬 기운이 가장 두꺼운 때에 태어나 몸이 먼저 데워져야 움직이는 쪽이라, 일을 시작하기 전에 뜸을 오래 들입니다.',
+                    findingIds: [solarTerm.id],
+                  },
+                  {
+                    text: '월지 자는 절기상 대설과 소한 사이에 놓입니다. 남이 정해 준 속도보다 자기 힘으로 끌고 가는 자리입니다.',
+                    findingIds: [solarTerm.id],
+                  },
+                ],
+              },
               {
                 topic: 'chart-overview',
                 paragraphs: [
@@ -110,6 +125,11 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
         const strengthFindings = task.request.evidence.findings.filter(
           ({ topic }) => topic === 'strength',
         );
+        const rooting = strengthFindings.filter(
+          ({ ruleId }) =>
+            ruleId === 'ditianshui.rooting-ledger' || ruleId === 'ditianshui.command-position',
+        );
+        if (rooting.length !== 2) throw new Error('ditianshui requires rooting evidence');
         return {
           packRef: task.packRef,
           output: {
@@ -128,6 +148,10 @@ function defaultProfileDrafts(tasks: readonly Task[]): readonly OhMySajuNarratio
                   {
                     text: '같은 자월의 힘과 두 자수 뿌리가 과해지면, 이미 깊이 들어간 문제에서 빠져나오는 속도가 늦어집니다. 다른 방향으로 고쳐 달라는 말을 들으면 내용보다 하던 일이 끊긴다는 불편함이 먼저 들어 수정할 때를 놓칠 수 있습니다.',
                     findingIds: [seasonal.id, ...strengthFindings.slice(1).map(({ id }) => id)],
+                  },
+                  {
+                    text: '월지 자와 일지 자가 모두 임수 일간의 뿌리라 월령과 일지를 함께 얻었습니다. 남이 정해 준 속도에 맞추기보다 자기 힘으로 끌고 가는 쪽이라, 급하게 재촉당하면 오히려 손을 놓습니다.',
+                    findingIds: rooting.map(({ id }) => id),
                   },
                 ],
               },
@@ -231,7 +255,7 @@ function defaultProfileDraft(tasks: readonly Task[]): OhMySajuDefaultProfileDraf
   });
   const section = (
     id: string,
-    topic: 'chart-overview' | 'ten-gods' | 'strength',
+    topic: 'chart-overview' | 'ten-gods' | 'strength' | 'season-climate',
     paragraphIndex: 0 | 1 | 2,
   ): OhMySajuParagraphRef => ({
     packRef: task(id).packRef,
@@ -310,6 +334,50 @@ function defaultProfileDraft(tasks: readonly Task[]): OhMySajuDefaultProfileDraf
         '상대가 이유 없이 결론부터 밀면 말을 줄이거나 버팁니다. 충분히 설명을 나눈 뒤에는 서로 맡을 몫이 분명한 관계를 편하게 느낍니다',
       ),
     ],
+  };
+}
+
+function defaultProfileV3Draft(tasks: readonly Task[]): OhMySajuDefaultProfileV3Draft {
+  const base = defaultProfileDraft(tasks);
+  const packRef = (id: string): Task['packRef'] => {
+    const match = tasks.find(({ packRef: ref }) => ref.id === id);
+    if (match === undefined) throw new Error(`${id} task missing`);
+    return match.packRef;
+  };
+  return {
+    schemaVersion: '3',
+    kind: 'default-profile',
+    climate: {
+      paragraph: {
+        packRef: packRef('calculation-baseline'),
+        source: { kind: 'section', topic: 'season-climate', paragraphIndex: 0 },
+      },
+      structure: {
+        role: 'climate',
+        basis:
+          '대설 절입 뒤 28.95일이라 자월이 거의 다 지났고 다음 절기인 소한까지 하루가 남지 않았습니다',
+        interpretation:
+          '한겨울의 찬 기운이 가장 두꺼운 때에 태어나 몸이 먼저 데워져야 움직이는 쪽이라, 일을 시작하기 전에 뜸을 오래 들입니다',
+      },
+    },
+    thesis: base.thesis,
+    core: base.core,
+    resource: {
+      paragraph: {
+        packRef: packRef('ditianshui'),
+        source: { kind: 'section', topic: 'strength', paragraphIndex: 2 },
+      },
+      structure: {
+        role: 'resource',
+        basis: '월지 자와 일지 자가 모두 임수 일간의 뿌리라 월령과 일지를 함께 얻었습니다',
+        interpretation:
+          '남이 정해 준 속도에 맞추기보다 자기 힘으로 끌고 가는 쪽이라, 급하게 재촉당하면 오히려 손을 놓습니다',
+      },
+    },
+    temperament: base.temperament,
+    work: base.work,
+    ...(base.money === undefined ? {} : { money: base.money }),
+    relationships: base.relationships,
   };
 }
 
@@ -858,6 +926,227 @@ describe('default-profile v2', () => {
       error: {
         code: 'INVALID_PRESENTATION_DRAFT',
         details: { policy: 'default-profile-topic-boundary' },
+      },
+    });
+  });
+});
+
+describe('default-profile v3', () => {
+  test('절기와 계절·타고난 힘 절을 앞세우고 근거를 문장 앞머리로 붙여 렌더링한다', async () => {
+    const prepared = await prepare();
+    const response = await validate(prepared, defaultProfileV3Draft(prepared.narrationTasks));
+    expect(response.ok, JSON.stringify(response)).toBe(true);
+    if (!response.ok || response.command !== 'validate-reading') return;
+    expect(response.result.presentation).toMatchObject({
+      schemaVersion: '3',
+      kind: 'default-profile',
+      sourceRefs: { schemaVersion: '3', kind: 'default-profile' },
+    });
+    const markdown = response.result.presentation?.markdown ?? '';
+    expect(markdown.split('\n').filter((line) => line.startsWith('## '))).toEqual([
+      '## 절기와 계절',
+      '## 성격과 행동 방식',
+      '## 타고난 힘과 쓰는 법',
+      '## 강점과 주의점',
+      '## 일·재능',
+      '## 돈과 현실 감각',
+      '## 관계',
+    ]);
+    expect(markdown).toContain(
+      '- 대설 절입 뒤 28.95일이라 자월이 거의 다 지났고 다음 절기인 소한까지 하루가 남지 않았습니다 — 한겨울의 찬 기운이',
+    );
+    expect(markdown).toContain(
+      '- 월지 자와 일지 자가 모두 임수 일간의 뿌리라 월령과 일지를 함께 얻었습니다 — 남이 정해 준 속도에 맞추기보다',
+    );
+    expect(markdown).toContain('_(근거: 자월의 임수 일간에 월주와 일주가 임자로 겹치고');
+    expect(
+      markdown.split('\n').filter((line) => line.startsWith('- ') && line.includes('_(근거:')),
+    ).toEqual([]);
+    expect(markdown).not.toContain('한 줄 정리');
+  });
+
+  test('schema 2 draft는 그대로 v2 렌더러로 처리해 하위 호환을 유지한다', async () => {
+    const prepared = await prepare();
+    const response = await validate(prepared, defaultProfileDraft(prepared.narrationTasks));
+    expect(response.ok, JSON.stringify(response)).toBe(true);
+    if (!response.ok || response.command !== 'validate-reading') return;
+    expect(response.result.presentation?.schemaVersion).toBe('2');
+    expect(response.result.presentation?.markdown ?? '').not.toContain('## 절기와 계절');
+  });
+
+  test('climate 슬롯이 절기·계절 문단이 아닌 근거를 가리키면 거부한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileV3Draft(prepared.narrationTasks);
+    const drafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'ditianshui',
+      'strength',
+      2,
+      '월지 자와 일지 자가 임수 일간의 뿌리라 월령과 일지를 함께 얻었습니다. 겨울의 찬 기운이 두꺼워 몸이 먼저 데워져야 움직이는 쪽입니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        climate: {
+          paragraph: draft.resource.paragraph,
+          structure: {
+            role: 'climate',
+            basis: '월지 자와 일지 자가 임수 일간의 뿌리라 월령과 일지를 함께 얻었습니다',
+            interpretation: '겨울의 찬 기운이 두꺼워 몸이 먼저 데워져야 움직이는 쪽입니다',
+          },
+        },
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'climate-slot-topic', path: 'climate' },
+      },
+    });
+  });
+
+  test('resource 슬롯이 힘의 근거 문단이 아닌 곳을 가리키면 거부한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileV3Draft(prepared.narrationTasks);
+    const response = await validate(prepared, {
+      ...draft,
+      resource: {
+        paragraph: {
+          packRef: draft.climate.paragraph.packRef,
+          source: { kind: 'section', topic: 'season-climate', paragraphIndex: 1 },
+        },
+        structure: {
+          role: 'resource',
+          basis: '월지 자는 절기상 대설과 소한 사이에 놓입니다',
+          interpretation: '남이 정해 준 속도보다 자기 힘으로 끌고 가는 자리입니다',
+        },
+      },
+    });
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'resource-slot-topic', path: 'resource' },
+      },
+    });
+  });
+
+  test('계절을 환경으로 읽는 서술은 climate 슬롯에서만 허용한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileV3Draft(prepared.narrationTasks);
+    const drafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'calculation-baseline',
+      'season-climate',
+      0,
+      '대설 절입 뒤 28.95일이라 자월이 거의 다 지났습니다. 겨울 기운이 두꺼운 환경에서는 몸이 먼저 데워져야 움직이는 쪽이라 시작 전에 뜸을 오래 들입니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        climate: {
+          ...draft.climate,
+          structure: {
+            role: 'climate',
+            basis: '대설 절입 뒤 28.95일이라 자월이 거의 다 지났습니다',
+            interpretation:
+              '겨울 기운이 두꺼운 환경에서는 몸이 먼저 데워져야 움직이는 쪽이라 시작 전에 뜸을 오래 들입니다',
+          },
+        },
+      },
+      drafts,
+    );
+    expect(response.ok, JSON.stringify(response)).toBe(true);
+  });
+
+  test('명식 근거를 붙여도 주변의 인정 같은 바넘 문장은 거부한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileV3Draft(prepared.narrationTasks);
+    const drafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'calculation-baseline',
+      'chart-overview',
+      0,
+      '월주와 일주가 모두 임자로 중첩됩니다. 주변 사람에게 인정받는 노력형입니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        core: [
+          draft.core[0],
+          {
+            ...draft.core[1],
+            structure: {
+              ...draft.core[1].structure,
+              basis: '월주와 일주가 모두 임자로 중첩됩니다',
+              interpretation: '주변 사람에게 인정받는 노력형입니다',
+            },
+          },
+        ],
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'generic-barnum-profile-text', path: 'core[1]' },
+      },
+    });
+  });
+
+  test('오행을 곧바로 미덕으로 옮기는 해석을 거부한다', async () => {
+    const prepared = await prepare();
+    const draft = defaultProfileV3Draft(prepared.narrationTasks);
+    const drafts = replaceDraftSectionParagraph(
+      defaultProfileDrafts(prepared.narrationTasks),
+      'calculation-baseline',
+      'chart-overview',
+      0,
+      '월주와 일주가 모두 임자로 중첩됩니다. 수 기운이 많아 지혜가 깊은 사람입니다.',
+    );
+    const response = await validate(
+      prepared,
+      {
+        ...draft,
+        core: [
+          draft.core[0],
+          {
+            ...draft.core[1],
+            structure: {
+              ...draft.core[1].structure,
+              basis: '월주와 일주가 모두 임자로 중첩됩니다',
+              interpretation: '수 기운이 많아 지혜가 깊은 사람입니다',
+            },
+          },
+        ],
+      },
+      drafts,
+    );
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { policy: 'element-to-virtue-shortcut', path: 'core[1]' },
+      },
+    });
+  });
+
+  test('climate·resource 슬롯이 빠진 v3 draft를 거부한다', async () => {
+    const prepared = await prepare();
+    const { climate, ...withoutClimate } = defaultProfileV3Draft(prepared.narrationTasks);
+    expect(climate).toBeDefined();
+    const response = await validate(prepared, withoutClimate);
+    expect(response).toMatchObject({
+      ok: false,
+      error: {
+        code: 'INVALID_PRESENTATION_DRAFT',
+        details: { path: 'presentationDraft.climate' },
       },
     });
   });

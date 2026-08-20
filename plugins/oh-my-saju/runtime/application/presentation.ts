@@ -43,6 +43,7 @@ const TOPICS = [
   'yin-yang',
   'ten-gods',
   'relationships',
+  'season-climate',
   'void-branches',
   'growth-stages',
   'strength',

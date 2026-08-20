@@ -5,8 +5,8 @@ import { isAiReadingError } from './errors';
 import type { SajuNarrationRequest } from './types';
 
 const PACK_REFS = [
-  { id: 'ziping', version: '1.0.0' },
-  { id: 'qiongtong', version: '1.0.0' },
+  { id: 'ziping', version: '1.2.0' },
+  { id: 'qiongtong', version: '1.2.0' },
 ] as const;
 
 describe('createAiSajuComparisonService', () => {
@@ -80,7 +80,7 @@ describe('createAiSajuComparisonService', () => {
   test('생시 미상에서도 삼주 기반 finding과 partial 표시를 Pack별로 유지한다', async () => {
     const requests: SajuNarrationRequest[] = [];
     const service = createAiSajuComparisonService({
-      packRefs: [PACK_REFS[1], { id: 'ditianshui', version: '1.0.0' }],
+      packRefs: [PACK_REFS[1], { id: 'ditianshui', version: '1.2.0' }],
       narrator: {
         id: 'fixture-selector',
         requestedModel: 'fixture-model',

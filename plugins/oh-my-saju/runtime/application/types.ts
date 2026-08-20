@@ -346,7 +346,9 @@ export interface OhMySajuLegacyBroadPresentationDraft {
 }
 
 export type OhMySajuProfileSectionRole =
+  | 'climate'
   | 'core'
+  | 'resource'
   | 'strength'
   | 'blind-spot'
   | 'work'
@@ -378,7 +380,7 @@ export interface OhMySajuProfileThesisRef {
   };
 }
 
-/** Chart-first, evidence-visible default profile used by new broad readings. */
+/** @deprecated Accepted for 0.4.5 compatibility; new hosts should use the v3 default profile. */
 export interface OhMySajuDefaultProfileDraft {
   readonly schemaVersion: '2';
   readonly kind: 'default-profile';
@@ -393,9 +395,32 @@ export interface OhMySajuDefaultProfileDraft {
   readonly relationships: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
 }
 
+/**
+ * Chart-first default profile that opens with the solar-term season and states
+ * what the day master leans on before the ordinary life-area sections.
+ */
+export interface OhMySajuDefaultProfileV3Draft {
+  readonly schemaVersion: '3';
+  readonly kind: 'default-profile';
+  /** Solar-term and seasonal opening; must quote `season-climate` prose. */
+  readonly climate: OhMySajuProfileParagraphRef;
+  readonly thesis: OhMySajuProfileThesisRef;
+  readonly core: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef];
+  /** What the day master leans on; must quote `strength` prose. */
+  readonly resource: OhMySajuProfileParagraphRef;
+  readonly temperament: {
+    readonly strength: OhMySajuProfileParagraphRef;
+    readonly blindSpot: OhMySajuProfileParagraphRef;
+  };
+  readonly work: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+  readonly money?: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+  readonly relationships: readonly [OhMySajuProfileParagraphRef, OhMySajuProfileParagraphRef?];
+}
+
 export type OhMySajuBroadPresentationDraft =
   | OhMySajuLegacyBroadPresentationDraft
-  | OhMySajuDefaultProfileDraft;
+  | OhMySajuDefaultProfileDraft
+  | OhMySajuDefaultProfileV3Draft;
 
 export type OhMySajuBroadPresentation =
   | {
@@ -410,6 +435,13 @@ export type OhMySajuBroadPresentation =
       readonly kind: 'default-profile';
       /** Canonical references retained for audits; ordinary display uses only markdown. */
       readonly sourceRefs: OhMySajuDefaultProfileDraft;
+      readonly markdown: string;
+    }
+  | {
+      readonly schemaVersion: '3';
+      readonly kind: 'default-profile';
+      /** Canonical references retained for audits; ordinary display uses only markdown. */
+      readonly sourceRefs: OhMySajuDefaultProfileV3Draft;
       readonly markdown: string;
     };
 
