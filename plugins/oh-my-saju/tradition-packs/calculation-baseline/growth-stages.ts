@@ -4,18 +4,7 @@ import { deepFreeze } from '../../runtime/internal/deep-freeze';
 import { assertEarthlyBranch, assertHeavenlyStem } from '../../runtime/traditions/domain';
 
 export type GrowthStage =
-  | '장생'
-  | '목욕'
-  | '관대'
-  | '건록'
-  | '제왕'
-  | '쇠'
-  | '병'
-  | '사'
-  | '묘'
-  | '절'
-  | '태'
-  | '양';
+  '장생' | '목욕' | '관대' | '건록' | '제왕' | '쇠' | '병' | '사' | '묘' | '절' | '태' | '양';
 
 export const GROWTH_STAGE_SOURCE_ID = 'sanming-tonghui-growth-stages-v1';
 

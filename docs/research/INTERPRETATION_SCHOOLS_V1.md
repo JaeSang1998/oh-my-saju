@@ -410,10 +410,7 @@ interface DoctrineProfileManifest {
     attributedAuthor?: string;
     commentator?: string;
     textualLayer:
-      | 'base-text'
-      | 'original-commentary'
-      | 'later-commentary'
-      | 'modern-reconstruction';
+      'base-text' | 'original-commentary' | 'later-commentary' | 'modern-reconstruction';
   };
   edition: {
     catalogUrl: string;

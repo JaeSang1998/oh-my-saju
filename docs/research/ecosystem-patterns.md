@@ -343,7 +343,7 @@ level과 다른 표기다.
 | D5   | Agent Skill: 입력 인터뷰, workflow, 결과 제시                | D4 command interface | 아니오                            |
 | D6   | host 설치·discovery·UI와 선택적 transport adapter            | D5 또는 D4           | transport 외 규칙을 소유하지 않음 |
 
-현재 `src/**`는 D0~D1 계산 코어의 정본이고 `plugins/oh-my-saju`가 D2~D6을 소유한다.
+현재 `src/**`는 D0~~D1 계산 코어의 정본이고 `plugins/oh-my-saju`가 D2~~D6을 소유한다.
 Pack과 runtime은 core private source를 import하지 않고 package public interface만
 호출해야 self-contained artifact에서도 같은 행동을 한다.
 

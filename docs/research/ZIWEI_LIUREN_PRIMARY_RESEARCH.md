@@ -431,7 +431,7 @@ L4 = { lower: L3.upper,  upper: H(L3.upper) }
 
 ### 2.7 `laravel-fortune`과의 차이
 
-고정 commit의 [`YukimService`](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L17-L18)는 음력 1~12월을 월장 亥~子에 직접 대응시키고, [천반 구성부](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L242-L286)는 그 값을 사용한다. 삼전은 계산 추적을 만들기보다 [미리 계산된 720국 설정 조회](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L133-L148)에 의존한다.
+고정 commit의 [`YukimService`](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L17-L18)는 음력 1~~12월을 월장 亥~~子에 직접 대응시키고, [천반 구성부](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L242-L286)는 그 값을 사용한다. 삼전은 계산 추적을 만들기보다 [미리 계산된 720국 설정 조회](https://github.com/wangta69/laravel-fortune/blob/3b97333d8aa2a25bf347ac818a424a5a5df7a6c0/src/Services/YukimService.php#L133-L148)에 의존한다.
 
 따라서 오마이사주 구현은:
 

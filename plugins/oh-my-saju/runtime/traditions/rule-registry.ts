@@ -70,11 +70,7 @@ const QIONGTONG_RULE_IDS_V1: readonly QiongtongRuleId[] = [
 
 interface BuiltInTraditionPack {
   readonly id:
-    | 'ziping'
-    | 'ditianshui'
-    | 'xingchong-resolution'
-    | 'qiongtong'
-    | 'sanming-symbolic-curated';
+    'ziping' | 'ditianshui' | 'xingchong-resolution' | 'qiongtong' | 'sanming-symbolic-curated';
   readonly ruleIds: readonly TraditionPackRuleId[];
   readonly evaluate: (
     ruleId: TraditionPackRuleId,

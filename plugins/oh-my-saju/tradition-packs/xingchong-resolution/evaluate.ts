@@ -29,9 +29,7 @@ import type { JsonValue } from '../../runtime/traditions/types';
 import relationTableData from './branch-relation-tables-v1.json';
 
 export type XingchongResolutionRuleId =
-  | 'xingchong.branch-bureau'
-  | 'xingchong.stem-combination-state'
-  | 'xingchong.resolution-order';
+  'xingchong.branch-bureau' | 'xingchong.stem-combination-state' | 'xingchong.resolution-order';
 
 export const XINGCHONG_RESOLUTION_RULE_IDS_V1: readonly XingchongResolutionRuleId[] = deepFreeze([
   'xingchong.branch-bureau',

@@ -36,9 +36,7 @@ type SanmingYearBranchRuleId = SanmingTriadSymbolicRuleId | SanmingSeasonCornerR
 type SanmingBranchPairRuleId = 'sanming.resentment-pair' | 'sanming.ghost-gate-pair';
 
 export type SanmingSymbolicCuratedRuleId =
-  | SanmingYearBranchRuleId
-  | SanmingDayStemRuleId
-  | SanmingBranchPairRuleId;
+  SanmingYearBranchRuleId | SanmingDayStemRuleId | SanmingBranchPairRuleId;
 
 export const SANMING_SYMBOLIC_CURATED_RULE_IDS_V1: readonly SanmingSymbolicCuratedRuleId[] =
   deepFreeze([

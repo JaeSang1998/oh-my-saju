@@ -5771,7 +5771,7 @@ function brandCalculationReport(value) {
 
 // src/manifest.ts
 var import_moment_timezone = __toESM(require_moment_timezone2(), 1);
-var SOURCE_REVISION = true ? "core-content-sha256:b7030eac91ecf634079d7aca7f28df6a6dbe9bb42981046172933a8105bfd7bf" : "source-tree-unbuilt";
+var SOURCE_REVISION = true ? "core-content-sha256:edcbd53ea7556942c7608fcd3323663316229878e76932b8c2a0514fc74c6954" : "source-tree-unbuilt";
 var SUPPORTED_RANGES = Object.freeze({
   sajuBirthYears: Object.freeze({ min: 1801, max: 2100 }),
   solarTermYears: Object.freeze({ min: 1800, max: 2300 }),
@@ -10460,17 +10460,15 @@ function calculatePolicy(request, fixed, policy, omitHour, uncertainTerms, solar
   const idsByKey = new Map(
     mutableCandidates.map((candidate, index) => [candidate.key, `candidate-${index + 1}`])
   );
-  const candidates = mutableCandidates.map(
-    (candidate) => ({
-      id: idsByKey.get(candidate.key),
-      pillars: candidate.pillars,
-      windows: candidate.windows,
-      supportDurationMilliseconds: candidate.windows.reduce(
-        (sum, window) => sum + windowDuration(window),
-        0
-      )
-    })
-  );
+  const candidates = mutableCandidates.map((candidate) => ({
+    id: idsByKey.get(candidate.key),
+    pillars: candidate.pillars,
+    windows: candidate.windows,
+    supportDurationMilliseconds: candidate.windows.reduce(
+      (sum, window) => sum + windowDuration(window),
+      0
+    )
+  }));
   const boundaries = segments.slice(1).map(
     (segment, index) => boundaryBetween(
       segments[index],
@@ -11204,8 +11202,8 @@ function artifactDigests(value) {
 // plugins/oh-my-saju/tradition-packs/calculation-baseline/artifacts.json
 var artifacts_default = {
   schemaVersion: "1",
-  knowledgeSnapshot: "edd7c5ff256f3260b4d693acaaeba4a367d9e5a02650de46d3431f1f237752f4",
-  rules: "5ad725515c769fac95c0e3e539ab23fe1811c3109eece4c7e1bf9323bb883812",
+  knowledgeSnapshot: "5d670fd010d6f9e90e914c8896c0c7162462146382597dbecd867b7f9132a11f",
+  rules: "84960462399f3150fa61f7555313a1d6baa84ab4a87b40605be1f9a601fdf8cc",
   fixtures: "7a765b712b4e916248ea460df1f174e934f07f2dc9cd1b19703ad443d05047ae"
 };
 
@@ -11527,8 +11525,8 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ditianshui/artifacts.json
 var artifacts_default2 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "467b12c377f3ab1cb66471ea80c0f0e8db1f0ab0db784d772ac8b76e4fdc7dba",
-  rules: "8f23e6730c11347be4a697b5770b1edd17d66a281ee56e71616dd8f6ca952c39",
+  knowledgeSnapshot: "7eb9146ade9a98e557208137bcdcd5fae5f5675e5b28ddbc98e988d67b919119",
+  rules: "227c781df6517ac2d30687babd1a9a14e5765f74bcf37d8279ac71253931baa8",
   fixtures: "7e8e58a3d08e79fe248f3778980137a2bd49ab351c022137e80719da631ca22b"
 };
 
@@ -11771,8 +11769,8 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/qiongtong/artifacts.json
 var artifacts_default3 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "b2bb8ec00b67d6696266df128ee2b72ab3f4744c042129063a3352ff210b1b0b",
-  rules: "6c412d881e2b1a62eb9accbc90221ba0ff9a483dfc2ac093683d4939147310ac",
+  knowledgeSnapshot: "a80a5f3e4b4563451bb3e64c13cb3cfda61a61182ad6c6ee86d9f5c9fcbfe383",
+  rules: "6512296715cfc7f96865e1625573daa196989d39c728a7c0724df2d9b79bf2ea",
   fixtures: "d3693447faf1e3096bdaf927d6457a0810b145cc9af000b1a500a09007c085c4"
 };
 
@@ -12626,8 +12624,8 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/sanming-symbolic-curated/artifacts.json
 var artifacts_default4 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "b2ebb931f65e2ae14d6e8f7ab7e031eaff2225cf97e375db9c4ec0d3f00dffc9",
-  rules: "2e56931971503a9daa7e4fc1221daa7d331cf4b6986c9de8d7d843febbde09e9",
+  knowledgeSnapshot: "906e1bed2e2c56e96d9b860409e3583eefa413864f27374bfb2bb73e92d65b03",
+  rules: "33d0acf044c5ee27a97552463a53490655623758ce336523f636725e783b37ed",
   fixtures: "4c2c5f9483af0f6869f241d607ef6eefbdf020ce8d1833251ddb790929e78f23"
 };
 
@@ -13618,8 +13616,8 @@ var XINGCHONG_RESOLUTION_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/xingchong-resolution/artifacts.json
 var artifacts_default5 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "e6e8ada99452d7b9391c5c405f07c3b8b194979d1c54f3924f61c67b99b39705",
-  rules: "3d92e94ca71a0c5272426f5253d1c2243700a27c4e20ddaaf23ac7551c0f80a8",
+  knowledgeSnapshot: "ea2720fb4d65f99cb2cc5bff27524ba503095a2d1d15accb8252986a1f76fa1b",
+  rules: "7acf57b4884fae2fdcb606fff7147ae561809062113512fc453236e9cc145697",
   fixtures: "c6cb7f35272944e556dab0cf2c66f3e839bcfed9761d5c3f33a583c82fda3532"
 };
 
@@ -13851,8 +13849,8 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 // plugins/oh-my-saju/tradition-packs/ziping/artifacts.json
 var artifacts_default6 = {
   schemaVersion: "1",
-  knowledgeSnapshot: "8e0c01af6334073fe5735608f054ad91cc2f572873e4ddf659d4e0cc9dd0279f",
-  rules: "a75aeccc5508a2c79a6ef96a11db1f4896aa045de6cef984e53a9c504c0b9e32",
+  knowledgeSnapshot: "0c26093909086123517cde4274b2ff1696e23457b71c85627933dc11ea6f33dc",
+  rules: "8a9c4c4d0dd8e9a80cba0a4b0238864e1568a59604e22b530cdc3bc6eb860659",
   fixtures: "6dc147f3688a1ec24eb6ce584a66df78ac5ee8f2659ae739ac5b029c98ebe46c"
 };
 
@@ -22826,16 +22824,14 @@ function castIChing(request) {
   }
   const derived = deriveCast(request);
   const values = derived.values;
-  const lines = values.map(
-    (value, index) => ({
-      position: index + 1,
-      value,
-      traditionalClass: lineClass(value),
-      polarity: linePolarity(value),
-      changedPolarity: changedPolarity(value),
-      moving: value === 6 || value === 9
-    })
-  );
+  const lines = values.map((value, index) => ({
+    position: index + 1,
+    value,
+    traditionalClass: lineClass(value),
+    polarity: linePolarity(value),
+    changedPolarity: changedPolarity(value),
+    moving: value === 6 || value === 9
+  }));
   const baseBits = lines.map(({ polarity }) => polarity === "yang" ? "1" : "0").join("");
   const changedBits = lines.map(({ changedPolarity: polarity }) => polarity === "yang" ? "1" : "0").join("");
   const castTrace = derived.trace;

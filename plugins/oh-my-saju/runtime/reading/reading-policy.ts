@@ -41,10 +41,7 @@ export interface ResolvedSajuReadingPolicy {
 }
 
 export type SajuDisclosureViolationId =
-  | SajuDoctrineDisclosureId
-  | 'science-meta'
-  | 'uncertainty-meta'
-  | 'audit-meta';
+  SajuDoctrineDisclosureId | 'science-meta' | 'uncertainty-meta' | 'audit-meta';
 
 const DOCTRINE_DISCLOSURE_RULES: readonly DoctrineDisclosureRule[] = [
   {

@@ -340,8 +340,7 @@ export interface PossibilityAiSajuComparisonServiceResult {
 
 export type AiSajuComparisonServiceRequest = AiSajuServiceRequest;
 export type AiSajuComparisonServiceResult =
-  | ExactAiSajuComparisonServiceResult
-  | PossibilityAiSajuComparisonServiceResult;
+  ExactAiSajuComparisonServiceResult | PossibilityAiSajuComparisonServiceResult;
 
 export interface AiSajuComparisonService {
   read(request: ExactAiSajuServiceRequest): Promise<ExactAiSajuComparisonServiceResult>;

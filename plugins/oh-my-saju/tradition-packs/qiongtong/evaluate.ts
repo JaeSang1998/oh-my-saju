@@ -525,10 +525,7 @@ export const QIONGTONG_HIDDEN_STEMS_V1: Readonly<Record<EarthlyBranch, readonly 
   deepFreeze(parseHiddenStemTable(hiddenStemTable));
 
 type QiongtongCandidateState =
-  | 'transparent-and-rooted'
-  | 'transparent-only'
-  | 'rooted-only'
-  | 'absent';
+  'transparent-and-rooted' | 'transparent-only' | 'rooted-only' | 'absent';
 
 const QIONGTONG_CANDIDATE_STATE_LABEL: Readonly<Record<QiongtongCandidateState, string>> = {
   'transparent-and-rooted': '드러나고 뿌리도 있어 바로 쓸 수 있는 자리',
@@ -616,8 +613,7 @@ function candidateConditions(context: DoctrineRuleContext): readonly QiongtongCa
 interface QiongtongCellVerification {
   readonly verified: boolean;
   readonly verification:
-    | 'source-checked-candidate-order-and-explicit-functions'
-    | 'experimental-transcription-only';
+    'source-checked-candidate-order-and-explicit-functions' | 'experimental-transcription-only';
   readonly notice: string;
 }
 

@@ -19,7 +19,7 @@
       "immutability": "content-addressed",
       "algorithm": "sha256",
       "canonicalization": "ordered-file-bytes-with-path-v1",
-      "digest": "8e0c01af6334073fe5735608f054ad91cc2f572873e4ddf659d4e0cc9dd0279f",
+      "digest": "0c26093909086123517cde4274b2ff1696e23457b71c85627933dc11ea6f33dc",
       "provenanceContract": "tradition-provenance-v1",
       "queryContract": "static-resource-query-v1"
     },

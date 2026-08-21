@@ -303,16 +303,14 @@ export function castIChing(request: IChingRequest): IChingReport {
 
   const derived = deriveCast(request);
   const values = derived.values;
-  const lines = values.map(
-    (value, index): IChingLine => ({
-      position: (index + 1) as IChingLine['position'],
-      value,
-      traditionalClass: lineClass(value),
-      polarity: linePolarity(value),
-      changedPolarity: changedPolarity(value),
-      moving: value === 6 || value === 9,
-    }),
-  );
+  const lines = values.map((value, index): IChingLine => ({
+    position: (index + 1) as IChingLine['position'],
+    value,
+    traditionalClass: lineClass(value),
+    polarity: linePolarity(value),
+    changedPolarity: changedPolarity(value),
+    moving: value === 6 || value === 9,
+  }));
   const baseBits = lines.map(({ polarity }) => (polarity === 'yang' ? '1' : '0')).join('');
   const changedBits = lines
     .map(({ changedPolarity: polarity }) => (polarity === 'yang' ? '1' : '0'))

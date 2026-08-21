@@ -11,9 +11,7 @@ import type { SajuNarrationPromptTemplate } from '../reading/prompt-contract';
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue =
-  | JsonPrimitive
-  | readonly JsonValue[]
-  | { readonly [key: string]: JsonValue };
+  JsonPrimitive | readonly JsonValue[] | { readonly [key: string]: JsonValue };
 
 export type InterpretationTopic =
   | 'chart-overview'
@@ -96,21 +94,13 @@ export type ProfileLimitationId =
 export interface InterpretationSourceReference {
   readonly id: string;
   readonly kind:
-    | 'engine-rule'
-    | 'classical-text'
-    | 'commentary'
-    | 'academic-study'
-    | 'modern-convention';
+    'engine-rule' | 'classical-text' | 'commentary' | 'academic-study' | 'modern-convention';
   readonly title: string;
   readonly citation: string;
   readonly url?: string;
   readonly locator?: string;
   readonly textualLayer?:
-    | 'base-text'
-    | 'commentary'
-    | 'editorial'
-    | 'modern-analysis'
-    | 'not-applicable';
+    'base-text' | 'commentary' | 'editorial' | 'modern-analysis' | 'not-applicable';
   readonly verification:
     | 'engine-tested'
     | 'scan-verified'
@@ -133,11 +123,7 @@ export interface TraditionRuleProfile {
   readonly displayName: string;
   readonly school: string;
   readonly textualLayer:
-    | 'cross-school-common'
-    | 'base-text'
-    | 'commentary'
-    | 'reconstruction'
-    | 'modern-synthesis';
+    'cross-school-common' | 'base-text' | 'commentary' | 'reconstruction' | 'modern-synthesis';
   /**
    * @deprecated This is the runtime release status only. Use the catalog
    * entry's multi-axis `maturity` and `assurance` records.
@@ -229,8 +215,7 @@ export interface PossibilitySajuInterpretationRequest {
 }
 
 export type SajuInterpretationCalculationRequest =
-  | ExactSajuInterpretationRequest
-  | PossibilitySajuInterpretationRequest;
+  ExactSajuInterpretationRequest | PossibilitySajuInterpretationRequest;
 
 export interface ExactSajuInterpretationResult {
   readonly schemaVersion: '2';
@@ -348,9 +333,7 @@ export interface TraditionPackContract {
       readonly digest: string;
       readonly provenanceContract: 'tradition-provenance-v1';
       readonly queryContract:
-        | 'static-resource-query-v1'
-        | 'ontology-query-v1'
-        | 'knowledge-graph-query-v1';
+        'static-resource-query-v1' | 'ontology-query-v1' | 'knowledge-graph-query-v1';
       readonly paths: readonly string[];
     };
     readonly editionLocks: readonly {
@@ -414,11 +397,7 @@ export interface TraditionPackCatalogEntry {
     readonly attributedAuthor?: string;
     readonly commentator?: string;
     readonly textualLayer:
-      | 'cross-school-common'
-      | 'base-text'
-      | 'commentary'
-      | 'reconstruction'
-      | 'modern-synthesis';
+      'cross-school-common' | 'base-text' | 'commentary' | 'reconstruction' | 'modern-synthesis';
   };
   readonly supportedTopics: readonly InterpretationTopic[];
   readonly execution: {

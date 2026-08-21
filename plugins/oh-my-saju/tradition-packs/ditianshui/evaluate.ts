@@ -75,11 +75,7 @@ export const DITIANSHUI_SEASONAL_RULER_BY_MONTH_V1: Readonly<Record<EarthlyBranc
   deepFreeze(parseSeasonalRulerTable(seasonalStateTable));
 
 type StrengthEvidenceRole =
-  | 'resourceSupport'
-  | 'peerSupport'
-  | 'outputDrain'
-  | 'wealthDrain'
-  | 'officerControl';
+  'resourceSupport' | 'peerSupport' | 'outputDrain' | 'wealthDrain' | 'officerControl';
 
 type StrengthEvidenceLedger = Readonly<
   Record<
@@ -785,13 +781,7 @@ function ditianshuiTenGodGroup(tenGod: TenGod): DitianshuiTenGodGroup {
 }
 
 type DitianshuiScoreSlotId =
-  | 'yearStem'
-  | 'monthStem'
-  | 'hourStem'
-  | 'yearBranch'
-  | 'monthBranch'
-  | 'dayBranch'
-  | 'hourBranch';
+  'yearStem' | 'monthStem' | 'hourStem' | 'yearBranch' | 'monthBranch' | 'dayBranch' | 'hourBranch';
 
 const DITIANSHUI_SCORE_SLOT_IDS: readonly DitianshuiScoreSlotId[] = [
   'yearStem',

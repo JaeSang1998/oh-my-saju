@@ -57,9 +57,7 @@ interface LocalSolarTerm {
 }
 
 type SolarBreakpointProvenance =
-  | 'solar-term-estimate'
-  | 'solar-term-uncertainty-start'
-  | 'solar-term-uncertainty-end';
+  'solar-term-estimate' | 'solar-term-uncertainty-start' | 'solar-term-uncertainty-end';
 
 interface StateItem {
   readonly report: SajuReport;
@@ -1179,17 +1177,15 @@ function calculatePolicy(
   const idsByKey = new Map(
     mutableCandidates.map((candidate, index) => [candidate.key, `candidate-${index + 1}`]),
   );
-  const candidates = mutableCandidates.map(
-    (candidate): SajuPossibilityCandidate => ({
-      id: idsByKey.get(candidate.key) as string,
-      pillars: candidate.pillars,
-      windows: candidate.windows,
-      supportDurationMilliseconds: candidate.windows.reduce(
-        (sum, window) => sum + windowDuration(window),
-        0,
-      ),
-    }),
-  );
+  const candidates = mutableCandidates.map((candidate): SajuPossibilityCandidate => ({
+    id: idsByKey.get(candidate.key) as string,
+    pillars: candidate.pillars,
+    windows: candidate.windows,
+    supportDurationMilliseconds: candidate.windows.reduce(
+      (sum, window) => sum + windowDuration(window),
+      0,
+    ),
+  }));
   const boundaries = segments
     .slice(1)
     .map((segment, index) =>

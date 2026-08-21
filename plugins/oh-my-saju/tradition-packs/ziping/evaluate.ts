@@ -155,14 +155,7 @@ function segmentValues(segments: readonly ZipingMonthCommandSegment[]): JsonValu
 export const ZIPING_PATTERN_INTEGRITY_TABLE_ID_V1 = 'ziping-pattern-integrity-v1';
 
 export type ZipingReliefGroup =
-  | '재성'
-  | '관성'
-  | '관살'
-  | '인성'
-  | '식상'
-  | '식신'
-  | '양인'
-  | '비겁';
+  '재성' | '관성' | '관살' | '인성' | '식상' | '식신' | '양인' | '비겁';
 
 const ZIPING_RELIEF_GROUPS: readonly ZipingReliefGroup[] = [
   '재성',
@@ -216,10 +209,7 @@ const TEN_GOD_NAMES: readonly TenGod[] = [
 ];
 
 type ZipingBreakingKind =
-  | 'stem-transparent'
-  | 'mixed-officer'
-  | 'month-branch-clash'
-  | 'relief-absent';
+  'stem-transparent' | 'mixed-officer' | 'month-branch-clash' | 'relief-absent';
 
 type ZipingRescueStatus = 'modeled' | 'not-modeled' | 'absence-is-the-factor';
 

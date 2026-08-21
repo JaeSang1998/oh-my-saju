@@ -19,8 +19,7 @@ import type { SajuTimingReport } from 'saju-engine/timing';
 import type { TraditionalSystemRequest, TraditionalSystemResult } from '../systems/types';
 
 export type KoreanSajuAnalysisResult =
-  | ExactKoreanSajuAnalysisResult
-  | PossibilityKoreanSajuAnalysisResult;
+  ExactKoreanSajuAnalysisResult | PossibilityKoreanSajuAnalysisResult;
 
 export interface OhMySajuNarrationTask {
   readonly packRef: TraditionPackRef;
@@ -79,9 +78,7 @@ export interface PreparedOhMySajuReading {
         readonly digest: string;
         readonly provenanceContract: 'tradition-provenance-v1';
         readonly queryContract:
-          | 'static-resource-query-v1'
-          | 'ontology-query-v1'
-          | 'knowledge-graph-query-v1';
+          'static-resource-query-v1' | 'ontology-query-v1' | 'knowledge-graph-query-v1';
         readonly paths: readonly string[];
       };
     }[];
@@ -346,14 +343,7 @@ export interface OhMySajuLegacyBroadPresentationDraft {
 }
 
 export type OhMySajuProfileSectionRole =
-  | 'climate'
-  | 'core'
-  | 'resource'
-  | 'strength'
-  | 'blind-spot'
-  | 'work'
-  | 'money'
-  | 'relationships';
+  'climate' | 'core' | 'resource' | 'strength' | 'blind-spot' | 'work' | 'money' | 'relationships';
 
 /**
  * Selects finding-backed prose and exposes the exact chart-to-interpretation

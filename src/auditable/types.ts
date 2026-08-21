@@ -30,11 +30,7 @@ export interface BirthTime {
 }
 
 export type BirthTimeAbsentReason =
-  | 'unknown'
-  | 'asked-unknown'
-  | 'not-asked'
-  | 'asked-declined'
-  | 'masked';
+  'unknown' | 'asked-unknown' | 'not-asked' | 'asked-declined' | 'masked';
 
 export type BirthTimeEvidenceSource =
   | 'birth-record'
@@ -227,8 +223,7 @@ export interface SajuReport {
   };
   readonly warnings: readonly {
     readonly code:
-      | 'BOUNDARY_WITHIN_SOURCE_UNCERTAINTY'
-      | 'PRE_STANDARD_TIME_LOCAL_MEAN_APPROXIMATION';
+      'BOUNDARY_WITHIN_SOURCE_UNCERTAINTY' | 'PRE_STANDARD_TIME_LOCAL_MEAN_APPROXIMATION';
     readonly message: string;
   }[];
 }
@@ -265,9 +260,7 @@ export interface SajuPossibilityCandidate {
 export interface SajuPossibilityBoundary {
   /** Candidate changes alter possibilities; basis transitions only change computed-vs-epistemic support. */
   readonly transitionKind:
-    | 'candidate-set-change'
-    | 'computed-basis-transition'
-    | 'source-uncertainty-transition';
+    'candidate-set-change' | 'computed-basis-transition' | 'source-uncertainty-transition';
   readonly atLocalDateTime: string;
   /** UTC candidates for this wall time; empty when the boundary starts a gap. */
   readonly instantUtcCandidates: readonly string[];
@@ -275,10 +268,7 @@ export interface SajuPossibilityBoundary {
   readonly afterCandidateIds: readonly string[];
   readonly changedPillars: readonly SajuPillarName[];
   readonly causes: readonly (
-    | 'solar-term'
-    | 'day-boundary'
-    | 'hour-boundary'
-    | 'time-zone-transition'
+    'solar-term' | 'day-boundary' | 'hour-boundary' | 'time-zone-transition'
   )[];
 }
 
@@ -314,8 +304,7 @@ export interface SajuAggregatedPossibilityCandidate {
 
 export interface SajuPossibilityWarning {
   readonly code:
-    | 'SOLAR_TERM_SOURCE_UNCERTAINTY_INTERSECTS_RANGE'
-    | 'PRE_STANDARD_TIME_LOCAL_MEAN_APPROXIMATION';
+    'SOLAR_TERM_SOURCE_UNCERTAINTY_INTERSECTS_RANGE' | 'PRE_STANDARD_TIME_LOCAL_MEAN_APPROXIMATION';
   readonly message: string;
   readonly boundaryInstantUtc?: string;
   readonly boundaryLocalDateTime?: string;

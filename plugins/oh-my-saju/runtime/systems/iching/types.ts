@@ -53,9 +53,7 @@ export interface IChingYarrowRequest extends IChingTrigramArrangementRequest {
 }
 
 export type IChingRequest =
-  | IChingManualLinesRequest
-  | IChingThreeCoinsRequest
-  | IChingYarrowRequest;
+  IChingManualLinesRequest | IChingThreeCoinsRequest | IChingYarrowRequest;
 
 export interface IChingLine {
   readonly position: 1 | 2 | 3 | 4 | 5 | 6;
@@ -76,14 +74,7 @@ export interface IChingTrigram {
 }
 
 export type IChingCompassDirection =
-  | 'north'
-  | 'northeast'
-  | 'east'
-  | 'southeast'
-  | 'south'
-  | 'southwest'
-  | 'west'
-  | 'northwest';
+  'north' | 'northeast' | 'east' | 'southeast' | 'south' | 'southwest' | 'west' | 'northwest';
 
 export interface IChingTrigramArrangementProfile extends IChingTrigramArrangementSelection {
   readonly displayName: string;
@@ -182,9 +173,7 @@ export interface IChingYarrowCastTrace {
 }
 
 export type IChingCastTrace =
-  | IChingManualCastTrace
-  | IChingThreeCoinsCastTrace
-  | IChingYarrowCastTrace;
+  IChingManualCastTrace | IChingThreeCoinsCastTrace | IChingYarrowCastTrace;
 
 export interface IChingValue {
   readonly lineOrder: 'bottom-to-top';

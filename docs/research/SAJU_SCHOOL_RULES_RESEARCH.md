@@ -597,11 +597,7 @@ interface RuleDefinition {
   revision: string;
   module: string;
   status:
-    | 'literal-table'
-    | 'formalized-text'
-    | 'reconstruction'
-    | 'modern-convention'
-    | 'synthetic';
+    'literal-table' | 'formalized-text' | 'reconstruction' | 'modern-convention' | 'synthetic';
   sourceRefs: SourceRef[];
   inputs: InputSchemaRef;
   predicate: ExpressionTree;

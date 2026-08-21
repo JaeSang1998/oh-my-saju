@@ -484,12 +484,7 @@ AI가 받을 수 있는 값은 fixture를 통과한 rule finding ID와 출전 �
 
 ```ts
 type DoctrineRuleStatus =
-  | 'research'
-  | 'transcribed'
-  | 'collated'
-  | 'expert-reviewed'
-  | 'stable'
-  | 'deprecated';
+  'research' | 'transcribed' | 'collated' | 'expert-reviewed' | 'stable' | 'deprecated';
 ```
 
 현재 이 문서의 표와 대표 fixture는 `transcribed` 단계다. 판면 위치 확정과 독립 전문가 검토 전에는 `stable`로 승격하지 않는다.
