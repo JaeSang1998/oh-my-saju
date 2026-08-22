@@ -10,6 +10,13 @@ export type SajuReadingMode = 'broad' | 'focused' | 'technical-audit';
  */
 export type SajuReadingModePreference = 'auto' | SajuReadingMode;
 
+/**
+ * Controls how far the narrator may carry supplied traditional findings into
+ * concrete lived scenarios. It changes narration scope, not calculation facts
+ * or the claim gate.
+ */
+export type SajuInferenceDepth = 'grounded' | 'deep-traditional';
+
 export type SajuDoctrineDisclosureId =
   | 'day-master'
   | 'five-elements'
@@ -32,6 +39,15 @@ interface DoctrineDisclosureRule {
 
 export interface ResolvedSajuReadingPolicy {
   readonly mode: SajuReadingMode;
+  readonly inferenceDepth: SajuInferenceDepth;
+  /**
+   * A deep reading may describe how a supported pattern can begin, repeat,
+   * strengthen, or break down in the life area named by the user. It still
+   * may not turn an inference into a guaranteed event or a calculated verdict.
+   */
+  readonly detailedTraditionalInferenceAllowed: boolean;
+  /** Provider-facing instructions that turn supported findings into a complete reading. */
+  readonly narrationDirectives: readonly string[];
   /** True only for an explicit broad request; legacy `auto` callers keep their old protocol. */
   readonly structuredBroadPresentation: boolean;
   readonly requestedDoctrineIds: readonly SajuDoctrineDisclosureId[];
@@ -132,6 +148,14 @@ const BROAD_DEFAULT_DOCTRINE_IDS = new Set<SajuDoctrineDisclosureId>([
   'strength',
 ]);
 
+const DEEP_TRADITIONAL_NARRATION_DIRECTIVES = [
+  'Give the traditional inference directly when the supplied findings support it; do not replace the reading with a limitation disclaimer.',
+  'Carry each supported mechanism through its sequence: what starts it, what keeps it going, how pressure distorts it, and what interrupts or repairs the loop.',
+  'For relationship questions, describe attraction or first approach, the habit that maintains closeness, the repeated reaction that creates distance, and the condition that restores contact.',
+  'For career or job-change questions, distinguish proposals that fit the supported working mechanism from proposals that fail because their pace, authority, reward, or role structure conflicts with it.',
+  'State traditional scenarios as interpretations of the supplied chart facts, never as a guaranteed dated event, medical verdict, legal conclusion, or investment outcome.',
+] as const;
+
 const SCIENCE_META_REQUEST_PATTERN =
   /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}(?:(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,12}(?:근거|검증|타당|맞|사실|아닙|아니|인가|이야|입니까)|(?:검증|타당성)[^.?!\n]{0,12}(?:과학|실증))|(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,20}(?:사주|명리|운세|해석|예측)[^.?!\n]{0,20}(?:맞|검증|근거|타당|사실)|(?:scientific|empirical)[^.?!\n]{0,20}(?:saju|fortune|reading|prediction)|현실\s*예측\s*(?:근거|검증|타당성))/iu;
 const UNCERTAINTY_META_REQUEST_PATTERN =
@@ -163,10 +187,21 @@ export function assertReadingModePreference(
   return value;
 }
 
+export function assertSajuInferenceDepth(
+  value: unknown,
+  field = 'inferenceDepth',
+): SajuInferenceDepth {
+  if (value !== 'grounded' && value !== 'deep-traditional') {
+    throw new AiReadingError('INVALID_REQUEST', `${field} is not supported.`);
+  }
+  return value;
+}
+
 export function resolveSajuReadingPolicy(
   question: string | null,
   purpose: string,
   preference: SajuReadingModePreference,
+  inferenceDepth: SajuInferenceDepth,
 ): ResolvedSajuReadingPolicy {
   const userQuestion = question ?? '';
   const requestedDoctrineIds = DOCTRINE_DISCLOSURE_RULES.filter(({ requestPattern }) =>
@@ -192,6 +227,10 @@ export function resolveSajuReadingPolicy(
 
   return deepFreeze({
     mode,
+    inferenceDepth,
+    detailedTraditionalInferenceAllowed: inferenceDepth === 'deep-traditional',
+    narrationDirectives:
+      inferenceDepth === 'deep-traditional' ? DEEP_TRADITIONAL_NARRATION_DIRECTIVES : [],
     structuredBroadPresentation: preference === 'broad',
     requestedDoctrineIds,
     scienceMetaRequested,
@@ -203,7 +242,13 @@ export function resolveSajuReadingPolicy(
 function doctrineAllowed(rule: DoctrineDisclosureRule, policy: ResolvedSajuReadingPolicy): boolean {
   return (
     policy.requestedDoctrineIds.some((id) => id === rule.id) ||
-    (policy.mode === 'broad' && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id))
+    (policy.mode === 'broad' && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id)) ||
+    // Deep traditional mode makes chart doctrines part of the default reading,
+    // but luck-cycle narration still requires an explicit timing request because
+    // this Pack-isolated task deliberately carries no chronology or timing data.
+    (policy.detailedTraditionalInferenceAllowed &&
+      policy.mode !== 'technical-audit' &&
+      rule.id !== 'luck-cycles')
   );
 }
 

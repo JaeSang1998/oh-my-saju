@@ -28,7 +28,8 @@ import type {
 
 const MINIMUM_TIMING_YEAR = ENGINE_MANIFEST.supportedRanges.solarTermYears.min;
 const MAXIMUM_TIMING_YEAR = ENGINE_MANIFEST.supportedRanges.solarTermYears.max - 1;
-const MAXIMUM_TIMING_YEAR_SPAN = 20;
+/** A complete 60갑자 cycle is available in one timing request. */
+const MAXIMUM_TIMING_YEAR_SPAN = 59;
 const CURRENT_YEAR_JIE_INDICES = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22] as const;
 
 function assertTimingRequest(value: unknown): asserts value is SajuTimingRequest {

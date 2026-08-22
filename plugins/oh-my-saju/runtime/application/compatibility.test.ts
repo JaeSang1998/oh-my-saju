@@ -167,6 +167,21 @@ describe('two-person compatibility protocol', () => {
     expect(JSON.stringify(prepared)).not.toMatch(/compatibility[^"]*unsupported/iu);
   });
 
+  test('기본 궁합은 관계의 시작·유지·소원해짐을 직접 풀도록 준비한다', async () => {
+    const prepared = await prepare({
+      ...REQUEST,
+      question: '연애가 어떻게 시작되고, 무엇 때문에 멀어지기 쉬운지 깊게 풀어줘.',
+    });
+
+    expect(prepared.narrationTask.inferenceDepth).toBe('deep-traditional');
+    expect(prepared.narrationTask.instructions.join(' ')).toContain(
+      'how closeness starts, what keeps the pair connected',
+    );
+    expect(prepared.narrationTask.instructions.join(' ')).toContain(
+      'instead of replacing it with a limitation disclaimer',
+    );
+  });
+
   test('검증된 궁합 초안을 두 원국·방향 관계·장단점 섹션으로 렌더링한다', async () => {
     const prepared = await prepare();
     const response = await executeOhMySaju({

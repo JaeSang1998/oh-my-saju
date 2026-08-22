@@ -5,7 +5,7 @@ import { brandCalculationReport } from '../internal/report-authenticity';
 import { ENGINE_MANIFEST } from '../manifest';
 import { getTenGodChart } from '../features/ten-gods';
 import { getVoidBranches } from '../features/void-branches';
-import type { SolarTermBoundary } from '../astro/astronomical-solar-terms';
+import { findSolarTermBoundary, type SolarTermBoundary } from '../astro/astronomical-solar-terms';
 import { analyzeStructure } from '../analysis/structural-analysis';
 import {
   calculateAuditableFourPillars,
@@ -28,6 +28,7 @@ import type {
   SajuCalculationResult,
   SajuReport,
   SajuRequest,
+  SeasonalQuarterDistanceEvidence,
   SolarTermEvidence,
   ZiHourPolicy,
 } from './types';
@@ -42,6 +43,37 @@ function completeTime(date: GregorianBirthDate, time: SajuRequest['birth']['time
     second: time.second ?? 0,
     millisecond: time.millisecond ?? 0,
   };
+}
+
+const SEASONAL_QUARTER_TERM_INDICES = [2, 8, 14, 20] as const;
+
+function nearestSeasonalQuarterBoundary(
+  civilYear: number,
+  epochMilliseconds: number,
+  index: (typeof SEASONAL_QUARTER_TERM_INDICES)[number],
+): SolarTermBoundary {
+  const candidates = [civilYear - 1, civilYear, civilYear + 1].map((year) =>
+    findSolarTermBoundary(year, index),
+  );
+  return candidates.reduce((nearest, candidate) =>
+    Math.abs(candidate.epochMilliseconds - epochMilliseconds) <
+    Math.abs(nearest.epochMilliseconds - epochMilliseconds)
+      ? candidate
+      : nearest,
+  );
+}
+
+function seasonalQuarterDistances(
+  civilYear: number,
+  epochMilliseconds: number,
+): readonly SeasonalQuarterDistanceEvidence[] {
+  return SEASONAL_QUARTER_TERM_INDICES.map((index) => {
+    const boundary = nearestSeasonalQuarterBoundary(civilYear, epochMilliseconds, index);
+    return {
+      boundary: solarTermEvidence(boundary),
+      relativeMilliseconds: epochMilliseconds - boundary.epochMilliseconds,
+    };
+  });
 }
 
 function pillarReport(pillar: Pillar, cycleIndex: number): PillarReport {
@@ -199,6 +231,10 @@ export function calculateSaju(request: SajuRequest): SajuReport {
         lichun: solarTermEvidence(calculated.lichun),
         monthStart: solarTermEvidence(calculated.monthStart),
         monthEnd: solarTermEvidence(calculated.monthEnd),
+        seasonalQuarterDistances: seasonalQuarterDistances(
+          gregorianDate.year,
+          instant.epochMilliseconds,
+        ),
         effectiveDay: calculated.effectiveDay,
         epochDay: calculated.epochDay,
         distanceToNearestBoundaryMilliseconds: boundaryDistance,

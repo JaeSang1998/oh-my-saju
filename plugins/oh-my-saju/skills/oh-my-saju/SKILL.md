@@ -8,19 +8,12 @@ license: Apache-2.0
 
 Use the bundled runtime as the source of calculation facts and Tradition Pack findings. Collect the right input, run the two-phase protocol, write grounded Korean drafts, validate them, and present the validated result naturally.
 
-Never calculate pillars, solar-term boundaries, ten gods, element weights, or Tradition Pack
-findings from memory. Never replace an unknown time with noon.
+Never calculate pillars, solar-term boundaries, ten gods, element weights, or Tradition Pack findings from memory. Never replace an unknown time with noon.
 
-Read [references/architecture-and-contract.md](references/architecture-and-contract.md) before the
-first execution. Read [references/input-and-runtime.md](references/input-and-runtime.md) when
-constructing commands. Before user-facing prose, read
-[references/korean-interpretation-style.md](references/korean-interpretation-style.md). For a
-consequential comparison or timing question, also read
-[references/decision-quality.md](references/decision-quality.md).
+Read [references/architecture-and-contract.md](references/architecture-and-contract.md) before the first execution and [references/input-and-runtime.md](references/input-and-runtime.md) when constructing commands.
+Before user-facing prose, read [references/korean-interpretation-style.md](references/korean-interpretation-style.md) and [references/deep-traditional-analysis.md](references/deep-traditional-analysis.md). For a consequential comparison or timing question, also read [references/decision-quality.md](references/decision-quality.md).
 
-This skill needs local file access, a temporary JSON file, Node.js 18+, and JSON stdout. Prepare Pack
-drafts in independent contexts when available or sequentially in returned order; the protocol and
-result stay the same.
+This skill needs local file access, a temporary JSON file, Node.js 18+, and JSON stdout. Prepare Pack drafts in independent contexts when available or sequentially in returned order; the protocol and result stay the same.
 
 ## Workflow
 
@@ -65,6 +58,8 @@ asking what kind of person the chart describes. Build the answer around:
 - relationships and communication;
 - money or resource handling when placement gives it a distinct basis.
 
+Set `request.inferenceDepth` to `deep-traditional` unless the user explicitly asks for a compact calculation or evidence-only answer. Follow the 0–7 cross-check in `references/deep-traditional-analysis.md`: default prose includes supported 월령·조후·격국·통근·합형충파해 and special-pattern reasoning, then carries it into concrete relationship and work scenes. Do not replace that reading with an implementation or uncertainty disclaimer.
+
 Give at least three concrete, recognizable manifestations across the reading. Make each area answer
 a different question; do not recycle `information/choices → own standard → output` or another
 abstract mechanism across three slots. Do not force an unsupported area. Keep a narrow question narrow.
@@ -95,7 +90,10 @@ and `거리가 회복된다`; keep `작용` or `구조` in the chart basis. Ever
 `근거 — 해석` on one line, so write each basis as a readable clause rather than a noun phrase.
 `절기와 계절` is the only section where reading the season as heat, cold, and damp is correct;
 everywhere else the season stays a chart coordinate. Apply the native-Korean copy check in
-`references/korean-interpretation-style.md`.
+`references/korean-interpretation-style.md` before validation: make one Korean clarity pass on
+every user-facing sentence, completing needed particles and predicates without changing chart
+bases, finding IDs, technical terms, or JSON fields. Never rewrite the validated
+`result.presentation.markdown` afterward.
 
 When birth-time uncertainty affects selected prose, keep the uncertainty local with `△` for a
 candidate-dependent result and `◇` for a partial result (`△◇` when both apply). Define only the
@@ -110,10 +108,10 @@ ten-god function.
 
 Keep the basic vocabulary needed to show the reasoning: `일간`, `월지` or `월령`, `오행`,
 `십신`, and basic ten-god groups such as `비견·겁재`, `식상`, `재성`, `관성`, and `인성`.
-At first use, translate the term immediately and explain how it works in this chart. Do not mention
-`격국`, `조후`, `용신`, `신살`, `공망`, named pattern candidates, Pack/profile names, or unresolved
-school comparisons unless the user explicitly asks about that doctrine. Do not expose a candidate
-merely to retract it.
+At first use, translate the term immediately and explain how it works in this chart. In the default
+`deep-traditional` mode, use supported `격국`, `조후`, `용신`, `신살`, `공망`, and named pattern
+candidates when they change the reading; in `grounded` mode, show them only when the user asks.
+Do not expose a candidate merely to retract it.
 
 Prefer visible placements over raw ledger counts. Do not leave labels such as `왕`, `휴`,
 `인성 1`, or `식상 2` unexplained: write the ordinary meaning in the same sentence, for example
@@ -242,8 +240,7 @@ For an exact-time timing question, add a sibling `timing` object:
 }
 ```
 
-The range contains Saju years beginning at exact Lichun, not January 1. It may contain at most 21
-years. `luckPillarCount` selects 1–120 returned decade pillars; each returned pillar includes
+The range contains Saju years beginning at exact Lichun, not January 1. It may contain at most 60 years. `luckPillarCount` selects 1–120 returned decade pillars; each returned pillar includes
 day-master-relative stem and branch ten gods. Timing is intentionally rejected for unknown or
 constrained birth time in this release.
 
@@ -307,14 +304,12 @@ ten-god evidence. Preserve validator uncertainty metadata: the renderer adds a l
 `△◇` marker to each affected selection and one shared legend.
 
 Use `chart-overview`, `day-master`, `five-elements`, `ten-gods`, `relationships`, `strength`, and
-`season-climate` for a default profile. Do not turn a `pattern`, `useful-god`, `void-branches`, `growth-stages`,
-`luck-cycles`, or `symbolic-stars` finding into generic personality prose through a summary. If a
-Pack supplies no allowed default-profile topic, draft its required isolated response for
-validation but do not select it into `presentationDraft`. In that non-display draft, do not repeat
-the hidden doctrine name or invent a behavioral meaning; use one neutral finding-backed sentence
-such as `이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.` This exception is
-only protocol filler for an otherwise required Pack draft and never appears in
-`result.presentation.markdown`.
+`season-climate` as the profile spine. In the default deep protocol, add a supported `pattern`,
+`useful-god`, `void-branches`, `growth-stages`, or `symbolic-stars` finding when it changes the
+seasonal, strength, relationship, or work conclusion; translate it into a concrete scene rather
+than leaving it as a label. `luck-cycles` remains in the timing branch. In `grounded` mode, a Pack
+with no ordinary-profile topic gets one neutral validation-only sentence and stays out of
+`presentationDraft`.
 
 The draft output shape is:
 
@@ -452,12 +447,11 @@ tradition-comparison request, present Packs side by side and leave unresolved di
 unresolved. For an existing-reading audit, separate calculation mismatch, unsupported Pack
 claim, missing evidence, uncertainty violation, and generic/Barnum language.
 
-Timing pillars and boundaries are deterministic facts, but this release does not turn them into
-Tradition Pack findings. Present only the exact dates, pillars, ten gods (including the returned
-luck-pillar stem/branch ten gods), and approximate luck-pillar qualifier from `timing`. Do not
-derive favorable periods, activated functions,
-opportunities, burdens, advice, or events from that branch. Explain that timing interpretation
-requires a future versioned timing Pack and claim gate.
+Timing pillars and boundaries are deterministic facts rather than Tradition Pack findings. For a
+deep timing request, carry an already supported natal mechanism through the returned 대운·세운·절월
+sequence and describe the relationship, work, or decision pattern that repeats, eases, or comes
+under pressure. Keep exact dates, pillars, ten gods, and the approximate luck-pillar qualifier
+visible; write the rest as a traditional scenario rather than a dated-event guarantee.
 
 ### 8. Final self-review
 
@@ -487,7 +481,8 @@ Before answering, verify:
   leans on;
 - season stayed a chart coordinate outside `절기와 계절`, and uncertainty uses local `△`/`◇`
   markers with no more than one shared legend;
-- no advanced doctrine or internal non-display guardrail leaked into a broad reading;
+- every advanced doctrine used in a deep reading changed a concrete conclusion; no internal
+  non-display guardrail leaked into a broad reading;
 - no trait was inferred from an element percentage alone;
 - generic audit, limitation, and scientific-validity prose stayed out of an ordinary reading;
 - no medical, legal, financial, admission, marriage, illness, wealth, or dated-event guarantee was

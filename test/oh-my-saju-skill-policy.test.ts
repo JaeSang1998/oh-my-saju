@@ -50,7 +50,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     );
   });
 
-  test('keeps advanced doctrine behind progressive disclosure', () => {
+  test('uses supported advanced doctrine in the default deep protocol', () => {
     const skill = readSkillFile('SKILL.md');
     const style = readSkillFile('references/korean-interpretation-style.md');
 
@@ -59,7 +59,6 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       for (const term of ['격국', '조후', '용신', '신살', '공망']) {
         expect(policy).toContain(`\`${term}\``);
       }
-      expect(policy).toMatch(/unless the user(?: explicitly)? asks/u);
       expect(policy).toContain(
         'Never end a broad reading with a limitations or unresolved-doctrine paragraph',
       );
@@ -67,6 +66,8 @@ describe('Oh My Saju agent-skill conversation policy', () => {
         'If a finding cannot support a plain-language implication, omit the finding entirely',
       );
     }
+    expect(skill).toContain('`deep-traditional` mode, use supported');
+    expect(style).toContain('default `deep-traditional` reading, also use supported');
   });
 
   test('keeps generic validity and audit disclaimers out of ordinary readings', () => {
@@ -81,8 +82,38 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     }
     expect(interfaceMetadata).not.toContain('explicit limits');
     expect(interfaceMetadata).toContain('자연스럽게 풀이합니다');
-    expect(interfaceMetadata).toContain('근거는 짧게 밝히고');
-    expect(interfaceMetadata).toContain('평범한 한국어로 풀어 주세요');
+    expect(interfaceMetadata).toContain('근거는 짧게 밝히며');
+    expect(interfaceMetadata).toContain('조사와 어미를 갖춘 일상적인 한국어로 써 주세요');
+  });
+
+  test('requires complete Korean prose before a validated reading is rendered', () => {
+    const skill = readSkillFile('SKILL.md');
+    const style = readSkillFile('references/korean-interpretation-style.md');
+    const inputReference = readSkillFile('references/input-and-runtime.md');
+
+    expect(skill).toMatch(/make one Korean clarity pass on\s+every user-facing sentence/u);
+    expect(skill).toMatch(
+      /Never rewrite the validated\s+`result\.presentation\.markdown` afterward/u,
+    );
+    expect(style).toContain('Complete the sentence before making it elegant');
+    expect(style).toContain('noun string, a label, or a connective ending');
+    expect(inputReference).toContain('Each `text` value must\nbe complete Korean prose');
+    expect(inputReference).toContain('read the finished\nKorean line aloud');
+  });
+
+  test('uses the detailed traditional 0–7 protocol by default', () => {
+    const skill = readSkillFile('SKILL.md');
+    const inputReference = readSkillFile('references/input-and-runtime.md');
+    const deepProtocol = readSkillFile('references/deep-traditional-analysis.md');
+
+    expect(skill).toContain('`request.inferenceDepth` to `deep-traditional`');
+    expect(inputReference).toContain('`deep-traditional` (default)');
+    expect(inputReference).toContain('at most 60 Saju years');
+    for (const stage of ['0', '0.5', '5.1', '5.2', '6.1', '6.2', '7']) {
+      expect(deepProtocol).toMatch(new RegExp(`\\| ${stage}\\s+\\|`, 'u'));
+    }
+    expect(deepProtocol).toContain('무엇에 끌려 먼저 가까워지는지');
+    expect(deepProtocol).toContain('어떤 제안이 그 강점을 쓰게 해 장기적으로 맞는지');
   });
 
   test('requires the validated deterministic presentation for a broad reading', () => {
@@ -104,7 +135,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
     expect(inputReference).toContain(
       '이 근거는 기본 성향 프로필의 해석 문장으로 선택하지 않습니다.',
     );
-    expect(skill).toContain('only protocol filler');
+    expect(inputReference).toContain('validation-only protocol filler');
     expect(inputReference).toMatch(/show\s+that Markdown as-is/u);
   });
 
@@ -146,7 +177,7 @@ describe('Oh My Saju agent-skill conversation policy', () => {
       skills: { 'oh-my-saju': string };
     };
 
-    expect(portable.version).toBe('0.6.0');
+    expect(portable.version).toBe('0.7.0');
     expect(codex.version).toBe(portable.version);
     expect(claude.version).toBe(portable.version);
     expect(versions.plugin).toBe(portable.version);

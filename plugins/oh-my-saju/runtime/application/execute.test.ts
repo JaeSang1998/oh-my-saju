@@ -115,13 +115,13 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.6.0',
+        version: '0.7.0',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '5.0.0',
+          version: '6.0.0',
         },
         outputSchemaVersion: '3',
         claimGateVersion: '3',
@@ -205,6 +205,40 @@ describe('executeOhMySaju', () => {
       expect(JSON.stringify(task.request)).not.toContain('"chronology"');
     }
     expect(Object.isFrozen(response)).toBe(true);
+  });
+
+  test('깊은 사주식 추정은 준비·검증 요청에 명시적으로 결합한다', async () => {
+    const deepRequest = {
+      ...REQUEST,
+      question: '연애와 이직에서 어떤 흐름이 반복되는지 사주식으로 깊게 풀어줘.',
+      inferenceDepth: 'deep-traditional' as const,
+    };
+    const prepared = await executeOhMySaju({
+      command: 'prepare-reading',
+      request: deepRequest,
+    });
+
+    expect(prepared.ok).toBe(true);
+    if (!prepared.ok || prepared.command !== 'prepare-reading') return;
+    expect(
+      prepared.result.narrationTasks.every(
+        ({ request }) =>
+          request.task.readingPolicy.inferenceDepth === 'deep-traditional' &&
+          request.task.readingPolicy.detailedTraditionalInferenceAllowed,
+      ),
+    ).toBe(true);
+
+    const drafts = prepared.result.narrationTasks
+      .filter(({ requiresDraft }) => requiresDraft)
+      .map(draftFor);
+    const validated = await executeOhMySaju({
+      command: 'validate-reading',
+      request: deepRequest,
+      preparedDigest: prepared.result.binding.digest,
+      narrator: { id: 'test-host', requestedModel: 'fixture-model' },
+      drafts,
+    });
+    expect(validated).toMatchObject({ ok: true, command: 'validate-reading' });
   });
 
   test('Pack knowledge, rules, fixtures, contract digests all participate in the preparation binding', async () => {

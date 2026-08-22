@@ -5,6 +5,7 @@ import type {
   SajuNarrationRequest,
 } from '../reading/types';
 import type { SajuNarrationPromptTemplate } from '../reading/prompt-contract';
+import type { SajuInferenceDepth } from '../reading/reading-policy';
 import type {
   ExactKoreanSajuAnalysisResult,
   InterpretationTopic,
@@ -118,6 +119,8 @@ export interface OhMySajuCompatibilityRequest {
   readonly question: string | null;
   readonly locale: 'ko-KR';
   readonly variantPolicy: 'stable-only' | 'include-candidate-dependent';
+  /** Defaults to the detailed traditional reading protocol when omitted. */
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 export type OhMySajuCompatibilityFindingKind =
@@ -194,6 +197,7 @@ export interface OhMySajuCompatibilityNarrationTask {
   readonly schemaVersion: '1';
   readonly mode: 'grounded-compatibility';
   readonly question: string | null;
+  readonly inferenceDepth: SajuInferenceDepth;
   readonly instructions: readonly string[];
   readonly evidence: {
     readonly profile: {

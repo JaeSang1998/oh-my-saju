@@ -3,7 +3,7 @@ import { deepFreeze } from '../internal/deep-freeze';
 
 export const SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze({
   id: 'saju-grounded-narration',
-  version: '5.0.0',
+  version: '6.0.0',
 } as const);
 
 export type SajuNarrationPromptTemplate = typeof SAJU_NARRATION_PROMPT_TEMPLATE;

@@ -161,7 +161,16 @@ function assertServiceRequest(value: unknown): asserts value is AiSajuServiceReq
   }
   assertOnlyKeys(
     value,
-    ['calculation', 'question', 'locale', 'purpose', 'audience', 'variantPolicy', 'readingMode'],
+    [
+      'calculation',
+      'question',
+      'locale',
+      'purpose',
+      'audience',
+      'variantPolicy',
+      'readingMode',
+      'inferenceDepth',
+    ],
     'request',
   );
   assertOnlyKeys(value.calculation, ['kind', 'request'], 'request.calculation');

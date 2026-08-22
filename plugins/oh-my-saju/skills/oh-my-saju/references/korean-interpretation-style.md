@@ -69,6 +69,29 @@ like something a Korean reader would naturally say about a person, not like tran
 copy. Keep technical terms in the nearby `basis`; write the meaning with people as subjects and
 ordinary verbs.
 
+### Complete the sentence before making it elegant
+
+Clarity comes before a polished tone. A reader must be able to tell who does what, under which
+condition, and what follows from it without restoring omitted words for themselves. In particular:
+
+- Do not leave a profile sentence as a noun string, a label, or a connective ending. Complete it
+  with a predicate and an ending: `생각을 오래 정리한 뒤 표현` is not prose; `생각을 오래
+정리한 뒤에 말이나 글로 표현합니다` is.
+- Keep particles and endings when they identify the relationship between a chart basis and its
+  meaning. Shorten only material that the reader can recover without ambiguity; do not save words
+  by dropping a needed subject, object, or condition.
+- Name the person, situation, or relationship once when a pronoun such as `이것`, `그 부분`, or
+  `이런 경우` could point to more than one nearby fact. Korean can omit a repeated subject, but
+  it cannot omit the referent of a conclusion.
+- Keep the chart term in the basis and explain its lived meaning with common Korean words. Do not
+  replace a plain verb with a figurative or imported expression just to vary the wording.
+- The renderer joins `basis` and `interpretation` with an em dash. Make each span a clause that
+  reads naturally on its own, then read the joined line once to make sure the subject and predicate
+  still connect.
+
+These rules apply to Korean prose only. Preserve exact finding IDs, quoted basis spans, code,
+JSON keys, Markdown syntax, and established technical terms.
+
 Prefer:
 
 - `계획이 틀어져도 다른 방법을 빨리 찾습니다.`
@@ -90,30 +113,32 @@ actually means. Vary sentence length and endings; do not repeat `…할 수 있�
 `…하는 편입니다`, or the same comma-linked rhythm through every bullet.
 
 As a final test, remove the Saju terms from a sentence. If what remains sounds like a strategy
-report, an English personality test, or generic AI coaching, rewrite it in plain spoken Korean.
+report, an English personality test, or generic AI coaching, rewrite it in everyday Korean prose.
 
 ## Judgment endings and Korean rhythm
 
 Use `~로 봅니다` as the standard ending for a judgment. It is the ending Korean myeongni writing
 actually uses: firmer than `~일 수 있습니다`, more modest than `~입니다`. Never write
-`~하는 경향이 있습니다`; it is a literal rendering of *tend to* and commits to nothing. For a
+`~하는 경향이 있습니다`; it is a literal rendering of _tend to_ and commits to nothing. For a
 tendency write `~한 편입니다`, and keep cause and conclusion in one sentence with `~해서 ~합니다`.
 
 Each of the following has a shorter Korean replacement. Treat the left column as banned:
 
-| Avoid                                            | Write instead                             |
-| ------------------------------------------------ | ----------------------------------------- |
-| `~하는 경향이 있습니다`                          | `~한 편입니다`                            |
-| repeated `~할 수 있습니다`                        | `~합니다`, `~로 봅니다`                   |
-| `~에 있어서`                                      | `~에서`, `~는`                            |
-| `~를 가지고 있습니다`                             | `~가 있습니다`, `~를 지녔습니다`          |
-| `당신은 ~한 사람입니다`                           | drop the subject: `~한 편입니다`          |
-| `이는 ~를 의미합니다`                             | `그래서 ~합니다`, `~라는 뜻입니다`        |
-| `중요한 것은 ~입니다`                             | `~가 관건입니다`, `~를 먼저 봐야 합니다`  |
-| `긍정적인 영향`, `부정적인 영향`                  | `도움이 됩니다`, `발목을 잡습니다`        |
-| `균형을 맞추는 것이 좋습니다`                     | delete it, or name the concrete action    |
-| `전반적으로`, `종합적으로 볼 때`                  | delete it                                 |
-| `또한`, `그리고`, `하지만` opening every sentence | delete them; Korean reads without them    |
+| Avoid                                             | Write instead                            |
+| ------------------------------------------------- | ---------------------------------------- |
+| `~하는 경향이 있습니다`                           | `~한 편입니다`                           |
+| repeated `~할 수 있습니다`                        | `~합니다`, `~로 봅니다`                  |
+| `~에 있어서`                                      | `~에서`, `~는`                           |
+| `~를 가지고 있습니다`                             | `~가 있습니다`, `~를 지녔습니다`         |
+| `당신은 ~한 사람입니다`                           | drop the subject: `~한 편입니다`         |
+| `이는 ~를 의미합니다`                             | `그래서 ~합니다`, `~라는 뜻입니다`       |
+| `중요한 것은 ~입니다`                             | `~가 관건입니다`, `~를 먼저 봐야 합니다` |
+| `긍정적인 영향`, `부정적인 영향`                  | `도움이 됩니다`, `발목을 잡습니다`       |
+| `균형을 맞추는 것이 좋습니다`                     | delete it, or name the concrete action   |
+| `전반적으로`, `종합적으로 볼 때`                  | delete it                                |
+| `또한`, `그리고`, `하지만` opening every sentence | delete them; Korean reads without them   |
+| noun-string or connective ending                  | state the actor, action, and result      |
+| unclear `이것`, `그 부분`, `이런 경우`            | name the chart fact or situation once    |
 
 Do not repeat the subject `당신은`. Korean counselling speech drops the subject almost everywhere;
 one explicit `당신은` in a whole reading is already the maximum.
@@ -185,7 +210,9 @@ person does this chart describe?” A useful broad reading normally covers:
 7. money or resource handling only when supported.
 
 Use two or three chart mechanisms to connect these areas rather than assigning a different doctrine
-label to each heading. Across the answer, include at least three concrete, recognizable
+label to each heading. The default `deep-traditional` setting also follows the 0–7 seasonal,
+month-command, strength, relation, past-pattern, and timing cross-check in
+`deep-traditional-analysis.md`. Across the answer, include at least three concrete, recognizable
 manifestations. Each should name a situation, the likely response, and the cost or result. Favor
 examples such as how the person starts, decides, finishes, disagrees, delegates, or reacts to an
 unclear boundary over abstract labels such as `추진력이 있다`.
@@ -228,26 +255,31 @@ _(근거: [핵심 요약이 딛고 선 명식 근거])_
 
 ## 절기와 계절
 
-- [△/◇] [절입 경과일·다음 절기까지의 거리·사령·한난 근거를 읽히는 절로] — [그 계절
-  좌표 위에서 몸이 실제로 움직이는 리듬]
+- [△/◇] [절입 경과일·다음 절기까지의 거리·사령·한난을 함께 밝힌 계절 근거] — [그
+  계절의 한난조습이 몸의 반응과 행동으로 드러나는 모습]
 
 ## 성격과 행동 방식
 
-- [△/◇] [일간·계절·뿌리 또는 반복 배치] — [전통적 기능이 행동으로 드러나는 모습]
-- [△/◇] [첫째와 다른 실제 배치] — [첫째와 겹치지 않는 또 다른 행동]
+- [△/◇] [일간·계절·뿌리 또는 반복 배치를 보여 주는 근거] — [그 전통적 기능이 실제
+  행동으로 드러나는 모습]
+- [△/◇] [첫째와 다른 실제 배치를 보여 주는 근거] — [첫째 설명과 겹치지 않는 또 다른
+  행동]
 
 ## 타고난 힘과 쓰는 법
 
-- [△/◇] [통근·득령·득지·득세 근거] — [자기 힘으로 끌고 가는지, 무엇에 기대는지]
+- [△/◇] [통근·득령·득지·득세를 보여 주는 근거] — [자기 힘으로 끌고 가는지, 무엇에
+  기대는지]
 
 ## 강점과 주의점
 
-- **잘 풀릴 때:** [△/◇] [강점과 맹점이 공유하는 근거] — [같은 성향이 도움이 되는 때]
-- **압박을 받을 때:** [△/◇] [같은 근거] — [같은 성향 때문에 문제가 생기는 때]
+- **잘 풀릴 때:** [△/◇] [강점과 맹점이 함께 나오는 근거] — [같은 성향이 도움이 되는
+  상황과 행동]
+- **압박을 받을 때:** [△/◇] [강점과 같은 근거] — [같은 성향 때문에 문제가 생기는
+  상황과 반응]
 
 ## 일·재능
 
-- [△/◇] [일·공부와 직접 연결되는 근거] — [맞는 과업 방식과 그 방식이 실패하는 조건]
+- [△/◇] [일·공부와 직접 연결되는 근거] — [맞는 과업 방식과 그 방식이 막히는 조건]
 
 ## 돈과 현실 감각
 
@@ -256,7 +288,8 @@ _(근거: [핵심 요약이 딛고 선 명식 근거])_
 
 ## 관계
 
-- [△/◇] [관계와 직접 연결되는 근거] — [가까운 관계에서의 반응과 오해가 생기는 조건]
+- [△/◇] [관계와 직접 연결되는 근거] — [가까운 관계에서 보이는 반응과 오해가 생기는
+  조건]
 ```
 
 Prefer bullets and small tables. A paragraph may contain one to three connected sentences. Keep
@@ -324,10 +357,10 @@ relationship checklists out of the result.
 Use `일간`, `월지` or `월령`, `오행`, `십신`, and the basic ten-god groups when they make the
 reasoning visible. Translate each term at first use: `시주의 을목 상관, 즉 생각을 밖으로
 표현하는 작용`보다 `시주에 을목 상관이 있어 생각을 말이나 작업으로 곧바로 꺼냅니다`가
-더 자연스럽다. Keep `격국`, `조후`,
-`용신`, `신살`, `공망`, named candidates, Pack/profile names, and unresolved school comparisons
-out of ordinary prose unless the user asks about them. Do not report a technical candidate simply
-to retract it in the next clause.
+더 자연스럽다. In the default `deep-traditional` reading, also use supported `격국`, `조후`,
+`용신`, `신살`, `공망`, and named pattern candidates when each term changes the actual reading.
+In `grounded` mode, keep those terms out unless the user asks. Never report a technical candidate
+simply to retract it in the next clause.
 
 Prefer placements to bare ledger counts. A reader should never have to know what `왕`, `휴`,
 `인성 1`, or `식상 2` means before reading the sentence: translate the state or ten-god function
@@ -341,9 +374,9 @@ Treat a validated reading's `notice` the same way when it has `displayPolicy: "a
 `defaultDisplay: false`. Preserve it for audits but do not render or paraphrase it in an ordinary
 reading.
 
-Never end a broad reading with a limitations or unresolved-doctrine paragraph. If the user
-explicitly asks about an advanced doctrine, define it once in plain Korean and answer that focused
-question without dumping unrelated candidates.
+Never end a broad reading with a limitations or unresolved-doctrine paragraph. Define an advanced
+doctrine once in plain Korean when it matters to the deep reading, then carry it into the requested
+relationship, work, or timing question without dumping unrelated candidates.
 
 ## Natural response shape
 

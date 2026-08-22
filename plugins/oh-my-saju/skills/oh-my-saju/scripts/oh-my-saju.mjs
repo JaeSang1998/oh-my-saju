@@ -5771,7 +5771,7 @@ function brandCalculationReport(value) {
 
 // src/manifest.ts
 var import_moment_timezone = __toESM(require_moment_timezone2(), 1);
-var SOURCE_REVISION = true ? "core-content-sha256:edcbd53ea7556942c7608fcd3323663316229878e76932b8c2a0514fc74c6954" : "source-tree-unbuilt";
+var SOURCE_REVISION = true ? "core-content-sha256:1e91e5f94cbaa6f0375f8a26d039d0462310e1763d274feed023e082deb34c8b" : "source-tree-unbuilt";
 var SUPPORTED_RANGES = Object.freeze({
   sajuBirthYears: Object.freeze({ min: 1801, max: 2100 }),
   solarTermYears: Object.freeze({ min: 1800, max: 2300 }),
@@ -5847,395 +5847,6 @@ var ENGINE_MANIFEST = Object.freeze({
     })
   })
 });
-
-// src/domain/hidden-stems-v1.ts
-var HIDDEN_STEMS_V1 = deepFreeze({
-  \uC790: [{ stem: "\uACC4", weight: 1 }],
-  \uCD95: [
-    { stem: "\uAE30", weight: 0.6 },
-    { stem: "\uACC4", weight: 0.3 },
-    { stem: "\uC2E0", weight: 0.1 }
-  ],
-  \uC778: [
-    { stem: "\uAC11", weight: 0.6 },
-    { stem: "\uBCD1", weight: 0.3 },
-    { stem: "\uBB34", weight: 0.1 }
-  ],
-  \uBB18: [{ stem: "\uC744", weight: 1 }],
-  \uC9C4: [
-    { stem: "\uBB34", weight: 0.6 },
-    { stem: "\uC744", weight: 0.3 },
-    { stem: "\uACC4", weight: 0.1 }
-  ],
-  \uC0AC: [
-    { stem: "\uBCD1", weight: 0.6 },
-    { stem: "\uBB34", weight: 0.3 },
-    { stem: "\uACBD", weight: 0.1 }
-  ],
-  \uC624: [
-    { stem: "\uC815", weight: 0.7 },
-    { stem: "\uAE30", weight: 0.3 }
-  ],
-  \uBBF8: [
-    { stem: "\uAE30", weight: 0.6 },
-    { stem: "\uC815", weight: 0.3 },
-    { stem: "\uC744", weight: 0.1 }
-  ],
-  \uC2E0: [
-    { stem: "\uACBD", weight: 0.6 },
-    { stem: "\uC784", weight: 0.3 },
-    { stem: "\uBB34", weight: 0.1 }
-  ],
-  \uC720: [{ stem: "\uC2E0", weight: 1 }],
-  \uC220: [
-    { stem: "\uBB34", weight: 0.6 },
-    { stem: "\uC2E0", weight: 0.3 },
-    { stem: "\uC815", weight: 0.1 }
-  ],
-  \uD574: [
-    { stem: "\uC784", weight: 0.7 },
-    { stem: "\uAC11", weight: 0.3 }
-  ]
-});
-
-// src/analysis/structural-analysis.ts
-var POSITIONS = ["year", "month", "day", "hour"];
-var STEM_COMBINATIONS = [
-  ["\uAC11", "\uAE30"],
-  ["\uC744", "\uACBD"],
-  ["\uBCD1", "\uC2E0"],
-  ["\uC815", "\uC784"],
-  ["\uBB34", "\uACC4"]
-];
-var BRANCH_COMBINATIONS = [
-  ["\uC790", "\uCD95"],
-  ["\uC778", "\uD574"],
-  ["\uBB18", "\uC220"],
-  ["\uC9C4", "\uC720"],
-  ["\uC0AC", "\uC2E0"],
-  ["\uC624", "\uBBF8"]
-];
-var BRANCH_CLASHES = [
-  ["\uC790", "\uC624"],
-  ["\uCD95", "\uBBF8"],
-  ["\uC778", "\uC2E0"],
-  ["\uBB18", "\uC720"],
-  ["\uC9C4", "\uC220"],
-  ["\uC0AC", "\uD574"]
-];
-var BRANCH_HARMS = [
-  ["\uC790", "\uBBF8"],
-  ["\uCD95", "\uC624"],
-  ["\uC778", "\uC0AC"],
-  ["\uBB18", "\uC9C4"],
-  ["\uC2E0", "\uD574"],
-  ["\uC720", "\uC220"]
-];
-var BRANCH_BREAKS = [
-  ["\uC790", "\uC720"],
-  ["\uCD95", "\uC9C4"],
-  ["\uC778", "\uD574"],
-  ["\uBB18", "\uC624"],
-  ["\uC0AC", "\uC2E0"],
-  ["\uBBF8", "\uC220"]
-];
-var DIRECTED_BRANCH_PUNISHMENTS = [
-  ["\uC778", "\uC0AC"],
-  ["\uC0AC", "\uC2E0"],
-  ["\uC2E0", "\uC778"],
-  ["\uCD95", "\uC220"],
-  ["\uC220", "\uBBF8"],
-  ["\uBBF8", "\uCD95"]
-];
-var MUTUAL_BRANCH_PUNISHMENTS = [
-  ["\uC790", "\uBB18"]
-];
-var SELF_PUNISHMENT_BRANCHES = ["\uC9C4", "\uC624", "\uC720", "\uD574"];
-var THREE_HARMONIES = [
-  ["\uC2E0", "\uC790", "\uC9C4"],
-  ["\uD574", "\uBB18", "\uBBF8"],
-  ["\uC778", "\uC624", "\uC220"],
-  ["\uC0AC", "\uC720", "\uCD95"]
-];
-function isPair(left, right, pairs) {
-  return pairs.some(
-    ([first, second]) => left === first && right === second || left === second && right === first
-  );
-}
-function analyzePillarPairRelationships(left, right) {
-  const leftBranch = left.earthlyBranch;
-  const rightBranch = right.earthlyBranch;
-  let branchPunishment = null;
-  if (leftBranch === rightBranch && SELF_PUNISHMENT_BRANCHES.includes(leftBranch)) {
-    branchPunishment = { kind: "self", direction: "self" };
-  } else if (DIRECTED_BRANCH_PUNISHMENTS.some(
-    ([fromBranch, toBranch]) => leftBranch === fromBranch && rightBranch === toBranch
-  )) {
-    branchPunishment = { kind: "directed-cycle", direction: "left-to-right" };
-  } else if (DIRECTED_BRANCH_PUNISHMENTS.some(
-    ([fromBranch, toBranch]) => rightBranch === fromBranch && leftBranch === toBranch
-  )) {
-    branchPunishment = { kind: "directed-cycle", direction: "right-to-left" };
-  } else if (isPair(leftBranch, rightBranch, MUTUAL_BRANCH_PUNISHMENTS)) {
-    branchPunishment = { kind: "mutual", direction: "mutual" };
-  }
-  return {
-    stemCombination: isPair(left.heavenlyStem, right.heavenlyStem, STEM_COMBINATIONS),
-    branchCombination: isPair(leftBranch, rightBranch, BRANCH_COMBINATIONS),
-    branchClash: isPair(leftBranch, rightBranch, BRANCH_CLASHES),
-    branchPunishment,
-    branchBreak: isPair(leftBranch, rightBranch, BRANCH_BREAKS),
-    branchHarm: isPair(leftBranch, rightBranch, BRANCH_HARMS)
-  };
-}
-function rounded(value) {
-  return Math.round(value * 1e6) / 1e6;
-}
-function pairRelationships(values, pairs) {
-  const relationships = [];
-  for (let leftIndex = 0; leftIndex < POSITIONS.length; leftIndex += 1) {
-    for (let rightIndex = leftIndex + 1; rightIndex < POSITIONS.length; rightIndex += 1) {
-      const leftPosition = POSITIONS[leftIndex];
-      const rightPosition = POSITIONS[rightIndex];
-      if (leftPosition === void 0 || rightPosition === void 0) continue;
-      const left = values[leftPosition];
-      const right = values[rightPosition];
-      if (isPair(left, right, pairs)) {
-        relationships.push({
-          positions: [leftPosition, rightPosition],
-          members: [left, right]
-        });
-      }
-    }
-  }
-  return relationships;
-}
-function knownPairRelationships(positions, values, pairs) {
-  const relationships = [];
-  for (let leftIndex = 0; leftIndex < positions.length; leftIndex += 1) {
-    for (let rightIndex = leftIndex + 1; rightIndex < positions.length; rightIndex += 1) {
-      const leftPosition = positions[leftIndex];
-      const rightPosition = positions[rightIndex];
-      if (leftPosition === void 0 || rightPosition === void 0) continue;
-      const left = values[leftPosition];
-      const right = values[rightPosition];
-      if (left !== void 0 && right !== void 0 && isPair(left, right, pairs)) {
-        relationships.push({
-          positions: [leftPosition, rightPosition],
-          members: [left, right]
-        });
-      }
-    }
-  }
-  return relationships;
-}
-function branchPunishmentRelationships(positions, values) {
-  const relationships = [];
-  const positionsFor = (branch) => positions.filter((position2) => values[position2] === branch);
-  for (const [fromBranch, toBranch] of DIRECTED_BRANCH_PUNISHMENTS) {
-    for (const fromPosition of positionsFor(fromBranch)) {
-      for (const toPosition of positionsFor(toBranch)) {
-        relationships.push({
-          kind: "directed-cycle",
-          positions: [fromPosition, toPosition],
-          members: [fromBranch, toBranch]
-        });
-      }
-    }
-  }
-  for (const [leftBranch, rightBranch] of MUTUAL_BRANCH_PUNISHMENTS) {
-    for (const leftPosition of positionsFor(leftBranch)) {
-      for (const rightPosition of positionsFor(rightBranch)) {
-        relationships.push({
-          kind: "mutual",
-          positions: [leftPosition, rightPosition],
-          members: [leftBranch, rightBranch]
-        });
-      }
-    }
-  }
-  for (const branch of SELF_PUNISHMENT_BRANCHES) {
-    const matchingPositions = positionsFor(branch);
-    for (let leftIndex = 0; leftIndex < matchingPositions.length; leftIndex += 1) {
-      for (let rightIndex = leftIndex + 1; rightIndex < matchingPositions.length; rightIndex += 1) {
-        relationships.push({
-          kind: "self",
-          positions: [matchingPositions[leftIndex], matchingPositions[rightIndex]],
-          members: [branch, branch]
-        });
-      }
-    }
-  }
-  return relationships;
-}
-function analyzeKnownPillarStructure(pillars) {
-  const day = pillars.day;
-  if (day === void 0) {
-    throw new TypeError("analyzeKnownPillarStructure requires a day pillar.");
-  }
-  const knownPillars = POSITIONS.filter((position2) => pillars[position2] !== void 0);
-  const omittedPillars2 = POSITIONS.filter((position2) => pillars[position2] === void 0);
-  const stems = {};
-  const branches = {};
-  const hiddenStems = {};
-  for (const position2 of knownPillars) {
-    const pillar = pillars[position2];
-    stems[position2] = pillar.heavenlyStem;
-    branches[position2] = pillar.earthlyBranch;
-    hiddenStems[position2] = HIDDEN_STEMS_V1[pillar.earthlyBranch].map(({ stem, weight }) => ({
-      stem,
-      weight,
-      element: getHeavenlyStemElement(stem),
-      tenGod: getTenGod(day.heavenlyStem, stem)
-    }));
-  }
-  const scores = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
-  for (const position2 of knownPillars) {
-    scores[getHeavenlyStemElement(stems[position2])] += 1;
-    for (const hidden of hiddenStems[position2] ?? []) scores[hidden.element] += hidden.weight;
-  }
-  for (const element of FIVE_ELEMENTS) scores[element] = rounded(scores[element]);
-  const totalWeight = knownPillars.length * 2;
-  const percentages = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
-  for (const element of FIVE_ELEMENTS) {
-    percentages[element] = rounded(scores[element] / totalWeight * 100);
-  }
-  const maximum = Math.max(...FIVE_ELEMENTS.map((element) => scores[element]));
-  const minimum = Math.min(...FIVE_ELEMENTS.map((element) => scores[element]));
-  const counts = { \uC591: 0, \uC74C: 0 };
-  for (const position2 of knownPillars) {
-    counts[getHeavenlyStemYinYang(stems[position2])] += 1;
-    counts[getEarthlyBranchYinYang(branches[position2])] += 1;
-  }
-  const totalCharacters = knownPillars.length * 2;
-  const threeHarmonies = [];
-  for (const members of THREE_HARMONIES) {
-    const matchingPositions = members.map(
-      (member) => knownPillars.find((position2) => branches[position2] === member)
-    );
-    if (matchingPositions.every((position2) => position2 !== void 0)) {
-      threeHarmonies.push({
-        positions: matchingPositions,
-        members: [...members]
-      });
-    }
-  }
-  return {
-    knownPillars,
-    omittedPillars: omittedPillars2,
-    hiddenStems,
-    elementBalance: {
-      profileId: "visible-stems-1-hidden-stems-normalized-v1",
-      totalWeight,
-      scores,
-      percentages,
-      strongest: FIVE_ELEMENTS.filter((element) => scores[element] === maximum),
-      weakest: FIVE_ELEMENTS.filter((element) => scores[element] === minimum)
-    },
-    yinYangBalance: {
-      basis: "known-visible-characters",
-      totalCharacters,
-      counts,
-      percentages: {
-        \uC591: rounded(counts.\uC591 / totalCharacters * 100),
-        \uC74C: rounded(counts.\uC74C / totalCharacters * 100)
-      }
-    },
-    relationships: {
-      stemCombinations: knownPairRelationships(knownPillars, stems, STEM_COMBINATIONS),
-      branchCombinations: knownPairRelationships(knownPillars, branches, BRANCH_COMBINATIONS),
-      branchClashes: knownPairRelationships(knownPillars, branches, BRANCH_CLASHES),
-      branchPunishments: branchPunishmentRelationships(knownPillars, branches),
-      branchBreaks: knownPairRelationships(knownPillars, branches, BRANCH_BREAKS),
-      branchHarms: knownPairRelationships(knownPillars, branches, BRANCH_HARMS),
-      threeHarmonies
-    }
-  };
-}
-function analyzeStructure(pillars) {
-  const dayMaster = pillars.day.heavenlyStem;
-  const stems = {
-    year: pillars.year.heavenlyStem,
-    month: pillars.month.heavenlyStem,
-    day: pillars.day.heavenlyStem,
-    hour: pillars.hour.heavenlyStem
-  };
-  const branches = {
-    year: pillars.year.earthlyBranch,
-    month: pillars.month.earthlyBranch,
-    day: pillars.day.earthlyBranch,
-    hour: pillars.hour.earthlyBranch
-  };
-  const hiddenFor = (position2) => HIDDEN_STEMS_V1[branches[position2]].map(({ stem, weight }) => ({
-    stem,
-    weight,
-    element: getHeavenlyStemElement(stem),
-    tenGod: getTenGod(dayMaster, stem)
-  }));
-  const hiddenStems = {
-    year: hiddenFor("year"),
-    month: hiddenFor("month"),
-    day: hiddenFor("day"),
-    hour: hiddenFor("hour")
-  };
-  const scores = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
-  for (const position2 of POSITIONS) {
-    scores[getHeavenlyStemElement(stems[position2])] += 1;
-    for (const hidden of hiddenStems[position2]) {
-      scores[hidden.element] += hidden.weight;
-    }
-  }
-  for (const element of FIVE_ELEMENTS) scores[element] = rounded(scores[element]);
-  const percentages = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
-  for (const element of FIVE_ELEMENTS) percentages[element] = rounded(scores[element] / 8 * 100);
-  const maximum = Math.max(...FIVE_ELEMENTS.map((element) => scores[element]));
-  const minimum = Math.min(...FIVE_ELEMENTS.map((element) => scores[element]));
-  const yinYangCounts = { \uC591: 0, \uC74C: 0 };
-  for (const position2 of POSITIONS) {
-    yinYangCounts[getHeavenlyStemYinYang(stems[position2])] += 1;
-    yinYangCounts[getEarthlyBranchYinYang(branches[position2])] += 1;
-  }
-  const threeHarmonies = [];
-  for (const members of THREE_HARMONIES) {
-    const positions = members.map(
-      (member) => POSITIONS.find((position2) => branches[position2] === member)
-    );
-    if (positions.every((position2) => position2 !== void 0)) {
-      threeHarmonies.push({
-        positions,
-        members: [...members]
-      });
-    }
-  }
-  return {
-    hiddenStems,
-    elementBalance: {
-      profileId: "visible-stems-1-hidden-stems-normalized-v1",
-      totalWeight: 8,
-      scores,
-      percentages,
-      strongest: FIVE_ELEMENTS.filter((element) => scores[element] === maximum),
-      weakest: FIVE_ELEMENTS.filter((element) => scores[element] === minimum)
-    },
-    yinYangBalance: {
-      basis: "eight-visible-characters",
-      counts: yinYangCounts,
-      percentages: {
-        \uC591: rounded(yinYangCounts.\uC591 / 8 * 100),
-        \uC74C: rounded(yinYangCounts.\uC74C / 8 * 100)
-      }
-    },
-    relationships: {
-      stemCombinations: pairRelationships(stems, STEM_COMBINATIONS),
-      branchCombinations: pairRelationships(branches, BRANCH_COMBINATIONS),
-      branchClashes: pairRelationships(branches, BRANCH_CLASHES),
-      branchPunishments: branchPunishmentRelationships(POSITIONS, branches),
-      branchBreaks: pairRelationships(branches, BRANCH_BREAKS),
-      branchHarms: pairRelationships(branches, BRANCH_HARMS),
-      threeHarmonies
-    }
-  };
-}
 
 // node_modules/.pnpm/astronomy-engine@2.1.19/node_modules/astronomy-engine/esm/astronomy.js
 var C_AUDAY = 173.1446326846693;
@@ -8522,6 +8133,395 @@ function findSolarTermsOfYear(year) {
   );
 }
 
+// src/domain/hidden-stems-v1.ts
+var HIDDEN_STEMS_V1 = deepFreeze({
+  \uC790: [{ stem: "\uACC4", weight: 1 }],
+  \uCD95: [
+    { stem: "\uAE30", weight: 0.6 },
+    { stem: "\uACC4", weight: 0.3 },
+    { stem: "\uC2E0", weight: 0.1 }
+  ],
+  \uC778: [
+    { stem: "\uAC11", weight: 0.6 },
+    { stem: "\uBCD1", weight: 0.3 },
+    { stem: "\uBB34", weight: 0.1 }
+  ],
+  \uBB18: [{ stem: "\uC744", weight: 1 }],
+  \uC9C4: [
+    { stem: "\uBB34", weight: 0.6 },
+    { stem: "\uC744", weight: 0.3 },
+    { stem: "\uACC4", weight: 0.1 }
+  ],
+  \uC0AC: [
+    { stem: "\uBCD1", weight: 0.6 },
+    { stem: "\uBB34", weight: 0.3 },
+    { stem: "\uACBD", weight: 0.1 }
+  ],
+  \uC624: [
+    { stem: "\uC815", weight: 0.7 },
+    { stem: "\uAE30", weight: 0.3 }
+  ],
+  \uBBF8: [
+    { stem: "\uAE30", weight: 0.6 },
+    { stem: "\uC815", weight: 0.3 },
+    { stem: "\uC744", weight: 0.1 }
+  ],
+  \uC2E0: [
+    { stem: "\uACBD", weight: 0.6 },
+    { stem: "\uC784", weight: 0.3 },
+    { stem: "\uBB34", weight: 0.1 }
+  ],
+  \uC720: [{ stem: "\uC2E0", weight: 1 }],
+  \uC220: [
+    { stem: "\uBB34", weight: 0.6 },
+    { stem: "\uC2E0", weight: 0.3 },
+    { stem: "\uC815", weight: 0.1 }
+  ],
+  \uD574: [
+    { stem: "\uC784", weight: 0.7 },
+    { stem: "\uAC11", weight: 0.3 }
+  ]
+});
+
+// src/analysis/structural-analysis.ts
+var POSITIONS = ["year", "month", "day", "hour"];
+var STEM_COMBINATIONS = [
+  ["\uAC11", "\uAE30"],
+  ["\uC744", "\uACBD"],
+  ["\uBCD1", "\uC2E0"],
+  ["\uC815", "\uC784"],
+  ["\uBB34", "\uACC4"]
+];
+var BRANCH_COMBINATIONS = [
+  ["\uC790", "\uCD95"],
+  ["\uC778", "\uD574"],
+  ["\uBB18", "\uC220"],
+  ["\uC9C4", "\uC720"],
+  ["\uC0AC", "\uC2E0"],
+  ["\uC624", "\uBBF8"]
+];
+var BRANCH_CLASHES = [
+  ["\uC790", "\uC624"],
+  ["\uCD95", "\uBBF8"],
+  ["\uC778", "\uC2E0"],
+  ["\uBB18", "\uC720"],
+  ["\uC9C4", "\uC220"],
+  ["\uC0AC", "\uD574"]
+];
+var BRANCH_HARMS = [
+  ["\uC790", "\uBBF8"],
+  ["\uCD95", "\uC624"],
+  ["\uC778", "\uC0AC"],
+  ["\uBB18", "\uC9C4"],
+  ["\uC2E0", "\uD574"],
+  ["\uC720", "\uC220"]
+];
+var BRANCH_BREAKS = [
+  ["\uC790", "\uC720"],
+  ["\uCD95", "\uC9C4"],
+  ["\uC778", "\uD574"],
+  ["\uBB18", "\uC624"],
+  ["\uC0AC", "\uC2E0"],
+  ["\uBBF8", "\uC220"]
+];
+var DIRECTED_BRANCH_PUNISHMENTS = [
+  ["\uC778", "\uC0AC"],
+  ["\uC0AC", "\uC2E0"],
+  ["\uC2E0", "\uC778"],
+  ["\uCD95", "\uC220"],
+  ["\uC220", "\uBBF8"],
+  ["\uBBF8", "\uCD95"]
+];
+var MUTUAL_BRANCH_PUNISHMENTS = [
+  ["\uC790", "\uBB18"]
+];
+var SELF_PUNISHMENT_BRANCHES = ["\uC9C4", "\uC624", "\uC720", "\uD574"];
+var THREE_HARMONIES = [
+  ["\uC2E0", "\uC790", "\uC9C4"],
+  ["\uD574", "\uBB18", "\uBBF8"],
+  ["\uC778", "\uC624", "\uC220"],
+  ["\uC0AC", "\uC720", "\uCD95"]
+];
+function isPair(left, right, pairs) {
+  return pairs.some(
+    ([first, second]) => left === first && right === second || left === second && right === first
+  );
+}
+function analyzePillarPairRelationships(left, right) {
+  const leftBranch = left.earthlyBranch;
+  const rightBranch = right.earthlyBranch;
+  let branchPunishment = null;
+  if (leftBranch === rightBranch && SELF_PUNISHMENT_BRANCHES.includes(leftBranch)) {
+    branchPunishment = { kind: "self", direction: "self" };
+  } else if (DIRECTED_BRANCH_PUNISHMENTS.some(
+    ([fromBranch, toBranch]) => leftBranch === fromBranch && rightBranch === toBranch
+  )) {
+    branchPunishment = { kind: "directed-cycle", direction: "left-to-right" };
+  } else if (DIRECTED_BRANCH_PUNISHMENTS.some(
+    ([fromBranch, toBranch]) => rightBranch === fromBranch && leftBranch === toBranch
+  )) {
+    branchPunishment = { kind: "directed-cycle", direction: "right-to-left" };
+  } else if (isPair(leftBranch, rightBranch, MUTUAL_BRANCH_PUNISHMENTS)) {
+    branchPunishment = { kind: "mutual", direction: "mutual" };
+  }
+  return {
+    stemCombination: isPair(left.heavenlyStem, right.heavenlyStem, STEM_COMBINATIONS),
+    branchCombination: isPair(leftBranch, rightBranch, BRANCH_COMBINATIONS),
+    branchClash: isPair(leftBranch, rightBranch, BRANCH_CLASHES),
+    branchPunishment,
+    branchBreak: isPair(leftBranch, rightBranch, BRANCH_BREAKS),
+    branchHarm: isPair(leftBranch, rightBranch, BRANCH_HARMS)
+  };
+}
+function rounded(value) {
+  return Math.round(value * 1e6) / 1e6;
+}
+function pairRelationships(values, pairs) {
+  const relationships = [];
+  for (let leftIndex = 0; leftIndex < POSITIONS.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < POSITIONS.length; rightIndex += 1) {
+      const leftPosition = POSITIONS[leftIndex];
+      const rightPosition = POSITIONS[rightIndex];
+      if (leftPosition === void 0 || rightPosition === void 0) continue;
+      const left = values[leftPosition];
+      const right = values[rightPosition];
+      if (isPair(left, right, pairs)) {
+        relationships.push({
+          positions: [leftPosition, rightPosition],
+          members: [left, right]
+        });
+      }
+    }
+  }
+  return relationships;
+}
+function knownPairRelationships(positions, values, pairs) {
+  const relationships = [];
+  for (let leftIndex = 0; leftIndex < positions.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < positions.length; rightIndex += 1) {
+      const leftPosition = positions[leftIndex];
+      const rightPosition = positions[rightIndex];
+      if (leftPosition === void 0 || rightPosition === void 0) continue;
+      const left = values[leftPosition];
+      const right = values[rightPosition];
+      if (left !== void 0 && right !== void 0 && isPair(left, right, pairs)) {
+        relationships.push({
+          positions: [leftPosition, rightPosition],
+          members: [left, right]
+        });
+      }
+    }
+  }
+  return relationships;
+}
+function branchPunishmentRelationships(positions, values) {
+  const relationships = [];
+  const positionsFor = (branch) => positions.filter((position2) => values[position2] === branch);
+  for (const [fromBranch, toBranch] of DIRECTED_BRANCH_PUNISHMENTS) {
+    for (const fromPosition of positionsFor(fromBranch)) {
+      for (const toPosition of positionsFor(toBranch)) {
+        relationships.push({
+          kind: "directed-cycle",
+          positions: [fromPosition, toPosition],
+          members: [fromBranch, toBranch]
+        });
+      }
+    }
+  }
+  for (const [leftBranch, rightBranch] of MUTUAL_BRANCH_PUNISHMENTS) {
+    for (const leftPosition of positionsFor(leftBranch)) {
+      for (const rightPosition of positionsFor(rightBranch)) {
+        relationships.push({
+          kind: "mutual",
+          positions: [leftPosition, rightPosition],
+          members: [leftBranch, rightBranch]
+        });
+      }
+    }
+  }
+  for (const branch of SELF_PUNISHMENT_BRANCHES) {
+    const matchingPositions = positionsFor(branch);
+    for (let leftIndex = 0; leftIndex < matchingPositions.length; leftIndex += 1) {
+      for (let rightIndex = leftIndex + 1; rightIndex < matchingPositions.length; rightIndex += 1) {
+        relationships.push({
+          kind: "self",
+          positions: [matchingPositions[leftIndex], matchingPositions[rightIndex]],
+          members: [branch, branch]
+        });
+      }
+    }
+  }
+  return relationships;
+}
+function analyzeKnownPillarStructure(pillars) {
+  const day = pillars.day;
+  if (day === void 0) {
+    throw new TypeError("analyzeKnownPillarStructure requires a day pillar.");
+  }
+  const knownPillars = POSITIONS.filter((position2) => pillars[position2] !== void 0);
+  const omittedPillars2 = POSITIONS.filter((position2) => pillars[position2] === void 0);
+  const stems = {};
+  const branches = {};
+  const hiddenStems = {};
+  for (const position2 of knownPillars) {
+    const pillar = pillars[position2];
+    stems[position2] = pillar.heavenlyStem;
+    branches[position2] = pillar.earthlyBranch;
+    hiddenStems[position2] = HIDDEN_STEMS_V1[pillar.earthlyBranch].map(({ stem, weight }) => ({
+      stem,
+      weight,
+      element: getHeavenlyStemElement(stem),
+      tenGod: getTenGod(day.heavenlyStem, stem)
+    }));
+  }
+  const scores = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
+  for (const position2 of knownPillars) {
+    scores[getHeavenlyStemElement(stems[position2])] += 1;
+    for (const hidden of hiddenStems[position2] ?? []) scores[hidden.element] += hidden.weight;
+  }
+  for (const element of FIVE_ELEMENTS) scores[element] = rounded(scores[element]);
+  const totalWeight = knownPillars.length * 2;
+  const percentages = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
+  for (const element of FIVE_ELEMENTS) {
+    percentages[element] = rounded(scores[element] / totalWeight * 100);
+  }
+  const maximum = Math.max(...FIVE_ELEMENTS.map((element) => scores[element]));
+  const minimum = Math.min(...FIVE_ELEMENTS.map((element) => scores[element]));
+  const counts = { \uC591: 0, \uC74C: 0 };
+  for (const position2 of knownPillars) {
+    counts[getHeavenlyStemYinYang(stems[position2])] += 1;
+    counts[getEarthlyBranchYinYang(branches[position2])] += 1;
+  }
+  const totalCharacters = knownPillars.length * 2;
+  const threeHarmonies = [];
+  for (const members of THREE_HARMONIES) {
+    const matchingPositions = members.map(
+      (member) => knownPillars.find((position2) => branches[position2] === member)
+    );
+    if (matchingPositions.every((position2) => position2 !== void 0)) {
+      threeHarmonies.push({
+        positions: matchingPositions,
+        members: [...members]
+      });
+    }
+  }
+  return {
+    knownPillars,
+    omittedPillars: omittedPillars2,
+    hiddenStems,
+    elementBalance: {
+      profileId: "visible-stems-1-hidden-stems-normalized-v1",
+      totalWeight,
+      scores,
+      percentages,
+      strongest: FIVE_ELEMENTS.filter((element) => scores[element] === maximum),
+      weakest: FIVE_ELEMENTS.filter((element) => scores[element] === minimum)
+    },
+    yinYangBalance: {
+      basis: "known-visible-characters",
+      totalCharacters,
+      counts,
+      percentages: {
+        \uC591: rounded(counts.\uC591 / totalCharacters * 100),
+        \uC74C: rounded(counts.\uC74C / totalCharacters * 100)
+      }
+    },
+    relationships: {
+      stemCombinations: knownPairRelationships(knownPillars, stems, STEM_COMBINATIONS),
+      branchCombinations: knownPairRelationships(knownPillars, branches, BRANCH_COMBINATIONS),
+      branchClashes: knownPairRelationships(knownPillars, branches, BRANCH_CLASHES),
+      branchPunishments: branchPunishmentRelationships(knownPillars, branches),
+      branchBreaks: knownPairRelationships(knownPillars, branches, BRANCH_BREAKS),
+      branchHarms: knownPairRelationships(knownPillars, branches, BRANCH_HARMS),
+      threeHarmonies
+    }
+  };
+}
+function analyzeStructure(pillars) {
+  const dayMaster = pillars.day.heavenlyStem;
+  const stems = {
+    year: pillars.year.heavenlyStem,
+    month: pillars.month.heavenlyStem,
+    day: pillars.day.heavenlyStem,
+    hour: pillars.hour.heavenlyStem
+  };
+  const branches = {
+    year: pillars.year.earthlyBranch,
+    month: pillars.month.earthlyBranch,
+    day: pillars.day.earthlyBranch,
+    hour: pillars.hour.earthlyBranch
+  };
+  const hiddenFor = (position2) => HIDDEN_STEMS_V1[branches[position2]].map(({ stem, weight }) => ({
+    stem,
+    weight,
+    element: getHeavenlyStemElement(stem),
+    tenGod: getTenGod(dayMaster, stem)
+  }));
+  const hiddenStems = {
+    year: hiddenFor("year"),
+    month: hiddenFor("month"),
+    day: hiddenFor("day"),
+    hour: hiddenFor("hour")
+  };
+  const scores = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
+  for (const position2 of POSITIONS) {
+    scores[getHeavenlyStemElement(stems[position2])] += 1;
+    for (const hidden of hiddenStems[position2]) {
+      scores[hidden.element] += hidden.weight;
+    }
+  }
+  for (const element of FIVE_ELEMENTS) scores[element] = rounded(scores[element]);
+  const percentages = { \uBAA9: 0, \uD654: 0, \uD1A0: 0, \uAE08: 0, \uC218: 0 };
+  for (const element of FIVE_ELEMENTS) percentages[element] = rounded(scores[element] / 8 * 100);
+  const maximum = Math.max(...FIVE_ELEMENTS.map((element) => scores[element]));
+  const minimum = Math.min(...FIVE_ELEMENTS.map((element) => scores[element]));
+  const yinYangCounts = { \uC591: 0, \uC74C: 0 };
+  for (const position2 of POSITIONS) {
+    yinYangCounts[getHeavenlyStemYinYang(stems[position2])] += 1;
+    yinYangCounts[getEarthlyBranchYinYang(branches[position2])] += 1;
+  }
+  const threeHarmonies = [];
+  for (const members of THREE_HARMONIES) {
+    const positions = members.map(
+      (member) => POSITIONS.find((position2) => branches[position2] === member)
+    );
+    if (positions.every((position2) => position2 !== void 0)) {
+      threeHarmonies.push({
+        positions,
+        members: [...members]
+      });
+    }
+  }
+  return {
+    hiddenStems,
+    elementBalance: {
+      profileId: "visible-stems-1-hidden-stems-normalized-v1",
+      totalWeight: 8,
+      scores,
+      percentages,
+      strongest: FIVE_ELEMENTS.filter((element) => scores[element] === maximum),
+      weakest: FIVE_ELEMENTS.filter((element) => scores[element] === minimum)
+    },
+    yinYangBalance: {
+      basis: "eight-visible-characters",
+      counts: yinYangCounts,
+      percentages: {
+        \uC591: rounded(yinYangCounts.\uC591 / 8 * 100),
+        \uC74C: rounded(yinYangCounts.\uC74C / 8 * 100)
+      }
+    },
+    relationships: {
+      stemCombinations: pairRelationships(stems, STEM_COMBINATIONS),
+      branchCombinations: pairRelationships(branches, BRANCH_COMBINATIONS),
+      branchClashes: pairRelationships(branches, BRANCH_CLASHES),
+      branchPunishments: branchPunishmentRelationships(POSITIONS, branches),
+      branchBreaks: pairRelationships(branches, BRANCH_BREAKS),
+      branchHarms: pairRelationships(branches, BRANCH_HARMS),
+      threeHarmonies
+    }
+  };
+}
+
 // src/rules/auditable-four-pillars.ts
 var JULIAN_DAY_NUMBER_AT_UNIX_EPOCH = 2440588;
 var MILLISECONDS_PER_HOUR = 36e5;
@@ -9480,6 +9480,24 @@ function completeTime(date, time) {
     millisecond: time.millisecond ?? 0
   };
 }
+var SEASONAL_QUARTER_TERM_INDICES = [2, 8, 14, 20];
+function nearestSeasonalQuarterBoundary(civilYear, epochMilliseconds, index) {
+  const candidates = [civilYear - 1, civilYear, civilYear + 1].map(
+    (year) => findSolarTermBoundary(year, index)
+  );
+  return candidates.reduce(
+    (nearest, candidate) => Math.abs(candidate.epochMilliseconds - epochMilliseconds) < Math.abs(nearest.epochMilliseconds - epochMilliseconds) ? candidate : nearest
+  );
+}
+function seasonalQuarterDistances(civilYear, epochMilliseconds) {
+  return SEASONAL_QUARTER_TERM_INDICES.map((index) => {
+    const boundary = nearestSeasonalQuarterBoundary(civilYear, epochMilliseconds, index);
+    return {
+      boundary: solarTermEvidence(boundary),
+      relativeMilliseconds: epochMilliseconds - boundary.epochMilliseconds
+    };
+  });
+}
 function pillarReport(pillar, cycleIndex) {
   const report = describePillar(pillar);
   if (report.cycleIndex !== cycleIndex) {
@@ -9602,6 +9620,10 @@ function calculateSaju(request) {
         lichun: solarTermEvidence(calculated.lichun),
         monthStart: solarTermEvidence(calculated.monthStart),
         monthEnd: solarTermEvidence(calculated.monthEnd),
+        seasonalQuarterDistances: seasonalQuarterDistances(
+          gregorianDate.year,
+          instant.epochMilliseconds
+        ),
         effectiveDay: calculated.effectiveDay,
         epochDay: calculated.epochDay,
         distanceToNearestBoundaryMilliseconds: boundaryDistance
@@ -10593,7 +10615,7 @@ function isArrayOf(value, predicate) {
 // plugins/oh-my-saju/runtime/reading/prompt-contract.ts
 var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
   id: "saju-grounded-narration",
-  version: "5.0.0"
+  version: "6.0.0"
 });
 var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
   mode: "chart-first-profile",
@@ -10621,7 +10643,7 @@ var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.6.0",
+    version: "0.7.0",
     schemaVersion: "1"
   },
   compatibility: {
@@ -11203,7 +11225,7 @@ function artifactDigests(value) {
 var artifacts_default = {
   schemaVersion: "1",
   knowledgeSnapshot: "5d670fd010d6f9e90e914c8896c0c7162462146382597dbecd867b7f9132a11f",
-  rules: "84960462399f3150fa61f7555313a1d6baa84ab4a87b40605be1f9a601fdf8cc",
+  rules: "5b77051f16305da1d44a15afb2326c1cd83de875233114d45e3bcd28b32b7a73",
   fixtures: "7a765b712b4e916248ea460df1f174e934f07f2dc9cd1b19703ad443d05047ae"
 };
 
@@ -11526,7 +11548,7 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 var artifacts_default2 = {
   schemaVersion: "1",
   knowledgeSnapshot: "7eb9146ade9a98e557208137bcdcd5fae5f5675e5b28ddbc98e988d67b919119",
-  rules: "227c781df6517ac2d30687babd1a9a14e5765f74bcf37d8279ac71253931baa8",
+  rules: "208ae2a774972654d83f13f70d856a4dff5bc27a479af426a5c86819d6a9209e",
   fixtures: "7e8e58a3d08e79fe248f3778980137a2bd49ab351c022137e80719da631ca22b"
 };
 
@@ -11770,7 +11792,7 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 var artifacts_default3 = {
   schemaVersion: "1",
   knowledgeSnapshot: "a80a5f3e4b4563451bb3e64c13cb3cfda61a61182ad6c6ee86d9f5c9fcbfe383",
-  rules: "6512296715cfc7f96865e1625573daa196989d39c728a7c0724df2d9b79bf2ea",
+  rules: "04d4f9079021c3eeb30800d0e48f88662fb51389c4678b9fc245070c29da33c7",
   fixtures: "d3693447faf1e3096bdaf927d6457a0810b145cc9af000b1a500a09007c085c4"
 };
 
@@ -12625,7 +12647,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 var artifacts_default4 = {
   schemaVersion: "1",
   knowledgeSnapshot: "906e1bed2e2c56e96d9b860409e3583eefa413864f27374bfb2bb73e92d65b03",
-  rules: "33d0acf044c5ee27a97552463a53490655623758ce336523f636725e783b37ed",
+  rules: "d6f16a4e1e2078cc2e41f9e581ea54e788b56f0d84e38f38474086b3c705ef6d",
   fixtures: "4c2c5f9483af0f6869f241d607ef6eefbdf020ce8d1833251ddb790929e78f23"
 };
 
@@ -13617,7 +13639,7 @@ var XINGCHONG_RESOLUTION_PROFILE_V1 = deepFreeze2({
 var artifacts_default5 = {
   schemaVersion: "1",
   knowledgeSnapshot: "ea2720fb4d65f99cb2cc5bff27524ba503095a2d1d15accb8252986a1f76fa1b",
-  rules: "7acf57b4884fae2fdcb606fff7147ae561809062113512fc453236e9cc145697",
+  rules: "5f6fddb91a570da52e478f75a5d45ade333febf691343e129293c2d6f19b327c",
   fixtures: "c6cb7f35272944e556dab0cf2c66f3e839bcfed9761d5c3f33a583c82fda3532"
 };
 
@@ -13850,7 +13872,7 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 var artifacts_default6 = {
   schemaVersion: "1",
   knowledgeSnapshot: "0c26093909086123517cde4274b2ff1696e23457b71c85627933dc11ea6f33dc",
-  rules: "8a9c4c4d0dd8e9a80cba0a4b0238864e1568a59604e22b530cdc3bc6eb860659",
+  rules: "5b89801964edc59e4a8529a013e159d0ab4cf874eb1b46a6a288ac84ae9850a6",
   fixtures: "6dc147f3688a1ec24eb6ce584a66df78ac5ee8f2659ae739ac5b029c98ebe46c"
 };
 
@@ -18561,7 +18583,14 @@ function solarTermContext(candidate) {
       hanja: monthEnd.hanja,
       epochMilliseconds: monthEnd.epochMilliseconds
     },
-    lichun: { epochMilliseconds: lichun.epochMilliseconds }
+    lichun: { epochMilliseconds: lichun.epochMilliseconds },
+    seasonalQuarterDistances: report.audit.evidence.seasonalQuarterDistances.map(
+      ({ boundary, relativeMilliseconds }) => ({
+        name: boundary.name,
+        hanja: boundary.hanja,
+        relativeMilliseconds
+      })
+    )
   };
 }
 var RELATION_POSITION_LABELS = {
@@ -18941,6 +18970,13 @@ function evaluateCandidateRule(candidate, ruleId) {
     const daysSinceLichun = roundToHundredths3(
       (solarTerm.birthEpochMilliseconds - solarTerm.lichun.epochMilliseconds) / MILLISECONDS_PER_DAY3
     );
+    const seasonalQuarterDistances2 = solarTerm.seasonalQuarterDistances.map(
+      ({ name, hanja, relativeMilliseconds }) => ({
+        name,
+        hanja,
+        relativeDays: roundToHundredths3(relativeMilliseconds / MILLISECONDS_PER_DAY3)
+      })
+    );
     const values = {
       monthBranch,
       seasonLabel,
@@ -18954,17 +18990,23 @@ function evaluateCandidateRule(candidate, ruleId) {
       depthPercent,
       daysSinceLichun,
       beforeLichun: daysSinceLichun < 0,
-      nearSolarTermEdge: elapsedDays < 3 || remainingDays < 3
+      nearSolarTermEdge: elapsedDays < 3 || remainingDays < 3,
+      seasonalQuarterDistances: seasonalQuarterDistances2
     };
     const elapsedText = elapsedDays < 1 ? `${roundToHundredths3(elapsedDays * 24)}\uC2DC\uAC04` : `${elapsedDays}\uC77C`;
     const remainingText = remainingDays < 1 ? `${roundToHundredths3(remainingDays * 24)}\uC2DC\uAC04` : `${remainingDays}\uC77C`;
     const lichunSentence = daysSinceLichun < 0 ? `\uC774 \uD574 \uC785\uCD98\uAE4C\uC9C0\uB294 ${-daysSinceLichun < 1 ? `${roundToHundredths3(-daysSinceLichun * 24)}\uC2DC\uAC04` : `${roundToHundredths3(-daysSinceLichun)}\uC77C`} \uB0A8\uC544 \uC55E \uC0AC\uC8FC\uD574\uC758 \uB05D\uC790\uB77D\uC785\uB2C8\uB2E4.` : daysSinceLichun < 1 ? `\uC785\uCD98\uC774 \uC9C0\uB09C \uC9C0 ${roundToHundredths3(daysSinceLichun * 24)}\uC2DC\uAC04\uC9F8\uC785\uB2C8\uB2E4.` : `\uC785\uCD98\uC774 \uC9C0\uB09C \uC9C0 ${daysSinceLichun}\uC77C\uC9F8\uC785\uB2C8\uB2E4.`;
+    const seasonalQuarterSentence = seasonalQuarterDistances2.map(({ name, hanja, relativeDays }) => {
+      const distance = Math.abs(relativeDays);
+      const distanceText = distance < 1 ? `${roundToHundredths3(distance * 24)}\uC2DC\uAC04` : `${distance}\uC77C`;
+      return relativeDays < 0 ? `${name}(${hanja})\uAE4C\uC9C0 ${distanceText}` : `${name}(${hanja})\uC774 \uC9C0\uB09C \uC9C0 ${distanceText}`;
+    }).join(", ");
     return {
       kind: "matches",
       matches: [
         {
           key: canonicalJsonStringify(values),
-          statement: `\uCD9C\uC0DD \uC2DC\uAC01\uC740 ${solarTerm.monthStart.name}(${solarTerm.monthStart.hanja}) \uC808\uC785 \uB4A4 ${elapsedText}\uC774\uACE0 \uB2E4\uC74C \uC808\uAE30 ${solarTerm.monthEnd.name}(${solarTerm.monthEnd.hanja})\uAE4C\uC9C0 ${remainingText} \uB0A8\uC558\uC2B5\uB2C8\uB2E4. \uC6D4\uC9C0\uB294 ${monthBranch}\uC774\uBA70 ${seasonLabel}\uC5D0 \uD574\uB2F9\uD558\uACE0, \uC808\uAE30 \uAD6C\uAC04\uC758 ${depthPercent}%\uB97C \uC9C0\uB09C \uC790\uB9AC\uC785\uB2C8\uB2E4. ` + lichunSentence,
+          statement: `\uCD9C\uC0DD \uC2DC\uAC01\uC740 ${solarTerm.monthStart.name}(${solarTerm.monthStart.hanja}) \uC808\uC785 \uB4A4 ${elapsedText}\uC774\uACE0 \uB2E4\uC74C \uC808\uAE30 ${solarTerm.monthEnd.name}(${solarTerm.monthEnd.hanja})\uAE4C\uC9C0 ${remainingText} \uB0A8\uC558\uC2B5\uB2C8\uB2E4. \uC6D4\uC9C0\uB294 ${monthBranch}\uC774\uBA70 ${seasonLabel}\uC5D0 \uD574\uB2F9\uD558\uACE0, \uC808\uAE30 \uAD6C\uAC04\uC758 ${depthPercent}%\uB97C \uC9C0\uB09C \uC790\uB9AC\uC785\uB2C8\uB2E4. ${lichunSentence} \uC0AC\uACC4\uC808 \uC804\uD658\uC810\uACFC\uC758 \uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uAC70\uB9AC\uB294 ${seasonalQuarterSentence}\uC785\uB2C8\uB2E4.`,
           topic: "season-climate",
           values,
           evidence: evidence(
@@ -18972,7 +19014,8 @@ function evaluateCandidateRule(candidate, ruleId) {
             "chronology.epochMilliseconds",
             "audit.evidence.monthStart",
             "audit.evidence.monthEnd",
-            "audit.evidence.lichun"
+            "audit.evidence.lichun",
+            "audit.evidence.seasonalQuarterDistances"
           ),
           sourceReferenceIds: [COMMON_SOURCE_ID]
         }
@@ -19651,6 +19694,13 @@ var BROAD_DEFAULT_DOCTRINE_IDS = /* @__PURE__ */ new Set([
   "ten-gods",
   "strength"
 ]);
+var DEEP_TRADITIONAL_NARRATION_DIRECTIVES = [
+  "Give the traditional inference directly when the supplied findings support it; do not replace the reading with a limitation disclaimer.",
+  "Carry each supported mechanism through its sequence: what starts it, what keeps it going, how pressure distorts it, and what interrupts or repairs the loop.",
+  "For relationship questions, describe attraction or first approach, the habit that maintains closeness, the repeated reaction that creates distance, and the condition that restores contact.",
+  "For career or job-change questions, distinguish proposals that fit the supported working mechanism from proposals that fail because their pace, authority, reward, or role structure conflicts with it.",
+  "State traditional scenarios as interpretations of the supplied chart facts, never as a guaranteed dated event, medical verdict, legal conclusion, or investment outcome."
+];
 var SCIENCE_META_REQUEST_PATTERN = /(?:(?:사주|명리|운세|해석|예측)[^.?!\n]{0,30}(?:(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,12}(?:근거|검증|타당|맞|사실|아닙|아니|인가|이야|입니까)|(?:검증|타당성)[^.?!\n]{0,12}(?:과학|실증))|(?:과학(?:적(?:으로)?)?|실증(?:적)?)[^.?!\n]{0,20}(?:사주|명리|운세|해석|예측)[^.?!\n]{0,20}(?:맞|검증|근거|타당|사실)|(?:scientific|empirical)[^.?!\n]{0,20}(?:saju|fortune|reading|prediction)|현실\s*예측\s*(?:근거|검증|타당성))/iu;
 var UNCERTAINTY_META_REQUEST_PATTERN = /(?:(?:사주|명리|해석|판정|결론)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종)|(?:확정|단정|불확실|한계|최종)[^.?!\n]{0,24}(?:사주|명리|해석|판정|결론)|(?:격국|용신|조후|신살|신강|신약|강약)[^.?!\n]{0,24}(?:확정|단정|불확실|한계|최종|후보)|(?:확정|단정|불확실|한계|최종|후보)[^.?!\n]{0,24}(?:격국|용신|조후|신살|신강|신약|강약))/u;
 var AUDIT_META_REQUEST_PATTERN = /(?:\bpack(?:ref)?\b|\bfinding(?:s|ids?)?\b|\bprofileref\b|(?:전통|규칙)\s*팩|팩\s*(?:ID|버전|근거|규칙|감사|참조)|(?:profile|프로필)\s*(?:ID|version|버전|근거|규칙|감사)|(?:규칙|계산|명리)\s*프로필|근거\s*ID|감사\s*(?:추적|로그|정보|자료)|\baudit\b|학파(?:별)?\s*(?:비교|근거|규칙)|전통\s*규칙[^.?!\n]{0,30}(?:검증|근거)|기술\s*용어[^.?!\n]{0,20}(?:검증|감사))/iu;
@@ -19667,7 +19717,13 @@ function assertReadingModePreference(value, field = "readingMode") {
   }
   return value;
 }
-function resolveSajuReadingPolicy(question, purpose, preference) {
+function assertSajuInferenceDepth(value, field = "inferenceDepth") {
+  if (value !== "grounded" && value !== "deep-traditional") {
+    throw new AiReadingError("INVALID_REQUEST", `${field} is not supported.`);
+  }
+  return value;
+}
+function resolveSajuReadingPolicy(question, purpose, preference, inferenceDepth) {
   const userQuestion = question ?? "";
   const requestedDoctrineIds = DOCTRINE_DISCLOSURE_RULES.filter(
     ({ requestPattern }) => requestPattern.test(userQuestion)
@@ -19688,6 +19744,9 @@ function resolveSajuReadingPolicy(question, purpose, preference) {
   }
   return deepFreeze2({
     mode,
+    inferenceDepth,
+    detailedTraditionalInferenceAllowed: inferenceDepth === "deep-traditional",
+    narrationDirectives: inferenceDepth === "deep-traditional" ? DEEP_TRADITIONAL_NARRATION_DIRECTIVES : [],
     structuredBroadPresentation: preference === "broad",
     requestedDoctrineIds,
     scienceMetaRequested,
@@ -19696,7 +19755,10 @@ function resolveSajuReadingPolicy(question, purpose, preference) {
   });
 }
 function doctrineAllowed(rule, policy) {
-  return policy.requestedDoctrineIds.some((id) => id === rule.id) || policy.mode === "broad" && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id);
+  return policy.requestedDoctrineIds.some((id) => id === rule.id) || policy.mode === "broad" && BROAD_DEFAULT_DOCTRINE_IDS.has(rule.id) || // Deep traditional mode makes chart doctrines part of the default reading,
+  // but luck-cycle narration still requires an explicit timing request because
+  // this Pack-isolated task deliberately carries no chronology or timing data.
+  policy.detailedTraditionalInferenceAllowed && policy.mode !== "technical-audit" && rule.id !== "luck-cycles";
 }
 function findSajuDisclosureViolation(text, policy) {
   for (const rule of DOCTRINE_DISCLOSURE_RULES) {
@@ -19726,6 +19788,7 @@ var DEFAULT_LOCALE = "ko-KR";
 var DEFAULT_PURPOSE = "general-interpretation";
 var DEFAULT_AUDIENCE = "general";
 var DEFAULT_VARIANT_POLICY = "include-candidate-dependent";
+var DEFAULT_INFERENCE_DEPTH = "deep-traditional";
 var ALLOWED_TOPICS = new Set(Object.keys(SAJU_TOPIC_TITLES));
 var PILLAR_NAMES = /* @__PURE__ */ new Set(["year", "month", "day", "hour"]);
 var HTML_OR_URL_PATTERN = /<[^>]*>|(?:https?|file|mailto|javascript|data):|(?:^|[\s[(])(?:www\.|\/\/)|\[[^\]]*]\([^)]*\)/i;
@@ -19848,7 +19911,7 @@ function copyUnavailableRule(rule, index) {
     candidateIds: [...rule.candidateIds]
   };
 }
-function buildNarrationRequest(assessment, locale, purpose, audience, question, variantPolicy, readingMode) {
+function buildNarrationRequest(assessment, locale, purpose, audience, question, variantPolicy, readingMode, inferenceDepth) {
   const allFindings = assessment.findings.map(copyNarrationFinding);
   const profileFindingPrefix = `${assessment.profile.id}@${assessment.profile.version}:`;
   if (allFindings.some(({ id }) => !id.startsWith(profileFindingPrefix))) {
@@ -19871,7 +19934,7 @@ function buildNarrationRequest(assessment, locale, purpose, audience, question, 
       topicNeutral: true,
       omitCalendarAndGanzhiClaimsWithoutEvidence: true,
       presentation: SAJU_NARRATION_PRESENTATION_POLICY,
-      readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode)
+      readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode, inferenceDepth)
     },
     template: SAJU_NARRATION_PROMPT_TEMPLATE,
     grounding: {
@@ -20504,6 +20567,7 @@ function prepareAiSajuNarrationRequest(input) {
   const variantPolicy = assertReadingVariantPolicy(input.variantPolicy ?? DEFAULT_VARIANT_POLICY);
   const question = assertQuestion(input.question);
   const readingMode = assertReadingModePreference(input.readingMode ?? "auto");
+  const inferenceDepth = assertSajuInferenceDepth(input.inferenceDepth ?? DEFAULT_INFERENCE_DEPTH);
   return buildNarrationRequest(
     input.assessment,
     locale,
@@ -20511,7 +20575,8 @@ function prepareAiSajuNarrationRequest(input) {
     audience,
     question,
     variantPolicy,
-    readingMode
+    readingMode,
+    inferenceDepth
   );
 }
 
@@ -20521,7 +20586,8 @@ var DEFAULT_COMPARISON_READING_OPTIONS = deepFreeze2({
   purpose: "school-comparison",
   audience: "general",
   variantPolicy: "include-candidate-dependent",
-  readingMode: "auto"
+  readingMode: "auto",
+  inferenceDepth: "deep-traditional"
 });
 var MAXIMUM_PACK_COUNT = 16;
 function snapshotPackRefs(value) {
@@ -20583,6 +20649,10 @@ function snapshotOptions(options) {
     readingMode: assertReadingModePreference(
       options.readingMode ?? DEFAULT_COMPARISON_READING_OPTIONS.readingMode,
       "options.readingMode"
+    ),
+    inferenceDepth: assertSajuInferenceDepth(
+      options.inferenceDepth ?? DEFAULT_COMPARISON_READING_OPTIONS.inferenceDepth,
+      "options.inferenceDepth"
     )
   });
 }
@@ -20614,6 +20684,7 @@ function comparisonPackReadingInput(defaults, request, packResult) {
     audience: request.audience ?? defaults.audience,
     variantPolicy: request.variantPolicy ?? defaults.variantPolicy,
     readingMode: request.readingMode ?? defaults.readingMode,
+    inferenceDepth: request.inferenceDepth ?? defaults.inferenceDepth,
     ...request.question === void 0 ? {} : { question: request.question }
   };
 }
@@ -20983,7 +21054,7 @@ function getLuckPillars(params) {
 // src/timing/calculate-saju-timing.ts
 var MINIMUM_TIMING_YEAR = ENGINE_MANIFEST.supportedRanges.solarTermYears.min;
 var MAXIMUM_TIMING_YEAR = ENGINE_MANIFEST.supportedRanges.solarTermYears.max - 1;
-var MAXIMUM_TIMING_YEAR_SPAN = 20;
+var MAXIMUM_TIMING_YEAR_SPAN = 59;
 var CURRENT_YEAR_JIE_INDICES = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
 function assertTimingRequest(value) {
   if (!isRecord(value) || !isRecord(value.natalRequest)) {
@@ -24391,7 +24462,12 @@ var DEFAULT_PROFILE_TOPICS = /* @__PURE__ */ new Set([
   "ten-gods",
   "relationships",
   "season-climate",
-  "strength"
+  "strength",
+  "pattern",
+  "useful-god",
+  "void-branches",
+  "growth-stages",
+  "symbolic-stars"
 ]);
 function fail(message, details = {}) {
   throw new OhMySajuApplicationError("INVALID_PRESENTATION_DRAFT", message, { details });
@@ -25675,7 +25751,11 @@ function copyCompatibilityRequest(value) {
   if (!isRecord2(value)) {
     throw new OhMySajuApplicationError("INVALID_COMMAND", "request must be an object.");
   }
-  assertOnlyKeys3(value, ["participants", "question", "locale", "variantPolicy"], "request");
+  assertOnlyKeys3(
+    value,
+    ["participants", "question", "locale", "variantPolicy", "inferenceDepth"],
+    "request"
+  );
   if (!Array.isArray(value.participants) || value.participants.length !== 2) {
     throw new OhMySajuApplicationError(
       "INVALID_COMMAND",
@@ -25709,7 +25789,8 @@ function copyCompatibilityRequest(value) {
     participants: [first, second],
     question: copyQuestion(value.question),
     locale: "ko-KR",
-    variantPolicy: value.variantPolicy
+    variantPolicy: value.variantPolicy,
+    inferenceDepth: assertSajuInferenceDepth(value.inferenceDepth ?? "deep-traditional")
   };
 }
 function toPillar(value) {
@@ -26089,6 +26170,7 @@ function compatibilityTask(request, participants, findings) {
     schemaVersion: "1",
     mode: "grounded-compatibility",
     question: request.question,
+    inferenceDepth: request.inferenceDepth ?? "deep-traditional",
     instructions: [
       "Answer the two-person compatibility question directly in the summary.",
       "Use A\u2192B and B\u2192A directional ten-god findings together; compatibility is not two individual readings pasted together.",
@@ -26097,6 +26179,9 @@ function compatibilityTask(request, participants, findings) {
       "Use people as subjects and concrete verbs. Do not invent type labels such as \uBE44\uB300\uCE6D \uBCF4\uC644\uD615 or translated phrases such as \uD68C\uBCF5 \uB9AC\uB4EC and \uC5F0\uACB0\uC810\uC73C\uB85C \uC791\uB3D9\uD569\uB2C8\uB2E4.",
       "Use only supplied finding IDs and keep candidate-dependent findings conditional.",
       "When a day-master-ten-god-range finding is present, name every listed ten-god candidate instead of selecting one.",
+      ...(request.inferenceDepth ?? "deep-traditional") === "deep-traditional" ? [
+        "For deep traditional inference, carry supported pair mechanisms into the relationship arc named by the user: how closeness starts, what keeps the pair connected, which repeated reaction cools it, and what changes that loop. Give the inference directly instead of replacing it with a limitation disclaimer."
+      ] : [],
       "Do not produce a numeric score, marriage prediction, moral judgment, or implementation-limitation disclaimer."
     ],
     evidence: {
@@ -26860,7 +26945,16 @@ function assertServiceRequest2(value) {
   }
   assertOnlyKeys4(
     value,
-    ["calculation", "question", "locale", "purpose", "audience", "variantPolicy", "readingMode"],
+    [
+      "calculation",
+      "question",
+      "locale",
+      "purpose",
+      "audience",
+      "variantPolicy",
+      "readingMode",
+      "inferenceDepth"
+    ],
     "request"
   );
   assertOnlyKeys4(value.calculation, ["kind", "request"], "request.calculation");

@@ -1,4 +1,4 @@
 interface:
-  display_name: "오 마이 사주"
-  short_description: "한국 사주와 두 사람의 궁합을 계산하고 자연스럽게 풀이합니다"
-  default_prompt: "$oh-my-saju로 사주나 두 사람의 궁합을 계산해, 근거는 짧게 밝히고 해석은 평범한 한국어로 풀어 주세요."
+  display_name: '오 마이 사주'
+  short_description: '한국 사주와 두 사람의 궁합을 계산하고 자연스럽게 풀이합니다'
+  default_prompt: '$oh-my-saju로 사주나 두 사람의 궁합을 계산해 주세요. 월령·조후·통근·합형충파해를 교차해 연애와 이직까지 사주식으로 자세히 풀고, 근거는 짧게 밝히며 해석은 조사와 어미를 갖춘 일상적인 한국어로 써 주세요.'

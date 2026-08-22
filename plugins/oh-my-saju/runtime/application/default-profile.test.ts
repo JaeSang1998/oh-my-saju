@@ -905,7 +905,7 @@ describe('default-profile v2', () => {
     });
   });
 
-  test('격국·용신·신살 summary를 기본 프로필 근거로 세탁하지 못한다', async () => {
+  test('깊은 기본 프로필은 검증된 격국·용신·신살 summary를 근거로 쓸 수 있다', async () => {
     const prepared = await prepare();
     const draft = defaultProfileDraft(prepared.narrationTasks);
     const response = await validate(prepared, {
@@ -921,13 +921,7 @@ describe('default-profile v2', () => {
         },
       },
     });
-    expect(response).toMatchObject({
-      ok: false,
-      error: {
-        code: 'INVALID_PRESENTATION_DRAFT',
-        details: { policy: 'default-profile-topic-boundary' },
-      },
-    });
+    expect(response).toMatchObject({ ok: true, command: 'validate-reading' });
   });
 });
 

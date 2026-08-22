@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.0 — 2026-08-22
+
+- Default `inferenceDepth` to `deep-traditional` for individual readings and pair compatibility;
+  preserve `grounded` as an explicit compact, evidence-first mode. Deep mode opens supplied
+  non-timing traditional topics and instructs relation and career prose to describe complete
+  mechanisms rather than ending in a limitation disclaimer.
+- Add nearest 입춘·입하·입추·입동 distances to audited exact reports and the baseline
+  `season-climate` finding. The 60-year timing request contains 60 exact-Lichun Saju years and
+  their 12 Jie months.
+- Add the default 0–7 deep-traditional analysis protocol and Korean copy guidance for relationship
+  start/maintenance/distance and job-offer fit/failure scenarios.
+
 ## 0.6.0 — 2026-08-20
 
 - Add the `xingchong-resolution@1.0.0` pack (profile `xingchong-resolution@1.0.0`) with

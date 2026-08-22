@@ -152,6 +152,14 @@ export interface SolarTermEvidence {
   readonly uncertaintyMilliseconds: number;
 }
 
+/** Nearest occurrence of one of the four seasonal turning points at birth. */
+export interface SeasonalQuarterDistanceEvidence {
+  /** The closest occurrence of 입춘, 입하, 입추, or 입동. */
+  readonly boundary: SolarTermEvidence;
+  /** Birth instant minus the boundary instant; negative means the turn is still ahead. */
+  readonly relativeMilliseconds: number;
+}
+
 export interface SolarTimeCorrection {
   readonly longitudeSeconds: number;
   readonly equationOfTimeSeconds: number;
@@ -216,6 +224,8 @@ export interface SajuReport {
       readonly lichun: SolarTermEvidence;
       readonly monthStart: SolarTermEvidence;
       readonly monthEnd: SolarTermEvidence;
+      /** Nearest 입춘·입하·입추·입동 distances, kept as calculation facts. */
+      readonly seasonalQuarterDistances: readonly SeasonalQuarterDistanceEvidence[];
       readonly effectiveDay: string;
       readonly epochDay: number;
       readonly distanceToNearestBoundaryMilliseconds: number;

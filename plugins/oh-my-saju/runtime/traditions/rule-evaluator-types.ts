@@ -24,6 +24,13 @@ export interface SolarTermContext {
   };
   /** Lichun that opened the current Saju year. */
   readonly lichun: { readonly epochMilliseconds: number };
+  /** Nearest four-season turning points copied from the audited calculation. */
+  readonly seasonalQuarterDistances: readonly {
+    readonly name: string;
+    readonly hanja: string;
+    /** Birth instant minus the turning-point instant. */
+    readonly relativeMilliseconds: number;
+  }[];
 }
 
 /**

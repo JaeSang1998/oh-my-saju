@@ -1,5 +1,17 @@
 # Changelog
 
+## Oh My Saju plugin 0.7.0 — 2026-08-22
+
+- Made `deep-traditional` the default narration depth. Supported traditional findings now carry
+  through the seasonal, month-command, strength, relation, past-pattern, and timing cross-check
+  into direct relationship and job-change scenarios; `grounded` remains available for compact
+  evidence-first output.
+- Added audited nearest distances from birth to 입춘·입하·입추·입동 and extended exact-time timing
+  requests from 21 to 60 Saju years.
+- Reworked Korean input, output, and style guidance to require complete prose and to explain
+  relationship initiation/maintenance/distance and job-offer fit/failure without generic
+  implementation disclaimers.
+
 ## Oh My Saju plugin 0.6.0 — 2026-08-20
 
 - Added the `xingchong-resolution@1.0.0` Tradition Pack for 형충회합 with Pack-local

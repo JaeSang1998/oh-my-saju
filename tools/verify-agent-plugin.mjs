@@ -80,7 +80,10 @@ try {
   assert.match(skill, /^---\nname: oh-my-saju\n/m);
   assert.match(skill, /^license: Apache-2\.0$/mu);
   assert.match(skillInterface, /display_name: ['"]오 마이 사주['"]/u);
-  assert.match(skillInterface, /default_prompt: ['"]\$oh-my-saju로 .*평범한 한국어로 풀어 주세요/u);
+  assert.match(
+    skillInterface,
+    /default_prompt: ['"]\$oh-my-saju로 .*조사와 어미를 갖춘 일상적인 한국어로 써 주세요/u,
+  );
   assert.equal(
     versions.skills['oh-my-saju'],
     portable.version,

@@ -13,6 +13,7 @@ export { SAJU_NARRATIVE_JSON_SCHEMA } from './output-contract';
 export type {
   ResolvedSajuReadingPolicy,
   SajuDoctrineDisclosureId,
+  SajuInferenceDepth,
   SajuReadingMode,
   SajuReadingModePreference,
 } from './reading-policy';

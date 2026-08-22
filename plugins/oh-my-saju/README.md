@@ -23,9 +23,15 @@ Packs are knowledge artifacts, not Agent Skills. Their `knowledge.providerContra
 where a later version can materialize the same identifiers and provenance from an ontology or
 knowledge graph. Pack findings are kept separate; the runtime never votes them into one verdict.
 
-Plugin 0.6.0 installs six Tradition Packs — `calculation-baseline@1.2.0`, `ziping@1.2.0`,
+Plugin 0.7.0 keeps the same six Tradition Packs — `calculation-baseline@1.2.0`, `ziping@1.2.0`,
 `ditianshui@1.2.0`, `qiongtong@1.2.0`, `sanming-symbolic-curated@1.2.0`, and the new
 `xingchong-resolution@1.0.0` — and adds:
+
+- a default `deep-traditional` narration depth: supported 월령·조후·격국·통근·합형충파해 and
+  symbolic findings can become detailed relationship and work scenarios instead of being withheld
+  until the user repeats every technical term;
+- four seasonal-turning-point distances (입춘·입하·입추·입동) in the audited calculation and a
+  60-Saju-year timing range for exact birth times;
 
 - `xingchong-resolution@1.0.0`, a Pack for 형충회합: Pack-local 방합·삼합·육합·천간합 tables, the
   four-condition transform test (합화 / 기반 / 쟁합), and a bounded two-pass 탐합망충·충해합

@@ -33,12 +33,14 @@ import {
   SAJU_NARRATION_PROMPT_TEMPLATE,
 } from './prompt-contract';
 import {
+  assertSajuInferenceDepth,
   assertReadingModePreference,
   doctrineDisclosureIdForTopic,
   findSajuDisclosureViolation,
   isSajuInterpretationTopicAllowed,
   resolveSajuReadingPolicy,
   type ResolvedSajuReadingPolicy,
+  type SajuInferenceDepth,
   type SajuReadingModePreference,
 } from './reading-policy';
 import type {
@@ -67,6 +69,7 @@ const DEFAULT_LOCALE: SajuReadingLocale = 'ko-KR';
 const DEFAULT_PURPOSE: SajuReadingPurpose = 'general-interpretation';
 const DEFAULT_AUDIENCE: SajuReadingAudience = 'general';
 const DEFAULT_VARIANT_POLICY: SajuVariantPolicy = 'include-candidate-dependent';
+const DEFAULT_INFERENCE_DEPTH: SajuInferenceDepth = 'deep-traditional';
 
 const ALLOWED_TOPICS = new Set<string>(Object.keys(SAJU_TOPIC_TITLES));
 const PILLAR_NAMES: ReadonlySet<string> = new Set(['year', 'month', 'day', 'hour']);
@@ -102,6 +105,7 @@ interface ServiceSnapshot {
   readonly audience: SajuReadingAudience;
   readonly variantPolicy: SajuVariantPolicy;
   readonly readingMode: SajuReadingModePreference;
+  readonly inferenceDepth: SajuInferenceDepth;
 }
 
 interface ParsedNarratorResponse {
@@ -292,6 +296,7 @@ function buildNarrationRequest(
   question: string | null,
   variantPolicy: SajuVariantPolicy,
   readingMode: SajuReadingModePreference,
+  inferenceDepth: SajuInferenceDepth,
 ): SajuNarrationRequest {
   const allFindings = assessment.findings.map(copyNarrationFinding);
   const profileFindingPrefix = `${assessment.profile.id}@${assessment.profile.version}:`;
@@ -318,7 +323,7 @@ function buildNarrationRequest(
       topicNeutral: true,
       omitCalendarAndGanzhiClaimsWithoutEvidence: true,
       presentation: SAJU_NARRATION_PRESENTATION_POLICY,
-      readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode),
+      readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode, inferenceDepth),
     },
     template: SAJU_NARRATION_PROMPT_TEMPLATE,
     grounding: {
@@ -1091,6 +1096,7 @@ export function prepareAiSajuNarrationRequest(
   const variantPolicy = assertReadingVariantPolicy(input.variantPolicy ?? DEFAULT_VARIANT_POLICY);
   const question = assertQuestion(input.question);
   const readingMode = assertReadingModePreference(input.readingMode ?? 'auto');
+  const inferenceDepth = assertSajuInferenceDepth(input.inferenceDepth ?? DEFAULT_INFERENCE_DEPTH);
   return buildNarrationRequest(
     input.assessment,
     locale,
@@ -1099,6 +1105,7 @@ export function prepareAiSajuNarrationRequest(
     question,
     variantPolicy,
     readingMode,
+    inferenceDepth,
   );
 }
 
@@ -1137,6 +1144,7 @@ async function readFromService(
     ...(request.question === undefined ? {} : { question: request.question }),
     variantPolicy: request.variantPolicy ?? options.variantPolicy,
     readingMode: request.readingMode ?? options.readingMode,
+    inferenceDepth: request.inferenceDepth ?? options.inferenceDepth,
   });
 
   if (request.calculation.kind === 'exact') {
@@ -1172,6 +1180,10 @@ export function createAiSajuService(options: CreateAiSajuServiceOptions): AiSaju
       'options.variantPolicy',
     ),
     readingMode: assertReadingModePreference(options.readingMode ?? 'auto', 'options.readingMode'),
+    inferenceDepth: assertSajuInferenceDepth(
+      options.inferenceDepth ?? DEFAULT_INFERENCE_DEPTH,
+      'options.inferenceDepth',
+    ),
   });
   const service = {
     read: (request: AiSajuServiceRequest) => readFromService(snapshot, request),

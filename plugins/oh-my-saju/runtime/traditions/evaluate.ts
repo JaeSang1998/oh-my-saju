@@ -670,6 +670,13 @@ function solarTermContext(candidate: EvaluationCandidate): SolarTermContext | nu
       epochMilliseconds: monthEnd.epochMilliseconds,
     },
     lichun: { epochMilliseconds: lichun.epochMilliseconds },
+    seasonalQuarterDistances: report.audit.evidence.seasonalQuarterDistances.map(
+      ({ boundary, relativeMilliseconds }) => ({
+        name: boundary.name,
+        hanja: boundary.hanja,
+        relativeMilliseconds,
+      }),
+    ),
   };
 }
 
@@ -1115,6 +1122,13 @@ function evaluateCandidateRule(
       (solarTerm.birthEpochMilliseconds - solarTerm.lichun.epochMilliseconds) /
         MILLISECONDS_PER_DAY,
     );
+    const seasonalQuarterDistances = solarTerm.seasonalQuarterDistances.map(
+      ({ name, hanja, relativeMilliseconds }) => ({
+        name,
+        hanja,
+        relativeDays: roundToHundredths(relativeMilliseconds / MILLISECONDS_PER_DAY),
+      }),
+    );
     const values: Readonly<Record<string, JsonValue>> = {
       monthBranch,
       seasonLabel,
@@ -1129,6 +1143,7 @@ function evaluateCandidateRule(
       daysSinceLichun,
       beforeLichun: daysSinceLichun < 0,
       nearSolarTermEdge: elapsedDays < 3 || remainingDays < 3,
+      seasonalQuarterDistances,
     };
     // Under a day the rounded day count reads as an unresolved `0일`, so the
     // sentence switches to hours while `values` keeps the exact day figure.
@@ -1144,6 +1159,16 @@ function evaluateCandidateRule(
         : daysSinceLichun < 1
           ? `입춘이 지난 지 ${roundToHundredths(daysSinceLichun * 24)}시간째입니다.`
           : `입춘이 지난 지 ${daysSinceLichun}일째입니다.`;
+    const seasonalQuarterSentence = seasonalQuarterDistances
+      .map(({ name, hanja, relativeDays }) => {
+        const distance = Math.abs(relativeDays);
+        const distanceText =
+          distance < 1 ? `${roundToHundredths(distance * 24)}시간` : `${distance}일`;
+        return relativeDays < 0
+          ? `${name}(${hanja})까지 ${distanceText}`
+          : `${name}(${hanja})이 지난 지 ${distanceText}`;
+      })
+      .join(', ');
     return {
       kind: 'matches',
       matches: [
@@ -1152,7 +1177,7 @@ function evaluateCandidateRule(
           statement:
             `출생 시각은 ${solarTerm.monthStart.name}(${solarTerm.monthStart.hanja}) 절입 뒤 ${elapsedText}이고 다음 절기 ${solarTerm.monthEnd.name}(${solarTerm.monthEnd.hanja})까지 ${remainingText} 남았습니다. ` +
             `월지는 ${monthBranch}이며 ${seasonLabel}에 해당하고, 절기 구간의 ${depthPercent}%를 지난 자리입니다. ` +
-            lichunSentence,
+            `${lichunSentence} 사계절 전환점과의 가장 가까운 거리는 ${seasonalQuarterSentence}입니다.`,
           topic: 'season-climate',
           values,
           evidence: evidence(
@@ -1161,6 +1186,7 @@ function evaluateCandidateRule(
             'audit.evidence.monthStart',
             'audit.evidence.monthEnd',
             'audit.evidence.lichun',
+            'audit.evidence.seasonalQuarterDistances',
           ),
           sourceReferenceIds: [COMMON_SOURCE_ID],
         },

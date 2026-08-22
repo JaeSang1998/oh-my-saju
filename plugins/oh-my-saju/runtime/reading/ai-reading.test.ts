@@ -101,6 +101,8 @@ describe('createAiSajuReading', () => {
         },
         readingPolicy: {
           mode: 'focused',
+          inferenceDepth: 'deep-traditional',
+          detailedTraditionalInferenceAllowed: true,
           structuredBroadPresentation: false,
           requestedDoctrineIds: [],
           scienceMetaRequested: false,
@@ -110,7 +112,7 @@ describe('createAiSajuReading', () => {
       },
       template: {
         id: 'saju-grounded-narration',
-        version: '5.0.0',
+        version: '6.0.0',
       },
     });
     expect(reading).toMatchObject({
@@ -130,7 +132,7 @@ describe('createAiSajuReading', () => {
         defaultDisplay: false,
       },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '5.0.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '6.0.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,

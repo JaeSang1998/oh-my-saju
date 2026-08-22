@@ -106,6 +106,22 @@ describe('calculateSajuTiming', () => {
     expect(() => JSON.parse(JSON.stringify(report))).not.toThrow();
   });
 
+  test('60년 사주년 범위를 한 번에 계산한다', () => {
+    const report = calculateSajuTiming({
+      natalRequest: SEOUL_NATAL,
+      fromYear: 2024,
+      throughYear: 2083,
+    });
+
+    expect(report.range).toEqual({
+      fromSajuYear: 2024,
+      throughSajuYear: 2083,
+      yearCount: 60,
+    });
+    expect(report.years).toHaveLength(60);
+    expect(report.years.every(({ months }) => months.length === 12)).toBe(true);
+  });
+
   test('성별이 있으면 감사된 출생 순간에서 대운을 계산하고 시작일을 근사값으로 표시한다', () => {
     const withoutGender = calculateSajuTiming({
       natalRequest: SEOUL_NATAL,
@@ -197,7 +213,7 @@ describe('calculateSajuTiming', () => {
     { fromYear: 1799, throughYear: 2024 },
     { fromYear: 2024, throughYear: 2300 },
     { fromYear: 2025, throughYear: 2024 },
-    { fromYear: 2000, throughYear: 2021 },
+    { fromYear: 2000, throughYear: 2060 },
     { fromYear: 2024.5, throughYear: 2025 },
   ])('지원하지 않는 timing 범위 $fromYear..$throughYear를 거부한다', (range) => {
     try {

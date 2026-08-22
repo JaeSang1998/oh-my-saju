@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oh-my-saju",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "한국 사주와 두 사람 궁합을 계산하고, 택일·토정비결·주역·자미두수·육임까지 근거와 함께 풀이합니다.",
   "author": {
     "name": "Jaesang Lee"

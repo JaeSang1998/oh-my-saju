@@ -128,6 +128,11 @@ const DEFAULT_PROFILE_TOPICS = new Set<InterpretationTopic>([
   'relationships',
   'season-climate',
   'strength',
+  'pattern',
+  'useful-god',
+  'void-branches',
+  'growth-stages',
+  'symbolic-stars',
 ]);
 
 type LivedPatternDomain = OhMySajuLivedPatternRef['structure']['domain'];

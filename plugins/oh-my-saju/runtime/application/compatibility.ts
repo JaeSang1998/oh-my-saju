@@ -11,6 +11,7 @@ import { deepFreeze } from '../internal/deep-freeze';
 import { isRecord } from '../internal/guards';
 import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { assertSafeIdentifier } from '../reading/option-validation';
+import { assertSajuInferenceDepth } from '../reading/reading-policy';
 import { calculateKoreanSajuAnalysis } from '../traditions/calculate-korean-analysis';
 import { getBranchTenGod, getHeavenlyStemElement, getTenGod } from '../traditions/domain';
 import { withAdverbialParticle, withSubjectParticle } from '../traditions/rule-helpers';
@@ -230,7 +231,11 @@ function copyCompatibilityRequest(value: unknown): OhMySajuCompatibilityRequest 
   if (!isRecord(value)) {
     throw new OhMySajuApplicationError('INVALID_COMMAND', 'request must be an object.');
   }
-  assertOnlyKeys(value, ['participants', 'question', 'locale', 'variantPolicy'], 'request');
+  assertOnlyKeys(
+    value,
+    ['participants', 'question', 'locale', 'variantPolicy', 'inferenceDepth'],
+    'request',
+  );
   if (!Array.isArray(value.participants) || value.participants.length !== 2) {
     throw new OhMySajuApplicationError(
       'INVALID_COMMAND',
@@ -268,6 +273,7 @@ function copyCompatibilityRequest(value: unknown): OhMySajuCompatibilityRequest 
     question: copyQuestion(value.question),
     locale: 'ko-KR',
     variantPolicy: value.variantPolicy,
+    inferenceDepth: assertSajuInferenceDepth(value.inferenceDepth ?? 'deep-traditional'),
   };
 }
 
@@ -757,6 +763,7 @@ function compatibilityTask(
     schemaVersion: '1',
     mode: 'grounded-compatibility',
     question: request.question,
+    inferenceDepth: request.inferenceDepth ?? 'deep-traditional',
     instructions: [
       'Answer the two-person compatibility question directly in the summary.',
       'Use A→B and B→A directional ten-god findings together; compatibility is not two individual readings pasted together.',
@@ -765,6 +772,11 @@ function compatibilityTask(
       'Use people as subjects and concrete verbs. Do not invent type labels such as 비대칭 보완형 or translated phrases such as 회복 리듬 and 연결점으로 작동합니다.',
       'Use only supplied finding IDs and keep candidate-dependent findings conditional.',
       'When a day-master-ten-god-range finding is present, name every listed ten-god candidate instead of selecting one.',
+      ...((request.inferenceDepth ?? 'deep-traditional') === 'deep-traditional'
+        ? [
+            'For deep traditional inference, carry supported pair mechanisms into the relationship arc named by the user: how closeness starts, what keeps the pair connected, which repeated reaction cools it, and what changes that loop. Give the inference directly instead of replacing it with a limitation disclaimer.',
+          ]
+        : []),
       'Do not produce a numeric score, marriage prediction, moral judgment, or implementation-limitation disclaimer.',
     ],
     evidence: {

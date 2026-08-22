@@ -90,6 +90,7 @@ describe('AI request and error validation v3', () => {
     { name: '지원하지 않는 audience', patch: { audience: 'employer' } },
     { name: '지원하지 않는 variant policy', patch: { variantPolicy: 'random-candidate' } },
     { name: '지원하지 않는 reading mode', patch: { readingMode: 'generic' } },
+    { name: '지원하지 않는 추정 깊이', patch: { inferenceDepth: 'unbounded' } },
     { name: 'zero-width question', patch: { question: '핵\u200b심' } },
   ])('$name 입력을 모델 호출 전에 거부한다', async ({ patch }) => {
     const narrate = vi.fn(async () => response());
@@ -172,6 +173,29 @@ describe('AI request and error validation v3', () => {
       }),
     ).resolves.toMatchObject({ generatedByAI: true });
     expect(capturedAudience).toBe('minor');
+  });
+
+  test('깊은 사주식 추정 요청은 근거를 벗어나지 않으면서 구체적인 생활 장면을 허용한다', async () => {
+    let capturedPolicy: unknown = null;
+    await expect(
+      createAiSajuReading({
+        assessment: ASSESSMENT,
+        question: '연애에서 관계가 어떻게 시작되고 멀어지는지 사주식으로 깊게 풀어줘.',
+        inferenceDepth: 'deep-traditional',
+        narrator: {
+          id: 'deep-traditional-fixture',
+          requestedModel: 'fixture',
+          async narrate(request) {
+            capturedPolicy = request.task.readingPolicy;
+            return response();
+          },
+        },
+      }),
+    ).resolves.toMatchObject({ generatedByAI: true });
+    expect(capturedPolicy).toMatchObject({
+      inferenceDepth: 'deep-traditional',
+      detailedTraditionalInferenceAllowed: true,
+    });
   });
 
   test('조작하거나 역직렬화한 assessment는 provider 호출 전에 거부한다', async () => {
@@ -368,15 +392,28 @@ describe('AI output validation v3', () => {
     '신살에는 화개와 천을귀인이 잡힙니다.',
     '공망은 아직 확정할 수 없는 자료입니다.',
     '현실 예측의 과학적 타당성은 확립돼 있지 않습니다.',
-  ])('요청하지 않은 전문 교리·방어 문구 %j을 기본 해석에서 거부한다', async (text) => {
+  ])('grounded 해석은 요청하지 않은 전문 교리·방어 문구 %j을 거부한다', async (text) => {
     await expect(
-      createAiSajuReading(inputReturning(plan([FINDING.id], text), '사주 봐줘.')),
+      createAiSajuReading({
+        ...inputReturning(plan([FINDING.id], text), '사주 봐줘.'),
+        inferenceDepth: 'grounded',
+      }),
     ).rejects.toMatchObject({
       code: 'INVALID_NARRATOR_OUTPUT',
       details: {
         path: 'summary',
         policy: 'advanced-doctrine-explicit-opt-in',
       },
+    });
+  });
+
+  test('기본 심층 해석은 지원된 조후·신살 용어를 생활 해석으로 이어갈 수 있다', async () => {
+    const text =
+      '조후와 신살의 근거를 관계에서 가까워지는 방식과 멀어질 때의 반응으로 이어서 풉니다.';
+    const output = plan([FINDING.id], text);
+
+    await expect(createAiSajuReading(inputReturning(output, '사주 봐줘.'))).resolves.toMatchObject({
+      narrative: { summary: { text } },
     });
   });
 
@@ -390,7 +427,7 @@ describe('AI output validation v3', () => {
     });
   });
 
-  test('기본 broad에서는 오행을 보여주고 focused·audit에서는 명시적으로 물을 때만 연다', async () => {
+  test('기본 심층 해석은 오행을 열고 technical-audit은 명시적 교리를 요구한다', async () => {
     const output = {
       summary: paragraph([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
       sections: [
@@ -457,12 +494,13 @@ describe('AI output validation v3', () => {
 
   test('명리 이론이라는 포괄어만으로 모든 전문 교리를 열지 않는다', async () => {
     await expect(
-      createAiSajuReading(
-        inputReturning(
+      createAiSajuReading({
+        ...inputReturning(
           plan([FIVE_ELEMENT_FINDING.id], '오행 분포를 중심으로 설명합니다.'),
           '명리 이론으로 봐줘.',
         ),
-      ),
+        inferenceDepth: 'grounded',
+      }),
     ).rejects.toMatchObject({
       code: 'INVALID_NARRATOR_OUTPUT',
       details: {

@@ -37,7 +37,8 @@ provides conflicting evidence. For a Korean lunar date, the runtime still requir
       }
     },
     "question": "핵심 구조를 설명해줘.",
-    "readingMode": "focused"
+    "readingMode": "focused",
+    "inferenceDepth": "deep-traditional"
   }
 }
 ```
@@ -172,6 +173,9 @@ solar time are distinct audited policies.
   classifying the request. `auto` exists only for backward-compatible callers. At the low-level
   reading-service boundary this controls narration policy only; the application-level
   `validate-reading` command owns cross-Pack broad presentation assembly.
+- `inferenceDepth`: `deep-traditional` (default) or `grounded`. The default carries supplied
+  traditional findings into detailed relationship, work, and decision scenes. Use `grounded` only
+  for a compact calculation or evidence-first answer.
 
 For a minor, avoid adult relationship or financial framing that the evidence and question do not
 require.
@@ -221,7 +225,8 @@ Prepare both charts in one command:
     ],
     "question": "두 사람 궁합을 봐줘.",
     "locale": "ko-KR",
-    "variantPolicy": "include-candidate-dependent"
+    "variantPolicy": "include-candidate-dependent",
+    "inferenceDepth": "deep-traditional"
   }
 }
 ```
@@ -241,50 +246,53 @@ The successful preparation returns:
 - `binding.digest`: the two-person preparation binding.
 
 Write one pair draft using only `narrationTask.evidence.findings`. Every paragraph names its chart
-basis first and then translates that basis into a two-person interaction:
+basis first and then translates that basis into a two-person interaction. Each `text` value must
+be complete Korean prose: retain the particles and endings that connect the basis to the
+interpretation, and state the actual relationship action instead of leaving a label or noun string.
+Do this before validation; the validator requires the selected spans to remain exact.
 
 ```json
 {
   "schemaVersion": "1",
   "kind": "compatibility",
   "summary": {
-    "text": "[두 명식 근거]. [두 사람이 어떻게 맞물리는지 보여 주는 짧은 총평].",
+    "text": "[두 명식에서 확인한 관계 근거를 밝힙니다]. [그 근거가 두 사람 사이에서 어떻게 드러나는지 설명합니다].",
     "findingIds": ["actual-finding-id", "another-actual-finding-id"],
     "structure": {
-      "basis": "[text 안에 그대로 있는 두 명식 근거]",
-      "interpretation": "[text 안에서 basis 뒤에 있는 짧은 궁합 총평]"
+      "basis": "[text 안에 그대로 있는 두 명식의 관계 근거]",
+      "interpretation": "[text에서 basis 뒤에 이어지는 두 사람의 관계 총평]"
     }
   },
   "connection": {
-    "text": "[연결 근거]. [서로 끌리거나 보완되는 실제 방식].",
+    "text": "[두 명식을 잇는 근거를 밝힙니다]. [그 근거 때문에 서로 끌리거나 보완되는 방식을 설명합니다].",
     "findingIds": ["actual-connection-or-directional-finding-id"],
     "structure": {
       "basis": "[text 안의 연결 근거]",
-      "interpretation": "[text 안의 연결 해석]"
+      "interpretation": "[text에서 basis 뒤에 이어지는 연결 해석]"
     }
   },
   "interaction": {
-    "text": "[A→B와 B→A 십신 근거]. [한 사람의 반응에 다른 사람이 이어서 보이는 반응].",
+    "text": "[A→B와 B→A의 십신 관계를 밝힙니다]. [한 사람의 반응에 상대가 어떻게 이어서 반응하는지 설명합니다].",
     "findingIds": ["actual-a-to-b-id", "actual-b-to-a-id"],
     "structure": {
       "basis": "[text 안의 양방향 근거]",
-      "interpretation": "[text 안에서 두 사람이 주고받는 방식]"
+      "interpretation": "[text에서 basis 뒤에 이어지는 두 사람의 상호 반응]"
     }
   },
   "friction": {
-    "text": "[교차 긴장 또는 방향 차이 근거]. [언제 부딪히기 시작하고 다툼이 어떻게 되풀이되는지].",
+    "text": "[교차 긴장 또는 방향 차이를 보여 주는 근거를 밝힙니다]. [어떤 상황에서 부딪히고 다툼이 어떻게 되풀이되는지 설명합니다].",
     "findingIds": ["actual-tension-finding-id"],
     "structure": {
       "basis": "[text 안의 마찰 근거]",
-      "interpretation": "[text 안의 갈등 해석]"
+      "interpretation": "[text에서 basis 뒤에 이어지는 갈등 해석]"
     }
   },
   "durability": {
-    "text": "[연결 근거와 갈등 근거]. [다툰 뒤 오해를 풀고 오래 지내는 구체적인 방식].",
+    "text": "[연결과 갈등을 함께 보여 주는 근거를 밝힙니다]. [다툰 뒤 오해를 풀고 오래 지내기 위해 두 사람이 할 수 있는 구체적인 방법을 설명합니다].",
     "findingIds": ["actual-connection-or-directional-finding-id", "actual-tension-finding-id"],
     "structure": {
       "basis": "[text 안의 장기 관계 근거]",
-      "interpretation": "[text 안의 오래 지내기 위한 구체적인 습관]"
+      "interpretation": "[text에서 basis 뒤에 이어지는 오래 지내기 위한 구체적인 습관]"
     }
   }
 }
@@ -335,7 +343,7 @@ For exact-time calculations only, the command may include:
 ```
 
 - years must satisfy `1800 <= fromYear <= throughYear <= 2299`;
-- the range may contain at most 21 Saju years;
+- the range may contain at most 60 Saju years;
 - `gender` is optional and only selects the traditional direction used for ten-year luck pillars;
 - omit `gender` when that layer is not needed;
 - `luckPillarCount` is optional, requires `gender`, accepts 1–120, and defaults to 10;
@@ -348,9 +356,10 @@ explicitly approximate under `three-days-one-year`; they are not exact event bou
 returned luck pillar includes day-master-relative stem and branch ten gods, and
 `luckPillarCount` controls only how many decade pillars are projected.
 
-Timing output is deterministic calendar activation data. It is not itself a Tradition Pack finding or an
-event prediction. Plugin 0.4 hosts must present it as facts only; they must not derive favorable
-periods, opportunities, burdens, advice, or events from it.
+Timing output is deterministic calendar activation data, not itself a Tradition Pack finding. In the
+default deep protocol, connect it to an already supported natal mechanism to explain which relationship,
+work, or decision pattern repeats, eases, or comes under pressure. Keep the result as a traditional
+scenario rather than a medical, legal, investment, or date-specific event guarantee.
 
 ## Traditional-system command
 
@@ -610,10 +619,12 @@ the displayed ten-god row has at least two `정재`/`편재` placements, a disti
 also required. The thesis quotes exact ordered `basis` and
 `portrait` spans. Every other selection declares its `role` and quotes exact ordered `basis` and
 `interpretation` spans. The strength/blind-spot pair must share finding support within one Pack.
-The runtime resolves only prose that already passed the Pack claim gate and rejects specialist
-topic laundering in the default profile. It also requires distinct finding support for the two
-central mechanisms and checks that work, relationships, and optional money prose actually matches
-its declared section rather than trusting the `role` label alone.
+The runtime resolves only prose that already passed the Pack claim gate. In the default
+`deep-traditional` protocol, validated `pattern`, `useful-god`, `void-branches`, `growth-stages`,
+and `symbolic-stars` findings may also enter a profile when they advance the 0–7 analysis rather
+than merely naming a label. It also requires distinct finding support for the two central mechanisms
+and checks that work, relationships, and optional money prose actually matches its declared section
+rather than trusting the `role` label alone.
 
 Some broad preparations still expose a required isolated draft for a Pack whose findings are all
 outside the default-profile topic allowlist. Do not invent a personality claim from those findings
@@ -652,8 +663,8 @@ schema 2 drafts without them are still accepted for backward compatibility but r
       },
       "structure": {
         "role": "climate",
-        "basis": "[절입 경과일·다음 절기까지의 거리·사령·한난 근거를 읽히는 절로]",
-        "interpretation": "[그 계절 좌표 위에서 몸이 실제로 움직이는 리듬]"
+        "basis": "[절입 경과일·다음 절기까지의 거리·사령·한난을 함께 밝힌 계절 근거]",
+        "interpretation": "[그 계절의 한난조습이 몸의 반응과 행동으로 드러나는 모습]"
       }
     },
     "thesis": {
@@ -663,7 +674,7 @@ schema 2 drafts without them are still accepted for backward compatibility but r
       },
       "structure": {
         "basis": "[선택한 summary에서 그대로 복사한 명식 중심 근거]",
-        "portrait": "[같은 summary에서 basis 뒤에 있는 기억하기 쉬운 인물상]"
+        "portrait": "[같은 summary에서 basis 뒤에 이어지는 핵심 성향 해석]"
       }
     },
     "core": [
@@ -685,7 +696,7 @@ schema 2 drafts without them are still accepted for backward compatibility but r
         },
         "structure": {
           "role": "core",
-          "basis": "[첫 번째와 다른 finding을 쓰는 두 번째 배치·십신 근거]",
+          "basis": "[첫 번째와 다른 판정 근거를 쓰는 두 번째 배치·십신 근거]",
           "interpretation": "[첫 번째 설명과 겹치지 않는 또 다른 행동 특성]"
         }
       }
@@ -720,7 +731,7 @@ schema 2 drafts without them are still accepted for backward compatibility but r
         },
         "structure": {
           "role": "blind-spot",
-          "basis": "[강점과 같은 finding을 쓰는 실제 명식 근거]",
+          "basis": "[강점과 같은 판정 근거를 쓰는 실제 명식 근거]",
           "interpretation": "[같은 성향이 문제가 되기 시작하는 상황·반응·그 결과]"
         }
       }
@@ -747,7 +758,7 @@ schema 2 drafts without them are still accepted for backward compatibility but r
         "structure": {
           "role": "money",
           "basis": "[돈·자원과 직접 연결되는 실제 재성 배치 근거]",
-          "interpretation": "[돈을 다루는 별도의 습관과 그 때문에 생길 수 있는 문제]"
+          "interpretation": "[돈을 다룰 때 드러나는 습관과 그 때문에 생길 수 있는 문제]"
         }
       }
     ],
@@ -786,6 +797,12 @@ period; the renderer supplies the em dash. `PROFILE_TRANSLATIONESE_PATTERN` appl
 (`generic-barnum-profile-text`) and for element-to-virtue shortcuts
 (`element-to-virtue-shortcut`). Season-as-environment wording is rejected everywhere except the
 `climate` slot, where reading the season as heat, cold, and damp is the correct doctrine.
+
+Before copying a `basis`, `interpretation`, or `portrait` span into this schema, read the finished
+Korean line aloud. It must identify the relevant person or situation, use the particles needed to
+show how the chart fact leads to the interpretation, and end as a complete sentence. Do not solve
+an awkward line by changing the quoted span after validation: improve the Pack draft first, then
+copy its exact spans into the presentation draft.
 
 ### Legacy broad presentation draft (schema 1)
 

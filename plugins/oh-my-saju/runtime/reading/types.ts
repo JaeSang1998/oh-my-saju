@@ -21,7 +21,11 @@ import type {
   SajuNarrationPresentationPolicy,
   SajuNarrationPromptTemplate,
 } from './prompt-contract';
-import type { ResolvedSajuReadingPolicy, SajuReadingModePreference } from './reading-policy';
+import type {
+  ResolvedSajuReadingPolicy,
+  SajuInferenceDepth,
+  SajuReadingModePreference,
+} from './reading-policy';
 
 /** Caller-defined, short machine identifier describing the requested reading. */
 export type SajuReadingPurpose = string;
@@ -221,6 +225,8 @@ export interface CreateAiSajuReadingInput {
   readonly variantPolicy?: SajuVariantPolicy;
   readonly question?: string;
   readonly readingMode?: SajuReadingModePreference;
+  /** Defaults to `deep-traditional`; use `grounded` for a compact evidence-first reading. */
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 /**
@@ -238,6 +244,7 @@ export interface CreateAiSajuServiceOptions {
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
   readonly readingMode?: SajuReadingModePreference;
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 export interface CreateAiSajuComparisonServiceOptions {
@@ -252,6 +259,7 @@ export interface CreateAiSajuComparisonServiceOptions {
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
   readonly readingMode?: SajuReadingModePreference;
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 export type CreateAiKoreanSajuServiceOptions = Omit<
@@ -270,6 +278,7 @@ export interface ExactAiSajuServiceRequest {
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
   readonly readingMode?: SajuReadingModePreference;
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 export interface PossibilityAiSajuServiceRequest {
@@ -283,6 +292,7 @@ export interface PossibilityAiSajuServiceRequest {
   readonly audience?: SajuReadingAudience;
   readonly variantPolicy?: SajuVariantPolicy;
   readonly readingMode?: SajuReadingModePreference;
+  readonly inferenceDepth?: SajuInferenceDepth;
 }
 
 export type AiSajuServiceRequest = ExactAiSajuServiceRequest | PossibilityAiSajuServiceRequest;

@@ -13,7 +13,7 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white" />
   <img alt="Node.js 18+" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" />
   <img alt="saju-engine 0.9.0" src="https://img.shields.io/badge/saju--engine-0.9.0-765A3D" />
-  <img alt="Oh My Saju plugin 0.6.0" src="https://img.shields.io/badge/plugin-0.6.0-A66A3F" />
+  <img alt="Oh My Saju plugin 0.7.0" src="https://img.shields.io/badge/plugin-0.7.0-A66A3F" />
   <img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
 </p>
 
@@ -41,7 +41,7 @@ Oh My Saju는 만세력 계산, 전통 규칙 평가, AI 풀이를 한곳에 모
 | 배포물              | 역할                                                                    |
 | ------------------- | ----------------------------------------------------------------------- |
 | `saju-engine@0.9.0` | 원국, 한국 음양력, 절기, 시간대, 생시 후보, 세운·절월·대운·일진 계산    |
-| `oh-my-saju@0.6.0`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
+| `oh-my-saju@0.7.0`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
 
 ## 빠른 시작
 
@@ -187,10 +187,14 @@ prepare-reading
 명식 근거가 문장 앞에 옵니다. 생시 후보에 따라 달라지는 내용에는 `△`, 확인된 기둥만
 반영한 내용에는 `◇`를 붙이고 기호 설명은 한 번만 적습니다. 최종 답변은
 `result.presentation.markdown`에 들어갑니다. 검증이 끝난 문장을 다시 쓰거나 감사용
-notice를 덧붙이지 않습니다.
+notice를 덧붙이지 않습니다. 초안 단계에서는 조사와 어미를 생략한 명사 나열을 피하고,
+근거가 어떤 행동이나 관계 반응으로 이어지는지 완결문으로 씁니다. 이 한국어 점검은
+검증 전에 마쳐야 합니다.
 
-`격국`·`조후`·`용신`·`신살`·`공망`은 사용자가 직접 물었을 때만 노출합니다. 기본 풀이는
-그 판정의 내용을 평이한 한국어로 옮겨 적습니다.
+기본 풀이는 `inferenceDepth: "deep-traditional"`로 월령·조후·격국·통근·합형충파해를
+교차 확인합니다. 근거가 있으면 연애에서는 관계의 시작·유지·소원해짐을, 이직에서는
+맞는 제안과 막히기 쉬운 제안의 구조를 구체적인 한국어로 풉니다. 짧은 계산·근거 중심
+출력이 필요할 때만 `inferenceDepth: "grounded"`를 지정합니다.
 
 ## TypeScript API
 

@@ -33,7 +33,12 @@ import type {
   SajuReadingPurpose,
   SajuVariantPolicy,
 } from './types';
-import { assertReadingModePreference, type SajuReadingModePreference } from './reading-policy';
+import {
+  assertSajuInferenceDepth,
+  assertReadingModePreference,
+  type SajuInferenceDepth,
+  type SajuReadingModePreference,
+} from './reading-policy';
 
 export interface ComparisonReadingDefaults {
   readonly locale: SajuReadingLocale;
@@ -41,6 +46,7 @@ export interface ComparisonReadingDefaults {
   readonly audience: SajuReadingAudience;
   readonly variantPolicy: SajuVariantPolicy;
   readonly readingMode: SajuReadingModePreference;
+  readonly inferenceDepth: SajuInferenceDepth;
 }
 
 /** Shared by the comparison service and provider-neutral agent preparation seam. */
@@ -50,6 +56,7 @@ export const DEFAULT_COMPARISON_READING_OPTIONS: ComparisonReadingDefaults = dee
   audience: 'general',
   variantPolicy: 'include-candidate-dependent',
   readingMode: 'auto',
+  inferenceDepth: 'deep-traditional',
 });
 const MAXIMUM_PACK_COUNT = 16;
 
@@ -126,6 +133,10 @@ function snapshotOptions(options: unknown): ComparisonServiceSnapshot {
       options.readingMode ?? DEFAULT_COMPARISON_READING_OPTIONS.readingMode,
       'options.readingMode',
     ),
+    inferenceDepth: assertSajuInferenceDepth(
+      options.inferenceDepth ?? DEFAULT_COMPARISON_READING_OPTIONS.inferenceDepth,
+      'options.inferenceDepth',
+    ),
   });
 }
 
@@ -172,6 +183,7 @@ export function comparisonPackReadingInput(
     audience: request.audience ?? defaults.audience,
     variantPolicy: request.variantPolicy ?? defaults.variantPolicy,
     readingMode: request.readingMode ?? defaults.readingMode,
+    inferenceDepth: request.inferenceDepth ?? defaults.inferenceDepth,
     ...(request.question === undefined ? {} : { question: request.question }),
   };
 }
