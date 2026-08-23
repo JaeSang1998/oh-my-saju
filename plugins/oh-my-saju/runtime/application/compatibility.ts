@@ -11,6 +11,7 @@ import { deepFreeze } from '../internal/deep-freeze';
 import { isRecord } from '../internal/guards';
 import { OH_MY_SAJU_RUNTIME_MANIFEST } from '../manifest';
 import { assertSafeIdentifier } from '../reading/option-validation';
+import { SAJU_FLUENT_KOREAN_WRITING_POLICY } from '../reading/prompt-contract';
 import { assertSajuInferenceDepth } from '../reading/reading-policy';
 import { calculateKoreanSajuAnalysis } from '../traditions/calculate-korean-analysis';
 import { getBranchTenGod, getHeavenlyStemElement, getTenGod } from '../traditions/domain';
@@ -764,6 +765,7 @@ function compatibilityTask(
     mode: 'grounded-compatibility',
     question: request.question,
     inferenceDepth: request.inferenceDepth ?? 'deep-traditional',
+    writing: SAJU_FLUENT_KOREAN_WRITING_POLICY,
     instructions: [
       'Answer the two-person compatibility question directly in the summary.',
       'Use A→B and B→A directional ten-god findings together; compatibility is not two individual readings pasted together.',

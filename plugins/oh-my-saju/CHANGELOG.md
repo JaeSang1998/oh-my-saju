@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.8.0 — 2026-08-23
+
+- Added `analyze-reading`, the one-command default for ordinary Korean readings. It returns the
+  audited multi-Pack analysis and a direct Korean-reading task without the six-draft
+  prepare/validate envelope.
+- Made the full `fluent-korean` output pass part of every narration task and added a packaged
+  output-pass reference for agent hosts. User-facing default-profile bullets now use a colon or
+  connective rather than an em dash.
+- Kept the strict `prepare-reading` → `validate-reading` workflow for explicit audit,
+  provenance, reproducible Markdown, and API integration.
+
 ## 0.7.0 — 2026-08-22
 
 - Default `inferenceDepth` to `deep-traditional` for individual readings and pair compatibility;

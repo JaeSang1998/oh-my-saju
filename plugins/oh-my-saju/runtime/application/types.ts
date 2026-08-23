@@ -4,8 +4,11 @@ import type {
   AiSajuServiceRequest,
   SajuNarrationRequest,
 } from '../reading/types';
-import type { SajuNarrationPromptTemplate } from '../reading/prompt-contract';
-import type { SajuInferenceDepth } from '../reading/reading-policy';
+import type {
+  SajuFluentKoreanWritingPolicy,
+  SajuNarrationPromptTemplate,
+} from '../reading/prompt-contract';
+import type { ResolvedSajuReadingPolicy, SajuInferenceDepth } from '../reading/reading-policy';
 import type {
   ExactKoreanSajuAnalysisResult,
   InterpretationTopic,
@@ -88,6 +91,24 @@ export interface PreparedOhMySajuReading {
       readonly outputSchemaVersion: '3';
       readonly claimGateVersion: '3';
     };
+  };
+}
+
+/**
+ * Lightweight default response for a direct Korean reading. It keeps every
+ * deterministic Pack result but removes the six draft contracts, digest, and
+ * presentation-selection JSON required only by the strict audit workflow.
+ */
+export interface AnalyzedOhMySajuReading {
+  readonly schemaVersion: '1';
+  readonly calculationKind: KoreanSajuAnalysisResult['calculationKind'];
+  readonly analysis: KoreanSajuAnalysisResult;
+  readonly timing: SajuTimingReport | null;
+  readonly task: {
+    readonly mode: 'direct-korean-interpretation';
+    readonly readingPolicy: ResolvedSajuReadingPolicy;
+    readonly writing: SajuFluentKoreanWritingPolicy;
+    readonly instructions: readonly string[];
   };
 }
 
@@ -198,6 +219,8 @@ export interface OhMySajuCompatibilityNarrationTask {
   readonly mode: 'grounded-compatibility';
   readonly question: string | null;
   readonly inferenceDepth: SajuInferenceDepth;
+  /** Full Korean-output pass, performed before compatibility validation. */
+  readonly writing: SajuFluentKoreanWritingPolicy;
   readonly instructions: readonly string[];
   readonly evidence: {
     readonly profile: {
@@ -447,6 +470,15 @@ export interface PrepareOhMySajuReadingCommand {
   readonly timing?: OhMySajuTimingOptions;
 }
 
+/** Default one-command analysis for ordinary Korean interpretations. */
+export interface AnalyzeOhMySajuReadingCommand {
+  readonly schemaVersion?: '1';
+  readonly command: 'analyze-reading';
+  readonly request: AiSajuServiceRequest;
+  /** Exact-time requests only. Produces exact Lichun years and Jie months. */
+  readonly timing?: OhMySajuTimingOptions;
+}
+
 interface ValidateOhMySajuReadingCommandBase {
   readonly schemaVersion?: '1';
   readonly command: 'validate-reading';
@@ -493,6 +525,7 @@ export interface ValidateOhMySajuCompatibilityCommand {
 }
 
 export type OhMySajuCommand =
+  | AnalyzeOhMySajuReadingCommand
   | PrepareOhMySajuReadingCommand
   | ValidateOhMySajuReadingCommand
   | PrepareOhMySajuCompatibilityCommand
@@ -504,6 +537,13 @@ export interface OhMySajuPreparedSuccess {
   readonly ok: true;
   readonly command: 'prepare-reading';
   readonly result: PreparedOhMySajuReading;
+}
+
+export interface OhMySajuAnalyzedSuccess {
+  readonly schemaVersion: '1';
+  readonly ok: true;
+  readonly command: 'analyze-reading';
+  readonly result: AnalyzedOhMySajuReading;
 }
 
 export interface OhMySajuValidatedSuccess {
@@ -558,6 +598,7 @@ export interface OhMySajuFailure {
 }
 
 export type OhMySajuResponse =
+  | OhMySajuAnalyzedSuccess
   | OhMySajuPreparedSuccess
   | OhMySajuValidatedSuccess
   | OhMySajuCompatibilityPreparedSuccess

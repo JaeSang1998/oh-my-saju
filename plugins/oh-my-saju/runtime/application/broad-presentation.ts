@@ -1427,10 +1427,7 @@ function renderedProfileBridge(value: ResolvedProfileParagraphRef): string {
 }
 
 /** v3 reads as one sentence: the chart basis first, then what it means. */
-/**
- * A basis span that already ends in a Korean connective ending runs straight
- * into its meaning, so an em dash there would break the sentence it is part of.
- */
+/** A connective ending runs directly into its meaning; otherwise use a Korean-readable colon. */
 const BASIS_CONNECTIVE_ENDING_PATTERN = /(?:면서|면|고|며|서|지만|어야|아야)$/u;
 
 function renderedProfileBridgeV3(value: ResolvedProfileParagraphRef): string {
@@ -1438,7 +1435,7 @@ function renderedProfileBridgeV3(value: ResolvedProfileParagraphRef): string {
   const trimmedBasis = value.structure.basis.replace(/[\s.,]+$/u, '');
   const basis = escapeBroadPresentationMarkdownText(trimmedBasis);
   const interpretation = escapeBroadPresentationMarkdownText(value.structure.interpretation);
-  const joiner = BASIS_CONNECTIVE_ENDING_PATTERN.test(trimmedBasis) ? ' ' : ' — ';
+  const joiner = BASIS_CONNECTIVE_ENDING_PATTERN.test(trimmedBasis) ? ' ' : ': ';
   return `${marker === null ? '' : `${marker} `}${basis}${joiner}${interpretation}`;
 }
 

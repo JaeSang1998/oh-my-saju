@@ -1,15 +1,15 @@
 /**
  * Provider-neutral application boundary for agent hosts.
  *
- * The deterministic engine prepares isolated narration tasks; the host supplies
- * JSON drafts; the engine then validates every claim reference and uncertainty
- * rule before returning user-facing readings.
+ * Ordinary callers receive one direct Korean-reading task. Audit callers can
+ * still prepare isolated Pack drafts and validate claim references afterward.
  */
 
 /** Host-neutral Oh My Saju application protocol. */
 export {
   executeOhMySaju,
   executeTraditionalSystemCommand,
+  analyzeOhMySajuReading,
   prepareOhMySajuReading,
   validateOhMySajuReading,
 } from './execute';
@@ -40,6 +40,8 @@ export { renderOhMySajuCompact, renderOhMySajuMarkdown } from './presentation';
 export type { OhMySajuApplicationErrorCode } from './errors';
 export type {
   KoreanSajuAnalysisResult,
+  AnalyzedOhMySajuReading,
+  AnalyzeOhMySajuReadingCommand,
   OhMySajuCommand,
   OhMySajuBroadPresentation,
   OhMySajuBroadPresentationDraft,
@@ -53,6 +55,7 @@ export type {
   OhMySajuCompatibilityPreparedSuccess,
   OhMySajuCompatibilityRequest,
   OhMySajuCompatibilityValidatedSuccess,
+  OhMySajuAnalyzedSuccess,
   OhMySajuConclusionRef,
   OhMySajuDefaultProfileDraft,
   OhMySajuDefaultProfileV3Draft,

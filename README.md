@@ -13,7 +13,7 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white" />
   <img alt="Node.js 18+" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" />
   <img alt="saju-engine 0.9.0" src="https://img.shields.io/badge/saju--engine-0.9.0-765A3D" />
-  <img alt="Oh My Saju plugin 0.7.0" src="https://img.shields.io/badge/plugin-0.7.0-A66A3F" />
+  <img alt="Oh My Saju plugin 0.8.0" src="https://img.shields.io/badge/plugin-0.8.0-A66A3F" />
   <img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
 </p>
 
@@ -41,7 +41,7 @@ Oh My Saju는 만세력 계산, 전통 규칙 평가, AI 풀이를 한곳에 모
 | 배포물              | 역할                                                                    |
 | ------------------- | ----------------------------------------------------------------------- |
 | `saju-engine@0.9.0` | 원국, 한국 음양력, 절기, 시간대, 생시 후보, 세운·절월·대운·일진 계산    |
-| `oh-my-saju@0.7.0`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
+| `oh-my-saju@0.8.0`  | 개인 사주·두 사람 명식 궁합, 전통 규칙 팩, 택일·토정·주역·자미두수·육임 |
 
 ## 빠른 시작
 
@@ -159,37 +159,27 @@ Node.js 18 이상이 필요합니다. npm 패키지 배포 전에는 저장소 �
 택일 점수는 후보 정렬 정책입니다. 고전 규칙의 일치 내역과 점수 기여분을 나누어
 반환하므로 순위가 나온 이유를 확인할 수 있습니다.
 
-### 근거를 인용하는 AI 풀이
+### 빠른 AI 풀이와 엄격 검증
 
 ```text
-prepare-reading
+analyze-reading
   → 원국과 규칙 팩 계산
-  → 규칙 팩별 판정 근거 ID 생성
-  → 호스트 모델이 근거 ID를 인용해 초안 작성
-  → validate-reading이 근거와 생시 불확실성 검증
-  → 기본 풀이는 검증된 문장만 정해진 Markdown 항목에 배치
+  → 하나의 직접 해석 task와 Fluent Korean 출력 규칙 반환
+  → 0–7 교차 확인을 거친 사용자용 해석 작성
 ```
 
-두 사람 궁합은 별도의
-`prepare-compatibility → host pair draft → validate-compatibility` 프로토콜을
-사용합니다. 두 사람의 개인 풀이를 이어 붙이지 않고 방향별 십신과 교차 관계를 한 쌍의
-근거로 검증한 뒤 정해진 궁합 Markdown을 반환합니다.
+일반 사주·연애·이직·대운 질문은 이 빠른 경로를 사용합니다. Pack별 초안, `preparedDigest`,
+`presentationDraft`를 만들지 않으므로 대화 에이전트가 검증 JSON을 조립할 필요가 없습니다.
+계산 사실과 Pack finding은 결과 안에 모두 남아 있습니다.
 
-계산 결과, 규칙 팩의 판정, 모델이 쓴 문장은 각각 다른 필드에 둡니다. 모델이 다른
-규칙 팩의 근거를 섞거나 특정 생시 후보에서만 맞는 말을 단정하면 검증 단계에서
-걸러집니다.
+`prepare-reading → validate-reading`은 Pack별 출처, finding ID, 재현 가능한 Markdown,
+기존 풀이 감사, API 통합처럼 엄격한 검증이 필요한 경우에만 사용합니다. 두 사람 궁합도
+별도의 `prepare-compatibility → host pair draft → validate-compatibility` 프로토콜을
+사용합니다.
 
-열린 질문은 `readingMode: "broad"`로 보냅니다. 검증 명령의 `presentationDraft`는
-이미 검증된 짧은 문단을 절기와 계절·핵심 요약·성격과 행동 방식·타고난 힘과 쓰는 법·
-강점과 주의점·일과 재능·돈과 현실 감각·관계 항목에 배치합니다. 항목마다 `role`이 붙고,
-`climate`는 `season-climate` 근거에서, `resource`는 `strength` 근거에서만 올 수 있습니다.
-서로 다른 문단 열 개 이상이 필요하며, 각 항목은 `근거 — 해석` 한 줄로 렌더링되어
-명식 근거가 문장 앞에 옵니다. 생시 후보에 따라 달라지는 내용에는 `△`, 확인된 기둥만
-반영한 내용에는 `◇`를 붙이고 기호 설명은 한 번만 적습니다. 최종 답변은
-`result.presentation.markdown`에 들어갑니다. 검증이 끝난 문장을 다시 쓰거나 감사용
-notice를 덧붙이지 않습니다. 초안 단계에서는 조사와 어미를 생략한 명사 나열을 피하고,
-근거가 어떤 행동이나 관계 반응으로 이어지는지 완결문으로 씁니다. 이 한국어 점검은
-검증 전에 마쳐야 합니다.
+빠른 경로와 엄격 경로 모두, 사용자용 한국어 문장은 `fluent-korean` 전체 점검을 거칩니다.
+조사와 어미를 생략하지 않은 완결문으로 쓰고, 차트 근거와 풀이 사이는 엠대시 대신 콜론이나
+연결어미로 이어 갑니다.
 
 기본 풀이는 `inferenceDepth: "deep-traditional"`로 월령·조후·격국·통근·합형충파해를
 교차 확인합니다. 근거가 있으면 연애에서는 관계의 시작·유지·소원해짐을, 이직에서는

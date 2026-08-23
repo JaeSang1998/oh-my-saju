@@ -5,7 +5,7 @@ import { SAJU_NARRATION_PROMPT_TEMPLATE } from './reading/prompt-contract';
 export const OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze({
   runtime: {
     name: 'oh-my-saju',
-    version: '0.7.0',
+    version: '0.8.0',
     schemaVersion: '1',
   },
   compatibility: {

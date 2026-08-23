@@ -1,5 +1,18 @@
 # Changelog
 
+## Oh My Saju plugin 0.8.0 — 2026-08-23
+
+- Added `analyze-reading` as the ordinary one-command Korean-reading path. It returns one direct
+  task and the full audited analysis without six Pack draft envelopes, a preparation digest, or a
+  presentation-selection JSON round trip.
+- Kept `prepare-reading` → `validate-reading` for explicit provenance, audit, reproducible
+  Markdown, and API-integration workflows instead of making it the default conversation path.
+- Made the complete `fluent-korean` pass a provider-facing narration requirement and a mandatory
+  pre-validation delivery step. User-facing profile rendering now uses a colon or connective
+  instead of an em dash.
+- Reduced the primary skill entrypoint from 492 to 81 lines and routed strict protocol details to
+  references only when the request needs them.
+
 ## Oh My Saju plugin 0.7.0 — 2026-08-22
 
 - Made `deep-traditional` the default narration depth. Supported traditional findings now carry

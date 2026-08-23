@@ -18,6 +18,7 @@ import type {
   UnavailableInterpretationRule,
 } from '../traditions/types';
 import type {
+  SajuFluentKoreanWritingPolicy,
   SajuNarrationPresentationPolicy,
   SajuNarrationPromptTemplate,
 } from './prompt-contract';
@@ -64,6 +65,8 @@ export interface SajuNarrationRequest {
     readonly topicNeutral: true;
     readonly omitCalendarAndGanzhiClaimsWithoutEvidence: true;
     readonly presentation: SajuNarrationPresentationPolicy;
+    /** Full Korean-output pass, performed before the validated presentation is rendered. */
+    readonly writing: SajuFluentKoreanWritingPolicy;
     readonly readingPolicy: ResolvedSajuReadingPolicy;
   };
   readonly template: SajuNarrationPromptTemplate;

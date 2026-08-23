@@ -29,6 +29,7 @@ import {
   snapshotNarrator,
 } from './option-validation';
 import {
+  SAJU_FLUENT_KOREAN_WRITING_POLICY,
   SAJU_NARRATION_PRESENTATION_POLICY,
   SAJU_NARRATION_PROMPT_TEMPLATE,
 } from './prompt-contract';
@@ -323,6 +324,7 @@ function buildNarrationRequest(
       topicNeutral: true,
       omitCalendarAndGanzhiClaimsWithoutEvidence: true,
       presentation: SAJU_NARRATION_PRESENTATION_POLICY,
+      writing: SAJU_FLUENT_KOREAN_WRITING_POLICY,
       readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode, inferenceDepth),
     },
     template: SAJU_NARRATION_PROMPT_TEMPLATE,

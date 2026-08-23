@@ -9,10 +9,10 @@ directory and does not require an npm install or network connection.
 
 ```text
 saju-engine (calculation facts only)
-  ├→ Tradition Packs → isolated finding sets → grounded narration validation
+  ├→ Tradition Packs → isolated finding sets → analyze-reading direct task
   ├→ two natal charts → directional/cross-chart findings → compatibility validation
   └→ election / Tojeong / I Ching / Zi Wei / Liu Ren deterministic reports
-  → prepare-reading / validate-reading / prepare-compatibility / validate-compatibility
+  → strict only: prepare-reading / validate-reading / prepare-compatibility / validate-compatibility
   → run-traditional-system protocol
   → validated chart-to-interpretation profile assembly → deterministic broad-reading Markdown
   → Agent Skill
@@ -23,9 +23,15 @@ Packs are knowledge artifacts, not Agent Skills. Their `knowledge.providerContra
 where a later version can materialize the same identifiers and provenance from an ontology or
 knowledge graph. Pack findings are kept separate; the runtime never votes them into one verdict.
 
-Plugin 0.7.0 keeps the same six Tradition Packs — `calculation-baseline@1.2.0`, `ziping@1.2.0`,
-`ditianshui@1.2.0`, `qiongtong@1.2.0`, `sanming-symbolic-curated@1.2.0`, and the new
+Plugin 0.8.0 keeps the same six Tradition Packs — `calculation-baseline@1.2.0`, `ziping@1.2.0`,
+`ditianshui@1.2.0`, `qiongtong@1.2.0`, `sanming-symbolic-curated@1.2.0`, and
 `xingchong-resolution@1.0.0` — and adds:
+
+- `analyze-reading`, the one-command default for ordinary Korean readings. It returns the full
+  audited analysis and one direct-reading task without six Pack draft envelopes, a preparation
+  digest, or a `presentationDraft`;
+- a mandatory full `fluent-korean` output pass in every single-chart and compatibility narration
+  task. The ordinary Korean renderer uses a colon or a connective instead of an em dash;
 
 - a default `deep-traditional` narration depth: supported 월령·조후·격국·통근·합형충파해 and
   symbolic findings can become detailed relationship and work scenarios instead of being withheld
@@ -54,10 +60,10 @@ Plugin 0.5.0 added:
 - a `season-climate` reading topic that places the birth instant between two solar terms, names
   the commanding hidden stem of the month, and states which way the chart's heat leans;
 - `ditianshui` root and command-position evidence: where the day master has roots, whether it
-  holds the month and the day ground, and what it leans on — as a candidate grade, never a final
+  holds the month and the day ground, and what it leans on as a candidate grade, never a final
   신강·신약 verdict;
 - broad-reading display contract v3 with `절기와 계절` and `타고난 힘과 쓰는 법` sections, ten
-  distinct validated paragraphs, and `근거 — 해석` bullets that read the chart basis first;
+  distinct validated paragraphs, and `근거: 해석` bullets that read the chart basis first;
 - stricter default-profile validation against Barnum prose and element-to-virtue shortcuts, with
   the season-as-environment rejection lifted only inside the climate slot.
 
@@ -116,7 +122,23 @@ It rejects numeric compatibility scores, event verdicts, missing-feature disclai
 relationship checklists. Additional historical compatibility methods remain separate future
 profiles rather than being silently mixed into the structural profile.
 
-Source integrations can render the same prepared object without constructing a lossy projection:
+Normal source integrations can request the same direct task used by the Agent Skill:
+
+```ts
+import { analyzeOhMySajuReading } from './runtime/application';
+
+const analyzed = analyzeOhMySajuReading({
+  command: 'analyze-reading',
+  request,
+  timing: { fromYear: 2026, throughYear: 2027, gender: 'female' },
+});
+
+// Write from analyzed.analysis, then apply every analyzed.task.writing rule.
+// No Pack-by-Pack draft, digest, or presentationDraft is needed here.
+```
+
+Use the following prepared-object flow only when an integration explicitly needs audit-grade
+provenance or deterministic validated Markdown:
 
 ```ts
 import {

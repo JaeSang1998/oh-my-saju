@@ -38,7 +38,10 @@ import {
   validateOhMySajuCompatibilityFromUnknown,
 } from './compatibility';
 import type {
+  AnalyzeOhMySajuReadingCommand,
+  AnalyzedOhMySajuReading,
   OhMySajuCommand,
+  OhMySajuAnalyzedSuccess,
   OhMySajuFailure,
   OhMySajuNarrationDraft,
   OhMySajuNarrationTask,
@@ -436,6 +439,60 @@ function prepareOhMySajuReadingFromUnknown(command: unknown): PreparedOhMySajuRe
   });
 }
 
+/**
+ * Ordinary readings need the complete deterministic analysis, not six
+ * provider-specific draft envelopes. The strict prepare/validate workflow
+ * remains available for audit-grade provenance and rendered presentation.
+ */
+function analyzeOhMySajuReadingFromUnknown(command: unknown): AnalyzedOhMySajuReading {
+  if (!isRecord(command) || command.command !== 'analyze-reading') {
+    throw new OhMySajuApplicationError(
+      'INVALID_COMMAND',
+      'command must be an analyze-reading object.',
+    );
+  }
+  assertOnlyKeys(command, ['schemaVersion', 'command', 'request', 'timing'], 'command');
+  assertCommandVersion(command.schemaVersion);
+  assertServiceRequest(command.request);
+  const analysis = calculateKoreanSajuAnalysis(command.request.calculation);
+  assertPresetIntegrity(analysis.preset);
+  const timing = calculateRequestedTiming(command.request, command.timing);
+  // Reuse the baseline request only to normalize the common reading options
+  // and deliver the Korean writing contract. It is deliberately not returned
+  // as a draft task and does not cause the six-Pack validation workflow.
+  const baselineRequest = prepareAiSajuNarrationRequest(
+    comparisonPackReadingInput(
+      DEFAULT_COMPARISON_READING_OPTIONS,
+      command.request,
+      analysis.baseline,
+    ),
+  );
+  return deepFreeze({
+    schemaVersion: '1',
+    calculationKind: analysis.calculationKind,
+    analysis,
+    timing,
+    task: {
+      mode: 'direct-korean-interpretation',
+      readingPolicy: baselineRequest.task.readingPolicy,
+      writing: baselineRequest.task.writing,
+      instructions: [
+        'Answer the user directly from the supplied audited calculation and Pack findings.',
+        'For a deep reading, follow the 0–7 traditional analysis sequence without exposing it as a mechanical checklist.',
+        'Compare compatible Pack findings when they change the conclusion, but do not make the user wait for one draft per Pack or compose validation JSON.',
+        'Use the full Fluent Korean output pass before delivering the answer.',
+        'Keep calculation facts, traditional findings, and your own life-scene interpretation distinct in the wording.',
+      ],
+    },
+  });
+}
+
+export function analyzeOhMySajuReading(
+  command: AnalyzeOhMySajuReadingCommand,
+): AnalyzedOhMySajuReading {
+  return analyzeOhMySajuReadingFromUnknown(command);
+}
+
 export function prepareOhMySajuReading(
   command: PrepareOhMySajuReadingCommand,
 ): PreparedOhMySajuReading {
@@ -606,6 +663,7 @@ export function executeTraditionalSystemCommand(
 }
 
 const COMMAND_NAMES = Object.freeze([
+  'analyze-reading',
   'prepare-reading',
   'validate-reading',
   'prepare-compatibility',
@@ -663,6 +721,14 @@ export async function executeOhMySaju(command: unknown): Promise<OhMySajuRespons
   try {
     if (!isRecord(command)) {
       throw new OhMySajuApplicationError('INVALID_COMMAND', 'command must be an object.');
+    }
+    if (command.command === 'analyze-reading') {
+      return deepFreeze({
+        schemaVersion: '1',
+        ok: true,
+        command: 'analyze-reading',
+        result: analyzeOhMySajuReadingFromUnknown(command),
+      } satisfies OhMySajuAnalyzedSuccess);
     }
     if (command.command === 'prepare-reading') {
       return deepFreeze({

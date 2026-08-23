@@ -14,8 +14,8 @@ Usage:
   node oh-my-saju.mjs --help
 
 The runtime reads one JSON command from --input or stdin and writes one JSON
-response to stdout. Supported commands are prepare-reading, validate-reading,
-prepare-compatibility, validate-compatibility, and run-traditional-system.
+response to stdout. Supported commands are analyze-reading, prepare-reading,
+validate-reading, prepare-compatibility, validate-compatibility, and run-traditional-system.
 `;
 
 interface CliOptions {

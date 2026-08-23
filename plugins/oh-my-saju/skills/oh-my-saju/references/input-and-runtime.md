@@ -5,6 +5,40 @@ response to stdout. The full analysis is often tens of kilobytes, so omit `--pre
 agent execution and use it only for human inspection. Exit code is zero for success, one for a
 domain/validation failure, and two for unreadable JSON or CLI options.
 
+For an ordinary user-facing reading, use `analyze-reading`. It returns one direct Korean-reading
+task and the complete audited analysis without Pack-by-Pack draft envelopes or a validation JSON
+round trip. `prepare-reading` and `validate-reading` are the strict audit path; use them only for
+provenance, reproducible Markdown, or API-integration requests.
+
+## Fast success envelope
+
+An ordinary `analyze-reading` response keeps the complete calculation and Pack findings, then adds
+one task for the host to write the final Korean answer. It intentionally contains neither
+`narrationTasks` nor a `preparedDigest` or `presentationDraft`.
+
+```json
+{
+  "schemaVersion": "1",
+  "ok": true,
+  "command": "analyze-reading",
+  "result": {
+    "schemaVersion": "1",
+    "calculationKind": "exact",
+    "analysis": {},
+    "timing": null,
+    "task": {
+      "mode": "direct-korean-interpretation",
+      "readingPolicy": { "inferenceDepth": "deep-traditional" },
+      "writing": { "id": "fluent-korean-full-output-pass", "required": true },
+      "instructions": []
+    }
+  }
+}
+```
+
+Use `result.analysis` as the only calculation source and follow `result.task` before returning
+prose. Do not turn this compact delivery contract back into six separate model prompts.
+
 ## Korean civil-time defaults
 
 For a Korean-language Saju request with an unqualified numbered date, whether the birth time is
@@ -23,7 +57,7 @@ provides conflicting evidence. For a Korean lunar date, the runtime still requir
 
 ```json
 {
-  "command": "prepare-reading",
+  "command": "analyze-reading",
   "request": {
     "calculation": {
       "kind": "exact",
@@ -78,7 +112,7 @@ whether a leap month exists.
 
 ```json
 {
-  "command": "prepare-reading",
+  "command": "analyze-reading",
   "request": {
     "calculation": {
       "kind": "possibilities",
@@ -540,7 +574,7 @@ Liu Ren result contains the astronomical middle-Qi month general, heaven/earth p
 lessons, rule path, Shehai evidence where applicable, and three transmissions. Heavenly generals
 and judgment text are outside v1.
 
-## Success envelope
+## Strict audit success envelope
 
 ```json
 {
@@ -789,20 +823,22 @@ selections, together with the thesis, must combine day-master or seasonal-streng
 another chart placement, relation, or ten-god axis. Every quoted span must appear exactly and in
 order in the selected paragraph.
 
-Each rendered profile bullet is `{basis} — {interpretation}` on one line, with any `△`/`◇` marker
+Each rendered profile bullet is `{basis}: {interpretation}` on one line, with any `△`/`◇` marker
 at the head of the line. Write `basis` as a clause that can be read out loud and drop its trailing
-period; the renderer supplies the em dash. `PROFILE_TRANSLATIONESE_PATTERN` applies to the
+period; the renderer supplies the colon unless `basis` already has a connective ending.
+`PROFILE_TRANSLATIONESE_PATTERN` applies to the
 `interpretation` span only, so a legitimate chart statement in `basis` is not rejected, while
 `interpretation` and the thesis `portrait` are additionally checked for Barnum prose
 (`generic-barnum-profile-text`) and for element-to-virtue shortcuts
 (`element-to-virtue-shortcut`). Season-as-environment wording is rejected everywhere except the
 `climate` slot, where reading the season as heat, cold, and damp is the correct doctrine.
 
-Before copying a `basis`, `interpretation`, or `portrait` span into this schema, read the finished
-Korean line aloud. It must identify the relevant person or situation, use the particles needed to
-show how the chart fact leads to the interpretation, and end as a complete sentence. Do not solve
-an awkward line by changing the quoted span after validation: improve the Pack draft first, then
-copy its exact spans into the presentation draft.
+Before copying a `basis`, `interpretation`, or `portrait` span into this schema, complete the full
+pass in [fluent-korean-output-pass.md](fluent-korean-output-pass.md). Read the finished Korean line
+aloud. It must identify the relevant person or situation, use the particles needed to show how the
+chart fact leads to the interpretation, and end as a complete sentence. Do not solve an awkward
+line by changing the quoted span after validation: improve the Pack draft first, then copy its
+exact spans into the presentation draft.
 
 ### Legacy broad presentation draft (schema 1)
 

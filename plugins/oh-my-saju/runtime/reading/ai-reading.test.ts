@@ -78,6 +78,13 @@ describe('createAiSajuReading', () => {
         keepCalculationAndInterpretationDistinct: true,
         topicNeutral: true,
         omitCalendarAndGanzhiClaimsWithoutEvidence: true,
+        writing: {
+          id: 'fluent-korean-full-output-pass',
+          version: '1.0.0',
+          required: true,
+          passPosition: 'before-validation',
+          ruleSet: 'fluent-korean',
+        },
         presentation: {
           mode: 'chart-first-profile',
           format: 'chart-and-short-sections',
@@ -112,7 +119,7 @@ describe('createAiSajuReading', () => {
       },
       template: {
         id: 'saju-grounded-narration',
-        version: '6.0.0',
+        version: '7.0.0',
       },
     });
     expect(reading).toMatchObject({
@@ -132,7 +139,7 @@ describe('createAiSajuReading', () => {
         defaultDisplay: false,
       },
       audit: {
-        promptTemplate: { id: 'saju-grounded-narration', version: '6.0.0' },
+        promptTemplate: { id: 'saju-grounded-narration', version: '7.0.0' },
         grounding: { id: 'saju-finding-references', variantPolicy: 'include-candidate-dependent' },
         validation: {
           everyAiParagraphHasFindingReferences: true,

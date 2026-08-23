@@ -231,6 +231,30 @@ try {
     question: '핵심 구조를 근거와 함께 설명해줘.',
   };
   const smokeTiming = { fromYear: 2026, throughYear: 2026 };
+  const directSmoke = spawnSync(process.execPath, [runtimePath], {
+    cwd: temporaryRoot,
+    encoding: 'utf8',
+    input: JSON.stringify({
+      command: 'analyze-reading',
+      request: smokeRequest,
+      timing: smokeTiming,
+    }),
+  });
+  assert.equal(directSmoke.status, 0, directSmoke.stderr || directSmoke.stdout);
+  const directResult = JSON.parse(directSmoke.stdout);
+  assert.equal(directResult.ok, true);
+  assert.equal(directResult.command, 'analyze-reading');
+  assert.equal(directResult.result.analysis.doctrines.length, 5);
+  assert.equal(directResult.result.task.mode, 'direct-korean-interpretation');
+  assert.equal(directResult.result.task.readingPolicy.inferenceDepth, 'deep-traditional');
+  assert.equal(directResult.result.task.writing.id, 'fluent-korean-full-output-pass');
+  assert.equal(directResult.result.task.writing.required, true);
+  assert.equal(
+    Object.hasOwn(directResult.result, 'narrationTasks'),
+    false,
+    'ordinary direct reading should not create Pack narration tasks',
+  );
+
   const smoke = spawnSync(process.execPath, [runtimePath], {
     cwd: temporaryRoot,
     encoding: 'utf8',

@@ -40,6 +40,31 @@ function draftFor(task: {
 }
 
 describe('executeOhMySaju', () => {
+  test('일반 해석은 검증 초안 여섯 개 없이 한 번의 직접 분석으로 준비한다', async () => {
+    const response = await executeOhMySaju({
+      schemaVersion: '1',
+      command: 'analyze-reading',
+      request: REQUEST,
+    });
+
+    expect(response).toMatchObject({ ok: true, command: 'analyze-reading' });
+    if (!response.ok || response.command !== 'analyze-reading') return;
+    expect(response.result.task).toMatchObject({
+      mode: 'direct-korean-interpretation',
+      writing: {
+        id: 'fluent-korean-full-output-pass',
+        required: true,
+        passPosition: 'before-validation',
+      },
+      readingPolicy: {
+        inferenceDepth: 'deep-traditional',
+        detailedTraditionalInferenceAllowed: true,
+      },
+    });
+    expect(JSON.stringify(response.result)).not.toContain('narrationTasks');
+    expect(JSON.stringify(response.result)).not.toContain('presentationDraft');
+  });
+
   test('하나의 traditional-system 명령이 타입별 결정론 모듈을 JSON envelope로 실행한다', async () => {
     const response = await executeOhMySaju({
       schemaVersion: '1',
@@ -115,13 +140,13 @@ describe('executeOhMySaju', () => {
       },
       runtime: {
         name: 'oh-my-saju',
-        version: '0.7.0',
+        version: '0.8.0',
         schemaVersion: '1',
       },
       reading: {
         promptTemplate: {
           id: 'saju-grounded-narration',
-          version: '6.0.0',
+          version: '7.0.0',
         },
         outputSchemaVersion: '3',
         claimGateVersion: '3',

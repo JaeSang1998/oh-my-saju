@@ -10615,7 +10615,31 @@ function isArrayOf(value, predicate) {
 // plugins/oh-my-saju/runtime/reading/prompt-contract.ts
 var SAJU_NARRATION_PROMPT_TEMPLATE = deepFreeze2({
   id: "saju-grounded-narration",
-  version: "6.0.0"
+  version: "7.0.0"
+});
+var SAJU_FLUENT_KOREAN_WRITING_POLICY = deepFreeze2({
+  id: "fluent-korean-full-output-pass",
+  version: "1.0.0",
+  required: true,
+  passPosition: "before-validation",
+  ruleSet: "fluent-korean",
+  scope: {
+    applyTo: "all-user-facing-korean-prose",
+    exclude: ["quoted-source-text", "code", "code-comments", "JSON-keys", "finding-ids"]
+  },
+  instructions: [
+    "Apply every fluent-korean rule to the completed Korean answer; do not replace this pass with a short checklist.",
+    "Apply this policy to Korean prose only. Keep foreign-language text when needed and exclude quoted sources, code, code comments, JSON keys, and finding IDs.",
+    "Use established Korean translations or transliterations for proper names and technical terms; otherwise preserve the source term.",
+    "Do not imitate the user's fragments, typos, slang, or sentence omissions.",
+    "Keep every meaning-bearing sentence component. Do not overuse the possessive particle \uC758 in a way that hides the actor, action, condition, or relation.",
+    "Except for headings and list labels, end every Korean sentence with a predicate and final ending, never a noun, adverbial phrase, or connective ending.",
+    "Keep particles and endings whenever they clarify a relationship; do not shorten by omitting a needed subject, object, condition, auxiliary, or pre-final ending.",
+    "Prefer a concrete Sino-Korean term with natural Korean syntax over a noun stack or compressed phrase.",
+    "Use ordinary words where ordinary words are needed. Do not use unestablished metaphors, translated consulting language, or abstract nouns as the actor of a person's life.",
+    "Avoid em dashes in user-facing Korean. Use a colon or a connective that states the relation between the chart basis and its meaning.",
+    "Apply the same full pass to Korean instructions sent to another agent and to Korean prose received from another agent before it reaches the user."
+  ]
 });
 var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
   mode: "chart-first-profile",
@@ -10643,7 +10667,7 @@ var SAJU_NARRATION_PRESENTATION_POLICY = deepFreeze2({
 var OH_MY_SAJU_RUNTIME_MANIFEST = deepFreeze2({
   runtime: {
     name: "oh-my-saju",
-    version: "0.7.0",
+    version: "0.8.0",
     schemaVersion: "1"
   },
   compatibility: {
@@ -11225,7 +11249,7 @@ function artifactDigests(value) {
 var artifacts_default = {
   schemaVersion: "1",
   knowledgeSnapshot: "5d670fd010d6f9e90e914c8896c0c7162462146382597dbecd867b7f9132a11f",
-  rules: "5b77051f16305da1d44a15afb2326c1cd83de875233114d45e3bcd28b32b7a73",
+  rules: "cae023b80d97d25b30db383ff4b890a4452fa4637e1b3d62059c3c4dd4b4cdb6",
   fixtures: "7a765b712b4e916248ea460df1f174e934f07f2dc9cd1b19703ad443d05047ae"
 };
 
@@ -11548,7 +11572,7 @@ var DITIANSHUI_STRENGTH_EVIDENCE_PROFILE_V1 = deepFreeze2({
 var artifacts_default2 = {
   schemaVersion: "1",
   knowledgeSnapshot: "7eb9146ade9a98e557208137bcdcd5fae5f5675e5b28ddbc98e988d67b919119",
-  rules: "208ae2a774972654d83f13f70d856a4dff5bc27a479af426a5c86819d6a9209e",
+  rules: "6b131b20eb4f3b0920155eb16acb1a5ce13fd6d48c43879c550965a16ccc5289",
   fixtures: "7e8e58a3d08e79fe248f3778980137a2bd49ab351c022137e80719da631ca22b"
 };
 
@@ -11792,7 +11816,7 @@ var QIONGTONG_CLIMATE_PROFILE_V1 = deepFreeze2({
 var artifacts_default3 = {
   schemaVersion: "1",
   knowledgeSnapshot: "a80a5f3e4b4563451bb3e64c13cb3cfda61a61182ad6c6ee86d9f5c9fcbfe383",
-  rules: "04d4f9079021c3eeb30800d0e48f88662fb51389c4678b9fc245070c29da33c7",
+  rules: "28b5d9d987d7bf533668015af1473f8cdafd16f2d3cf9537d93ac503a75f90ee",
   fixtures: "d3693447faf1e3096bdaf927d6457a0810b145cc9af000b1a500a09007c085c4"
 };
 
@@ -12647,7 +12671,7 @@ var SANMING_SYMBOLIC_CURATED_PROFILE_V1 = deepFreeze2({
 var artifacts_default4 = {
   schemaVersion: "1",
   knowledgeSnapshot: "906e1bed2e2c56e96d9b860409e3583eefa413864f27374bfb2bb73e92d65b03",
-  rules: "d6f16a4e1e2078cc2e41f9e581ea54e788b56f0d84e38f38474086b3c705ef6d",
+  rules: "7c89f806e676e68690050ad204354a0c80a7f939c40b9bde6d01f223fc5970d8",
   fixtures: "4c2c5f9483af0f6869f241d607ef6eefbdf020ce8d1833251ddb790929e78f23"
 };
 
@@ -13639,7 +13663,7 @@ var XINGCHONG_RESOLUTION_PROFILE_V1 = deepFreeze2({
 var artifacts_default5 = {
   schemaVersion: "1",
   knowledgeSnapshot: "ea2720fb4d65f99cb2cc5bff27524ba503095a2d1d15accb8252986a1f76fa1b",
-  rules: "5f6fddb91a570da52e478f75a5d45ade333febf691343e129293c2d6f19b327c",
+  rules: "928e89835daa15b9d8ccde791cba8f6cc788b66d8a7ac7bf6cdbfd20a382656d",
   fixtures: "c6cb7f35272944e556dab0cf2c66f3e839bcfed9761d5c3f33a583c82fda3532"
 };
 
@@ -13872,7 +13896,7 @@ var ZIPING_MONTH_COMMAND_PROFILE_V1 = deepFreeze2({
 var artifacts_default6 = {
   schemaVersion: "1",
   knowledgeSnapshot: "0c26093909086123517cde4274b2ff1696e23457b71c85627933dc11ea6f33dc",
-  rules: "5b89801964edc59e4a8529a013e159d0ab4cf874eb1b46a6a288ac84ae9850a6",
+  rules: "4d64eb710d8009ca44c36300e2978a9e9513f0212861eec5da73495caeaf9c51",
   fixtures: "6dc147f3688a1ec24eb6ce584a66df78ac5ee8f2659ae739ac5b029c98ebe46c"
 };
 
@@ -19934,6 +19958,7 @@ function buildNarrationRequest(assessment, locale, purpose, audience, question, 
       topicNeutral: true,
       omitCalendarAndGanzhiClaimsWithoutEvidence: true,
       presentation: SAJU_NARRATION_PRESENTATION_POLICY,
+      writing: SAJU_FLUENT_KOREAN_WRITING_POLICY,
       readingPolicy: resolveSajuReadingPolicy(question, purpose, readingMode, inferenceDepth)
     },
     template: SAJU_NARRATION_PROMPT_TEMPLATE,
@@ -25410,7 +25435,7 @@ function renderedProfileBridgeV3(value) {
   const trimmedBasis = value.structure.basis.replace(/[\s.,]+$/u, "");
   const basis = escapeBroadPresentationMarkdownText(trimmedBasis);
   const interpretation = escapeBroadPresentationMarkdownText(value.structure.interpretation);
-  const joiner = BASIS_CONNECTIVE_ENDING_PATTERN.test(trimmedBasis) ? " " : " \u2014 ";
+  const joiner = BASIS_CONNECTIVE_ENDING_PATTERN.test(trimmedBasis) ? " " : ": ";
   return `${marker === null ? "" : `${marker} `}${basis}${joiner}${interpretation}`;
 }
 function presentationItems(resolved) {
@@ -26171,6 +26196,7 @@ function compatibilityTask(request, participants, findings) {
     mode: "grounded-compatibility",
     question: request.question,
     inferenceDepth: request.inferenceDepth ?? "deep-traditional",
+    writing: SAJU_FLUENT_KOREAN_WRITING_POLICY,
     instructions: [
       "Answer the two-person compatibility question directly in the summary.",
       "Use A\u2192B and B\u2192A directional ten-god findings together; compatibility is not two individual readings pasted together.",
@@ -27186,6 +27212,45 @@ function prepareOhMySajuReadingFromUnknown(command) {
     binding: preparationBinding(analysis, timing, tasks)
   });
 }
+function analyzeOhMySajuReadingFromUnknown(command) {
+  if (!isRecord2(command) || command.command !== "analyze-reading") {
+    throw new OhMySajuApplicationError(
+      "INVALID_COMMAND",
+      "command must be an analyze-reading object."
+    );
+  }
+  assertOnlyKeys4(command, ["schemaVersion", "command", "request", "timing"], "command");
+  assertCommandVersion(command.schemaVersion);
+  assertServiceRequest2(command.request);
+  const analysis = calculateKoreanSajuAnalysis(command.request.calculation);
+  assertPresetIntegrity(analysis.preset);
+  const timing = calculateRequestedTiming(command.request, command.timing);
+  const baselineRequest = prepareAiSajuNarrationRequest(
+    comparisonPackReadingInput(
+      DEFAULT_COMPARISON_READING_OPTIONS,
+      command.request,
+      analysis.baseline
+    )
+  );
+  return deepFreeze2({
+    schemaVersion: "1",
+    calculationKind: analysis.calculationKind,
+    analysis,
+    timing,
+    task: {
+      mode: "direct-korean-interpretation",
+      readingPolicy: baselineRequest.task.readingPolicy,
+      writing: baselineRequest.task.writing,
+      instructions: [
+        "Answer the user directly from the supplied audited calculation and Pack findings.",
+        "For a deep reading, follow the 0\u20137 traditional analysis sequence without exposing it as a mechanical checklist.",
+        "Compare compatible Pack findings when they change the conclusion, but do not make the user wait for one draft per Pack or compose validation JSON.",
+        "Use the full Fluent Korean output pass before delivering the answer.",
+        "Keep calculation facts, traditional findings, and your own life-scene interpretation distinct in the wording."
+      ]
+    }
+  });
+}
 async function validateOhMySajuReadingFromUnknown(command) {
   if (!isRecord2(command) || command.command !== "validate-reading") {
     throw new OhMySajuApplicationError(
@@ -27321,6 +27386,7 @@ function executeTraditionalSystemCommandFromUnknown(command) {
   return runTraditionalSystem(command.request);
 }
 var COMMAND_NAMES = Object.freeze([
+  "analyze-reading",
   "prepare-reading",
   "validate-reading",
   "prepare-compatibility",
@@ -27358,6 +27424,14 @@ async function executeOhMySaju(command) {
   try {
     if (!isRecord2(command)) {
       throw new OhMySajuApplicationError("INVALID_COMMAND", "command must be an object.");
+    }
+    if (command.command === "analyze-reading") {
+      return deepFreeze2({
+        schemaVersion: "1",
+        ok: true,
+        command: "analyze-reading",
+        result: analyzeOhMySajuReadingFromUnknown(command)
+      });
     }
     if (command.command === "prepare-reading") {
       return deepFreeze2({
@@ -27416,8 +27490,8 @@ Usage:
   node oh-my-saju.mjs --help
 
 The runtime reads one JSON command from --input or stdin and writes one JSON
-response to stdout. Supported commands are prepare-reading, validate-reading,
-prepare-compatibility, validate-compatibility, and run-traditional-system.
+response to stdout. Supported commands are analyze-reading, prepare-reading,
+validate-reading, prepare-compatibility, validate-compatibility, and run-traditional-system.
 `;
 function parseOptions(argv) {
   let inputPath;

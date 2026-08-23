@@ -1,6 +1,9 @@
 # Korean interpretation style
 
-Use this reference while drafting each profile output and assembling the validated response.
+Use this reference after reading [fluent-korean-output-pass.md](fluent-korean-output-pass.md) in
+full while drafting each profile output and assembling the validated response. The full Fluent
+Korean pass is mandatory for every user-facing Korean sentence and takes precedence whenever an
+older formatting example in this reference conflicts with it.
 
 ## Evidence levels
 
@@ -85,9 +88,10 @@ condition, and what follows from it without restoring omitted words for themselv
   it cannot omit the referent of a conclusion.
 - Keep the chart term in the basis and explain its lived meaning with common Korean words. Do not
   replace a plain verb with a figurative or imported expression just to vary the wording.
-- The renderer joins `basis` and `interpretation` with an em dash. Make each span a clause that
-  reads naturally on its own, then read the joined line once to make sure the subject and predicate
-  still connect.
+- The renderer joins a non-connective `basis` and `interpretation` with a colon. Make each span a
+  clause that reads naturally on its own, then read the joined line once to make sure the subject
+  and predicate still connect. If `basis` already ends in a connective ending, the renderer joins
+  the two clauses directly.
 
 These rules apply to Korean prose only. Preserve exact finding IDs, quoted basis spans, code,
 JSON keys, Markdown syntax, and established technical terms.
@@ -230,7 +234,7 @@ central mechanism, then show how it changes across the supported life areas.
 ## Default broad-reading display contract
 
 For a first substantive broad reading, use this chart-first shape. Each profile bullet renders as
-`근거 — 해석` on a single line, so the basis is read aloud before its meaning.
+`근거: 해석` on a single line, so the basis is read aloud before its meaning.
 
 ```markdown
 기준: 양력 YYYY.MM.DD HH:mm, 한국 표준시
@@ -255,31 +259,31 @@ _(근거: [핵심 요약이 딛고 선 명식 근거])_
 
 ## 절기와 계절
 
-- [△/◇] [절입 경과일·다음 절기까지의 거리·사령·한난을 함께 밝힌 계절 근거] — [그
+- [△/◇] [절입 경과일·다음 절기까지의 거리·사령·한난을 함께 밝힌 계절 근거]: [그
   계절의 한난조습이 몸의 반응과 행동으로 드러나는 모습]
 
 ## 성격과 행동 방식
 
-- [△/◇] [일간·계절·뿌리 또는 반복 배치를 보여 주는 근거] — [그 전통적 기능이 실제
+- [△/◇] [일간·계절·뿌리 또는 반복 배치를 보여 주는 근거]: [그 전통적 기능이 실제
   행동으로 드러나는 모습]
-- [△/◇] [첫째와 다른 실제 배치를 보여 주는 근거] — [첫째 설명과 겹치지 않는 또 다른
+- [△/◇] [첫째와 다른 실제 배치를 보여 주는 근거]: [첫째 설명과 겹치지 않는 또 다른
   행동]
 
 ## 타고난 힘과 쓰는 법
 
-- [△/◇] [통근·득령·득지·득세를 보여 주는 근거] — [자기 힘으로 끌고 가는지, 무엇에
+- [△/◇] [통근·득령·득지·득세를 보여 주는 근거]: [자기 힘으로 끌고 가는지, 무엇에
   기대는지]
 
 ## 강점과 주의점
 
-- **잘 풀릴 때:** [△/◇] [강점과 맹점이 함께 나오는 근거] — [같은 성향이 도움이 되는
+- **잘 풀릴 때:** [△/◇] [강점과 맹점이 함께 나오는 근거]: [같은 성향이 도움이 되는
   상황과 행동]
-- **압박을 받을 때:** [△/◇] [강점과 같은 근거] — [같은 성향 때문에 문제가 생기는
+- **압박을 받을 때:** [△/◇] [강점과 같은 근거]: [같은 성향 때문에 문제가 생기는
   상황과 반응]
 
 ## 일·재능
 
-- [△/◇] [일·공부와 직접 연결되는 근거] — [맞는 과업 방식과 그 방식이 막히는 조건]
+- [△/◇] [일·공부와 직접 연결되는 근거]: [맞는 과업 방식과 그 방식이 막히는 조건]
 
 ## 돈과 현실 감각
 
@@ -288,7 +292,7 @@ _(근거: [핵심 요약이 딛고 선 명식 근거])_
 
 ## 관계
 
-- [△/◇] [관계와 직접 연결되는 근거] — [가까운 관계에서 보이는 반응과 오해가 생기는
+- [△/◇] [관계와 직접 연결되는 근거]: [가까운 관계에서 보이는 반응과 오해가 생기는
   조건]
 ```
 
@@ -305,14 +309,14 @@ a real-world environment: `한겨울의 찬 기운이 가장 두꺼운 때에 �
 where reading the season as climate is correct rather than misframed.
 
 `타고난 힘과 쓰는 법` states whether the day master has roots, whether it holds the month and the
-day ground, and what it leans on. Write the conclusion as pushing or leaning — `자기 힘으로
-끌고 가는 쪽`, `기대는 자리가 없어 그대로 눌리는 쪽` — and never as a strength score, a grade
+day ground, and what it leans on. Write the conclusion as pushing or leaning, such as `자기 힘으로
+끌고 가는 쪽` or `기대는 자리가 없어 그대로 눌리는 쪽`, and never as a strength score, a grade
 name, or a prescription.
 
 Write `basis` as a clause that can be read out loud, not as a noun phrase, because v3 renders it
 as the first half of one sentence. `월지 진의 정기 무가 일간 계수에게 정관이라 월령을 얻지
 못했고` works; `월지 진의 정기 무의 십신` does not. Drop the trailing period: the renderer joins
-the two halves with an em dash.
+the two halves directly after a connective ending and otherwise uses a colon.
 
 In the v3 `presentationDraft`, the thesis quotes exact `basis` and `portrait` spans. Every other
 selection declares its `role` and quotes exact `basis` and `interpretation` spans. `climate` and
